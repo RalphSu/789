@@ -330,6 +330,10 @@ public class BaseAutowiredController {
 												  UserBaseInfoDO userBaseInfo,Model model) {
 		YzzUserSpecialRegisterResponse registerResponse = null;
 		try {
+			if(null == userBaseInfo.getMail()){
+				//没有邮箱地址的时候，设置为空字符串
+				userBaseInfo.setMail("");
+			}
 			registerResponse = userBaseInfoManager.doRegYJFAccount(
 					person, userBaseInfo);
 		} catch (Exception e) {

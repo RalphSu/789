@@ -90,6 +90,7 @@ public class InvestorRegisterController extends BaseAutowiredController {
 		JSONObject json = new JSONObject();
 		if (UserTypeEnum.GR.code().equals(userBaseInfo.getType())) {
 			logger.info("个人投资者自主注册，入参1：{}，入参2：{}", personalInfo, userBaseInfo);
+			//现已取消邮件验证 代码见 PersonalInfoManagerImpl.saveAndSendEmail()
 			json = registerService.personalRegister(session, personalInfo, userBaseInfo, token);
 		} else if ("JG".equals(userBaseInfo.getType())) {
 			logger.info("机构投资者自主注册，入参1：{}，入参2：{}", institution, userBaseInfo);
@@ -123,7 +124,9 @@ public class InvestorRegisterController extends BaseAutowiredController {
 			loginEmailUrl = "http://mail." + loginEmailUrl;
 			model.addAttribute("loginEmailUrl", loginEmailUrl);
 		}
-		return "/front/anon/activate/regSuccess.vm";
+//		return "/front/anon/activate/regSuccess.vm";
+		//取消邮件验证 直接到验证成功页面 15.01.19
+		return "/front/anon/activate/regActiveSuccess.vm";
 	}
 
 
