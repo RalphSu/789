@@ -713,13 +713,21 @@
 		            var myWin = window.open("/goto.htm","_blank");
 		            setTimeout(function(){
 		                var result = requestAjax(url, data);
-		                if(!result.investStatus)
-		                {
-		                    $('#invest-result-messge').html(result.message).show();
-		                    _this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);
-		                    myWin.close();
-		                }else
-		                {
+		                if(!result.investStatus){
+		                	myWin.close();
+		                	if(!(undefined == result.code) && "-1" == result.code){
+		                		var r = confirm("您的余额不足，现在充值吗?");
+		                		if(r){
+		                			window.location.href = ("/usercenter/deposit");
+		                		}else{
+									$('#invest-result-messge').html(result.message).show();
+		                    		_this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);		                			
+		                		}
+		                	}else{
+		                		$('#invest-result-messge').html(result.message).show();
+		                    	_this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);
+		                	}
+		                }else{
 		                    if(result.redirectURL != null)
 		                    {
 		                        _this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);
