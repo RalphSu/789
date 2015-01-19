@@ -197,7 +197,9 @@ public class RegisterServiceImpl extends OpenApiBaseService implements RegisterS
 		}
 		userBaseInfo.setMobileBinding(BooleanEnum.NO.code());
 		userBaseInfo.setMailBinding(BooleanEnum.IS.code());
-		userBaseInfo.setState(UserStateEnum.INACTIVE.code());
+//		userBaseInfo.setState(UserStateEnum.INACTIVE.code());
+		//取消邮件验证，注册直接设置为normal 15.01.19
+		userBaseInfo.setState(UserStateEnum.NORMAL.code());
 	}
 	
 	/**
