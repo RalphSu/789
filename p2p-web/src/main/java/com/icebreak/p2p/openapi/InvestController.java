@@ -243,6 +243,7 @@ public class InvestController extends BaseAutowiredController {
 		}
 		if (amount > (new Money(account.getAvailableBalance())).getCent()) {
 			result.put("message", "您的可用余额不足，请充值");
+			result.put("code", "-1");
 			return result;
 		}
 		result.put("status", true);
