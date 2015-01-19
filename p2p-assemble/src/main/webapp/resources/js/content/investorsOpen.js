@@ -66,7 +66,7 @@ define(function(require) {
 					required : true
 				},
 				mail : {
-					required : true,
+					required : false,
 					customRemote : {
 						url : '/anon/checkEmailOrMobile?dateTag=' + new Date().getTime(),
 						data : {
