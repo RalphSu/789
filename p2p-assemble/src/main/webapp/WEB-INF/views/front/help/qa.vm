@@ -1,0 +1,43 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<div class="blank"></div>
+<!--通用新闻公告内容开始-->
+<div class="new nav" style="height: 600px;">
+    #parse("/front/help/helpLeftMenu.vm")
+    <ul class="new_list">
+        <li class="new_list_tit large_font"><span class="blue">常见问题</span></li>
+        <li class="new_list_text">
+            <p class="blue" style="font-size:15px;">
+                <b>什么叫银行承兑汇票？</b>
+            </p>
+            <P>
+                银行承兑汇票时由银行开具的到期兑付的书面凭证。根据《票据法》第七十三条规定：银行承兑汇票由银行承兑，银行承诺到期后会无条件兑付该票据金额给予该银承德所有人。在789平台所推的产品中，银承作为担保财产，在借款人不能按期清偿的情况下，抵押权人可以通过行驶抵押权，实现权利。
+            </P>
+            <p>银行承兑汇票样例：</p>
+            <p><img src="/resources/images/new/yhhuidui.jpg" /> </p>
+
+
+            <br/>
+            <p class="blue" style="font-size:15px;">
+                <b>789金融1号是什么？</b>
+            </p>
+            <p>持有未到期银行承兑汇票的中小企业通过在789将银承进行质押将受益权装让给平台的投资用户，一方面为企业解决融资渠道，另一方面则为投资者提供一个低风险、高收益的的理财选择，实现双方的共赢。而789作为当中的枢纽，为了将投资全程中的抵押物的检验、保管到资金流向中的风险降到最低，与银行及第三方支付公司达成战略协议，让银行在当中全程参与，重要的检验、保管、监控。再加上抵押物是由开票银行到期后刚性兑付，让风险趋近于零。</p>
+
+            <br/>
+            <p class="blue" style="font-size:15px;">
+                <b>789平台的融资模式安全合法吗？</b>
+            </p>
+            <p>根据《票据法》规定：汇票可以设定质押，且根据《担保法》第七十五条,汇票权利可以质押 。两部法律都明确了汇票权利质押的合法性。并且投资者的资金是直接流向融资企业，并不会通过789平台，还款也是原路返回。789作为一家金融信息服务平台，向融资方、投资方双方提供信息服务完全合法。</p>
+            <br/>
+            <br/>
+            <br/>
+        </li>
+    </ul>
+</div>
+<div style="clear: both"></div>
+<!--通用新闻公告内容结束-->
+    #parse("/front/index/common/footer.vm")
+</body>
+</html>

@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+	<!-- ============================================= -->
+	<!-- RESULT MAPS -->
+	<!-- ============================================= -->
+
+	<!-- result maps for database table loan_demand -->
+	<resultMap id="RM-LOAN-DEMAND" class="com.icebreak.p2p.dataobject.LoanDemandDO">
+		<result property="demandId" column="demand_id" javaType="long" jdbcType="BIGINT" nullValue="0" />
+		<result property="tradeCode" column="trade_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="loanerId" column="loaner_id" javaType="long" jdbcType="BIGINT" nullValue="0" />
+		<result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="loanName" column="loan_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="dimensions" column="dimensions" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="loanAmount" column="loan_amount" javaType="long" jdbcType="BIGINT" nullValue="0" />
+		<result property="interestRate" column="interest_rate" javaType="double" jdbcType="DECIMAL" nullValue="0" />
+		<result property="timeLimitUnit" column="time_limit_unit" javaType="java.lang.String" jdbcType="ENUM" />
+		<result property="timeLimit" column="time_limit" javaType="int" jdbcType="INT" nullValue="0" />
+		<result property="leastInvestAmount" column="least_invest_amount" javaType="long" jdbcType="BIGINT" nullValue="0" />
+		<result property="saturationConditionMethod" column="saturation_condition_method" javaType="java.lang.String" jdbcType="ENUM" />
+		<result property="saturationCondition" column="saturation_condition" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="loanPurpose" column="loan_purpose" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="deadline" column="deadline" javaType="java.util.Date" jdbcType="DATETIME" />
+		<result property="selfDefinedTitle" column="self_defined_title" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="loanNote" column="loan_note" javaType="java.lang.String" jdbcType="MEDIUMTEXT" />
+		<result property="loanStatement" column="loan_statement" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="guaranteeId" column="guarantee_id" javaType="long" jdbcType="BIGINT" nullValue="0" />
+		<result property="guaranteeName" column="guarantee_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="guaranteeStatement" column="guarantee_statement" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="guaranteeLicenseNo" column="guarantee_licence_no" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="guaranteeLicenseName" column="guarantee_licence_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="guaranteeLicenseUrl" column="guarantee_license_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="sponsorId" column="sponsor_id" javaType="long" jdbcType="BIGINT" nullValue="0" />
+		<result property="sponsorName" column="sponsor_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="sponsorStatement" column="sponsor_statement" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="status" column="status" javaType="java.lang.String" jdbcType="ENUM" />
+		<result property="divisionTemplateId" column="division_template_id" javaType="long" jdbcType="BIGINT" />
+		<result property="demandDate" column="demand_date" javaType="java.util.Date" jdbcType="DATETIME" />
+		<result property="publishDate" column="publish_date" javaType="java.util.Date" jdbcType="DATETIME" />
+		<result property="dismissReason" column="dismiss_reason" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="guaranteeAudit" column="guarantee_audit" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result property="repayDivisionWay" column="repay_division_way" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="investAvalibleTime" column="invest_avl_date" javaType="java.util.Date" jdbcType="DATETIME" />
+		<result property="letterPdfUrl" column="letter_pdf_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="contractPdfUrl" column="contract_pdf_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="bizType" column="biz_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="loanPassword" column="loan_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="insureWay" column="insure_way" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="areaNbNo" column="area_nb_no" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="isJoinActivity" column="is_join_activity" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="loanType" column="loan_type" javaType="com.icebreak.p2p.dataobject.DOEnum.LoanTypeEnum" jdbcType="ENUM" />
+	</resultMap>
+
+	<!-- ============================================= -->
+	<!-- mapped statements for IbatisLoanDemandDAO -->
+	<!-- ============================================= -->
+	<!-- mapped statement for IbatisLoanDemandDAO.insert -->
+	<insert id="MS-LOAN-DEMAND-INSERT">
+		<![CDATA[
+		insert /*MS-ELOAN-LOAN-DEMAND-INSERT*/ into loan_demand(
+		trade_code,
+		loaner_id,
+		user_name,
+		loan_name,
+		dimensions,
+		loan_amount,
+		loan_password,
+		interest_rate,
+		time_limit_unit,
+		time_limit,
+		least_invest_amount,
+		saturation_condition_method,
+		saturation_condition,
+		loan_purpose,
+		deadline,
+		self_defined_title,
+		loan_note,
+		loan_statement,
+		guarantee_id,
+		guarantee_name,
+		guarantee_statement,
+		guarantee_licence_no,
+		guarantee_licence_name,
+		guarantee_license_url,
+		sponsor_id,
+		sponsor_name,
+		sponsor_statement,
+		status,
+		division_template_id,
+		demand_date,
+		publish_date,
+		dismiss_reason,
+		guarantee_audit,
+		repay_division_way,
+		invest_avl_date,
+		letter_pdf_url,
+		contract_pdf_url,
+		biz_type,
+		area_nb_no,
+		is_join_activity,
+		loan_type,
+		insure_way
+		) values (
+		#tradeCode#, 
+		#loanerId#, 
+		#userName#, 
+		#loanName#, 
+		#dimensions#, 
+		#loanAmount#,
+		#loanPassword#, 
+		#interestRate#, 
+		#timeLimitUnit#, 
+		#timeLimit#, 
+		#leastInvestAmount#, 
+		#saturationConditionMethod#, 
+		#saturationCondition#, 
+		#loanPurpose#, 
+		#deadline#, 
+		#selfDefinedTitle#, 
+		#loanNote#, 
+		#loanStatement#, 
+		#guaranteeId#, 
+		#guaranteeName#, 
+		#guaranteeStatement#, 
+		#guaranteeLicenseNo#,
+		#guaranteeLicenseName#,
+		#guaranteeLicenseUrl#, 
+		#sponsorId#, 
+		#sponsorName#, 
+		#sponsorStatement#, 
+		#status#, 
+		#divisionTemplateId#, 
+		#demandDate#,
+		#publishDate#,
+		#dismissReason#,
+		#guaranteeAudit#,
+		#repayDivisionWay#,
+		#investAvalibleTime#,
+		#letterPdfUrl#,
+		#contractPdfUrl#,
+		#bizType#,
+		#areaNbNo#,
+		#isJoinActivity#,
+		#loanType#,
+		#insureWay#
+		)
+		]]>
+		<selectKey resultClass="long" keyProperty="demandId">
+			<![CDATA[SELECT LAST_INSERT_ID() AS demand_id]]>
+		</selectKey>
+	</insert>
+
+	<!-- mapped statement for IbatisLoanDemandDAO.update -->
+	<update id="MS-LOAN-DEMAND-UPDATE">
+		<![CDATA[
+		update /*MS-ELOAN-LOAN-DEMAND-UPDATE*/ loan_demand set 
+		trade_code=#tradeCode#, 
+		loaner_id=#loanerId#, 
+		user_name=#userName#, 
+		loan_name=#loanName#, 
+		dimensions=#dimensions#, 
+		loan_amount=#loanAmount#, 
+		loan_password=#loanPassword#,
+		interest_rate=#interestRate#, 
+		time_limit_unit=#timeLimitUnit#, 
+		time_limit=#timeLimit#, 
+		least_invest_amount=#leastInvestAmount#, 
+		saturation_condition_method=#saturationConditionMethod#, 
+		saturation_condition=#saturationCondition#, 
+		loan_purpose=#loanPurpose#, 
+		deadline=#deadline#, 
+		self_defined_title=#selfDefinedTitle#, 
+		loan_note=#loanNote#, 
+		loan_statement=#loanStatement#, 
+		guarantee_id=#guaranteeId#, 
+		guarantee_name=#guaranteeName#, 
+		guarantee_statement=#guaranteeStatement#, 
+		guarantee_licence_no=#guaranteeLicenseNo#, 
+		guarantee_licence_name=#guaranteeLicenseName#, 
+		guarantee_license_url=#guaranteeLicenseUrl#, 
+		sponsor_id=#sponsorId#, 
+		sponsor_name=#sponsorName#, 
+		sponsor_statement=#sponsorStatement#, 
+		status=#status#,
+		division_template_id=#divisionTemplateId# , 
+		demand_date=#demandDate#,
+		publish_date=#publishDate#,
+		dismiss_reason=#dismissReason#,
+		guarantee_audit=#guaranteeAudit#,
+		repay_division_way=#repayDivisionWay#,
+		invest_avl_date=#investAvalibleTime#,
+		letter_pdf_url=#letterPdfUrl#,
+		contract_pdf_url=#contractPdfUrl#,
+		biz_type=#bizType#, 
+		area_nb_no=#areaNbNo#,
+		is_join_activity = #isJoinActivity#,
+		insure_way = #insureWay#,
+		loan_type = #loanType#
+		where (demand_id = #demandId#)
+		]]>
+	</update>
+
+	<!-- mapped statement for IbatisLoanDemandDAO.delete -->
+	<delete id="MS-LOAN-DEMAND-DELETE">
+		<![CDATA[
+		delete /*MS-ELOAN-LOAN-DEMAND-DELETE*/ from loan_demand where (demand_id = #value#)
+		]]>
+	</delete>
+
+	<!-- mapped statement for queryLoanDemandByDemandId -->
+	<select id="MS-ELOAN-DEMAND-QUERY_LOANDEMAND_BY_DEMANDID"
+		resultMap="RM-LOAN-DEMAND">
+		<![CDATA[
+		SELECT /*MS-ELOAN-DEMAND-QUERY_LOANDEMAND_BY_DEMANDID*/ * FROM loan_demand WHERE (demand_id = #demandId#)
+		]]>
+	</select>
+
+	<!-- mapped statement for IbatisLoanDemandDAO.queryCountByCondition -->
+	<select id="MS-ELOAN-DEMAND-QUERY_COUNT_BY_CONDITION"
+		resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /* MS-ELOAN-DEMAND-QUERY_COUNT_BY_CONDITION */ COUNT(1)
+		FROM loan_demand
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="loanerId" prepend=" and ">
+				<![CDATA[loaner_id = #loanerId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[loan_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[loan_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanPassword" prepend=" and ">
+				<![CDATA[loan_password = #loanPassword#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[guarantee_name = #guaranteeName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="sponsorName" prepend=" and ">
+				<![CDATA[sponsor_name = #sponsorName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeId" prepend=" and ">
+				<![CDATA[guarantee_id = #guaranteeId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseNo" prepend=" and ">
+				<![CDATA[guarantee_licence_no = #guaranteeLicenseNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseName" prepend=" and ">
+				<![CDATA[guarantee_licence_name = #guaranteeLicenseName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[demand_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[demand_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="status" prepend=" and ">
+			    <![CDATA[ status <> 'draft']]>
+			</isEmpty>
+		</dynamic>
+	</select>
+
+	<!-- mapped statement for IbatisLoanDemandDAO.queryListByCondition -->
+	<select id="MS-ELOAN-DEMAND-QUERY_LIST_BY_CONDITION" resultMap="RM-LOAN-DEMAND">
+		<![CDATA[
+		SELECT /* MS-ELOAN-DEMAND-QUERY_LIST_BY_CONDITION */ *
+		from loan_demand
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="loanerId" prepend=" and ">
+				<![CDATA[loaner_id = #loanerId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[loan_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[loan_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanPassword" prepend=" and ">
+				<![CDATA[loan_password = #loanPassword#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeId" prepend=" and ">
+				<![CDATA[guarantee_id = #guaranteeId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[guarantee_name = #guaranteeName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="sponsorName" prepend=" and ">
+				<![CDATA[sponsor_name = #sponsorName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseNo" prepend=" and ">
+				<![CDATA[guarantee_licence_no = #guaranteeLicenseNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseName" prepend=" and ">
+				<![CDATA[guarantee_licence_name = #guaranteeLicenseName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[demand_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[demand_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="status" prepend=" and ">
+			    <![CDATA[ status <> 'draft']]>
+			</isEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY demand_date DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="MS-ELOAN-DEMAND-QUERY_OFFLINE_LIST_BY_CONDITION" resultMap="RM-LOAN-DEMAND">
+		<![CDATA[
+		SELECT /* MS-ELOAN-DEMAND-QUERY_OFFLINE_LIST_BY_CONDITION*/ *
+		from loan_demand 
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="loanerId" prepend=" and ">
+				<![CDATA[loaner_id = #loanerId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[loan_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[loan_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanPassword" prepend=" and ">
+				<![CDATA[loan_password = #loanPassword#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeId" prepend=" and ">
+				<![CDATA[guarantee_id = #guaranteeId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[guarantee_name = #guaranteeName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="sponsorName" prepend=" and ">
+				<![CDATA[sponsor_name = #sponsorName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseNo" prepend=" and ">
+				<![CDATA[guarantee_licence_no = #guaranteeLicenseNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseName" prepend=" and ">
+				<![CDATA[guarantee_licence_name = #guaranteeLicenseName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[demand_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[demand_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="status" prepend=" and ">
+			    <![CDATA[ status <> 'draft']]>
+			</isEmpty>
+		</dynamic>
+		
+		<![CDATA[and demand_id NOT IN (SELECT t.demand_id FROM trade t) ORDER BY demand_date DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="MS-ELOAN-DEMAND-QUERY_OFFLINE_COUNT_BY_CONDITION" resultClass="long">
+		<![CDATA[
+		SELECT /* MS-ELOAN-DEMAND-QUERY_OFFLINE_COUNT_BY_CONDITION */ COUNT(*)
+		from loan_demand 
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="loanerId" prepend=" and ">
+				<![CDATA[loaner_id = #loanerId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[loan_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[loan_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanPassword" prepend=" and ">
+				<![CDATA[loan_password = #loanPassword#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeId" prepend=" and ">
+				<![CDATA[guarantee_id = #guaranteeId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[guarantee_name = #guaranteeName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="sponsorName" prepend=" and ">
+				<![CDATA[sponsor_name = #sponsorName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseNo" prepend=" and ">
+				<![CDATA[guarantee_licence_no = #guaranteeLicenseNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseName" prepend=" and ">
+				<![CDATA[guarantee_licence_name = #guaranteeLicenseName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[demand_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[demand_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="status" prepend=" and ">
+			    <![CDATA[ status <> 'draft']]>
+			</isEmpty>
+		</dynamic>
+		<![CDATA[and demand_id NOT IN (SELECT t.demand_id FROM trade t);]]>
+	</select>
+
+	<update id="MS-LOAN-DEMAND-UPDATE-PASS-IN-DISMISS">
+		<![CDATA[
+		update /*MS-LOAN-DEMAND-UPDATE-PASS-IN-DISMISS*/ loan_demand set status=#status#]]>
+		<dynamic>
+			<isNotEmpty property="publishDate" prepend=" , ">
+				<![CDATA[publish_date = #publishDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="dismissReason" prepend=" , ">
+				<![CDATA[dismiss_reason = #dismissReason#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeCode" prepend=" , ">
+				<![CDATA[trade_code = #tradeCode#]]>
+			</isNotEmpty>
+		</dynamic>
+		where (demand_id = #demandId#)
+	</update>
+	
+<!-- mapped statement for IbatisLoanDemandDAO.queryListByConditionForjob -->
+	<select id="MS-ELOAN-DEMAND-QUERY_LIST_BY_CONDITION_FORJOB" resultMap="RM-LOAN-DEMAND">
+		<![CDATA[
+		SELECT /* MS-ELOAN-DEMAND-QUERY_LIST_BY_CONDITION */ *
+		from loan_demand
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="loanerId" prepend=" and ">
+				<![CDATA[loaner_id = #loanerId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[loan_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[loan_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanPassword" prepend=" and ">
+				<![CDATA[loan_password = #loanPassword#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[guarantee_name = #guaranteeName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="sponsorName" prepend=" and ">
+				<![CDATA[sponsor_name = #sponsorName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[demand_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[demand_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="publishDate" prepend=" and ">
+				<![CDATA[publish_date <= #publishDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="status" prepend=" and ">
+			    <![CDATA[ status <> 'draft']]>
+			</isEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY demand_date DESC FOR UPDATE;]]>
+	</select>
+<!-- mapped statement for IbatisLoanDemandDAO.queryCountByConditionForGuarantee -->
+	<select id="MS-ELOAN-DEMAND-GUARANTEE_COUNT_BY_CONDITION" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /* MS-ELOAN-DEMAND-QUERY_LIST_BY_CONDITION */ count(0)
+		from loan_demand l INNER JOIN trade t on l.trade_code = t.trade_code 
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="loanerId" prepend=" and ">
+				<![CDATA[l.loaner_id = #loanerId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeId" prepend=" and ">
+				<![CDATA[l.guarantee_id = #guaranteeId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[l.trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[l.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[l.loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[l.loan_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[l.loan_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanPassword" prepend=" and ">
+				<![CDATA[l.loan_password = #loanPassword#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[l.guarantee_name = #guaranteeName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseNo" prepend=" and ">
+				<![CDATA[l.guarantee_licence_no = #guaranteeLicenseNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseName" prepend=" and ">
+				<![CDATA[l.guarantee_licence_name = #guaranteeLicenseName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="sponsorName" prepend=" and ">
+				<![CDATA[l.sponsor_name = #sponsorName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[l.demand_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[l.demand_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="publishDate" prepend=" and ">
+				<![CDATA[l.publish_date <= #publishDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeStatus" prepend=" and ">
+				<![CDATA[t.trade_status = #tradeStatus#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#l.status[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="status" prepend=" and ">
+			    <![CDATA[ l.status <> 'draft']]>
+			</isEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY demand_date DESC FOR UPDATE;]]>
+	</select>
+<!-- mapped statement for IbatisLoanDemandDAO.queryListByConditionForGuarantee -->
+	<select id="MS-ELOAN-DEMAND-GUARANTEE_LIST_BY_CONDITION" resultMap="RM-LOAN-DEMAND">
+		<![CDATA[
+		SELECT /* MS-ELOAN-DEMAND-QUERY_LIST_BY_CONDITION */ *
+		from loan_demand l INNER JOIN trade t on l.trade_code = t.trade_code 
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="loanerId" prepend=" and ">
+				<![CDATA[l.loaner_id = #loanerId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeId" prepend=" and ">
+				<![CDATA[l.guarantee_id = #guaranteeId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[l.trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[l.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[l.loan_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[l.loan_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanPassword" prepend=" and ">
+				<![CDATA[l.loan_password = #loanPassword#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[l.guarantee_name = #guaranteeName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseNo" prepend=" and ">
+				<![CDATA[l.guarantee_licence_no = #guaranteeLicenseNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[l.loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeLicenseName" prepend=" and ">
+				<![CDATA[l.guarantee_licence_name = #guaranteeLicenseName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="sponsorName" prepend=" and ">
+				<![CDATA[l.sponsor_name = #sponsorName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[l.demand_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[l.demand_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="publishDate" prepend=" and ">
+				<![CDATA[l.publish_date <= #publishDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeStatus" prepend=" and ">
+				<![CDATA[t.trade_status = #tradeStatus#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#l.status[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="status" prepend=" and ">
+			    <![CDATA[ l.status <> 'draft']]>
+			</isEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY demand_date DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>	
+	
+	<select id="MS-CHECKLICENSENO" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /* MS-CHECKLICENSENO */ count(0)
+		from loan_demand
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="licenseNo" prepend=" and ">
+				<![CDATA[guarantee_licence_no = #licenseNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="demandId" prepend=" and ">
+				<![CDATA[demand_id = #demandId#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<update id="MS-FILEUPLOAD-URL-UPDATE">
+		<![CDATA[
+		update /*MS-ELOAN-FILEUPLOAD-URL-UPDATE*/ loan_demand set  guarantee_license_url=#newUrl#,loan_amount=#loanAmout#,guarantee_audit=#audit# where (demand_id = #id#)
+		]]>
+	</update>
+	
+	<select id="LOAN-STATUS-AMOUNTS" parameterClass="java.util.Map" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT IFNULL(SUM(t.loaned_amount),0) amounts FROM trade t WHERE 1=1 ]]>
+		<dynamic>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="LOAN-NOLETTERCONTRACT-COUNTS" parameterClass="java.util.Map" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT IFNULL(COUNT(1),0) counts FROM trade t INNER JOIN loan_demand l ON t.`demand_id` = l.`demand_id`
+		WHERE 1=1 ]]>
+		<dynamic>
+			<isNotEmpty property="startDate" prepend=" and ">
+				<![CDATA[t.trade_effective_date >= #startDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endDate" prepend=" and ">
+				<![CDATA[t.trade_effective_date <= #endDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date >= #startExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date <= #endExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeName" prepend=" and ">
+				<![CDATA[t.trade_name = #tradeName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeAudit" prepend=" and ">
+				<![CDATA[l.guarantee_audit = #guaranteeAudit#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[l.loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[l.guarantee_name like '%$guaranteeName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[l.user_name like '%$userName$%']]>
+			</isNotEmpty>
+			<isNull property="letterPdfUrl" prepend=" and ">
+				<![CDATA[ l.letter_pdf_url IS NULL]]>
+			</isNull>
+			<isNull property="contractPdfUrl" prepend=" and ">
+				<![CDATA[ l.contract_pdf_url IS NULL]]>
+			</isNull>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="LOAN-NOLETTERCONTRACT-LIST" resultMap="RM-LOAN-DEMAND" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT l.* FROM trade t INNER JOIN loan_demand l ON t.demand_id = l.demand_id
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="startDate" prepend=" and ">
+				<![CDATA[t.trade_effective_date >= #startDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endDate" prepend=" and ">
+				<![CDATA[t.trade_effective_date <= #endDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date >= #startExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date <= #endExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeName" prepend=" and ">
+				<![CDATA[t.trade_name = #tradeName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeAudit" prepend=" and ">
+				<![CDATA[l.guarantee_audit = #guaranteeAudit#]]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[l.guarantee_name like '%$guaranteeName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[l.loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[l.user_name like '%$userName$%']]>
+			</isNotEmpty>
+			<isNull property="letterPdfUrl" prepend=" and ">
+				<![CDATA[ l.letter_pdf_url IS NULL]]>
+			</isNull>
+			<isNull property="contractPdfUrl" prepend=" and ">
+				<![CDATA[ l.contract_pdf_url IS NULL]]>
+			</isNull>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY t.trade_effective_date DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+</sqlMap>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+				
+  <resultMap id="RM-PERMISSION" class="com.icebreak.p2p.dataobject.Permission" >
+  		<result property="id" column="permission_id" javaType="int" jdbcType="INT"/>
+  		<result property="code" column="permission_code" javaType="java.lang.String" jdbcType="VARVHAR"/>
+  		<result property="name" column="permission_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="operate" column="permission_operate" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="backOperate" column="permission_callback" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="note" column="permission_note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <select id="PERMISSION-GETBYPERMISSIONID" parameterClass="int" resultClass="com.icebreak.p2p.dataobject.Permission" resultMap="RM-PERMISSION">
+  		SELECT 
+	  		t.permission_id,
+	  		t.permission_code,
+	  		t.permission_name,
+	  		t.permission_operate,
+	  		t.permission_callback,
+	  		t.permission_note
+  		FROM permission t WHERE t.permission_id = #value#
+  </select>
+  
+    <select id="PERMISSION-GETBYPERMISSIONCODE" parameterClass="java.lang.String" resultClass="com.icebreak.p2p.dataobject.Permission" resultMap="RM-PERMISSION">
+  		SELECT 
+	  		t.permission_id,
+	  		t.permission_code,
+	  		t.permission_name,
+	  		t.permission_operate,
+	  		t.permission_callback,
+	  		t.permission_note
+  		FROM permission t WHERE t.permission_code = #value#
+  </select>
+  
+  <insert id="PERMISSION-INSERT" parameterClass="com.icebreak.p2p.dataobject.Permission">
+      INSERT INTO permission (
+	  		permission_code,
+	  		permission_name,
+	  		permission_operate,
+	  		permission_callback,
+	  		permission_note
+      ) VALUES (
+            #code#,
+            #name#,
+            #operate#,
+            #backOperate#,
+            #note#
+      )
+  </insert>
+  
+  <update id="PERMISSION-UPDATE" parameterClass="com.icebreak.p2p.dataobject.Permission">
+  		UPDATE permission SET permission_code = #code#, permission_name = #name#, permission_operate = #operate#, permission_callback = #backOperate#, permission_note = #note# WHERE permission_id = #id#
+  </update>
+  
+  <delete id="PERMISSION-DELETEBYPERMISSIONID" parameterClass="int">
+  		DELETE FROM permission WHERE permission_id = #value#
+  </delete>
+  
+  <delete id="PERMISSION-DELETEBYPERMISSIONCODE" parameterClass="java.lang.String">
+  		DELETE FROM permission WHERE permission_code = #value#
+  </delete>
+  
+  <select id="PERMISSION-GETALLPERMISSIONS" resultClass="java.util.List" resultMap="RM-PERMISSION" parameterClass="java.util.Map">
+  		SELECT 
+	  		t.permission_id,
+	  		t.permission_code,
+	  		t.permission_name,
+	  		t.permission_operate,
+	  		t.permission_callback,
+	  		t.permission_note
+  		FROM permission t
+  		<isNotEmpty property="start">
+           LiMIT #start#
+           <isNotEmpty property="size">
+             , #size#
+           </isNotEmpty>
+         </isNotEmpty>
+  </select>
+  
+  <select id="PERMISSION-GETALLPERMISSIONS-COUNT" resultClass="long">
+  		SELECT COUNT(0) FROM permission t
+  </select>
+  
+  <select id="PERMISSION-EXISTS" parameterClass="java.lang.String" resultClass="int">
+  		SELECT COUNT(0) FROM permission t WHERE t.permission_code = #value#
+  </select>
+  
+  <select id="PERMISSION-GETPERMISSIONSBYROLES" parameterClass="java.util.List" resultClass="java.util.List" resultMap="RM-PERMISSION">
+  		SELECT 
+	  		t.permission_id,
+	  		t.permission_code,
+	  		t.permission_name,
+	  		t.permission_operate,
+	  		t.permission_callback,
+	  		t.permission_note
+  		FROM permission t
+  		WHERE t.permission_id IN (SELECT permission_id FROM role_permission WHERE role_permission.role_id IN 
+  		 <iterate conjunction="," open="(" close=")">
+  		   #value[]#
+  		 </iterate>
+  		)
+  </select>
+  
+    <select id="PERMISSION-GETPERMISSIONSBYROLE" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-PERMISSION">
+  		SELECT 
+	  		t.permission_id,
+	  		t.permission_code,
+	  		t.permission_name,
+	  		t.permission_operate,
+	  		t.permission_callback,
+	  		t.permission_note
+  		FROM permission t
+  		WHERE t.permission_id IN (SELECT permission_id FROM role_permission WHERE role_permission.role_id = #roleId#)
+  		<isNotEmpty property="start">
+  		   LIMIT #start#
+  		   <isNotEmpty property="size">
+  		     , #size#
+  		   </isNotEmpty>
+  		</isNotEmpty>
+  </select>
+  
+  <select id="PERMISSION-GETPERMISSIONSBYROLE-COUNT" parameterClass="java.util.Map" resultClass="long">
+  		SELECT 
+	  		COUNT(0)
+  		FROM permission t
+  		WHERE t.permission_id IN (SELECT permission_id FROM role_permission WHERE role_permission.role_id = #roleId#)
+  </select>
+  
+  <select id="PERMISSION-GETGRANTABLEPERMISSIONSBYROLEID" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-PERMISSION">
+		SELECT 
+			t.permission_id,
+	  		t.permission_code,
+	  		t.permission_name,
+	  		t.permission_operate,
+	  		t.permission_callback,
+	  		t.permission_note
+		FROM permission t 
+		WHERE t.permission_id NOT IN (
+		SELECT t1.permission_id FROM role_permission t1 WHERE t1.role_id = #roleId#
+		)
+		<isNotEmpty property="start">
+  		   LIMIT #start#
+  		   <isNotEmpty property="size">
+  		     , #size#
+  		   </isNotEmpty>
+  		</isNotEmpty>
+  </select>
+  
+  <select id="PERMISSION-GETGRANTABLEPERMISSIONSBYROLEID-COUNT" parameterClass="java.util.Map" resultClass="long">
+  		SELECT 
+			COUNT(0)
+		FROM permission t 
+		WHERE t.permission_id NOT IN (
+		SELECT t1.permission_id FROM role_permission t1 WHERE t1.role_id = #roleId#
+		)
+  </select>
+</sqlMap>

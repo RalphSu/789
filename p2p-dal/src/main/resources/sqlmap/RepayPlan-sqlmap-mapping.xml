@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="specialmer">
+
+    <resultMap id="RM-REPAY-PLAN" class="com.icebreak.p2p.dal.dataobject.RepayPlanDO">
+        <result property="repayPlanId" column="repay_plan_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+        <result property="createRepayNo" column="create_repay_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="repayNo" column="repay_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="createBatchNo" column="create_batch_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="periodNo" column="period_no" javaType="int" jdbcType="INT" nullValue="0"/>
+        <result property="periodCount" column="period_count" javaType="int" jdbcType="INT" nullValue="0"/>
+        <result property="tradeName" column="trade_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="tradeId" column="trade_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+        <result property="repayUserId" column="repay_user_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+        <result property="repayUserName" column="repay_user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="repayUserRealName" column="repay_user_real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="repayDivisionWay" column="repay_division_way" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="amount" column="amount" javaType="com.icebreak.util.lang.util.money.Money" jdbcType="BIGINT"/>
+        <result property="originalAmount" column="original_amount" javaType="com.icebreak.util.lang.util.money.Money" jdbcType="BIGINT"/>
+        <result property="status" column="status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="repayDate" column="repay_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+        <result property="actualRepayDate" column="actual_repay_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+        <result property="rawAddTime" column="raw_add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="rawUpdateTime" column="raw_update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="note" column="note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <insert id="MS-REPAY-PLAN-INSERT">
+    <![CDATA[
+        insert into repay_plan(repay_plan_id,period_no,period_count,trade_name,trade_id,repay_user_id,repay_user_name,repay_user_real_name,repay_division_way,amount,original_amount,status,repay_date,actual_repay_date,raw_add_time,note) values (#repayPlanId#, #periodNo#, #periodCount#, #tradeName#, #tradeId#, #repayUserId#, #repayUserName#, #repayUserRealName#, #repayDivisionWay#, #amount.cent#, #originalAmount.cent#, #status#, #repayDate#, #actualRepayDate#, #rawAddTime#, #note#)
+    ]]>
+    </insert>
+
+    <!-- mapped statement for IbatisRepayPlanDAO.update -->
+    <update id="MS-REPAY-PLAN-UPDATE">
+    <![CDATA[
+        update repay_plan set 
+        	create_repay_no=#createRepayNo#,
+        	repay_no=#repayNo#,
+        	create_batch_no=#createBatchNo#,
+        	period_no=#periodNo#, 
+        	period_count=#periodCount#, 
+        	trade_name=#tradeName#, trade_id=#tradeId#,
+        	repay_user_id=#repayUserId#, repay_user_name=#repayUserName#,
+        	repay_user_real_name=#repayUserRealName#,
+        	repay_division_way=#repayDivisionWay#,
+        	amount=#amount.cent#, original_amount=#originalAmount.cent#,
+        	status=#status#, repay_date=#repayDate#,
+        	actual_repay_date=#actualRepayDate#,
+        	note=#note# where (repay_plan_id = #repayPlanId#)
+    ]]>
+    </update>
+
+    <!-- mapped statement for IbatisRepayPlanDAO.findById -->
+    <select id="MS-REPAY-PLAN-FIND-BY-ID" resultMap="RM-REPAY-PLAN">
+    <![CDATA[
+        select create_repay_no,repay_no,create_batch_no,repay_plan_id, period_no, period_count, trade_name, trade_id, repay_user_id, repay_user_name, repay_user_real_name, repay_division_way, amount, original_amount, status, repay_date, actual_repay_date, raw_add_time, raw_update_time, note from repay_plan where (repay_plan_id = #value#)
+    ]]>
+    </select>
+    
+    
+     <!-- mapped statement for IbatisRepayPlanDAO.findByIdwithrowLock -->
+    <select id="MS-REPAY-PLAN-FIND-BY-ID-WITHROW-LOCK" resultMap="RM-REPAY-PLAN">
+    <![CDATA[
+        select create_repay_no,repay_no,create_batch_no,repay_plan_id, period_no, period_count, trade_name, trade_id, repay_user_id, repay_user_name, repay_user_real_name, repay_division_way, amount, original_amount, status, repay_date, actual_repay_date, raw_add_time, raw_update_time, note from repay_plan where (repay_plan_id = #value#) FOR UPDATE
+    ]]>
+    </select>
+
+    <!-- mapped statement for IbatisRepayPlanDAO.findByTradeId -->
+    <select id="MS-REPAY-PLAN-FIND-BY-TRADE-ID" resultMap="RM-REPAY-PLAN">
+    <![CDATA[
+        select create_repay_no,repay_no,create_batch_no,repay_plan_id, period_no, period_count, trade_name, trade_id, repay_user_id, repay_user_name, repay_user_real_name, repay_division_way, amount, original_amount, status, repay_date, actual_repay_date, raw_add_time, raw_update_time, note from repay_plan where (trade_id = #value#)
+    ]]>
+    </select>
+
+    <!-- mapped statement for IbatisRepayPlanDAO.deleteById -->
+    <delete id="MS-REPAY-PLAN-DELETE-BY-ID">
+    <![CDATA[
+        delete from repay_plan where (repay_plan_id = #value#)
+    ]]>
+    </delete>
+
+    <!-- mapped statement for IbatisRepayPlanDAO.deleteByTradeId -->
+    <delete id="MS-REPAY-PLAN-DELETE-BY-TRADE-ID">
+    <![CDATA[
+        delete from repay_plan where (trade_id = #value#)
+    ]]>
+    </delete>
+
+    <!-- mapped statement for IbatisRepayPlanDAO.findAllCount -->
+    <select id="MS-REPAY-PLAN-FIND-ALL-COUNT" resultClass="long">
+    <![CDATA[
+        select  COUNT(*) from repay_plan
+    ]]>
+    </select>
+
+    <!-- mapped statement for IbatisRepayPlanDAO.findByCondition -->
+    <select id="MS-REPAY-PLAN-FIND-BY-CONDITION" resultMap="RM-REPAY-PLAN">
+        SELECT  create_repay_no,repay_no,create_batch_no,repay_plan_id ,period_no ,period_count ,trade_name ,trade_id ,repay_user_id ,repay_user_name ,repay_user_real_name ,repay_division_way ,amount ,original_amount ,status ,repay_date ,actual_repay_date ,raw_add_time ,raw_update_time ,note  FROM repay_plan
+			WHERE 1=1
+			<dynamic>
+			<isNotEmpty property="repayPlan.createRepayNo"  prepend=" and ">
+				create_repay_no = #repayPlan.repayUserRealName#
+			</isNotEmpty>
+			<isNotEmpty property="repayPlan.repayNo"  prepend=" and ">
+				repay_no = #repayPlan.repayNo#
+			</isNotEmpty>
+			<isNotEmpty property="repayPlan.createBatchNo"  prepend=" and ">
+				create_batch_no = #repayPlan.createBatchNo#
+			</isNotEmpty>
+			<isGreaterThan property="repayPlan.tradeId" compareValue="0" prepend=" and ">
+				trade_id = #repayPlan.tradeId#
+			</isGreaterThan>
+			<isGreaterThan property="repayPlan.repayUserId" compareValue="0" prepend=" and ">
+				repay_user_id = #repayPlan.repayUserId#
+			</isGreaterThan>
+			<isNotEmpty property="repayPlan.repayUserName"  prepend=" and ">
+				repay_user_name = #repayPlan.repayUserName#
+			</isNotEmpty>
+			<isNotEmpty property="repayPlan.repayUserRealName"  prepend=" and ">
+				repay_user_real_name = #repayPlan.repayUserRealName#
+			</isNotEmpty>
+			<isNotEmpty property="repayPlan.tradeName"  prepend=" and ">
+				<![CDATA[  trade_name like '%$repayPlan.tradeName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="repayPlan.repayDivisionWay" prepend=" and ">
+				repay_division_way = #repayPlan.repayDivisionWay#
+			</isNotEmpty>
+			<isNotEmpty property="startRepayDate" prepend=" and ">
+				<![CDATA[	repay_date >= #startRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endRepayDate" prepend=" and ">
+				<![CDATA[ repay_date <= #endRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="startActualRepayDate" prepend=" and ">
+				<![CDATA[	actual_repay_date >= #startActualRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endActualRepayDate" prepend=" and ">
+				<![CDATA[ actual_repay_date <= #startActualRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="statusList" prepend=" and ">
+				status in
+				<iterate property="statusList" open="(" close=")" conjunction=",">
+					#statusList[]#
+				</iterate>
+			</isNotEmpty>
+			</dynamic>
+			order by repay_date asc
+			<isGreaterThan property="pageSize" compareValue="0" prepend="">
+				LIMIT #limitStart#,#pageSize#
+			</isGreaterThan>
+    </select>
+    
+    <!-- mapped statement for IbatisRepayPlanDAO.findByCondition -->
+    <select id="MS-REPAY-PLAN-QUERY" resultMap="RM-REPAY-PLAN">
+        SELECT create_repay_no,repay_no,create_batch_no,repay_plan_id ,period_no ,period_count ,trade_name ,trade_id ,repay_user_id ,repay_user_name ,repay_user_real_name ,repay_division_way ,amount ,original_amount ,status ,repay_date ,actual_repay_date ,raw_add_time ,raw_update_time ,note  FROM repay_plan
+			WHERE 1=1
+			<dynamic>
+			<isNotEmpty property="createRepayNo"  prepend=" and ">
+				create_repay_no = #createRepayNo#
+			</isNotEmpty>
+			<isNotEmpty property="repayNo"  prepend=" and ">
+				repay_no = #repayNo#
+			</isNotEmpty>
+			<isNotEmpty property="createBatchNo"  prepend=" and ">
+				create_batch_no = #createBatchNo#
+			</isNotEmpty>
+			<isGreaterThan property="tradeId" compareValue="0" prepend=" and ">
+				trade_id = #tradeId#
+			</isGreaterThan>
+			</dynamic>
+    </select>
+
+    <!-- mapped statement for IbatisRepayPlanDAO.findByConditionCount -->
+    <select id="MS-REPAY-PLAN-FIND-BY-CONDITION-COUNT" resultClass="long">
+        SELECT count(1) FROM repay_plan 
+			WHERE 1=1
+			<dynamic>
+			<isNotEmpty property="repayPlan.createRepayNo"  prepend=" and ">
+				create_repay_no = #repayPlan.repayUserRealName#
+			</isNotEmpty>
+			<isNotEmpty property="repayPlan.repayNo"  prepend=" and ">
+				repay_no = #repayPlan.repayNo#
+			</isNotEmpty>
+			<isNotEmpty property="repayPlan.createBatchNo"  prepend=" and ">
+				create_batch_no = #repayPlan.createBatchNo#
+			</isNotEmpty>
+			<isGreaterThan property="repayPlan.tradeId" compareValue="0" prepend=" and ">
+				trade_id = #repayPlan.tradeId#
+			</isGreaterThan>
+			<isGreaterThan property="repayPlan.repayUserId" compareValue="0" prepend=" and ">
+				repay_user_id = #repayPlan.repayUserId#
+			</isGreaterThan>
+			<isNotEmpty property="repayPlan.repayUserName"  prepend=" and ">
+				repay_user_name = #repayPlan.repayUserName#
+			</isNotEmpty>
+			<isNotEmpty property="repayPlan.repayUserRealName"  prepend=" and ">
+				repay_user_real_name = #repayPlan.repayUserRealName#
+			</isNotEmpty>
+             <isNotEmpty property="repayPlan.tradeName"  prepend=" and ">
+                    <![CDATA[  trade_name like '%$repayPlan.tradeName$%']]>
+             </isNotEmpty>
+			<isNotEmpty property="repayPlan.repayDivisionWay" prepend=" and ">
+				repay_division_way = #repayPlan.repayDivisionWay#
+			</isNotEmpty>
+			
+			<isNotEmpty property="startRepayDate" prepend=" and ">
+				<![CDATA[	repay_date >= #startRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endRepayDate" prepend=" and ">
+				<![CDATA[ repay_date <= #endRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="startActualRepayDate" prepend=" and ">
+				<![CDATA[	actual_repay_date >= #startActualRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endActualRepayDate" prepend=" and ">
+				<![CDATA[ actual_repay_date <= #startActualRepayDate# ]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="statusList" prepend=" and ">
+				status in
+				<iterate property="statusList" open="(" close=")" conjunction=",">
+					#statusList[]#
+				</iterate>
+			</isNotEmpty>
+			</dynamic>
+    </select>
+
+
+    <select id="MS-REPAY-PLAN-FIND-BY-CONDITION-COUNT-GUARANTEE" resultClass="long">
+        SELECT count(1) FROM repay_plan, loan_demand l , trade t where repay_plan.trade_id and t.trade_id and  l.trade_code = t.trade_code
+        WHERE 1=1
+        <dynamic>
+        	<isNotEmpty property="repayPlan.createRepayNo"  prepend=" and ">
+				create_repay_no = #repayPlan.repayUserRealName#
+			</isNotEmpty>
+			<isNotEmpty property="repayPlan.repayNo"  prepend=" and ">
+				repay_no = #repayPlan.repayNo#
+			</isNotEmpty>
+			<isNotEmpty property="repayPlan.createBatchNo"  prepend=" and ">
+				create_batch_no = #repayPlan.createBatchNo#
+			</isNotEmpty>
+            <isGreaterThan property="repayPlan.tradeId" compareValue="0" prepend=" and ">
+                trade_id = #repayPlan.tradeId#
+            </isGreaterThan>
+            <isGreaterThan property="repayPlan.repayUserId" compareValue="0" prepend=" and ">
+                repay_user_id = #repayPlan.repayUserId#
+            </isGreaterThan>
+            <isNotEmpty property="repayPlan.repayUserName"  prepend=" and ">
+                repay_user_name = #repayPlan.repayUserName#
+            </isNotEmpty>
+            <isNotEmpty property="repayPlan.repayUserRealName"  prepend=" and ">
+                repay_user_real_name = #repayPlan.repayUserRealName#
+            </isNotEmpty>
+            <isNotEmpty property="repayPlan.tradeName"  prepend=" and ">
+                <![CDATA[  trade_name like '%$repayPlan.tradeName$%']]>
+            </isNotEmpty>
+            <isNotEmpty property="repayPlan.repayDivisionWay" prepend=" and ">
+                repay_division_way = #repayPlan.repayDivisionWay#
+            </isNotEmpty>
+
+            <isNotEmpty property="startRepayDate" prepend=" and ">
+				<![CDATA[	repay_date >= #startRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endRepayDate" prepend=" and ">
+				<![CDATA[ repay_date <= #endRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="startActualRepayDate" prepend=" and ">
+				<![CDATA[	actual_repay_date >= #startActualRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endActualRepayDate" prepend=" and ">
+				<![CDATA[ actual_repay_date <= #startActualRepayDate# ]]>
+			</isNotEmpty>
+
+            <isNotEmpty property="statusList" prepend=" and ">
+                status in
+                <iterate property="statusList" open="(" close=")" conjunction=",">
+                    #statusList[]#
+                </iterate>
+            </isNotEmpty>
+
+            <isNotEmpty property="guaranteeId" prepend=" and ">
+                <![CDATA[l.guarantee_id = #guaranteeId#]]>
+            </isNotEmpty>
+        </dynamic>
+    </select>
+
+
+    <!-- mapped statement for IbatisRepayPlanDAO.findByCondition -->
+    <select id="MS-REPAY-PLAN-FIND-BY-CONDITION-GUARANTEE" resultMap="RM-REPAY-PLAN">
+        SELECT  repay_plan.*  FROM repay_plan, loan_demand l , trade t where repay_plan.trade_id and t.trade_id and  l.trade_code = t.trade_code
+        <dynamic>
+            <isGreaterThan property="repayPlan.tradeId" compareValue="0" prepend=" and ">
+                trade_id = #repayPlan.tradeId#
+            </isGreaterThan>
+            <isGreaterThan property="repayPlan.repayUserId" compareValue="0" prepend=" and ">
+                repay_user_id = #repayPlan.repayUserId#
+            </isGreaterThan>
+            <isNotEmpty property="repayPlan.repayUserName"  prepend=" and ">
+                repay_user_name = #repayPlan.repayUserName#
+            </isNotEmpty>
+            <isNotEmpty property="repayPlan.repayUserRealName"  prepend=" and ">
+                repay_user_real_name = #repayPlan.repayUserRealName#
+            </isNotEmpty>
+            <isNotEmpty property="repayPlan.tradeName"  prepend=" and ">
+                <![CDATA[  trade_name like '%$repayPlan.tradeName$%']]>
+            </isNotEmpty>
+            <isNotEmpty property="repayPlan.repayDivisionWay" prepend=" and ">
+                repay_division_way = #repayPlan.repayDivisionWay#
+            </isNotEmpty>
+            <isNotEmpty property="startRepayDate" prepend=" and ">
+				<![CDATA[	repay_date >= #startRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endRepayDate" prepend=" and ">
+				<![CDATA[ repay_date <= #endRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="startActualRepayDate" prepend=" and ">
+				<![CDATA[	actual_repay_date >= #startActualRepayDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endActualRepayDate" prepend=" and ">
+				<![CDATA[ actual_repay_date <= #startActualRepayDate# ]]>
+			</isNotEmpty>
+            <isNotEmpty property="statusList" prepend=" and ">
+                status in
+                <iterate property="statusList" open="(" close=")" conjunction=",">
+                    #statusList[]#
+                </iterate>
+            </isNotEmpty>
+
+            <isNotEmpty property="guaranteeId" prepend=" and ">
+                <![CDATA[l.guarantee_id = #guaranteeId#]]>
+            </isNotEmpty>
+        </dynamic>
+        order by repay_date asc
+        <isGreaterThan property="pageSize" compareValue="0" prepend="">
+            LIMIT #limitStart#,#pageSize#
+        </isGreaterThan>
+    </select>
+
+</sqlMap>

@@ -1,0 +1,115 @@
+#parse("/front/index/common/header.vm")
+
+<body class="warp">
+	#parse("/front/index/common/header-menu.vm")
+<!--content begin----------------->	
+	
+	
+	
+	<div class="home-section_bd pt20">
+	<div class="blank20"></div>
+    <div class="bd-box db-p14 container">
+    	<h2 class="title2 mt10"><span class="tit-name">项目列表</span><a href="/" class="return">《 返回</a> #if($sessionScope) <span href="javascript:;" class="balance">可用余额<span class="ml5">￥$!{thirdPartAccountInfo.availableBalance.toStandardString()} </span> #end<a href="/usercenter/topUp/withholdingIndex"></a></span></h2>
+        <div class="pro-list mt15">
+        	<table border="0" cellspacing="0" cellpadding="0" class="newpro-table">
+            	<tbody><tr>
+                	
+                    <th width="16%"><span class="ml10">项目名称</span></th>
+                    <th width="12%" class="f-tac">年化收益率</th>
+                    <th width="12%" class="f-tac">借款金额</th>
+                    
+                    <th width="12%" class="f-tac">期限</th>
+                    <th width="20%" class="f-tac">担保机构</th>
+                    <th width="16%" class="f-tac">投资进度</th>
+                    <th width="12%" class="f-tac">操作</th>
+                    
+                    
+                </tr>
+                
+                 #foreach($trade in $!{page.result})
+                 
+                   <tr>
+                	    <td ><span class="ml10"> $stringUtil.subString($!{trade.name},10,"..")</span></td>
+                        <td class="f-tac"><em>$!{trade.strRaate}</em></td>
+                        <td class="f-tac"><em>￥#if($!{trade.status}==1)$!{moneyUtil.getFormatAmount($!{trade.amount})}#else$!{moneyUtil.getFormatAmount($!{trade.loanedAmount})}#end</em></td>
+                        <td class="f-tac">$!{loanUtil.getLoanTime($!{trade.time}, $!{trade.timeUnit})}</td>
+                        <td class="f-tac">$!{trade.guaranteeName}</td>
+                        
+
+                        <td class="f-tal"><span class="plan_bg mr10 ml10"><span class="plan" style="width:${trade.percent};"></span></span>${trade.percent}</td>
+                        <td class="f-tac">
+                         
+                        #set($needAmount =  $moneyUtil.getMoneyByw($!{trade.amount}, $!{trade.loanedAmount})) <!--还差多少万-->
+                                              
+						#if($!{trade.status}==1 && ${needAmount}>0 )<a 
+								#if(!$sessionScope) href="javascript:top.location.href = '$!{rc.contextPath}/login/login';" 
+								#else href="javascript:index($!{trade.demandId},$!{trade.tradeId});"
+								#end  >#if($!{trade.sponsorName})定向投资#else投资#end</a>
+                        #elseif($!{trade.status}==3)
+
+                            <a  class="f-paid" href="javascript:index($!{trade.demandId},$!{trade.tradeId});">已正常还款</a>
+                        #elseif($!{trade.status}==7)
+                        <td class="button"><a  class="f-paid" href="javascript:index($!{trade.demandId},$!{trade.tradeId});">违约代偿完成</a>
+                        #elseif($!{trade.status}==8)
+                            <a  class="f-paid" href="javascript:index($!{trade.demandId},$!{trade.tradeId});">等待融资人还款</a>
+
+                        #else<a class="f-full" href="javascript:index($!{trade.demandId},$!{trade.tradeId});">投资已满</a>
+						
+						#end
+						</td>
+                   </tr>
+                
+                 #end
+                
+            
+            </tbody></table>
+            
+             <!--分页-->
+			<div class="pages account-page mt20">
+				<div class="fn-right">
+    				#parse("/backstage/page/page.vm")
+    			</div>	
+			</div>
+			
+            
+            <div class="blank30"></div>
+        </div>
+    </div>
+    <div class="blank50"></div>
+</div>
+
+
+
+
+
+<!--content end----------------->	
+	#parse("/front/index/common/footer.vm")
+	
+
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/comp/swfobject.js"></script>	
+	
+	<script type="text/javascript">
+	function index(demandId, tradeId){
+		top.location.href = '$!{rc.contextPath}/index/lookup/' + demandId + '/' + tradeId;
+	}
+	</script>
+	
+	<script type="text/javascript">
+	function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			var url = "/index/moreIndex/$!{page.pageSize}/"+pageNo+"?status=1";
+			window.location.href=url;
+	}
+    </script>
+
+	
+	
+</body>
+</html>

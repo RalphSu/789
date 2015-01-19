@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	default-autowire="byName">
+	
+	<context:annotation-config />
+	<bean id="identityObtainer" class="com.icebreak.p2p.ibatis.IdentityObtainerImpl" parent="baseSqlMapClientDAO" />
+	<bean id="userDao" class="com.icebreak.p2p.ibatis.UserDaoImpl" parent="baseSqlMapClientDAO" >
+	      <property name="identityObtainer" ref="identityObtainer" />
+	</bean>
+	<bean id="roleDao" class="com.icebreak.p2p.ibatis.RoleDaoImpl" parent="baseSqlMapClientDAO">
+		  <property name="identityObtainer" ref="identityObtainer" />
+	</bean>
+	<bean id="permissionDao" class="com.icebreak.p2p.ibatis.PermissionDaoImpl" parent="baseSqlMapClientDAO">
+		  <property name="identityObtainer" ref="identityObtainer" />
+	</bean>
+	<bean id="userRoleDao" class="com.icebreak.p2p.ibatis.UserRoleDaoImpl" parent="baseSqlMapClientDAO"/>
+	<bean id="rolePermissionDao" class="com.icebreak.p2p.ibatis.RolePermissionDaoImpl" parent="baseSqlMapClientDAO"/>
+	<bean id="tradeDao" class="com.icebreak.p2p.ibatis.TradeDaoImpl" parent="baseSqlMapClientDAO">
+	      <property name="identityObtainer" ref="identityObtainer"/>
+	</bean>
+	<bean id="divisionRuleDao" class="com.icebreak.p2p.ibatis.DivisionRuleDaoImpl" parent="baseSqlMapClientDAO" />
+	<bean id="divisionDao" class="com.icebreak.p2p.ibatis.DivisionDaoImpl" parent="baseSqlMapClientDAO" />
+	<bean id="tradeDetailDao" class="com.icebreak.p2p.ibatis.TradeDetailDaoImpl" parent="baseSqlMapClientDAO"/>
+	<bean id="divisionDetailDao" class="com.icebreak.p2p.ibatis.DivisionDetailDaoImpl" parent="baseSqlMapClientDAO"/>
+	<bean id="transferTradeDao" class="com.icebreak.p2p.ibatis.TransferTradeDaoImpl" parent="baseSqlMapClientDAO" />
+	<bean id="amountFlowDao" class="com.icebreak.p2p.ibatis.AmountFlowDaoImpl" parent="baseSqlMapClientDAO" />
+	<bean id="divisionTemplateDao" class="com.icebreak.p2p.ibatis.DivisionTemplateDaoImpl" parent="baseSqlMapClientDAO">
+		<property name="identityObtainer" ref="identityObtainer" />
+	</bean>
+	<bean id="tradeDivisionDao" class="com.icebreak.p2p.ibatis.TradeDivisionDaoImpl" parent="baseSqlMapClientDAO" />
+	<bean id="chargeTemplateDao" class="com.icebreak.p2p.ibatis.ChargeTemplateDaoImpl" parent="baseSqlMapClientDAO">
+		<property name="identityObtainer" ref="identityObtainer" />
+	</bean>
+	<bean id="chargeRuleDao" class="com.icebreak.p2p.ibatis.ChargeRuleDaoImpl" parent="baseSqlMapClientDAO" />
+	<bean id="chargeTemplateProjectDao" class="com.icebreak.p2p.ibatis.ChargeTemplateProjectDaoImpl" parent="baseSqlMapClientDAO" />
+	<bean id="chargeProjectDao" class="com.icebreak.p2p.ibatis.ChargeProjectDaoImpl"  parent="baseSqlMapClientDAO" />
+	<bean id="chargeDetailDao" class="com.icebreak.p2p.ibatis.ChargeDetailDaoImpl" parent="baseSqlMapClientDAO" >
+		<property name="identityObtainer" ref="identityObtainer" />
+	</bean>
+	<bean id="userChargeTemplateDao" class="com.icebreak.p2p.ibatis.UserChargeTemplateDaoImpl" parent="baseSqlMapClientDAO" />
+	<bean id="investmentDao" class="com.icebreak.p2p.ibatis.InvestmentDaoImpl" parent="baseSqlMapClientDAO" />
+	<bean id="userInvestEntryDao" class="com.icebreak.p2p.ibatis.UserInvestEntryDaoImpl" parent="baseSqlMapClientDAO"/>
+	<bean id="indexTradeDao" class="com.icebreak.p2p.ibatis.IndexTradeDaoImpl" parent="baseSqlMapClientDAO" />
+	<bean id="divisonRuleRoleDao" class="com.icebreak.p2p.ibatis.DivisonRuleRoleDaoImpl" parent="baseSqlMapClientDAO"/>
+	<!-- zjl -->
+	<bean id="userBaseInfoDAO" class="com.icebreak.p2p.ibatis.IbatisUserBaseInfoDAO" parent="baseSqlMapClientDAO"/>
+	<bean id="institutionsInfoDAO" class="com.icebreak.p2p.ibatis.IbatisInstitutionsInfoDAO" parent="baseSqlMapClientDAO"/>
+	<bean id="personalInfoDAO" class="com.icebreak.p2p.ibatis.IbatisPersonalInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="loanDemandDAO" class="com.icebreak.p2p.ibatis.IbatisLoanDemandDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="userRelationDAO" class="com.icebreak.p2p.ibatis.IbatisUserRelationDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="divisionTemplateLoanDao" class="com.icebreak.p2p.ibatis.DivisionTemplateLoanDaoImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="emailTemplateDao" class="com.icebreak.p2p.ibatis.EmailTemplateDAOImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="loanAuthRecordDao" class="com.icebreak.p2p.ibatis.LoanAuthRecordDaoImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="popInfoDao" class="com.icebreak.p2p.ibatis.PopInfoDaoImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="bankInfoDao" class="com.icebreak.p2p.ibatis.BankInfoDaoImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="operatorInfoDao" class="com.icebreak.p2p.ibatis.OperatorInfoDaoImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="fundsRecordDao" class="com.icebreak.p2p.ibatis.FundsRecordDaoImpl" parent="baseSqlMapClientDAO"/>
+    <!--****************************************************-->
+    <bean id="activityDao" class="com.icebreak.p2p.ibatis.ActivityDaoImpl" parent="baseSqlMapClientDAO"/>
+     <bean id="serLoginLogDao" class="com.icebreak.p2p.ibatis.UserLoginLogDaoImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="userAddressDao" class="com.icebreak.p2p.ibatis.UserAddessDaoImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="projectStatisticsDao" class="com.icebreak.p2p.ibatis.ProjectStatisticsDaoImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="amountStatisticsDao" class="com.icebreak.p2p.ibatis.AmountStatisticsDaoImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="rechargeFlowDao" class="com.icebreak.p2p.ibatis.RechargeFlowDaoImpl" parent="baseSqlMapClientDAO"/>
+    <bean id="commonBranchInfoExtendDAO" class="com.icebreak.p2p.dal.ibatis.IbatisCommonBranchInfoExtendDAO" parent="baseSqlMapClientDAO"/>
+	<bean id="repayPlanDAO" class="com.icebreak.p2p.dal.ibatis.IbatisRepayPlanDAO" parent="baseSqlMapClientDAO"/>
+	<bean id="commonAttachmentDAO" class="com.icebreak.p2p.dal.ibatis.IbatisCommonAttachmentDAO" parent="baseSqlMapClientDAO"/> 
+	
+	<!-- ======================================================================== -->
+    <!-- 								 gen DAO            				      -->
+    <!-- ======================================================================== -->
+    <bean id="bankBaseInfoDAO" class="com.icebreak.p2p.dal.ibatis.IbatisBankBaseInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="commonCardBinDAO" class="com.icebreak.p2p.dal.ibatis.IbatisCommonCardBinDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="commonDistrictDAO" class="com.icebreak.p2p.dal.ibatis.IbatisCommonDistrictDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="o2oJoinApplicationDAO" class="com.icebreak.p2p.dal.ibatis.IbatisO2oJoinApplicationDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="operationJournalDAO" class="com.icebreak.p2p.dal.ibatis.IbatisOperationJournalDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="sysParamDAO" class="com.icebreak.p2p.dal.ibatis.IbatisSysParamDAO" parent="baseSqlMapClientDAO"/>
+	<bean id="extendAttrDAO" class="com.icebreak.p2p.dal.ibatis.IbatisExtendAttrDAO" parent="baseSqlMapClientDAO"/>
+
+	<!--签约DAO-->
+	<bean id="signCard" class="com.icebreak.p2p.ibatis.SignCardInfoDaoImpl" parent="baseSqlMapClientDAO"/>
+
+	<bean id="goldExperienceDao" class="com.icebreak.p2p.ibatis.GoldExperienceDaoImpl" parent="baseSqlMapClientDAO"/>
+	<bean id="userGoldExperienceDao" class="com.icebreak.p2p.ibatis.UserGoldExperienceDaoImpl" parent="baseSqlMapClientDAO"/>
+
+	<bean id="loanTypeDao" class="com.icebreak.p2p.ibatis.IbatisLoanTypeDao" parent="baseSqlMapClientDAO"/>
+</beans>

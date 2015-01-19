@@ -1,0 +1,113 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<div class="blank"></div>
+<!--通用新闻公告内容开始-->
+<div class="new nav" style="height: 600px;">
+    #parse("/front/help/helpLeftMenu.vm")
+    <ul class="new_list">
+        <li class="new_list_tit large_font"><span class="blue">新手指引</span></li>
+        <li class="new_list_text">
+            <p class="blue" style="font-size:15px;">
+                <b>如何注册账号？</b>
+            </p>
+            <P>步骤一、点击首页的"注册"按钮,进入到投资人注册界面。</P>
+            <P>步骤二、输入正确的注册信息，点击注册按钮。</P>
+            <P>步骤三、系统提示注册成功，并收到注册成功邮件。</P>
+            <P>步骤四、打开邮件中的激活链接，输入登录密码以及手机号码，点击“确认,下一步”按钮。</P>
+            <P>步骤五、系统提示用户激活成功，并点击“下一步”按钮开通第三方支付。</P>
+            <P>步骤六、输入帐户名、联系方式以及验证码，点击下一步按钮。</P>
+            <P>步骤七、输入用户手机号并点击获取校验码，输入正确的校验码，点击下一步按钮。</P>
+            <P>步骤八、用户设置正确的支付密码和确认支付密码等内容，点击“确认，下一步”按钮。</P>
+            <P>步骤九、系统提示账户激活成功。</P>
+            <br/>
+            <p class="blue" style="font-size:15px;">
+                <b>购买产品流程？</b>
+            </p>
+            <p>步骤一、用户登录成功后，进入账户首页点击"我要投资"按钮，进入投资列表页面。</p>
+            <p>步骤二、选定项目后点击投资按钮，进入需求详情页面。</p>
+            <p>步骤三、点击“立即投资”，系统将自动进入易极付投资付款页面，确认信息后输入支付密码，点击“确定投资”按钮，系统会提示“投资成功”。</p>
+            <p>步骤四、进入“我的账户 > 投资的项目” 查看该笔交易。</p>
+            <br/>
+            <p class="blue" style="font-size:15px;">
+                <b>支付流程？</b>
+            </p>
+            <p>步骤一：在项目详情页面投资金额输入框输入要投资的金额，点击“立即投资”按钮。</p>
+            <p>步骤二：系统将自动进入易极付投资付款页面，确认信息后输入支付密码，然后点击“确定投资”按钮。</p>
+            <br/>
+
+            <p class="blue" style="font-size:15px;">
+                <b>如何进行实名认证？</b>
+            </p>
+            <p>步骤一：投资人使用账户登录789金融，点击“进入我的账户”，再点击“实名认证”的灰色图标。</p>
+            <p>步骤二：进入“实名认证”页面后，按照页面提示填写完相应内容，最后点击下方“实名认证”即可完成。</p>
+            <p class="blue" style="font-size:15px;">注意：</p>
+            <p>1.“身份证有效期”处请填写与身份证上背面的真实有效期一致的有效期。</p>
+            <p>2.不要乱点“长期”按钮。</p>
+            <p></p>
+            <br/>
+            <p class="blue" style="font-size:15px;">
+                <b>收费规则？</b>
+            </p>
+            <p>1.投资人、借款人及需向789金融平台网站支付及代扣的费用见下表：</p><br/><br/>
+            <table style="border:1px solid #ccc;">
+                <tr>
+                    <th width="120">缴费主体</th>
+                    <th>费用名称</th>
+                    <th>支付方式</th>
+                    <th>金额或计算方式</th>
+                </tr>
+                <tr>
+                    <td align="center">投资人</td>
+                    <td>无</td>
+                    <td>无</td>
+                    <td>无</td>
+                </tr>
+                <tr>
+                    <td align="center">借款人</td>
+                    <td>居间服务费等各项费用</td>
+                    <td>通过第三方支付机构代为扣除</td>
+                    <td>以平台规则及借款人与各方约定为准</td>
+                </tr>
+                <tr>
+                    <td align="center">承诺机构</td>
+                    <td>无</td>
+                    <td>无</td>
+                    <td>无</td>
+                </tr>
+            </table><br/>
+            <p>2.投资人、借款人及承诺机构所有资金均托管于第三方支付机构——易极付，相关方资金于银行账户与第三方托管账户间的划转费率见下表：</p><br/><br/>
+            <table style="border:1px solid #ccc;">
+                <tr>
+                    <th>项目</th>
+                    <th>支付方式</th>
+                    <th>收费说明</th>
+                </tr>
+                <tr>
+                    <td rowspan="2" align="center">从银行划入</td>
+                    <td>网银划入</td>
+                    <td>千分之三</td>
+                </tr>
+                <tr>
+                    <td>从银行划入</td>
+                    <td>千分之三</td>
+                </tr>
+                <tr>
+                    <td align="center">划出到银行卡</td>
+                    <td>划出到银行卡</td>
+                    <td>手续费5元/笔</td>
+                </tr>
+            </table><br/>
+            <p>该费用由第三方支付机构执行用户指令时自动扣取，我们平台不收取任何费用。</p>
+            <br/>
+            <br/>
+            <br/>
+        </li>
+    </ul>
+</div>
+<div style="clear: both;"></div>
+<!--通用新闻公告内容结束-->
+    #parse("/front/index/common/footer.vm")
+</body>
+</html>

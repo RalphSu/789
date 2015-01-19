@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="specialmer">
+    <!-- ============================================= -->
+    <!-- RESULT MAPS                                   -->
+    <!-- ============================================= -->
+
+    <!-- result maps for database table o2o_join_application -->
+    <resultMap id="RM-O-2-O-JOIN-APPLICATION" class="com.icebreak.p2p.dal.dataobject.O2oJoinApplicationDO">
+        <result property="id" column="id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+        <result property="companyName" column="company_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="contactName" column="contact_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="humanResources" column="human_resources" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="contactPhone" column="contact_phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="age" column="age" javaType="int" jdbcType="INT" nullValue="0"/>
+        <result property="salesProducts" column="sales_products" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="companyAddress" column="company_address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="status" column="status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="rowUpdateTime" column="row_update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="rowAddTime" column="row_add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="annexUrl" column="annex_url" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisO2oJoinApplicationDAO -->
+    <!-- ============================================= -->
+    <!-- mapped statement for IbatisO2oJoinApplicationDAO.insert -->
+    <insert id="MS-O-2-O-JOIN-APPLICATION-INSERT">
+        insert /*MS-YRD-O-2-O-JOIN-APPLICATION-INSERT*/ into o2o_join_application(id,company_name,contact_name,human_resources,contact_phone,industry,age,sales_products,company_address,status,row_update_time,row_add_time,annex_url) VALUES (#id#,#companyName#,#contactName#,#humanResources#,#contactPhone#,#industry#,#age#,#salesProducts#,#companyAddress#,#status#,#rowUpdateTime#,#rowAddTime#,#annexUrl#)
+    </insert>
+
+    <!-- mapped statement for IbatisO2oJoinApplicationDAO.findById -->
+    <select id="MS-O-2-O-JOIN-APPLICATION-FIND-BY-ID" resultMap="RM-O-2-O-JOIN-APPLICATION">
+    <![CDATA[
+        select /*MS-YRD-O-2-O-JOIN-APPLICATION-FIND-BY-ID*/ id, company_name, contact_name, human_resources, contact_phone, industry, age, sales_products, company_address, status, row_update_time, row_add_time, annex_url from o2o_join_application where (id = #value#)
+    ]]>
+    </select>
+
+    <!-- mapped statement for IbatisO2oJoinApplicationDAO.deleteById -->
+    <delete id="MS-O-2-O-JOIN-APPLICATION-DELETE-BY-ID">
+    <![CDATA[
+        delete /*MS-YRD-O-2-O-JOIN-APPLICATION-DELETE-BY-ID*/ from o2o_join_application where (id = #value#)
+    ]]>
+    </delete>
+
+    <!-- mapped statement for IbatisO2oJoinApplicationDAO.updateById -->
+    <update id="MS-O-2-O-JOIN-APPLICATION-UPDATE-BY-ID">
+    <![CDATA[
+        update /*MS-YRD-O-2-O-JOIN-APPLICATION-UPDATE-BY-ID*/ o2o_join_application set status=#status#, row_update_time=#rowUpdateTime# where (id = #id#)
+    ]]>
+    </update>
+
+    <!-- mapped statement for IbatisO2oJoinApplicationDAO.findByCondition -->
+    <select id="MS-O-2-O-JOIN-APPLICATION-FIND-BY-CONDITION" resultMap="RM-O-2-O-JOIN-APPLICATION">
+        SELECT /*MS-YRD-O-2-O-JOIN-APPLICATION-FIND-BY-CONDITION*/  id,company_name,contact_name,human_resources,contact_phone,industry,age,sales_products,company_address,status,row_update_time,row_add_time ,annex_url FROM o2o_join_application 
+				WHERE 1=1
+				<dynamic>
+					<isNotEmpty property="contactName" prepend=" and " >
+                      contact_name = #contactName#
+                   	</isNotEmpty>
+                   	<isNotEmpty property="status" prepend=" and ">
+                       status = #status#
+                   	</isNotEmpty>
+				</dynamic>			
+				order by row_add_time 
+			    LIMIT #limitStart#,#pageSize#;
+    </select>
+
+    <!-- mapped statement for IbatisO2oJoinApplicationDAO.countByCondition -->
+    <select id="MS-O-2-O-JOIN-APPLICATION-COUNT-BY-CONDITION" resultClass="long">
+        SELECT /*MS-YRD-O-2-O-JOIN-APPLICATION-COUNT-BY-CONDITION*/  count(*) FROM o2o_join_application
+					WHERE 1=1
+				<dynamic>
+					<isNotEmpty property="contactName" prepend=" and " >
+                      contact_name = #contactName#
+                   	</isNotEmpty>
+					<isNotEmpty property="status" prepend=" and " >
+                      status = #status#
+                   	</isNotEmpty>
+				</dynamic>
+    </select>
+
+    <!-- mapped statement for IbatisO2oJoinApplicationDAO.countAll -->
+    <select id="MS-O-2-O-JOIN-APPLICATION-COUNT-ALL" resultClass="long">
+    <![CDATA[
+        select /*MS-YRD-O-2-O-JOIN-APPLICATION-COUNT-ALL*/ COUNT(*) from o2o_join_application
+    ]]>
+    </select>
+
+</sqlMap>

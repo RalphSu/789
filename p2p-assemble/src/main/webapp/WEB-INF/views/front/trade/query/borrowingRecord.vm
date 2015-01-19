@@ -1,0 +1,201 @@
+<#parse("/front/index/common/header.vm")
+<link type="text/css" href="/styles/style.css" rel="stylesheet" />
+<style type="text/css">
+	/**解决样式兼容错乱问题 修补代码**/
+	* { margin:0px auto; padding:0px; text-decoration:none; list-style:none}
+    html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, p, blockquote, pre, code, form, fieldset, legend, input, button, textarea, table, caption, th, td, hr, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+        color:inherit;
+    }
+	.alrod *{
+		margin:0 auto;
+	}
+</style>
+<body>
+	#parse("/front/index/common/header-menu.vm")
+<!--内容-->
+
+<div class="top_blank" style="margin-top: -15px;"></div>
+<!--用户菜单开始-->
+<div class="use_menu b_gray_o">
+    <ul class="nav">
+        <li><a href="/usercenter/depositRecord">资金记录</a></li>
+
+		#set($t = $permission.check('/tradeQuery/borrowingRecord'))
+		#if($t > 0)
+            <li class="light"><a href="/tradeQuery/borrowingRecord">我的项目</a></li>
+		#end
+
+		#*#set($t = $permission.check('/repay/*'))
+		#set($s = $permission.check('/collection/*'))
+		#if($t>0)
+            <li><a href="/repay/list">还款管理</a></li>
+		#end
+		#if($s>0)
+            <li><a href="/collection/list">收款管理</a></li>
+		#end*#
+
+		#set($t = $permission.check('/repayDB/*'))
+		#if($t>0)
+            <li><a href="/repayDB/repayDBManager">还款管理</a></li>
+		#end
+
+		#set($t = $permission.check('/guaranteeCenter/*'))
+		#set($s = $permission.check('/guaranteeOperator/operatorManager'))
+		#if($t>0)
+            <li><a href="/guaranteeCenter/newGuaranteeManager">业务管理</a></li>
+		#end
+		#if($s>0)
+            <li><a href="/guaranteeOperator/operatorManager">操作员管理</a></li>
+		#end
+        <li><a href="/usercenter/setting">账户设置</a></li>
+        <li><a href="/usercenter/home">账户概览</a></li>
+    </ul>
+</div>
+
+<div class="home-section_bd pt20" >
+    <div class="" style="width: 1128px;margin-left: auto; margin-right: auto; " >
+        <div class="">
+            <div class="m-content-box">
+                <div class="borrowing-info" style="width: 1120px;">
+                    <form action="/tradeQuery/borrowingRecord" method="post"  name="gform">
+                        <div class="fn-condition mt15 fn-clear">
+                            <dl class="fn-clear mb20">
+                                <input type="hidden"   name="maiLoanAmount" value="$!{queryTradeOrder.maiLoanAmount}" />
+                                <input type="hidden"   name="maxLoanAmount"  value="$!{queryTradeOrder.maxLoanAmount}" />
+                                <input type="hidden"  name="pageSize"  value="$!{pageParam.pageSize}">
+                                <input type="hidden"  name="pageNo"  value="$!{pageParam.pageNo}">
+                                <dt>起始日期：</dt>
+                                <dd>
+								<span class="fn-time">
+								 <input type="date" value="$!{queryTradeOrder.startDate}" name="startDate" class="fn-text w90" style="width: 125px;">
+                                 <img src="$!{rc.contextPath}/resources/images/common/time-ico.gif" alt="时间" class="time-img">
+                                </span>
+                                    <em>-</em>
+                                <span class="fn-time">
+                                 <input type="date" value="$!{queryTradeOrder.endDate}" name="endDate"   class="fn-text w90" style="width: 125px;">
+                                 <img src="$!{rc.contextPath}/resources/images/common/time-ico.gif" alt="时间" class="time-img">
+                                </span>
+								<span class="fn-time">
+									<div class="jqtransform jqtransform-select3" style="margin-left: 10px; width: 175px;">
+                                        <select name="status" id="status">
+                                            <option value="">全部</option>
+                                            <option value="3">正常还款</option>
+                                            <option value="8">待还款</option>
+                                            <option value="2">未到期</option>
+                                            <option value="5">还款失败</option>
+                                        </select>
+                                    </div>
+                                </span>&nbsp;&nbsp;<a href="javascript:doSubmit();" class="fn-h-btn ml5"> <span>筛选</span></a>
+
+                                </dd>
+                            </dl>
+                        </div>
+                    </form>
+				<table cellpadding="0" cellspacing="0" border="0" class="pro-table">
+					<thead>
+					<tr>
+						<th class="f-tac" width="20%">申请号</th>
+						<th class="f-tac" width="12%">申请日期</th>
+						<th class="f-tac" width="12%">成立日期</th>
+						<th class="f-tac" width="12%">到期日期</th>
+						<th class="f-tac" width="12%">申请金额(元)</th>
+						<th class="f-tac" width="12%">实到金额(元)</th>
+						<th class="f-tac" width="10%">状态</th>
+						<th class="f-tac" width="10%">操作</th>
+					</tr>
+
+						#if($!page.result.size()==0)
+						<tr>
+							<td colspan=5 style="text-align:center">未查询到相关记录</td>
+						</tr>
+						#end
+
+						#foreach($info in $page.result)
+
+						<tr>
+							<td class="f-tac" style="text-align:center"><a href="/tradeQuery/borrowingDetails?tradeId=$!{info.id}&operate=xq"> $!{info.code}</a> </td>
+							<td class="f-tac">$!dateUtil.dtSimpleFormat($!{info.createDate})</td>
+							#if($!{info.effectiveDateTime})
+								<td class="f-tac">$!dateUtil.dtSimpleFormat($!{info.effectiveDateTime})</td>
+							#else
+								<td class="f-tac">暂无数据</td>
+							#end
+							#if($!{info.expireDateTime})
+								<td class="f-tac">$!dateUtil.dtSimpleFormat($!{info.expireDateTime})</td>
+							#else
+								<td class="f-tac">暂无数据</td>
+							#end
+
+							<td class="f-tac"><span class="ft-f60">$!{moneyUtil.getFormatAmount($!{info.amount})} </span></td>
+							<td class="f-tac"><span class="ft-f60">$!{moneyUtil.getFormatAmount($!{info.loanedAmount})}</span></td>
+							<td class="f-tac">#if($!{info.status}=="0")
+								待审核
+							#elseif($!{info.status}=="1")
+								待成立
+							#elseif($!{info.status}=="2")
+								未到期
+							#elseif($!{info.status}=="3")
+								正常还款
+							#elseif($!{info.status}=="4")
+								未成立
+							#elseif($!{info.status}=="5")
+								到期还款失败
+							#elseif($!{info.status}=="6")
+								担保公司审核中
+							#elseif($!{info.status}=="7")
+								违约代偿完成
+							#elseif($!{info.status}=="8")
+								待还款
+							#end
+							</td>
+							<td class="f-tac">#if($!{info.status}=="2" || $!{info.status}=="8") <a href="/tradeQuery/borrowingDetails?tradeId=$!{info.id}&operate=hk">还款</a> #else <a href="/tradeQuery/borrowingDetails?tradeId=$!{info.id}&operate=xq">详情</a> #end</td>
+						</tr>
+						#end
+
+					</tbody>
+					</thead>
+				</table>
+				<!--分页-->
+				<div class="fn-tb-bottom fn-clear">
+					#parse("/backstage/page/page.vm")
+				</div>
+			</div>
+			<div class="blank30"></div>
+		</div>
+	</div>
+  <div class="blank50"></div>
+</div>
+
+
+#parse("/front/index/common/footer.vm")
+
+
+
+<script type="text/javascript">
+    	var $_GLOBAL = {};
+        //修改头部菜单样式
+        addLiClass("header_home");
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'demo');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			$('[name=pageSize]').val($!{page.pageSize}) ;
+			$('[name=pageNo]').val(pageNo);
+			$('form[name=gform]').attr('action', '$!{rc.contextPath}/tradeQuery/borrowingRecord');
+			 document.gform.submit();
+		}
+
+		function doSubmit() {
+		    $('[name=pageSize]').val($!{page.pageSize}) ;
+			$('[name=pageNo]').val(1);
+			document.gform.submit();
+		}
+    </script>
+
+</body>
+</html>

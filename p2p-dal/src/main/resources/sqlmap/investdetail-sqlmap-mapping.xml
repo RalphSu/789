@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-INVESTDETAIL" class="com.icebreak.p2p.dataobject.InvestDetailDO">
+	  <result property="detailId" column="trade_detail_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="accountId" column="account_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="amount" column="amount" javaType="long" jdbcType="BIGINT"/>
+	  <result property="interestAmount" column="interest_amount" javaType="long" jdbcType="BIGINT"/>
+	  <result property="extOrder" column="ext_order" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <select id="TRADEDETAIL-GETINVESTDETAILBYPARAMS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-INVESTDETAIL">
+  	SELECT  t1.`trade_detail_id`, u.user_id, u.`account_id`, t1.`amount`,t2.`amount` interest_amount, t1.ext_order
+  		  
+	FROM trade_detail t1    
+	
+	INNER JOIN trade_detail t2 ON t2.`note` = t1.`trade_detail_id` AND t2.user_id=t1.`user_id` AND t2.`profit_type`= '0'
+	    
+	INNER JOIN user_base_info u ON u.user_id =t1.user_id
+	
+	WHERE   1 = 1  AND t1.`transfer_phase`='original'
+    <dynamic>
+		<isNotEmpty property="tradeId" prepend=" and ">
+			<![CDATA[t1.trade_id = #tradeId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="detailId" prepend=" and ">
+			<![CDATA[t.trade_detail_id = #detailId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="userId" prepend=" and ">
+			<![CDATA[t1.user_id = #userId#]]>
+		</isNotEmpty>
+	</dynamic>
+  </select>
+  
+</sqlMap>

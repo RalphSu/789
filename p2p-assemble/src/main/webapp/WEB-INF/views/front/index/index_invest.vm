@@ -1,0 +1,180 @@
+#parse("/front/index/common/header.vm")
+<body>
+#parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<div class="blank"></div>
+<div class="alrod">
+<!--项目列表开始-->
+<div class="nav">
+	<div class="pro_chos">
+        <ul class="chos_tit">
+        	<li><span class="blue mid_font">融资期限</span></li>
+        </ul>
+        <ul>
+        	<li unit="" start="" end="" name="time">全部</li>
+            <li unit="D" start="1" end="30" name="time">1-30天</li>
+            <li unit="D" start="31" end="60" name="time">31-60天</li>
+            <li unit="D" start="61" end="90" name="time">61-90天</li>
+            <li unit="D" start="91" end="180" name="time">91-180天</li>
+        </ul>
+        <ul class="chos_tit">
+        	<li><span class="blue mid_font">融资规模</span></li>
+        </ul>
+        <ul>
+            <li start="" end="" name="amount">全部</li>
+            <li start="10" end="50" name="amount">10万-50万</li>
+            <li start="50" end="100" name="amount">50万-100万</li>
+            <li start="100" end="500" name="amount">100万-500万</li>
+            <li start="500" end="1000" name="amount">500万-1000万</li>
+            <li start="1000" end="5000" name="amount">1000万-5000万</li>
+            <li start="5000" end="" name="amount">5000万以上</li>
+        </ul>
+        <ul class="chos_tit">
+        	<li><span class="blue mid_font">融资进度</span></li>
+        </ul>
+        <ul>
+            <li start="" end="" name="rate">全部</li>
+            <li start="" end="10" name="rate">10%以内</li>
+            <li start="10" end="20" name="rate">10%-20%</li>
+            <li start="20" end="50" name="rate">20%-50%</li>
+            <li start="50" end="80" name="rate">50%-80%</li>
+            <li start="80" end="90" name="rate">80%-90%</li>
+            <li start="90" end="100" name="rate">90%-100%</li>
+        </ul>
+    </div>
+    <div class="pro_list">
+  
+    	<ul class="pl_tit">
+        	<li><span class="big_font blue">项目列表</span></li>
+        </ul>
+    	<ul>
+   	      #parse("/front/index/common/entries-hard.vm")   
+        </ul>
+    </div>
+</div>
+<!--项目列表结束-->
+
+    <div class="form_blank"></div>
+
+    <!--分页-->
+    <div class="page">
+      #parse("/backstage/page/page.vm")
+    </div>
+
+    <!--查询form -->
+    <form action="$!{rc.contextPath}/index/invest/$!{page.pageSize}/1" method="get" name="frm">
+        <input type="hidden" name="timeUnit" value="$!{request.getParameter('timeUnit')}"/>
+        <input type="hidden" name="startTime" value="$!{request.getParameter('startTime')}"/>
+        <input type="hidden" name="endTime" value="$!{request.getParameter('endTime')}"/>
+        <input type="hidden" name="startAmount" value="$!{request.getParameter('startAmount')}"/>
+        <input type="hidden" name="endAmount" value="$!{request.getParameter('endAmount')}"/>
+        <input type="hidden" name="startRate" value="$!{request.getParameter('startRate')}"/>
+        <input type="hidden" name="endRate" value="$!{request.getParameter('endRate')}"/>
+        <input type="hidden" name="guarantee" value="$!{request.getParameter('guarantee')}"/>
+    </form>
+</div>
+
+<div class="blank"></div>
+#parse("/front/index/common/footer.vm")
+#parse("/front/index/common/js.vm")
+    
+    <script type="text/javascript">
+        //修改头部菜单样式
+        addLiClass("header_investor");
+
+        $(function(){
+          var timeUnit = $('input[name=timeUnit]').val();
+          var startTime = $('input[name=startTime]').val();
+          var endTime = $('input[name=endTime]').val();
+          var guarantee = $('input[name=guarantee]').val();
+          $('[guarantee=' + guarantee + ']').addClass('light');
+          $('[name=time][unit=' + timeUnit + '][start=' + startTime + '][end=' + endTime + ']').addClass('light');
+          var startAmount = $('input[name=startAmount]').val();
+          if(startAmount != ''){
+            startAmount = parseInt(startAmount) / 1000000;
+          }
+          var endAmount = $('input[name=endAmount]').val();
+          if(endAmount != ''){
+            endAmount = parseInt(endAmount) / 1000000;
+          }
+          $('[name=amount][start=' + startAmount + '][end=' + endAmount + ']').addClass('light');
+          var startRate = $('input[name=startRate]').val();
+          if(startRate != ''){
+            startRate = parseFloat(startRate) * 100;
+          }
+          var endRate = $('input[name=endRate]').val();
+          if(endRate != ''){
+            endRate = parseFloat(endRate) * 100;
+          }
+          $('[name=rate][start=' + startRate + '][end=' + endRate + ']').addClass('light');
+        });
+        
+        $('li[name=time]').click(function (){
+            var t = $(this);
+            $('input[name=timeUnit]').val(t.attr('unit'));
+            $('input[name=startTime]').val(t.attr('start'));
+            $('input[name=endTime]').val(t.attr('end'));
+            submitSearch();
+            return false;
+        });
+        
+        $('li[name=amount]').click(function (){
+            var t = $(this);
+            var start = t.attr('start');
+            if(start != ''){
+                start = parseInt(start) * 1000000;
+            }
+            var end = t.attr('end');
+            if(end != ''){
+                end = parseInt(end) * 1000000;
+            }
+            $('input[name=startAmount]').val(start);
+            $('input[name=endAmount]').val(end);
+            submitSearch();
+            return false;
+        });
+        
+        $('li[name=rate]').click(function (){
+            var t = $(this);
+            $('form[name=frm]').attr('action', '$!{rc.contextPath}/index/invest/$!{page.pageSize}/1');
+            var start = t. attr('start');
+            if(start != ''){
+                start = parseFloat(start) / 100;
+            }
+            var end = t.attr('end');
+            if(end != ''){
+                end = parseFloat(end) / 100;
+            }
+            $('input[name=startRate]').val(start);
+            $('input[name=endRate]').val(end);
+            submitSearch();
+            return false;
+        });
+        $('li[name=guarantee]').click(function (){
+            var t = $(this);
+            $('form[name=frm]').attr('action', '$!{rc.contextPath}/index/invest/$!{page.pageSize}/1');
+            var guarantee = t. attr('guarantee');
+            $('input[name=guarantee]').val(guarantee);
+            submitSearch();
+            return false;
+        });
+
+        <!--提交查询表单-->
+        function submitSearch()
+        {
+            $('form[name=frm]').submit();
+        }
+
+        <!--分页跳转-->
+        function toPage(totalPage, pageNo){
+                if(totalPage<pageNo){
+                    return false;
+                }
+                var url = "$!{rc.contextPath}/index/invest/$!{page.pageSize}/"+pageNo;
+                window.location.href=url;
+        }
+  
+   </script>
+
+</body>
+</html>

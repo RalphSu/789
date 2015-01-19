@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>首页-$!appConstantsUtil.getProductName()金融官网</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/recep.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/banner.css"/>
+</head>
+<body>
+
+<div class="nav inpro" id="childIframe">
+    <ul>
+        #foreach($trade in $!{page.result})
+            <a href="javascript:index($!{trade.demandId},$!{trade.tradeId});"><li style="height:315px;">
+                <div class="inpro_pic">
+                    <img src="$!{commonUtil.getProjectThumbnailUrl($!{trade.proImage},$request)}" width="234" height="143">
+                ##                    <div class="inpro_tim"><span class="white">10 天 19 小时 55 分 16 秒</span></div>
+                </div>
+                <p><span class="mid_font">$stringUtil.subString($!{trade.name},10,"..")</span></p>
+                <div class="inpro_wid">
+                    <span class="blue mid_font font_right"><em>年化:$!{trade.strRaate}</em></span> <span class="gray_o" style="float:right;">$!{loanUtil.getLoanTime($!{trade.time}, $!{trade.timeUnit})}</span>
+##                    <div class="inpro_ico"><img src="/resources/images/new/bao.png"/> <img src="/resources/images/new/p2c.png"/></div>
+                </div>
+                <div class="pro_load" style="height:25px;line-height:25px;">
+                    <div class="mout_load">
+                        <div class="mout_load_in b_blue"  style="width:${trade.percent};"></div>
+                    </div>
+                </div>
+                <div class="inpro_num inpro_wid">
+                    <span class="green mid_font">总额:$!{moneyUtil.getMoneyByw($!{trade.amount})}</b>万</span>
+                    <div class="inpro_icot"><span class="green mid_font">已完成:${trade.percent}</span></div>
+                    <div class="inpro_au"><span class="org mid_font"></span></div>
+                </div>
+                <div style="height: 30px;line-height: 30px;text-align: center;color: #999;font-size: 12px;" title="此项目到期将由 $!{trade.paymentBankName} 无条件兑付">
+                    <img src="/resources/images/new/pro_time.png" style="margin-right: 1px;vertical-align: middle;margin-top: -5px;">到期由<span style="color: #009ED6;">$stringUtil.subString($!{trade.paymentBankName},9,"..")</span>无条件兑付</div>
+                <div style="height:30px;line-height: 30px;">
+                    #set($needAmount =  $moneyUtil.getMoneyByw($!{trade.amount}, $!{trade.loanedAmount}))
+                    #if($!{trade.status}==1 && ${needAmount}>0 )
+                        #if($!{trade.getInvestDeadTime()} > 0)
+                            <div style="height:30px;line-height: 30px;text-align:center;background-color: #808080;margin-top: -2px;color: #FFF;">已过期</div>
+                        #elseif($!{trade.getDiffInvestAvalibleTime()} > 0)
+                            <div style="height:30px;line-height: 30px;text-align:center;background-color: #339900;margin-top: -2px;color: #FFF;">立即购买</div>
+                        #else
+                            <div style="height:30px;line-height: 30px;text-align:center;background-color: #F77607;margin-top: -2px;color: #FFF;">$!{dateUtil.simpleFormat($!{trade.investAvalibleTime})}开售</div>
+                        #end
+                    #else
+                        <div style="height:30px;line-height: 30px;text-align:center;background-color: #6F6F6F;margin-top: -2px;color: #FFF;">已 售 馨</div>
+                    #end
+                </div>
+            </li></a>
+
+        #end
+    </ul>
+</div>
+
+
+</body>
+</html>
+<script type="text/javascript">
+    function index(demandId, tradeId){
+        top.location.href = '$!{rc.contextPath}/index/lookup/' + demandId + '/' + tradeId;
+    }
+</script>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+   <resultMap id="RM-POPINFO" class="com.icebreak.p2p.dataobject.PopInfoDO">
+	   <result property="popId" column="base_id" javaType="long" jdbcType="BIGINT"/>
+	   <result property="title" column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	   <result property="type" column="type" javaType="short" jdbcType="TINYINT"/>
+	   <result property="status" column="status" javaType="short" jdbcType="TINYINT"/>
+	   <result property="parentId" column="parent_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+	   <result property="parentName" column="parent_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	   <result property="content" column="content" javaType="java.lang.String" jdbcType="MEDIUMTEXT"/>
+	   <result property="addTime" column="add_time" javaType="java.util.Date" jdbcType="DATETIME"/>
+	   <result property="modifyTime" column="modify_time" javaType="java.util.Date" jdbcType="DATETIME"/>
+	   <result property="remark" column="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	   <result property="rem1" column="rem1" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	   
+	   <result property="hits" column="hits" javaType="java.lang.Long" jdbcType="BIGINT" nullValue="0"/>
+   </resultMap>  
+   
+   <insert id="POPINFO-ADD" parameterClass="com.icebreak.p2p.dataobject.PopInfoDO">
+       <![CDATA[
+	   INSERT INTO pop_info (
+		   title,
+		   type,
+		   status,
+		   parent_id,
+		   parent_name,
+		   content,
+		   add_time,
+		   modify_time,
+		   remark,
+		   rem1,
+		   hits
+	   ) VALUES (
+		   #title#,
+		   #type#,
+		   #status#,
+		   #parentId#,
+		   #parentName#,
+		   #content#,
+		   #addTime#,
+		   #modifyTime#,
+		   #remark#,
+		   #rem1#,
+		   #hits#
+	   )
+	   ]]>
+
+       <selectKey resultClass="long" keyProperty="popId">
+           <![CDATA[SELECT LAST_INSERT_ID() AS popId ]]>
+       </selectKey>
+   </insert>
+   
+   <update id="POPINFO-MODIFY">
+   		UPDATE pop_info SET 
+			title = #title# ,
+			parent_id = #parentId#,
+			type = #type#,
+			status = #status# ,
+			content = #content# ,
+			remark = #remark#,
+			hits = #hits#,
+   			modify_time = #modifyTime#
+   		WHERE base_id = #popId#
+   </update>
+	<select id="POPINFO-QUERYBYPROPERTIESCOUNT" parameterClass="java.util.Map" resultClass="java.lang.Long">
+  		SELECT COUNT(*) 
+  		FROM pop_info
+  		WHERE 1=1
+  		<isNotEmpty property="status">
+		    AND status = #status#
+		</isNotEmpty>
+		<isNotEmpty property="parentId">
+		    AND parent_id = #parentId#
+		</isNotEmpty>
+		<isNotEmpty property="type" prepend=" and ">
+			<![CDATA[type in]]>
+			<iterate property="type" open="(" close=")" conjunction=",">
+				<![CDATA[#type[]#]]>
+			</iterate>
+		</isNotEmpty>
+  </select>
+  <select id="POPINFO-QUERYBYPROPERTIES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-POPINFO">
+  		SELECT * 
+  		FROM pop_info 
+  		WHERE 1=1
+  		<isNotEmpty property="status">
+		    AND status = #status#
+		</isNotEmpty>
+		<isNotEmpty property="parentId">
+		    AND parent_id = #parentId#
+		</isNotEmpty>
+		<isNotEmpty property="type" prepend=" and ">
+			<![CDATA[type in]]>
+			<iterate property="type" open="(" close=")" conjunction=",">
+				<![CDATA[#type[]#]]>
+			</iterate>
+		</isNotEmpty>
+		<![CDATA[ORDER BY add_time DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+  </select>
+  <select id="POPINFO-QUERYBYID" parameterClass="long" resultClass="com.icebreak.p2p.dataobject.PopInfoDO" resultMap="RM-POPINFO">
+  		SELECT * 
+  		FROM pop_info 
+  		WHERE 1=1 AND base_id = #value#
+  </select>
+</sqlMap>

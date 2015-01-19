@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-AGENT-LOANER-TRADE" class="com.icebreak.p2p.dataobject.AgentLoanerTrade" >
+  	  <result property="detailId" column="trade_detail_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="tradeId" column="trade_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="tradeCode" column="trade_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="tradeName" column="trade_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="loanerId" column="loaner_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="agencyId" column="agency_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="loanerName" column="loaner_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="agencyName" column="agency_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="transferPhase" column="transfer_phase" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="loanAmount" column="loan_amount" javaType="long" jdbcType="BIGINT" />
+	  <result property="agencyBenifitAmount" column="agency_amount" javaType="long" jdbcType="BIGINT" />
+	  <result property="loanDate" column="loanDate" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="effectiveDate" column="effectiveDate" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="expireDate" column="expireDate" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="status" column="trade_status" javaType="short" jdbcType="TINYINT" />
+  </resultMap>
+  
+  <!-- mapped statement for TradeDaoImpl.queryCountByCondition -->
+	<select id="RM-AGENT-LOAN-TRADE-QUERY_COUNT_BY_CONDITION" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT count(0)
+		FROM trade_detail td1
+		INNER JOIN trade t ON t.`trade_id` = td1.`trade_id`
+		INNER JOIN (SELECT u1.real_name,td.user_id,td.amount,td.trade_id,td.date FROM trade_detail td
+					INNER JOIN user_base_info u1 ON u1.`user_id` = td.`user_id`
+		 			WHERE td.role_id='13' AND td.`transfer_phase` = 'original') td2 
+		 			ON td2.trade_id = td1.`trade_id`
+		 INNER JOIN user_base_info u2 ON u2.`user_id` = td1.`user_id`
+		 WHERE 1=1 
+		 ]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[td1.user_Id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[td1.role_id = #roleId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[t.trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[td2.real_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[td1.date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[td1.date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic> 
+	</select>
+  
+  <!-- mapped statement for TradeDaoImpl.queryListByCondition -->
+	<select id="RM-AGENT-LOAN-TRADE-QUERY_LIST_BY_CONDITION" resultMap="RM-AGENT-LOANER-TRADE">
+		<![CDATA[
+		SELECT td1.trade_detail_id, td1.`user_id` agency_id, td1.`trade_id`,td1.`amount` agency_amount ,
+		td1.`transfer_phase`, t.trade_code,t.trade_name,t.`trade_status`,t.`trade_effective_date` effectiveDate,t.`trade_expire_date` expireDate,
+		td2.date loanDate, t.`loaned_amount` loan_amount, td2.user_id loaner_id, td2.real_name loaner_name,u2.`real_name` agency_name
+		FROM trade_detail td1
+		INNER JOIN trade t ON t.`trade_id` = td1.`trade_id`
+		INNER JOIN (SELECT u1.real_name,td.user_id,td.amount,td.trade_id,td.date FROM trade_detail td
+					INNER JOIN user_base_info u1 ON u1.`user_id` = td.`user_id`
+		 			WHERE td.role_id='13' AND td.`transfer_phase` = 'original') td2 
+		 			ON td2.trade_id = td1.`trade_id`
+		 INNER JOIN user_base_info u2 ON u2.`user_id` = td1.`user_id`
+		 WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[td1.user_Id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[td1.role_id = #roleId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[td2.real_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[t.trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[td1.date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[td1.date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY t.trade_create_date DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+  
+</sqlMap>

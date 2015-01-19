@@ -1,0 +1,181 @@
+/*首页*/
+.banner { width:100%; height:300px; background:url(../images/banner.jpg) no-repeat center; min-width:1280px}
+.ad { height:70px; line-height:70px}
+span.aid_text { position:relative; top:-4px; left:5px}
+.login_reg { position:absolute; right:0px; top:0px}
+.intit { height:90px; border-top:1px dotted #ccc; border-bottom:1px solid #ccc; line-height:90px}
+.nav_tit { text-indent:20px; background:url(../images/tit_bg.jpg) no-repeat 0px 30px}
+
+.inpart { overflow:hidden}
+.inpart ul { width:1300px}
+.inpart ul li { width:240px; height:96px; border:1px solid #ccc; float:left; margin-right:50px; margin-top:40px}
+
+.inpro { overflow:hidden}
+.inpro ul { width:1300px}
+.inpro ul li { width:234px; height:279px; border:1px solid #ccc; float:left; margin-right:50px; margin-top:20px; padding:3px; cursor:pointer}
+.inpro ul li:hover { background:#F0FDFF; border:1px solid #009ED6}
+.inpro ul li p { text-align:center; line-height:45px; height:50px}
+
+.inpro_num { position:relative}
+.inpro_au { width:100%; text-align:center; z-index:10; position:absolute; top:0px}
+.inpro_wid { width:94%; height:20px; line-height:20px; position:relative}
+.inpro_ico { position:absolute; right:0px; top:3px}
+.inpro_icot { position:absolute; right:0px; top:0px}
+
+.inpro_pic { position:relative}
+.inpro_tim { height:20px; line-height:20px; position:absolute; bottom:0px; left:0px; text-align:center; width:100%; background:#666 url(../../images/new/tim_bg.png);filter:alpha(opacity=70);-moz-opacity:0.7;opacity:0.7;}
+
+.inhv ul li { border:none; width:240px; cursor:auto}
+.inhv ul li:hover { border:none; background:none}
+
+.innew { height:365px; border-bottom:1px dotted #ccc; border-top:1px solid #ccc; background:#F7F7F7; position:relative}
+.innew_left { width:560px; float:left; position:relative}
+.inpro_pi { width:234px; height:143px; position:absolute; left:0px; top:30px}
+.inpro_mes { width:255px; position:absolute; right:0px; top:30px; right:50px}
+.inpro_mes p { height:55px; line-height:45px}
+.inpro_wid_up { position:relative}
+.inpro_outim { width:100%; height:40px; line-height:40px; background:#ccc; margin-top:20px; text-align:center}
+.inpro_outim_blue { width:100%; height:40px; line-height:40px; background:#009ED6; margin-top:20px; text-align:center}
+.inpro_room { height:110px; position:absolute; top:190px; left:0px; line-height:25px; padding-right:50px}
+.innew_but { position:absolute; top:310px; left:0px; margin-left:0px}
+
+
+.innew_right { width:559px; height:345px; float:right; border-left:1px dotted #ccc; padding-top:20px; position:relative}
+.innew_right ul li { width:510px; float:right; margin-bottom:15px; position:relative}
+.notic { position:absolute; left:-72px; top:20px}
+.innew_tit { height:40px; line-height:40px}
+.innew_but_right { left:50px; *left:0px; *top:100px}
+
+
+
+
+/*项目详情*/
+.pbu { height:335px; border-bottom:1px dotted #ccc; border-top:1px dotted #ccc;background:#F7F7F7}
+.pro_bas { height:335px}
+.bas_left { float:left; width:765px}
+.bl_pm { height:146px; margin-top:25px; padding-bottom:25px; border-bottom:1px solid #ccc}
+	.bl_pic { float:left; width:234px; height:143px}
+	.bl_mes { float:right; width:530px; overflow:hidden}
+	.bl_mes ul { clear:both}
+	.bl_mes ul.tit li { height:45px; line-height:45px}
+	.bl_mes ul.tit li img { position:relative; top:2px}
+	.bl_mes ul.num { height:65px; width:600px; position:relative; left:-15px; top:8px}
+	.bl_mes ul.num li { height:45px; line-height:45px; border-right:1px solid #ccc; margin-left:15px; padding-right:15px}
+	.bl_mes ul.ic { height:33px; line-height:33px;} 
+	.bl_mes ul.ic li img { position:relative; top:2px}
+	.bl_mes ul li { float:left}
+.bl_tim  { height:50px; border-bottom:1px solid #ccc}
+.bl_tim ul li { float:left; line-height:50px} 
+
+.bl_ll { height:75px; margin-top:20px}
+.bl_ll ul li { float:left;width:80px}
+.bl_ll ul li.gogo { float:left;width:320px}
+.bl_ll ul li p { line-height:40px}
+.bl_ll ul li.tt { padding-right:20px; width:auto}
+.bl_ll ul li.bl_load { width:240px}
+.t_box { height:15px; border:1px solid #009ED6; border-right:none; text-align:center; line-height:15px; font-size:12px; color:#fff; font-family:"宋体"; position:relative; top:2px}
+
+.bas_right { float:right; width:320px; height:310px; padding-top:25px}
+.bas_right ul li { width:255px; position:relative}
+.bas_right ul li.br_text { height:35px; line-height:35px; color:#fff}
+.bas_right ul li.br_input { margin-top:15px; height:55px}
+.bas_right ul li.br_blank { width:100%; border-bottom:1px dotted #f7f7f7; height:10px; margin-bottom:10px}
+.bas_right ul li.br_cen { text-align:center}
+.bas_right ul li.br_but { height:50px; padding-top:15px}
+input.br_inp { width:245px; height:30px; border:none; padding:5px; line-height:30px}
+.br_right { position:absolute; right:0px; top:0px}
+
+/*项目内容*/
+.pro_menu { background:#f7f7f7; border:1px solid #ccc; height:50px}
+.pro_menu ul li { float:left; border-right:1px solid #ccc; border-bottom:1px solid #ccc; line-height:50px; height:51px; width:135px; text-align:center; position:relative; top:-1px; font-size:16px; cursor:pointer}
+.pro_menu ul li.light { background:#fff; border-top:3px solid #339900; border-bottom:1px solid #fff;height:48px; line-height:48px }
+/*项目菜单的两种状态*/
+.scr { background:#f7f7f7; border:none; height:50px; border-left:1px solid #ccc; position:relative; left:1px}
+.scr ul li { float:left; border-right:1px solid #ccc; border-bottom:1px solid #ccc; line-height:50px; height:51px; width:135px; text-align:center; position:relative; top:-1px; font-size:16px; cursor:pointer}
+.scr ul li.light { background:#fff; border-top:3px solid #339900; border-bottom:1px solid #fff;height:47px; line-height:47px }
+.scr ul li.br_t { width:300px; float:right; cursor:auto; border-right:none;position:relative;* top:-10px; *border:none}
+.scr ul li.br_t img { position:relative; top:10px; left:25px}
+.scr_menu { border-bottom:1px solid #ccc; border-top:1px solid #ccc}
+
+.pro_box { border:1px solid #ccc; border-top:none; padding-top:25px; padding-bottom:25px}
+.pro_boxline { height:20px; border-bottom:1px dotted #ccc; margin-bottom:45px; position:relative}
+.pro_boxline img { position:absolute; left:48%; top:0px}
+.pro_boxpara { border:1px solid #ccc; margin-left:25px; margin-right:25px; margin-bottom:25px; border-top:3px solid #339900}
+.pro_boxpara ul.pbp_tit li { height:47px; line-height:47px; background:#F2FFEC; text-indent:15px; border-bottom:1px solid #ccc; position:relative}
+.pro_boxpara ul.pbp_room { padding:15px; overflow:hidden; z-index:1}
+.pro_boxpara ul.pbp_room li { float:left; width:50%; line-height:30px}
+.pro_boxpara ul.pbp_room li.pb_full {width:100%}
+.pro_boxpara ul.pbp_r_u { border-bottom:1px dotted #ccc; padding:0px 0px 0px 100px}
+.pro_boxpara ul.pbp_bot { border-bottom:none}
+.pro_boxpara ul.pbp_room li.pb_user {width:20%; line-height:40px}
+.pt_more { position:absolute; right:15px; top:0px}
+.pro_boxpara ul.pbp_bg { background:#f7f7f7}
+.pro_boxpara ul.pbp_room li.pb_pic { float:left; width:185px; height:185px; border:1px solid #ccc; background:#fff; padding:10px; margin:10px 25px 10px 25px; cursor:pointer}
+.pic_name {position:relative}
+.pic_num { position:absolute; right:0px; top:0px; *top:-7px}
+
+.pro_wio { border:none; overflow:hidden; z-index:1}
+.pro_wioo { border:none; overflow:hidden; z-index:1; *margin-left:0px}
+.box_file { border:1px solid #ccc; width:468px; height:266px; float:left; padding:25px; *margin-left:25px}
+.box_file ul { clear:both}
+.box_file ul li { float:left; width:150px; text-align:center; height:120px}
+.box_file ul li p { line-height:30px}
+.box_file ul.tit li { height:35px;width:100%; text-align:left; margin-bottom:15px; *margin-bottom:0px}
+.box_card { float:right}
+.box_b2c { width:618px}
+.box_law { width:318px; position:relative; *margin-left:0px; *margin-right:25px}
+.box_file ul.law_text li { width:318px; height:auto; text-align:left; line-height:27px; text-indent:2em}
+.law_logo { position:absolute; bottom:20px; right:20px; width:150px; height:60px}
+
+
+
+
+
+
+/*项目列表*/
+.pro_chos { float:left; width:260px}
+.pro_chos ul { overflow:hidden; z-index:1; margin-bottom:30px;margin-top:15px;*margin-top:30px;}
+.pro_chos ul.chos_tit { margin-bottom:5px;*margin-top:0px;}
+/*.pro_chos ul li { float:left; height:30px; margin-right:10px; margin-bottom:10px;line-height:30px; text-align:center;background:#F7F7F7; width:90px}*/
+.pro_chos ul li { float:left; height:30px; padding:0px 10px 0px 10px; margin-right:10px; margin-bottom:15px; line-height:30px; text-align:center;background:#F7F7F7; color:#999; cursor:pointer;white-space:nowrap; }
+.pro_chos ul li:hover { background:#F0FDFF; color:#009ED6}
+.pro_chos ul li.light { background:#009ED6; color:#fff}
+.pro_chos ul.chos_tit li { border-left:2px solid #009ED6; height:18px; line-height:16px; text-indent:0px; background:none}
+
+.pro_list { width:825px; border-left:1px dotted #ccc; float:right; overflow:hidden; z-index:1; padding-left:25px}
+.pro_list ul li { border-bottom:1px dotted #ccc; position:relative; overflow:hidden; z-index:1; height:295px}
+.pro_list ul.pl_tit li { border-bottom:1px solid #ccc; height:55px; line-height:45px}
+
+.pro_pic { width:234px; height:143px; position:absolute; left:0px; top:20px}
+.pro_mes { width:550px; position:absolute; right:0px; top:20px}
+.pro_tit { height:50px; line-height:45px}
+.pro_para { height:30px; line-height:30px; position:relative}
+.pro_amo { height:30px; overflow:hidden; z-index:1}
+	.pro_amo ul li { width:33%; float:left; line-height:30px}
+	.pro_amo ul li.pam { text-align:center}
+	.pro_amo ul li.par { text-align:right}
+.pro_room { height:110px; position:absolute; top:180px; left:0px; line-height:25px}
+
+p.pro_time { line-height:60px; text-indent:23px; background:url(/resources/images/new/pro_time.png) no-repeat 0px 23px}
+.pro_ico { position:absolute; right:0px; top:0px; *top:5px; top:6px\9}
+
+.pro_load { height:30px; line-height:30px}
+
+/*进度条通用*/
+.mout_load { height:8px; background:#53D5FF; width:100%; position:relative; top:10px}
+.mout_load_in { height:8px; margin:0px}
+.tt_ld { height:15px; position:relative; top:3px} 
+.tt_in { height:15px; margin:0px}
+
+
+/*前台通用按钮*/
+
+.pro_but { position:absolute; right:0px; bottom:25px; width:120px; height:25px; line-height:23px; color:#fff; text-align:center}
+.pro_detail_but { position:absolute; bottom:20px; width:120px; height:25px; line-height:23px; color:#fff; text-align:center}
+.all_but {-moz-border-radius: 50px; -webkit-border-radius: 50px; z-index:100}
+.but_blue { background:#91D4EC}
+.but_blue:hover { background:#0089B7}
+.but_disabled { background: #909ca5}
+
+.arrow { width:44px; height:44px; background:url(/resources/images/new/arrow.png) no-repeat}
+.arrow_innew { position:absolute; top:342px; left:540px; z-index:100}

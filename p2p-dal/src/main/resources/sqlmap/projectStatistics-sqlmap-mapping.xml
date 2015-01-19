@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="PROJECT-STATISTICS" class="com.icebreak.p2p.dataobject.ProjectStatisticsInfo" >
+	  <result property="dimension" column="ted" javaType="java.lang.String"  />
+	  <result property="pendingProjects" column="counts2" javaType="java.lang.Long"  />
+	  <result property="repayProjects" column="counts1" javaType="java.lang.Long"  />
+  </resultMap>
+  
+	<select id="PROJECT-STATISTICS-QUERY" resultMap="PROJECT-STATISTICS" parameterClass="java.util.Map">
+		<![CDATA[
+			SELECT tb1.ted,counts1,counts2 FROM 
+			(SELECT YEAR(t.`trade_expire_date`) ted  FROM trade t WHERE 
+			t.`trade_expire_date`>=#startTime# AND t.`trade_expire_date`<=#endTime# AND t.`trade_status` IN (2,3,8)
+			GROUP BY ted) tb1 
+			LEFT JOIN 	
+			(SELECT COUNT(*) counts2,YEAR(t.`trade_expire_date`) ted FROM trade t WHERE 
+			t.`trade_expire_date`>=#startTime# AND t.`trade_expire_date`<=#endTime# AND t.`trade_status` IN(2,8)
+			GROUP BY ted) tb2 ON tb1.ted = tb2.ted
+			LEFT JOIN 
+			(SELECT COUNT(*) counts1,YEAR(t.`trade_expire_date`) ted FROM trade t WHERE 
+			t.`trade_expire_date`>=#startTime# AND t.`trade_expire_date`<=#endTime# AND t.`trade_status`='3'
+			GROUP BY ted) tb3 ON tb1.ted = tb3.ted ORDER BY tb1.ted DESC  LIMIT #limitStart#,#pageSize#
+		]]>
+	</select>
+	
+	<select id="PROJECT-STATISTICS-QUERY-COUNTS"  parameterClass="java.util.Map" resultClass="java.lang.Long">
+		<![CDATA[
+			SELECT COUNT(tb1.ted) FROM 
+			(SELECT YEAR(t.`trade_expire_date`) ted  FROM trade t WHERE 
+			t.`trade_expire_date`>=#startTime# AND t.`trade_expire_date`<=#endTime# AND t.`trade_status` IN (2,3,8)
+			GROUP BY ted) tb1 
+		]]>
+	</select>
+	
+	<select id="PROJECT-STATISTICS-QUERY-STATUS" parameterClass="java.util.Map" resultClass="java.lang.Long">
+		<![CDATA[
+			SELECT COUNT(*) counts1 FROM trade t WHERE 
+			t.`trade_expire_date`>=#startTime# AND t.`trade_expire_date`<=#endTime# AND t.`trade_status`=#status#
+		]]>
+	</select>
+	
+	<select id="PROJECT-STATISTICS-QUERY-MONTH" parameterClass="java.util.Map" resultMap="PROJECT-STATISTICS" >
+		<![CDATA[
+			SELECT tb1.ted,tb2.counts2,tb3.counts1 FROM
+			(SELECT MONTH(t.`trade_expire_date`) months,YEAR(t.`trade_expire_date`) years,CONCAT(YEAR(t.`trade_expire_date`),'-',MONTH(t.`trade_expire_date`)) ted FROM trade t WHERE t.`trade_expire_date` >= #startTime# AND t.`trade_expire_date` <= #endTime#  GROUP BY ted) tb1
+			LEFT JOIN 
+			(SELECT CONCAT(YEAR(t.`trade_expire_date`),'-',MONTH(t.`trade_expire_date`)) ted, IFNULL(COUNT(*),0) counts2
+			FROM trade t
+			WHERE t.`trade_status` IN (2,8) AND t.`trade_expire_date` >= #startTime# AND t.`trade_expire_date` <= #endTime# GROUP BY ted)tb2
+			ON tb1.ted = tb2.ted
+			LEFT JOIN 
+			(SELECT CONCAT(YEAR(t.`trade_expire_date`),'-',MONTH(t.`trade_expire_date`)) ted, IFNULL(COUNT(*),0) counts1
+			FROM trade t
+			WHERE t.`trade_status` = '3' AND t.`trade_expire_date` >= #startTime# AND t.`trade_expire_date` <= #endTime# GROUP BY ted) tb3
+			ON tb1.ted = tb3.ted ORDER BY tb1.years  DESC,tb1.months DESC LIMIT #limitStart#,#pageSize#
+		]]>
+	</select>
+	
+	<select id="PROJECT-STATISTICS-QUERY-MONTH-ALLCOUNTS" parameterClass="java.util.Map" resultClass="java.lang.Long" >
+		<![CDATA[
+			SELECT COUNT(tb1.months) FROM (SELECT CONCAT(YEAR(t.`trade_expire_date`),'-',MONTH(t.`trade_expire_date`)) months FROM 
+			trade t WHERE YEAR(t.`trade_expire_date`) >= #startTime#
+			AND t.`trade_expire_date` <= #endTime#  GROUP BY months) tb1
+		]]>
+	</select>
+	
+	<select id="PROJECT-STATISTICS-QUERY-MONTH-STATUSCOUNTS" parameterClass="java.util.Map" resultClass="java.lang.Long" >
+		<![CDATA[
+			SELECT COUNT(*) counts1 FROM trade t WHERE t.`trade_status` = #status# AND 
+			t.`trade_expire_date` >= #startTime#  AND t.`trade_expire_date` <= #endTime#
+		]]>
+	</select>
+	
+	<select id="PROJECT-STATISTICS-QUERY-USER" parameterClass="java.util.Map" resultMap="PROJECT-STATISTICS" >
+		<![CDATA[
+			SELECT tb1.real_name ted,counts1,counts2 FROM (SELECT u.`user_id`,u.real_name FROM loan_demand l INNER JOIN trade t ON l.`demand_id`=t.`demand_id`
+			INNER JOIN user_base_info u ON u.`user_id` = l.`loaner_id` WHERE t.`trade_status` IN (3,2) AND t.`trade_expire_date`>=#startTime#
+			AND t.`trade_expire_date`<=#endTime#
+			GROUP BY u.`user_id`) tb1 
+			LEFT JOIN
+			(SELECT u.`user_id`, COUNT(t.`trade_id`) counts2 FROM loan_demand l INNER JOIN trade t ON l.`demand_id`=t.`demand_id`
+			INNER JOIN user_base_info u ON u.`user_id` = l.`loaner_id` WHERE t.`trade_status` IN (2,8) AND t.`trade_expire_date`>=#startTime#
+			AND t.`trade_expire_date`<=#endTime#
+			GROUP BY u.`user_id`) tb2 ON tb1.user_id = tb2.user_id 
+			LEFT JOIN 
+			(SELECT u.`user_id`, COUNT(t.`trade_id`) counts1 FROM loan_demand l INNER JOIN trade t ON l.`demand_id`=t.`demand_id`
+			INNER JOIN user_base_info u ON u.`user_id` = l.`loaner_id` WHERE t.`trade_status`='3' AND t.`trade_expire_date`>=#startTime#
+			AND t.`trade_expire_date`<=#endTime#
+			GROUP BY u.`user_id`) tb3 ON tb1.user_id = tb3.user_id LIMIT #limitStart#,#pageSize#
+		]]>
+	</select>
+	<select id="PROJECT-STATISTICS-QUERY-USER-COUNTS" parameterClass="java.util.Map" resultClass="java.lang.Long" >
+		<![CDATA[
+			SELECT COUNT(t.user_id) FROM (SELECT u.`user_id` ,u.real_name FROM loan_demand l INNER JOIN trade t ON l.`demand_id`=t.`demand_id`
+			INNER JOIN user_base_info u ON u.`user_id` = l.`loaner_id` WHERE t.`trade_status` IN (8,3,2) AND t.`trade_expire_date`>=#startTime#
+			AND t.`trade_expire_date`<=#endTime#
+			GROUP BY u.`user_id`) t
+		]]>
+	</select>
+	
+	<select id="PROJECT-STATISTICS-QUERY-USER-STATUS-COUNTS" parameterClass="java.util.Map" resultClass="java.lang.Long" >
+		<![CDATA[
+			SELECT COUNT(t.trade_id) FROM loan_demand l INNER JOIN trade t ON l.`demand_id`=t.`demand_id`
+			INNER JOIN user_base_info u ON u.`user_id` = l.`loaner_id` WHERE t.`trade_status`=#status# AND t.`trade_expire_date`>=#startTime#
+			AND t.`trade_expire_date`<=#endTime#
+		]]>
+	</select>
+	
+</sqlMap>

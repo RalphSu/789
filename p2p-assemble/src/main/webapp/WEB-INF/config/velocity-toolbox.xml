@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<toolbox>
+	<tool>
+		<key>dateUtil</key>
+		<scope>application</scope>
+		<class>com.icebreak.util.lang.util.DateUtil</class>
+	</tool>
+	
+	<tool>
+		<key>newDateUtil</key>
+		<scope>application</scope>
+		<class>com.icebreak.p2p.util.DateUtil</class>
+	</tool>
+	
+	<tool>
+		<key>commonUtil</key>
+		<scope>application</scope>
+		<class>com.icebreak.p2p.util.CommonUtil</class>
+	</tool>
+	
+	<tool>
+		<key>moneyUtil</key>
+		<scope>application</scope>
+		<class>com.icebreak.p2p.util.MoneyUtil</class>
+	</tool>
+	
+	<tool>
+		<key>loanUtil</key>
+		<scope>application</scope>
+		<class>com.icebreak.p2p.util.LoanUtil</class>
+	</tool>
+	
+	<tool>
+		<key>permission</key>
+		<scope>application</scope>
+		<class>com.icebreak.p2p.web.util.PermissionUtil</class>
+	</tool>
+	
+	<tool>
+		<key>tradeUtil</key>
+		<scope>application</scope>
+		<class>com.icebreak.p2p.web.util.TradeUtil</class>
+	</tool>
+	
+	<tool>
+		<key>propertiesUtil</key>
+		<scope>application</scope>
+		<class>com.icebreak.p2p.util.PropertiesUtil</class>
+	</tool>
+	<tool>
+		<key>appConstantsUtil</key>
+		<scope>application</scope>
+		<class>com.icebreak.p2p.util.AppConstantsUtil</class>
+	</tool>
+	
+	<tool>
+		<key>stringUtil</key>
+		<scope>application</scope>
+		<class>com.icebreak.p2p.util.StringUtil</class>
+	</tool>
+
+	<tool>
+		<key>vmUtil</key>
+		<scope>application</scope>
+		<class>com.icebreak.p2p.util.VMUtil</class>
+	</tool>
+	
+</toolbox>

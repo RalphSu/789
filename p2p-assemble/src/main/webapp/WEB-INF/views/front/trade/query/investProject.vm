@@ -1,0 +1,258 @@
+#parse("/front/index/common/header.vm")
+<body>
+	#parse("/front/index/common/header-menu.vm")
+	<!--内容-->
+
+<div class="top_blank"></div>
+<!--用户菜单开始-->
+<div class="use_menu b_gray_o">
+    <ul class="nav">
+        <li><a href="/usercenter/depositRecord">资金记录</a></li>
+
+        #set($t = $permission.check('/tradeQuery/invest/12/1'))
+        #if($t > 0)
+            <li class="light"><a href="/tradeQuery/invest/12/1">我的项目</a></li>
+        #end
+
+        #set($t = $permission.check('/tradeQuery/borrowingRecord'))
+        #if($t > 0)
+            <li style="margin-left: 28px;"><a href="/tradeQuery/borrowingRecord">投资接受记录</a></li>
+        #end
+
+        #set($t = $permission.check('/repay/*'))
+        #set($s = $permission.check('/collection/*'))
+        #if($t>0)
+            <li><a href="/repay/list">还款管理</a></li>
+        #end
+        #if($s>0)
+            <li><a href="/collection/list">收款管理</a></li>
+        #end
+
+        #set($t = $permission.check('/repayDB/*'))
+        #if($t>0)
+            <li><a href="/repayDB/repayDBManager">还款管理</a></li>
+        #end
+
+        #set($t = $permission.check('/guaranteeCenter/*'))
+        #set($s = $permission.check('/guaranteeOperator/operatorManager'))
+        #if($t>0)
+            <li><a href="/guaranteeCenter/newGuaranteeManager">业务管理</a></li>
+        #end
+        #if($s>0)
+            <li><a href="/guaranteeOperator/operatorManager">操作员管理</a></li>
+        #end
+        <li><a href="/usercenter/setting">账户设置</a></li>
+        <li><a href="/usercenter/home">账户概览</a></li>
+    </ul>
+</div>
+<!--用户菜单结束-->
+<div class="alrod">
+<!--通用搜索开始-->
+<div class="form_blank"></div>
+<!--通用搜索结束-->
+    <form action="/tradeQuery/invest/12/1" method="post" name="frm" id="frm">
+        <div class="search nav">
+            <!--<ul>
+                <li class="light" status="1">全部</li>
+                <li><a href status="2">融资中</a></li>
+                <li><a href status="3">还款中</a></li>
+                <li><a href status="4">已完结</a></li>
+                <li><a href status="5">已转让</a></li>
+                <li class="f_right but">筛选</li>
+                <li class="f_right f_inp"><input name="" type="text" class="f_inp" value="2014-03-18"></li>
+                <li class="f_right f_ot"> - </li>
+                <li class="f_right f_inp"><input name="" type="text" class="f_inp" value="2013-02-05"></li>
+                <li class="f_right f_sel"><select name="" class="f_sel"><option>全部选项</option></select></li>
+            </ul> -->
+            <ul>
+                <li class="light" status="-1"><a href="javascript:void(0);">全部</a></li>
+                <li status="1"><a href="javascript:void(0);">待成立</a></li>
+                <li status="2"><a href="javascript:void(0);">未到期</a></li>
+                <li status="3"><a href="javascript:void(0);">已收款</a></li>
+                <li status="4"><a href="javascript:void(0);">未成立</a></li>
+                <li status="5"><a href="javascript:void(0);">到期未还款</a></li>
+                <li status="6"><a href="javascript:void(0);">担保机构审核中</a></li>
+                <li status="8"><a href="javascript:void(0);">等待还款</a></li>
+                <li status="7"><a href="javascript:void(0);">超期收款</a></li>
+            </ul>
+        </div>
+
+    <input type="hidden" value="$!{request.getParameter('dateunit')}" name="dateunit"/>
+    <input type="hidden" name="status" value="$!{request.getParameter('status')}"/>
+        <div class="form_blank"></div>
+<!--通用表单开始-->
+<div class="form f_tit">
+	<ul class="tit">
+        <li class="col1">项目名称</li>
+        <li class="col1">投资接受人</li>
+        <li class="col3">投资金额</li>
+        <li class="col4">投资时间</li>
+        <li class="col4">到期时间</li>
+        <li class="col6">进度情况</li>
+        <li class="col7">凭证</li>
+    </ul>
+</div>
+<div class="form form_nav">
+    #if($!page.result.size()==0 || !$!page.result)
+        <ul>
+            <li class="col1"><span class="gray_o">暂时没有投资记录</span></li>
+        </ul>
+    #end
+
+    #foreach($item in $!{page.result})
+        <ul>
+            <li class="col1"><a title="查看投资详情" href="/tradeQuery/queryInvestDetails/$!{item.tradeId}?detailId=$!{item.id}">$stringUtil.subString( $!{item.tradeName},15,"..")</a></li>
+            <li class="col1">$!{item.loanerUserName}</li>
+            <li class="col3"><em>$!{moneyUtil.getFormatAmount($!{item.amount})}</em></li>
+            <li class="col4">$!{dateUtil.dtSimpleFormat($!{item.date})}</td>
+            <li class="col4">#if($!{item.expireDateTime})$!{dateUtil.dtSimpleFormat($!{item.expireDateTime})}#else暂无数据#end</li>
+            <li class="col6">$!{item.status}</td>
+            <li class="col7">
+                #if($!{item.expireDateTime})
+                    <a href="/tradeQuery/investReceipt/$!{item.tradeId}?tradeId=$!{item.tradeId}&detailId=$!{item.id}" name="test" target="_blank">下载 </a>
+                #else
+                    暂无
+                #end
+            </li>
+        </ul>
+    #end
+    <div style="font-weight:bold;font-size:18pt;margin-left:30px;">
+        <span id="countAmounTitle">个人总投资金额:</span><span class="ft-f60">￥$!{allAmount}</span>元
+    </div>
+
+
+    <!--分页-->
+    <div class="pages account-page mt20">
+        <div class="fn-right">
+            #parse("/backstage/page/page.vm")
+        </div>
+    </div>
+    </form>
+    <div class="blank30"></div>
+</div>
+<!--通用表单结束-->
+<div class="form_blank"></div>
+</div>
+<div class="blank"></div>
+<!--通用底部开始-->
+<div class="blank"></div>
+    #parse("/front/index/common/footer.vm")
+<!--通用底部结束-->
+<script type="text/javascript">
+    var $_GLOBAL = {};
+</script>
+<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/sea.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.mode + 'investBasicInfo');
+    //修改头部菜单样式
+    addLiClass("header_home");
+</script>
+<script type="text/javascript">
+    var investForm = $("#frm");
+    $(function (){
+        var status = $('input[name=status]').val();
+        if(status == ''){
+            status = -1
+        }
+        $(".search ul li").each(function() {
+            if($(this).attr("status") == status) {
+                $(".search ul li").removeClass();
+                $(this).attr("class", "light");
+            }
+        });
+    });
+
+    $('#invest-search').click(function (){
+        //	toPage($!{page.totalPageCount}, $!{page.currentPageNo});
+        document.frm.submit();
+    });
+
+    $('#condition-reset').click(function (){
+        $('form[name=frm] input').val('');
+        $('[t=invest-date] a').removeClass('cur');
+        $('[t=invest-status] a').removeClass('cur');
+        $('a[status=-1]').addClass('cur');
+    });
+
+    $('a[status]').click(function (){
+        var status = $(this);
+        $('input[name=status]').val(status.attr('status'));
+        $('a[status]').removeAttr('class');
+        status.attr('class', 'cur');
+        //toPage($!{page.totalPageCount}, $!{page.currentPageNo});
+        form.submit();
+        return false;
+    });
+
+    $(".search ul li").each(function() {
+       $(this).click(function() {
+           $(".search ul li").removeClass();
+           $(this).attr("class", "light");
+           $('input[name=status]').val($(this).attr("status"));
+           investForm.submit();
+           return false;
+       });
+    });
+
+    function toPage(totalPage, page){
+        if(page > totalPage){
+            return ;
+        }
+        $('form[name=frm]').attr('action', '/tradeQuery/invest/$!{page.pageSize}/' + page);
+        document.frm.submit();
+    }
+
+</script>
+<script type="text/javascript">
+    $(function (){
+        var dateInfos = $('.dateInfo');
+
+        dateInfos.click(function(){
+            var startDate = $('input[name=startDate]');
+            var endDate = $('input[name=endDate]');
+            dateInfos.removeClass('cur');
+            var t = $(this);
+            t.addClass('cur');
+            $('[name=dateunit]').val(t.attr('name'));
+            var times = 1000 * 24 * 3600;
+            if(dateInfos.index(this) == 0){
+                var date = new Date();
+                var str = getDateStr(date);
+                startDate.val(str);
+                endDate.val(str);
+            }else if(dateInfos.index(this) == 1){
+                var date = new Date();
+                var newDate = new Date(date.getTime() - times * 7);
+                startDate.val(getDateStr(newDate));
+                endDate.val(getDateStr(date));
+            }else if(dateInfos.index(this) == 2){
+                var date = new Date();
+                var newDate = new Date(date.getTime() - times * 30);
+                startDate.val(getDateStr(newDate));
+                endDate.val(getDateStr(date));
+            }else if(dateInfos.index(this) == 3){
+                var date = new Date();
+                var newDate = new Date(date.getTime() - times * 90);
+                startDate.val(getDateStr(newDate));
+                endDate.val(getDateStr(date));
+            }else if(dateInfos.index(this) == 4){
+                var date = new Date();
+                var newDate = new Date(date.getTime() - times * 365);
+                startDate.val(getDateStr(newDate));
+                endDate.val(getDateStr(date));
+            }
+        });
+        function getDateStr(date){
+            var str = '';
+            str += date.getFullYear() + '-';
+            var month = date.getMonth() + 1;
+            str += (month > 9 ? '' : '0') + month + '-';
+            var day = date.getDate();
+            str += (day > 9 ? '' : '0') + day;
+            return str;
+        }
+    });
+</script>
+</body>
+</html>

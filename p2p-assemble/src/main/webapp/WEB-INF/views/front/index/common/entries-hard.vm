@@ -1,0 +1,70 @@
+	 <!------------------------------------------>
+
+#foreach($trade in $!{page.result})
+   	   		<li>
+            	<div class="pro_pic"><a href="$!{rc.contextPath}/index/lookup/$!{trade.demandId}/$!{trade.tradeId}"><img src="$!{commonUtil.getProjectThumbnailUrl($!{trade.proImage},$request)}" width="234" height="143" /></a></div>
+                <div class="pro_mes">
+                	<div class="pro_tit"><a href="$!{rc.contextPath}/index/lookup/$!{trade.demandId}/$!{trade.tradeId}"><span class="big_font">$!{trade.name}</span></a></div>
+                    <div class="pro_para">年化利率: <span class="blue mid_font font_right">$!{trade.strRaate}</span>
+						<span class="gray_o font_right">融资期限: $!{loanUtil.getLoanTime($!{trade.time}, $!{trade.timeUnit})}</span>
+						<span class="gray_o font_right">还款方式: 到期还款付息</span>
+                    <div class="pro_ico"><img src="/resources/images/new/bao.png"/> <img src="/resources/images/new/p2c.png"/></div>
+                    </div>
+                    <div class="pro_load">
+                      	#if($!{trade.status}==1)
+							#set($p = $moneyUtil.getPercentage($!{trade.loanedAmount},$!{trade.amount},$!{trade.leastInvestAmount}))
+							<div class="mout_load">
+								<div class="mout_load_in b_blue" style="width:${p};"></div>
+							</div>
+						#else
+                            #set($p = '100%')
+                            <div class="mout_load_in b_blue" style="width:${p};"></div>
+						#end
+                    </div>
+                    <div class="pro_amo">
+                    	<ul>
+
+	                           #if($!{trade.status}==1)
+	                            #set($p = $moneyUtil.getPercentage($!{trade.loanedAmount},$!{trade.amount},$!{trade.leastInvestAmount}))
+	                                                    	<li>还需要金额: <span class="green mid_font"><b class="num">$!{moneyUtil.getMoneyByw($!{trade.amount}, $!{trade.loanedAmount})}</b>万</span></li>                            
+	                           	<li class="pam">融资进度: <span>${p}</span>					     
+							    </li>
+						       #else
+						        #set($p = '100%')
+						        	<li>还需要金额: <span class="green mid_font"><b class="num">0.00</b>万</span></li>
+						        	<li class="pam">融资进度: <span>${p}</span>
+						            
+						           </li>
+						       #end                            
+                            <li class="par">融资总额: <span class="blue mid_font">#if($!{trade.status}==1)$!{moneyUtil.getMoneyByw($!{trade.amount})}#else$!{moneyUtil.getMoneyByw($!{trade.loanedAmount})}#end</b>万</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pro_room">
+					<span class="blue">项目简介：</span><span class="gray_o">$stringUtil.subString($stringUtil.replaceHtml($!{trade.tradeNote}),110,"......")</span>
+					<p class="pro_time">
+						<span class="font_right">开始投资时间：$!{dateUtil.simpleFormat($!{trade.investAvalibleTime})}</span>
+						<span>投资完成时间：$!{dateUtil.simpleFormat($!{trade.deadline})}</span>
+					</p>
+                </div>
+					#set($needAmount =  $moneyUtil.getMoneyByw($!{trade.amount}, $!{trade.loanedAmount}))
+					#if($!{trade.status}==1 && ${needAmount}>0 )
+					    #if($!{trade.insureWay})
+							<a href="$!{rc.contextPath}/index/lookup/$!{trade.demandId}/$!{trade.tradeId}">
+							<div class="all_but pro_but but_blue">立即投资</div>
+							</a>
+						#else
+							<a href="$!{rc.contextPath}/index/lookup/$!{trade.demandId}/$!{trade.tradeId}">
+							<div class="all_but pro_but but_blue">投资</div>
+							</a>
+						#end
+					#else
+						<a  href="$!{rc.contextPath}/index/lookup/$!{trade.demandId}/$!{trade.tradeId}">
+							<div class="all_but pro_but but_disabled" disabled="disabled">投资已满</div>
+						</a>
+					#end
+
+            </li>
+	#end
+		

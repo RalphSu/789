@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理员首页</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+</head>
+<style type="text/css">
+	.font{color:#FF0000;}
+</style>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>管理员首页</a></li>
+                            <li><a href>任务列表</a></li>
+                        </ul>
+                    </div>
+					<div class="ui-form" style="width:800px;">
+						<fieldset>
+						<legend style="margin-bottom: 5px;"><h3>工作事宜提醒</h3></legend>
+						<div class="t-box">
+                            <table class="tablelist">
+                                <thead>
+                                <tr>
+                                    <th width="300">工作事宜</th>
+                                    <th width="200">待处理工作数量</th>
+                                    <th width="270">操作</th>
+                                </tr>
+                                </thead>
+								<tbody>
+                                <tr>
+                                    <td>实名认证中的用户</td>
+                                    <td><span class="font">$!{inRealNamAuthentication}</span>个</td>
+									<td><a href="/backstage/userManage/unRealNamePass?realNameAuthentication=IN">查看明细</a></td>
+                                </tr>
+                                <tr>
+                                    <td>待审核的产品</td>
+                                    <td><span class="font">$!{witeLoanDemand}</span>个</td>
+                                    <td><a href="/backstage/pageQueryLoanDemand?module=WITE">立即处理</a></td>
+                                </tr>
+                                <tr>
+                                    <td>待上传担保函、合同的产品</td>
+									<td><span class="font">$!{noLetterContract}</span>个</td>
+                                    <td><a href="/backstage/pageDemand?type=noLetterContract">立即处理</a></td>
+                                </tr>
+                                <tr>
+                                    <td>即将还款的产品</td>
+									<td><span class="font">$!{waitRepay}</span>个</td>
+                                    <td><a href="/backstage/pageDemand?type=waitRepay">查看明细</a></td>
+                                </tr>
+								</tbody>
+							</table>
+                        </div>
+					</fieldset>
+					<fieldset>
+						<legend style="margin-bottom: 5px;"><h3>项目一览表</h3></legend>
+                        <div class="t-box">
+                            <table class="tablelist">
+                                <thead>
+                                <tr>
+                                    <th width="300">产品</th>
+                                    <th width="200">产品数量</th>
+                                    <th width="270">金额</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>发行的产品</td>
+                                    <td><span class="font">$!{issueLoanDemand}</span>个产品</td>
+                                    <td><span class="font">$!{issueAmounts}</span>元</td>
+                                </tr>
+                                <tr>
+                                    <td>成立的产品</td>
+                                    <td><span class="font">$!{establishLoanDemand}</span>个产品</td>
+                                    <td><span class="font">$!{establishAmounts}</span>元</td>
+                                </tr>
+                                <tr>
+                                    <td>解除担保产品</td>
+                                    <td><span class="font">$!{relieveLoanDemand}</span>个产品</td>
+                                    <td><span class="font">$!{relieveAmounts}</span>元</td>
+                                </tr>
+                                <tr>
+                                    <td>目前在保产品</td>
+                                    <td><span class="font">$!{guaranteeLoanDemand}</span>个产品</td>
+                                    <td><span class="font">$!{guaranteeAmounts}</span>元</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+					</div>
+            </div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'addLoanDemand');
+    </script>
+</body>
+</html>

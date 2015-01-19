@@ -1,0 +1,207 @@
+#parse("/front/index/common/header.vm")
+<style type="text/css">
+</style>
+
+<body>
+	#parse("/front/index/common/header-menu.vm")
+
+<div class="top_blank"></div>
+<!--用户菜单开始-->
+<div class="use_menu b_gray_o">
+    <ul class="nav">
+        <li><a href="/usercenter/depositRecord">资金记录</a></li>
+
+		#set($t = $permission.check('/tradeQuery/entries/12/1'))
+		#if($t > 0)
+            <li><a href="/tradeQuery/invest/12/1">我的项目</a></li>
+		#end
+
+		#set($t = $permission.check('/tradeQuery/borrowingRecord'))
+		#if($t > 0)
+            <li style="margin-left: 28px;"><a href="/tradeQuery/borrowingRecord">投资接受记录</a></li>
+		#end
+
+		#set($t = $permission.check('/repay/*'))
+		#set($s = $permission.check('/collection/*'))
+		#if($t>0)
+            <li><a href="/repay/list">还款管理</a></li>
+		#end
+		#if($s>0)
+            <li><a href="/collection/list">收款管理</a></li>
+		#end
+
+		#set($t = $permission.check('/repayDB/*'))
+		#if($t>0)
+            <li><a href="/repayDB/repayDBManager">还款管理</a></li>
+		#end
+
+		#set($t = $permission.check('/guaranteeCenter/*'))
+		#set($s = $permission.check('/guaranteeOperator/operatorManager'))
+		#if($t>0)
+            <li class="light"><a href="/guaranteeCenter/newGuaranteeManager">业务管理</a></li>
+		#end
+		#if($s>0)
+            <li><a href="/guaranteeOperator/operatorManager">操作员管理</a></li>
+		#end
+        <li><a href="/usercenter/setting">账户设置</a></li>
+        <li><a href="/usercenter/home">账户概览</a></li>
+    </ul>
+</div>
+
+<div class="home-section_bd pt20">
+<div class="alrod">
+	<div class="" style="width:1200px;">
+		<div class="blank20"></div>
+		<div class="border-b">
+            <!--查询条件-->
+			<form action="/guaranteeCenter/newGuaranteeManager" method="post" name ="gform">
+			        <input type="hidden"  name="pageSize"  value="$!{pageParam.pageSize}">
+			        <input type="hidden"  name="pageNo"  value="$!{pageParam.pageNo}">
+                    <div class="fn-clear" style="margin-left: 50px;">
+                    	<dl class="fn-clear mb20">
+							<dt>担保函编号：</dt>
+							<dd><input type="text" class="fn-text" name="guaranteeLicenseNo"  value="$!{queryConditions.guaranteeLicenseNo}" ></dd>
+							<dt>担保函名称：</dt>
+							<dd>
+								<input type="text" class="fn-text" name="guaranteeLicenseName" value="$!{queryConditions.guaranteeLicenseName}">
+							</dd>
+                            <dt>担保函状态：</dt>
+                            <dd>
+                                <div class="jqtransform jqtransform-select3">
+									<select name="singleState">
+										<option value="">全部</option>
+										#foreach($state in $!{guaranteeStatus})
+											<option value="$!{state.tradeStateKey}"
+											#if($!{state.tradeStateKey}==$!{queryConditions.singleState})
+												selected="selected"
+											#end
+											>
+												$!{state.tradeStateValue}
+											</option>
+										#end
+									</select>
+                                </div>
+                            </dd>
+						</dl>
+                        <dl class="fn-clear mb20">
+							<dt>起止日期：</dt>
+							<dd>
+								<span class="fn-time">
+								
+								    <input type="date" class="fn-text w90" name="startDate" value="$!{queryConditions.startDate}" />
+									<img src="$!{rc.contextPath}/resources/images/common/time-ico.gif" alt="时间" class="time-img" />
+								
+								
+                                </span>
+                                <em>-</em>
+                                <span class="fn-time">
+                                   <input type="date" class="fn-text w90" name="endDate"  value="$!{queryConditions.endDate}" />
+									<img src="$!{rc.contextPath}/resources/images/common/time-ico.gif" alt="时间" class="time-img" />
+                                </span>
+                                <a href="javascript:doSubmit();" class="fn-h-btn ml5"><span>筛选</span></a>
+                                
+                                
+							</dd>					
+						</dl>
+                   </div>
+      	</form>
+
+                    <div class="form form_nav b_blue_o">
+                        <ul class="tit_t">
+                            <li class="col4">创建时间</li>
+                            <li class="col4">担保函编号</li>
+                            <li class="col4">担保函名</li>
+                            <li class="col4">担保费</li>
+                            <li class="col4">状态</li>
+                            <li class="col3">操作</li>
+                        </ul>
+                    </div>
+                    <div class="form form_nav">
+						#if($!page.result.size()==0)
+                            <tr>
+                                <td colspan=5 align=center>暂时没有担保交易记录</td>
+                            </tr>
+						#end
+						#foreach($info in $page.result)
+                        <ul>
+                            <li class="col4" style="height: 35px;">$!dateUtil.simpleFormat($!{info.demandDate})</li>
+                            <li class="col4" style="height: 35px;">$!{info.guaranteeLicenseNo}</li>
+                            <li class="col4" style="height: 35px;">$!{info.guaranteeLicenseName}</li>
+                            <li class="col4" style="height: 35px;"><em>$!{moneyUtil.getFormatAmount($!{info.benefitAmount})}</em></li>
+							#if($!{info.guaranteeStatus}=="合约违约")
+                                <li class="col4" style="height: 35px;"><span class="red">$!{info.guaranteeStatus}</span></li>
+							#elseif($!{info.state}=="合约失效")
+                                <li class="col4" style="height: 35px;"><span class="gray">$!{info.guaranteeStatus}</span></li>
+							#else
+                                <li class="col4" style="height: 35px;">$!{info.guaranteeStatus}</li>
+							#end
+                            <li class="col3" style="height: 35px;">
+							#if($!{info.guaranteeStatus}=="担保机构审核中")
+								#if($!{auditOperator}=="yes")
+									#if($!{info.guaranteeStatus}=="担保机构审核中") <a href="/guaranteeCenter/guaranteeDetails?demandId=$!{info.demandId}&operate=hk">融资完成审核</a>#end
+								#else
+                                    <a href="/guaranteeCenter/guaranteeDetails?demandId=$!{info.demandId}&operate=xq">详情</a>
+								#end
+							#elseif($!{info.guaranteeStatus}=="合约违约")
+							##不显示详情
+							#else
+                                <a href="/guaranteeCenter/guaranteeDetails?demandId=$!{info.demandId}&operate=xq">详情</a>
+							#end
+
+							#set($t = $permission.check('/tradeQuery/manualReimbursement'))
+							#if($t>0)
+								#if($!{info.guaranteeStatus}=="合约违约") <a href="/guaranteeCenter/guaranteeDetails?demandId=$!{info.demandId}&operate=hk">还款</a>#end
+							#end
+                            </li>
+                        </ul>
+						#end
+                    </div>
+                    <div class="pages account-page fn-clear mt20 mr20">
+                        <!--分页-->
+						#parse("/backstage/page/page.vm")
+                    <div class="blank30"></div>
+                </div>
+                <div class="blank30"></div>
+            </div>
+</div>
+  <div class="blank50"></div>
+  </div>
+
+
+#parse("/front/index/common/footer.vm")
+
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+        //修改头部菜单样式
+        addLiClass("header_home");
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'guarantee');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+    		
+			$('[name=pageSize]').val($!{page.pageSize}) ;
+			$('[name=pageNo]').val(pageNo);
+			
+			$('form[name=gform]').attr('action', '$!{rc.contextPath}/guaranteeCenter/newGuaranteeManager');
+			 document.gform.submit();
+			
+	//		window.location.href=url;
+		}
+		
+		
+		function doSubmit() {
+		    $('[name=pageSize]').val($!{page.pageSize}) ;
+			$('[name=pageNo]').val(1);
+			document.gform.submit();
+		}
+		
+	
+    </script>
+
+</body>
+</html>

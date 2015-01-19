@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-TRADEDETAIL" class="com.icebreak.p2p.dataobject.TradeDetail">
+	  <result property="id" column="trade_detail_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="orderNo" column="order_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="roleId" column="role_id" javaType="int" jdbcType="INT"/>
+	  <result property="tradeId" column="trade_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="amount" column="amount" javaType="long" jdbcType="BIGINT"/>
+	  <result property="transferPhase" column="transfer_phase" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="date" column="date" javaType="java.util.Date" jdbcType="DATETIME"/>  
+	  <result property="note" column="note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="profitType" column="profit_type" javaType="int" jdbcType="TINYINT"/>
+	  <result property="profitRate" column="profit_rate" javaType="double" jdbcType="DECIMAL"/>
+	  <result property="repayPeriodNo" column="repay_period_no" javaType="int" jdbcType="TINYINT"/>
+	  <result property="repayPeriodCount" column="repay_period_count" javaType="int" jdbcType="TINYINT"/>	  
+      <result property="repayDate" column="repay_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+      <result property="actualRepayDate" column="actual_repay_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="extOrder" column="ext_order" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  </resultMap>
+   <resultMap id="RM-TRADEQUERYDETAIL" class="com.icebreak.p2p.dataobject.TradeQueryDetail">
+	  <result property="id" column="trade_detail_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="roleId" column="role_id" javaType="int" jdbcType="INT"/>
+	  <result property="tradeId" column="trade_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="amount" column="amount" javaType="long" jdbcType="BIGINT"/>
+	  <result property="transferPhase" column="transfer_phase" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="date" column="date" javaType="java.util.Date" jdbcType="DATETIME"/>  
+	  <result property="note" column="note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="profitType" column="profit_type" javaType="int" jdbcType="TINYINT"/>
+	  <result property="profitRate" column="profit_rate" javaType="double" jdbcType="DECIMAL"/>
+	  <result property="repayPeriodNo" column="repay_period_no" javaType="int" jdbcType="TINYINT"/>
+	  <result property="repayPeriodCount" column="repay_period_count" javaType="int" jdbcType="TINYINT"/>	  
+      <result property="repayDate" column="repay_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="extOrder" column="ext_order" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="status" column="trade_status" javaType="short" jdbcType="TINYINT"/>
+	  <result property="name" column="trade_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="demandId" column="demand_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="tradeAmount" column="trade_amount" javaType="long" jdbcType="BIGINT"/>
+	  <result property="loanedAmount" column="loaned_amount" javaType="long" jdbcType="BIGINT"/>
+      <result property="actualRepayDate" column="actual_repay_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+      <result property="tradeDetailStatus" column="status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <result property="timeLimit" column="time_limit" javaType="int" jdbcType="INT"/>
+      <result property="timeLimitUnit" column="time_limit_unit" javaType="java.lang.String" jdbcType="ENUM"/>
+  </resultMap>
+  <insert id="TRADEDETAIL-ADDTRADEDETAIL" parameterClass="com.icebreak.p2p.dataobject.TradeDetail">
+	  INSERT INTO trade_detail ( 
+		  user_id,
+		  order_no,
+		  role_id,
+		  trade_id,
+		  amount,
+		  transfer_phase,
+		  date,
+		  note,
+		  profit_type,
+		  profit_rate,
+		  repay_period_no,
+		  repay_period_count,
+		  repay_date,
+		  ext_order,
+      actual_repay_date
+	  ) VALUES (
+	      #userId#,
+	      #orderNo#,
+	      #roleId#,
+	      #tradeId#,
+	      #amount#,
+	      #transferPhase#,
+	      #date#,
+	      #note#,
+	      #profitType#,
+	      #profitRate#,
+	      #repayPeriodNo#,
+		  #repayPeriodCount#,
+		  #repayDate#,
+	      #extOrder#,
+         #actualRepayDate#
+	  )
+	 <selectKey resultClass="long" keyProperty="id">
+			<![CDATA[SELECT LAST_INSERT_ID() AS trade_detail_id ]]>
+	 </selectKey>
+  </insert>
+  
+  <insert id="TRADEDETAIL-INVEST" parameterClass="com.icebreak.p2p.dataobject.TradeDetail">
+    CALL invest(
+	    #userId#,
+	    #tradeId#,
+	    #amount#,
+	    #date#
+    )
+  </insert>
+  
+  <select id="TRADEDETAIL-GETYJFUSERNAMEBYUSERID" parameterClass="long" resultClass="java.lang.String">
+  	SELECT user_base_info.account_id yjf_user_name FROM user_base_info WHERE user_base_info.user_id = #value#
+  </select>
+  
+  <select id="TRADEDETAIL-GETBYTRADEIDANDROLES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRADEDETAIL">
+  	SELECT  
+  		  t.trade_detail_id,
+  		  t.user_id,
+  		  t.order_no,
+		  t.role_id,
+		  u.user_base_id,
+  		  u.user_name,
+  		  u.real_name,
+		  t.trade_id,
+		  t.amount,
+		  t.transfer_phase,
+		  t.date,
+		  t.note,
+		  t.profit_type,
+		  t.profit_rate,
+		  t.repay_period_no,
+		  t.repay_period_count,
+		  t.repay_date,
+		  t.ext_order,
+      actual_repay_date
+    FROM trade_detail t
+    <isNotEmpty property="roles">
+    INNER JOIN role r ON t.role_id = r.role_id 
+    INNER JOIN user_base_info u ON u.user_id =t.user_id
+    </isNotEmpty>
+    WHERE  t.transfer_phase ='original' AND t.trade_id = #tradeId#
+    <isNotEmpty property="roles">
+	  AND r.role_code IN 
+	  <iterate conjunction="," open="(" close=")" property="roles">
+  		   #roles[]#
+  	  </iterate>
+	</isNotEmpty>
+  </select>
+  
+  <select id="TRADEDETAIL-GETAMOUNT" parameterClass="java.util.Map" resultClass="long">
+	  SELECT IFNULL(SUM(trade_detail.amount), 0) FROM trade_detail
+	  INNER JOIN role ON role.role_id = trade_detail.role_id
+	  WHERE trade_detail.user_id = #userId# AND role.role_code = #roleCode# 
+	  <isNotEmpty property="statuses">
+	  	AND trade.trade_status IN 
+	  	<iterate conjunction="," open="(" close=")" property="statuses">
+  		   #statuses[]#
+  	   </iterate>
+	 </isNotEmpty>
+  </select>
+  
+  <select id="TRADEDETAIL-CHECK" parameterClass="java.util.Map" resultClass="int">
+	SELECT COUNT(0) FROM trade_detail t
+	INNER JOIN role ON t.role_id = role.role_id
+	WHERE t.trade_id = #tradeId# AND t.user_id = #userId# AND role.role_code = #role#
+  </select>
+  
+  <select id="TRADEDETAIL-GETTRADEDETAILBYCONDITIONS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRADEQUERYDETAIL">
+  	SELECT  
+  		  t.trade_detail_id,
+  		  t.order_no,
+  		  t.user_id,
+		  t.role_id,
+		  u.user_base_id,
+  		  u.user_name,
+  		  u.real_name,
+		  t.trade_id,
+		  t.amount,
+		  t.transfer_phase,
+		  t.date,
+		  t.note,
+		  t.profit_type,
+		  t.profit_rate,
+		  t.repay_period_no,
+		  t.repay_period_count,
+		  t.repay_date,
+		  t.ext_order,
+		  trd.trade_name,
+		  trd.trade_status,
+		  trd.demand_id,
+		  trd.trade_amount,
+	      trd.time_limit,
+	      trd.time_limit_unit,
+		  trd.loaned_amount,
+          t.actual_repay_date,
+          t.status
+    FROM trade_detail t
+    INNER JOIN trade trd on t.trade_id=trd.trade_id
+    INNER JOIN role r ON t.role_id = r.role_id 
+    INNER JOIN user_base_info u ON u.user_id =t.user_id
+    WHERE   1 = 1  
+    <dynamic>
+		<isNotEmpty property="tradeId" prepend=" and ">
+			<![CDATA[t.trade_id = #tradeId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="orderNo" prepend=" and ">
+			<![CDATA[t.order_no = #orderNo#]]>
+		</isNotEmpty>
+		<isNotEmpty property="roleId" prepend=" and ">
+			<![CDATA[t.role_id = #roleId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="detailId" prepend=" and ">
+			<![CDATA[t.trade_detail_id = #detailId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="transferPhase" prepend=" and ">
+			<![CDATA[t.transfer_phase = #transferPhase#]]>
+		</isNotEmpty>
+		<isNotEmpty property="tradeDetailStatus" prepend=" and ">
+			<![CDATA[t.status = #tradeDetailStatus#]]>
+		</isNotEmpty>
+		<isNotEmpty property="userId" prepend=" and ">
+			<![CDATA[t.user_id = #userId#]]>
+		</isNotEmpty>
+	</dynamic>
+  </select>
+  <select id="TRADEDETAIL-COUNT-INVEST-TRANSACTIONS" parameterClass="long" resultClass="long">
+	SELECT COUNT(0) FROM trade_detail t WHERE t.transfer_phase = 'original' and t.role_id = '12' AND t.trade_id = #value# 
+  </select>
+    <select id="TRADEDETAIL-GETPRTDETAILBYINVESTDETAILID" parameterClass="long" resultClass="java.util.List" resultMap="RM-TRADEDETAIL">
+  	SELECT  
+  		  t.trade_detail_id,
+  		  t.order_no,
+  		  t.user_id,
+		  t.role_id,
+		  u.user_base_id,
+  		  u.user_name,
+  		  u.real_name,
+		  t.trade_id,
+		  t.amount,
+		  t.transfer_phase,
+		  t.date,
+		  t.note,
+		  t.profit_type,
+		  t.profit_rate,
+		  t.repay_period_no,
+		  t.repay_period_count,
+		  t.repay_date,
+		  t.ext_order,
+         t.actual_repay_date
+    FROM trade_detail t
+    INNER JOIN role r ON t.role_id = r.role_id 
+    INNER JOIN user_base_info u ON u.user_id =t.user_id
+    WHERE   1 = 1  AND t.role_id = '12' AND t.note = #value#
+  </select>
+  <select id="TRADEDETAIL-GETTRADEDIVISIONSCOUNTBYPARAMS" parameterClass="java.util.Map" resultClass="long">
+  	SELECT  
+  		 count(0)
+    FROM trade_detail t
+    INNER JOIN role r ON t.role_id = r.role_id 
+    INNER JOIN user_base_info u ON u.user_id =t.user_id
+    WHERE   1 = 1 AND  (t.transfer_phase = 'invest' OR t.transfer_phase = 'repay')
+    <dynamic>
+		<isNotEmpty property="tradeId" prepend=" and ">
+			<![CDATA[t.trade_id = #tradeId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="roleId" prepend=" and ">
+			<![CDATA[t.role_id = #roleId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="detailId" prepend=" and ">
+			<![CDATA[t.trade_detail_id = #detailId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="transferPhase" prepend=" and ">
+			<![CDATA[t.transfer_phase = #transferPhase#]]>
+		</isNotEmpty>
+		<isNotEmpty property="userId" prepend=" and ">
+			<![CDATA[t.user_id = #userId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="userName" prepend=" and ">
+			<![CDATA[u.user_name = #userName#]]>
+		</isNotEmpty>
+		<isNotEmpty property="realName" prepend=" and ">
+			<![CDATA[u.real_name = #realName#]]>
+		</isNotEmpty>
+		<isNotEmpty property="startDate">
+			<![CDATA[AND t.date >= #startDate#]]>
+	  	</isNotEmpty>
+	  	<isNotEmpty property="endDate">
+			<![CDATA[AND t.date <= #endDate#]]>
+	  	</isNotEmpty>
+        <isNotEmpty property="actualRepayDate">
+            <![CDATA[AND t.actual_repay_date <= #actualRepayDate#]]>
+        </isNotEmpty>
+
+
+	</dynamic>
+  </select>
+  <select id="TRADEDETAIL-GETTRADEDIVISIONSBYPARAMS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRADEDETAIL">
+  	SELECT  
+  		  t.trade_detail_id,
+  		  t.order_no,
+  		  t.user_id,
+		  t.role_id,
+		  u.user_base_id,
+  		  u.user_name,
+  		  u.real_name,
+		  t.trade_id,
+		  t.amount,
+		  t.transfer_phase,
+		  t.date,
+		  t.note,
+		  t.profit_type,
+		  t.profit_rate,
+		  t.repay_period_no,
+		  t.repay_period_count,
+		  t.repay_date,
+		  t.ext_order ,
+          t.actual_repay_date
+    FROM trade_detail t
+    INNER JOIN role r ON t.role_id = r.role_id 
+    INNER JOIN user_base_info u ON u.user_id =t.user_id
+    WHERE   1 = 1 AND  (t.transfer_phase = 'invest' OR t.transfer_phase = 'repay')
+    <dynamic>
+		<isNotEmpty property="tradeId" prepend=" and ">
+			<![CDATA[t.trade_id = #tradeId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="roleId" prepend=" and ">
+			<![CDATA[t.role_id = #roleId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="detailId" prepend=" and ">
+			<![CDATA[t.trade_detail_id = #detailId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="transferPhase" prepend=" and ">
+			<![CDATA[t.transfer_phase = #transferPhase#]]>
+		</isNotEmpty>
+		<isNotEmpty property="userId" prepend=" and ">
+			<![CDATA[t.user_id = #userId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="userName" prepend=" and ">
+			<![CDATA[u.user_name = #userName#]]>
+		</isNotEmpty>
+		<isNotEmpty property="realName" prepend=" and ">
+			<![CDATA[u.real_name = #realName#]]>
+		</isNotEmpty>
+		<isNotEmpty property="startDate">
+			<![CDATA[AND t.date >= #startDate#]]>
+	  	</isNotEmpty>
+	  	<isNotEmpty property="endDate">
+			<![CDATA[AND t.date <= #endDate#]]>
+	  	</isNotEmpty>
+
+        <isNotEmpty property="actualRepayDate">
+            <![CDATA[AND t.actual_repay_date <= #actualRepayDate#]]>
+        </isNotEmpty>
+
+
+	</dynamic>
+	<![CDATA[ORDER BY t.date DESC
+		LIMIT #limitStart#,#pageSize# ;]]>
+  </select>
+  <delete id="TRADEDETAIL-DELETEBYTRADEDETAILID" parameterClass="long">
+ 	  DELETE FROM trade_detail WHERE trade_detail_id = #value#
+  </delete>
+  <select id="TRADEDETAIL-COUNTINTERESTAMOUNTBYPARAMS" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /* TRADEDETAIL-COUNTINTERESTAMOUNTBYPARAMS */ SUM(td1.`amount`) FROM trade_detail td1 
+		INNER JOIN trade t ON t.`trade_id` = td1.`trade_id`
+		INNER JOIN trade_detail td2 ON td1.`note`=td2.`trade_detail_id`
+		WHERE td2.`transfer_phase` = 'original'AND td1.`role_id`='12' AND td1.profit_type='0'
+		]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[td2.user_id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="TRADEDETAIL-GETTRADEAMOUNSUMBYPARAMS" parameterClass="java.util.Map" resultClass="long">
+  	SELECT  
+  		 IFNULL(SUM(t.amount), 0)
+    FROM trade_detail t
+    INNER JOIN role r ON t.role_id = r.role_id 
+    INNER JOIN user_base_info u ON u.user_id =t.user_id
+    WHERE   1 = 1 
+    <dynamic>
+		<isNotEmpty property="tradeId" prepend=" and ">
+			<![CDATA[t.trade_id = #tradeId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="roleId" prepend=" and ">
+			<![CDATA[t.role_id = #roleId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="detailId" prepend=" and ">
+			<![CDATA[t.trade_detail_id = #detailId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="transferPhase" prepend=" and ">
+			<![CDATA[t.transfer_phase = #transferPhase#]]>
+		</isNotEmpty>
+		<isNotEmpty property="profitType" prepend=" and ">
+			<![CDATA[t.profit_type = #profitType#]]>
+		</isNotEmpty>
+		<isNotEmpty property="userId" prepend=" and ">
+			<![CDATA[t.user_id = #userId#]]>
+		</isNotEmpty>
+		<isNotEmpty property="userName" prepend=" and ">
+			<![CDATA[u.user_name = #userName#]]>
+		</isNotEmpty>
+		<isNotEmpty property="realName" prepend=" and ">
+			<![CDATA[u.real_name = #realName#]]>
+		</isNotEmpty>
+		<isNotEmpty property="startDate">
+			<![CDATA[AND t.date >= #startDate#]]>
+	  	</isNotEmpty>
+	  	<isNotEmpty property="endDate">
+			<![CDATA[AND t.date <= #endDate#]]>
+	  	</isNotEmpty>
+	</dynamic>
+  </select>
+  
+  
+  <update id="INVESTDETAIL-UPDATEREPAYDATE" parameterClass="java.util.Map">
+  		UPDATE trade_detail SET repay_date = #repayDate# WHERE trade_detail_id =  #tradeDetailId#
+  </update>
+  
+   <update id="INVESTDETAIL-UPDATE_ACTUALREPAYDATE" parameterClass="java.util.Map">
+  		UPDATE trade_detail SET actual_repay_date = #actualRepayDate# WHERE trade_detail_id =  #tradeDetailId#
+  </update>
+  
+   <update id="INVESTDETAIL_UPDATE_STATUS" parameterClass="java.util.Map">
+  		UPDATE trade_detail SET status = #status# WHERE trade_detail_id =  #tradeDetailId#
+  </update>
+
+
+    <select id="TRADEDETAIL-QUERYCOLLECTIONCOUNTBYPARAMS" parameterClass="java.util.Map" resultClass="long">
+        SELECT
+        count(0)
+        FROM trade_detail t
+        INNER JOIN trade trd on t.trade_id=trd.trade_id
+        INNER JOIN role r ON t.role_id = r.role_id
+        INNER JOIN user_base_info u ON u.user_id =t.user_id
+        WHERE    (t.transfer_phase = 'invest' OR t.transfer_phase = 'repay' OR t.transfer_phase ='original')
+        <dynamic>
+            <isNotEmpty property="tradeId" prepend=" and ">
+                <![CDATA[t.trade_id = #tradeId#]]>
+            </isNotEmpty>
+            <isNotEmpty property="roleId" prepend=" and ">
+                <![CDATA[t.role_id = #roleId#]]>
+            </isNotEmpty>
+            <isNotEmpty property="detailId" prepend=" and ">
+                <![CDATA[t.trade_detail_id = #detailId#]]>
+            </isNotEmpty>
+            <isNotEmpty property="transferPhase" prepend=" and ">
+                <![CDATA[t.transfer_phase = #transferPhase#]]>
+            </isNotEmpty>
+            <isNotEmpty property="userId" prepend=" and ">
+                <![CDATA[t.user_id = #userId#]]>
+            </isNotEmpty>
+            <isNotEmpty property="userName" prepend=" and ">
+                <![CDATA[u.user_name = #userName#]]>
+            </isNotEmpty>
+            <isNotEmpty property="realName" prepend=" and ">
+                <![CDATA[u.real_name = #realName#]]>
+            </isNotEmpty>
+            <isNotEmpty property="startDate">
+                <![CDATA[AND t.repay_date >= #startDate#]]>
+            </isNotEmpty>
+            <isNotEmpty property="endDate">
+                <![CDATA[AND t.repay_date <= #endDate#]]>
+            </isNotEmpty>
+            <isNotEmpty property="actualRepayDate">
+                <![CDATA[AND t.actual_repay_date <= #actualRepayDate#]]>
+            </isNotEmpty>
+
+            <isNotEmpty property="tradeName">
+                <![CDATA[AND trd.trade_name like  '%$tradeName$%']]>
+            </isNotEmpty>
+
+            <isNotEmpty property="status" prepend=" and ">
+                <![CDATA[t.status in]]>
+                <iterate property="status" open="(" close=")" conjunction=",">
+                    <![CDATA[#status[]#]]>
+                </iterate>
+            </isNotEmpty>
+
+        </dynamic>
+    </select>
+    <select id="TRADEDETAIL-QUERYCOLLECTIONBYPARAMS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRADEQUERYDETAIL">
+        SELECT
+        t.trade_detail_id,
+        t.order_no,
+        t.user_id,
+        t.role_id,
+        u.user_base_id,
+        u.user_name,
+        u.real_name,
+        t.trade_id,
+        t.amount,
+        t.transfer_phase,
+        t.date,
+        t.note,
+        t.profit_type,
+        <!--t.profit_rate,-->
+        t.repay_period_no,
+        t.repay_period_count,
+        <!--t.repay_date,-->
+        t.ext_order ,
+        t.actual_repay_date,
+		trd.trade_expire_date repay_date,
+		trd.interest_rate profit_rate,
+        trd.trade_name,
+        trd.trade_status,
+        trd.demand_id,
+        trd.trade_amount,
+        trd.loaned_amount,
+		trd.time_limit,
+		trd.time_limit_unit,
+        t.actual_repay_date,
+        t.status
+        FROM trade_detail t
+        INNER JOIN trade trd on t.trade_id=trd.trade_id
+        INNER JOIN role r ON t.role_id = r.role_id
+        INNER JOIN user_base_info u ON u.user_id =t.user_id
+        WHERE      (t.transfer_phase = 'invest' OR t.transfer_phase = 'repay' OR t.transfer_phase ='original')
+        <dynamic>
+            <isNotEmpty property="tradeId" prepend=" and ">
+                <![CDATA[t.trade_id = #tradeId#]]>
+            </isNotEmpty>
+            <isNotEmpty property="roleId" prepend=" and ">
+                <![CDATA[t.role_id = #roleId#]]>
+            </isNotEmpty>
+            <isNotEmpty property="detailId" prepend=" and ">
+                <![CDATA[t.trade_detail_id = #detailId#]]>
+            </isNotEmpty>
+            <isNotEmpty property="transferPhase" prepend=" and ">
+                <![CDATA[t.transfer_phase = #transferPhase#]]>
+            </isNotEmpty>
+            <isNotEmpty property="userId" prepend=" and ">
+                <![CDATA[t.user_id = #userId#]]>
+            </isNotEmpty>
+            <isNotEmpty property="userName" prepend=" and ">
+                <![CDATA[u.user_name = #userName#]]>
+            </isNotEmpty>
+            <isNotEmpty property="realName" prepend=" and ">
+                <![CDATA[u.real_name = #realName#]]>
+            </isNotEmpty>
+            <isNotEmpty property="startDate">
+                <![CDATA[AND t.repay_date >= #startDate#]]>
+            </isNotEmpty>
+            <isNotEmpty property="endDate">
+                <![CDATA[AND t.repay_date <= #endDate#]]>
+            </isNotEmpty>
+            <isNotEmpty property="actualRepayDate">
+                <![CDATA[AND t.actual_repay_date <= #actualRepayDate#]]>
+            </isNotEmpty>
+
+            <isNotEmpty property="status" prepend=" and ">
+                <![CDATA[t.status in]]>
+                <iterate property="status" open="(" close=")" conjunction=",">
+                    <![CDATA[#status[]#]]>
+                </iterate>
+            </isNotEmpty>
+
+			<isNotEmpty property="tradeStatusList" prepend=" and ">
+				<![CDATA[trd.trade_status in]]>
+				<iterate property="tradeStatusList" open="(" close=")" conjunction=",">
+					<![CDATA[#tradeStatusList[]#]]>
+				</iterate>
+			</isNotEmpty>
+
+            <isNotEmpty property="tradeName">
+                <![CDATA[AND trd.trade_name like  '%$tradeName$%']]>
+            </isNotEmpty>
+
+			<isNotEmpty property="tradeStatus">
+				<![CDATA[AND trd.trade_status = #tradeStatus#]]>
+			</isNotEmpty>
+
+        </dynamic>
+        <![CDATA[ORDER BY t.date DESC
+		LIMIT #limitStart#,#pageSize# ;]]>
+    </select>
+
+	<select id="TRADEDETAIL-getById" parameterClass="long" resultMap="RM-TRADEDETAIL">
+		SELECT
+		t.trade_detail_id,
+		t.order_no,
+		t.user_id,
+		t.role_id,
+		t.trade_id,
+		t.amount,
+		t.transfer_phase,
+		t.date,
+		t.note,
+		t.profit_type,
+		t.profit_rate,
+		t.repay_period_no,
+		t.repay_period_count,
+		t.repay_date,
+		t.ext_order,
+		t.actual_repay_date
+		FROM trade_detail t WHERE   1 = 1
+		AND t.trade_detail_id  = #value#
+	</select>
+  
+</sqlMap>

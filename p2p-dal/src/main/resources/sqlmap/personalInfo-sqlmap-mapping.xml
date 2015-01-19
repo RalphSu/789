@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+	<resultMap id="RM-PERSONAL-INFO" class="com.icebreak.p2p.dataobject.PersonalInfoDO">
+		<result property="id" column="id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="certNo" column="cert_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="businessPeriod" column="business_period" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="certFrontPath" column="cert_front_path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="certBackPath" column="cert_back_path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankOpenName" column="bank_open_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankCardNo" column="bank_card_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankType" column="bank_type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankKey" column="bank_key" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankProvince" column="bank_province" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankCity" column="bank_city" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankAddress" column="bank_address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="gender" column="gender" javaType="int" jdbcType="INT" nullValue="0"/>
+		<result property="referees" column="referees" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="customerSource" column="customer_source" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		
+		<result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="logPassword" column="log_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="payPassword" column="pay_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="accountId" column="account_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="accountName" column="account_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mobile" column="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mobileBinding" column="mobile_binding" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="mail" column="mail" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mailBinding" column="mail_binding" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="type" column="type" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="state" column="state" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="rowAddTime" column="row_add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="rowUpdateTime" column="row_update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="realNameAuthentication" column="real_name_authentication" javaType="java.lang.String" jdbcType="ENUM"/>
+	</resultMap>
+	
+	<resultMap id="RM-PERSONAL-INFO-LIST" class="com.icebreak.p2p.dataobject.PersonalInfoDO">
+		<result property="id" column="id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="certNo" column="cert_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="businessPeriod" column="business_period" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="certFrontPath" column="cert_front_path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="certBackPath" column="cert_back_path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankOpenName" column="bank_open_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankCardNo" column="bank_card_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankType" column="bank_type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankKey" column="bank_key" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankProvince" column="bank_province" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankCity" column="bank_city" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankAddress" column="bank_address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="gender" column="gender" javaType="int" jdbcType="INT" nullValue="0"/>
+		<result property="referees" column="referees" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="customerSource" column="customer_source" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="memberNo" column="member_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="role" column="role_id" javaType="int" jdbcType="int"/>
+		
+		<result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="accountId" column="account_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="accountName" column="account_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mobile" column="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mobileBinding" column="mobile_binding" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="mail" column="mail" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mailBinding" column="mail_binding" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="type" column="type" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="state" column="state" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="rowAddTime" column="row_add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="rowUpdateTime" column="row_update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="realNameAuthentication" column="real_name_authentication" javaType="java.lang.String" jdbcType="ENUM"/>
+	</resultMap>
+
+	<!-- ============================================= -->
+	<!-- mapped statements for IbatisPersonalInfoDAO -->
+	<!-- ============================================= -->
+	<!-- mapped statement for IbatisPersonalInfoDAO.insert -->
+	<insert id="MS-PERSONAL-INFO-INSERT">
+		<![CDATA[
+		insert /*MS-ELOAN-PERSONAL-INFO-INSERT*/ into personal_info(user_base_id,real_name,cert_no,business_period,
+		cert_front_path,cert_back_path,bank_open_name,bank_card_no,bank_type,bank_key,bank_province,bank_city,
+		bank_address,gender,referees,customer_source) values (#userBaseId#, #realName#, #certNo#, #businessPeriod#, 
+		#certFrontPath#, #certBackPath#, #bankOpenName#, #bankCardNo#,#bankType#, #bankKey#, #bankProvince#, 
+		#bankCity#, #bankAddress#, #gender#, #referees#,#customerSource#)
+		]]>
+		<selectKey resultClass="long" keyProperty="id">
+			<![CDATA[SELECT LAST_INSERT_ID() AS id ]]>
+		</selectKey>
+	</insert>
+
+	<!-- mapped statement for IbatisPersonalInfoDAO.update -->
+	<update id="MS-PERSONAL-INFO-UPDATE">
+		update /*MS-ELOAN-PERSONAL-INFO-UPDATE*/ personal_info set real_name=#realName#,
+		<isNotEmpty property="certNo">
+			cert_no=#certNo#,
+		</isNotEmpty>
+		business_period=#businessPeriod#,
+		cert_front_path=#certFrontPath#, cert_back_path=#certBackPath#, bank_open_name=#bankOpenName#, bank_card_no=#bankCardNo#, 
+		bank_type=#bankType# ,bank_key=#bankKey#, bank_province=#bankProvince#, bank_city=#bankCity#, bank_address=#bankAddress#, 
+		gender=#gender#, referees=#referees#, customer_source=#customerSource# where (id = #id#)
+	</update>
+
+	<!-- mapped statement for IbatisPersonalInfoDAO.delete -->
+	<delete id="MS-PERSONAL-INFO-DELETE">
+		<![CDATA[
+		delete /*MS-ELOAN-PERSONAL-INFO-DELETE*/ from personal_info where (id = #value#)
+		]]>
+	</delete>
+	
+	<!-- mapped statement for IbatisPersonalInfoDAO.queryCount -->
+	<select id="MS-PERSONAL-INFO-QUERY_COUNT" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /*MS-PERSONAL-INFO-QUERY_COUNT*/ COUNT(1)
+		FROM personal_info p INNER JOIN  user_base_info u ON p.user_base_id=u.user_base_id  
+		LEFT JOIN user_relation r ON r.child_id=u.user_id LEFT JOIN user_role ur ON ur.user_id=u.user_id
+		WHERE u.type='GR' AND ur.`role_id` IN (11,12,13)]]>
+		<dynamic>
+			<isNotEmpty property="userBaseId" prepend=" and ">
+				<![CDATA[p.user_base_id = #userBaseId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[p.real_name like '%$realName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="role" prepend=" and ">
+				<![CDATA[ur.role_id = #role#]]>
+			</isNotEmpty>
+			<isNotEmpty property="certNo" prepend=" and ">
+				<![CDATA[p.cert_no = #certNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="mobile" prepend=" and ">
+				<![CDATA[u.mobile = #mobile#]]>
+			</isNotEmpty>
+			<isNotEmpty property="memberNo" prepend=" and ">
+				<![CDATA[r.member_no = #memberNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name like '%$userName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="accountName" prepend=" and ">
+				<![CDATA[u.account_name = #accountName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="state" prepend=" and ">
+				<![CDATA[u.state = #state#]]>
+			</isNotEmpty>
+			<isNotEmpty property="referees" prepend=" and ">
+				<![CDATA[p.referees = #referees#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<!-- mapped statement for IbatisPersonalInfoDAO.queryList -->
+	<select id="MS-PERSONAL-INFO-QUERY_LIST" resultMap="RM-PERSONAL-INFO-LIST">
+		<![CDATA[
+		SELECT /*MS-PERSONAL-INFO-QUERY_LIST*/ *
+		FROM  personal_info p INNER JOIN  user_base_info u ON p.user_base_id=u.user_base_id  
+		LEFT JOIN user_relation r ON r.child_id=u.user_id LEFT JOIN user_role ur ON ur.user_id=u.user_id
+		WHERE u.type='GR' AND ur.`role_id` IN (11,12,13)]]>
+		<dynamic>
+			<isNotEmpty property="userBaseId" prepend=" and ">
+				<![CDATA[p.user_base_id = #userBaseId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[p.real_name like '%$realName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="certNo" prepend=" and ">
+				<![CDATA[p.cert_no = #certNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="role" prepend=" and ">
+				<![CDATA[ur.role_id = #role#]]>
+			</isNotEmpty>
+			<isNotEmpty property="mobile" prepend=" and ">
+				<![CDATA[u.mobile = #mobile#]]>
+			</isNotEmpty>
+			<isNotEmpty property="memberNo" prepend=" and ">
+				<![CDATA[r.member_no = #memberNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name like '%$userName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="accountName" prepend=" and ">
+				<![CDATA[u.account_name = #accountName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="state" prepend=" and ">
+				<![CDATA[u.state = #state#]]>
+			</isNotEmpty>
+			<isNotEmpty property="referees" prepend=" and ">
+				<![CDATA[p.referees = #referees#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY row_add_time DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="MS-INFO-QUERY_ALLLIST" resultMap="RM-PERSONAL-INFO">
+		<![CDATA[
+		SELECT /*MS-INFO-QUERY_ALLLIST*/ *
+		FROM personal_info p INNER JOIN  user_base_info u ON p.user_base_id=u.user_base_id  WHERE 1=1 ]]>
+		<dynamic>
+			<isNotEmpty property="userBaseId" prepend=" and ">
+				<![CDATA[p.user_base_id = #userBaseId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[p.real_name like '%$realName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="certNo" prepend=" and ">
+				<![CDATA[p.certNo = #certNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name like '%$userName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="startCreateTime" prepend=" and ">
+				<![CDATA[u.row_add_time >= #startCreateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endCreateTime" prepend=" and ">
+				<![CDATA[u.row_add_time <= #endCreateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startUpdateTime" prepend=" and ">
+				<![CDATA[u.row_update_time >= #startUpdateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endUpdateTime" prepend=" and ">
+				<![CDATA[u.row_update_time <= #endUpdateTime#]]>
+			</isNotEmpty>
+			<isPropertyAvailable property="realNameAuthentication">
+				<isNotEqual property="realNameAuthentication" prepend=" and " compareValue="N">
+				<![CDATA[u.real_name_authentication = #realNameAuthentication#]]>
+				</isNotEqual>
+				<isEqual property="realNameAuthentication" prepend=" and " compareValue="N">
+					<![CDATA[u.real_name_authentication IS NULL]]>
+				</isEqual>
+			</isPropertyAvailable>
+			
+		</dynamic>
+		<![CDATA[ORDER BY u.row_add_time DESC,row_update_time DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="MS-INFO-QUERY_ALLLCOUNT" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /*MS-INFO-QUERY_ALLLCOUNT*/ IFNULL(COUNT(1),0)
+		FROM personal_info p INNER JOIN  user_base_info u ON p.user_base_id=u.user_base_id  WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="userBaseId" prepend=" and ">
+				<![CDATA[p.user_base_id = #userBaseId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[p.real_name like '%$realName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="certNo" prepend=" and ">
+				<![CDATA[p.certNo = #certNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name like '%$userName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="startCreateTime" prepend=" and ">
+				<![CDATA[u.row_add_time >= #startCreateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endCreateTime" prepend=" and ">
+				<![CDATA[u.row_add_time <= #endCreateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startUpdateTime" prepend=" and ">
+				<![CDATA[u.row_update_time >= #startUpdateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endUpdateTime" prepend=" and ">
+				<![CDATA[u.row_update_time <= #endUpdateTime#]]>
+			</isNotEmpty>
+			<isPropertyAvailable property="realNameAuthentication">
+				<isNotEqual property="realNameAuthentication" prepend=" and " compareValue="N">
+				<![CDATA[u.real_name_authentication = #realNameAuthentication#]]>
+				</isNotEqual>
+				<isEqual property="realNameAuthentication" prepend=" and " compareValue="N">
+					<![CDATA[u.real_name_authentication IS NULL]]>
+				</isEqual>
+			</isPropertyAvailable>
+			
+			
+		</dynamic>
+	</select>
+
+
+	<!-- mapped statement for IbatisPersonalInfoDAO.query -->
+	<select id="MS-PERSONAL-INFO-QUERY" resultMap="RM-PERSONAL-INFO">
+		<![CDATA[
+		SELECT /*MS-PERSONAL-INFO-QUERY*/ *
+		FROM personal_info p INNER JOIN  user_base_info u ON p.user_base_id=u.user_base_id  WHERE u.type='GR' AND  u.user_base_id=#userBaseId#]]>
+	</select>
+	
+	
+	<!-- mapped statement for IbatisPersonalInfoDAO.queryCountByInvestor -->
+	<select id="MS-PERSONAL-INFO-QUERY_COUNT_INVESTOR" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /*MS-PERSONAL-INFO-QUERY_COUNT_INVESTOR*/ COUNT(1)
+		FROM personal_info p INNER JOIN user_base_info u ON p.user_base_id = u.user_base_id
+		WHERE 1 = 1
+		AND u.user_id IN
+		(SELECT
+		r.child_id
+		FROM
+		user_relation r
+		WHERE r.parent_id = #userId#)]]>
+		<dynamic>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[p.real_name = #realName#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!-- mapped statement for IbatisPersonalInfoDAO.queryListByInvestor -->
+	<select id="MS-PERSONAL-INFO-QUERY_COUNT_INVESTOR_LIST" resultMap="RM-PERSONAL-INFO">
+		<![CDATA[
+		SELECT /*MS-PERSONAL-INFO-QUERY_COUNT_INVESTOR_LIST*/ *
+		FROM personal_info p INNER JOIN user_base_info u ON p.user_base_id = u.user_base_id	
+		WHERE 1 = 1
+		AND u.user_id IN
+		(SELECT
+		r.child_id
+		FROM
+		user_relation r
+		WHERE r.parent_id = #userId#)]]>
+		<dynamic>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name like CONCAT(CONCAT('%', #userName#),'%') ]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[p.real_name like CONCAT(CONCAT('%', #realName#),'%') ]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY u.row_add_time DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	<select id="MS-PERSONAL-INFO-CERTNO" resultClass="java.lang.String">
+		<![CDATA[
+		SELECT /*MS-PERSONAL-INFO-CERTNO*/ cert_no
+		FROM personal_info p,user_base_info u
+		WHERE 
+		u.account_id = #accountId# AND 
+		p.user_base_id = u.user_base_id]]>
+	</select>
+	
+	<select id="MS-INFO-COUNT_CERTNO_BYCONDITION" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /*MS-INFO-COUNT_CERTNO_BYCONDITION*/ COUNT(1)
+		FROM personal_info p 
+		INNER JOIN  user_base_info u ON p.user_base_id=u.user_base_id  
+		INNER JOIN  user_role ur ON ur.user_id=u.user_id  
+		INNER JOIN  role r ON ur.role_id = r.role_id
+		WHERE  u.`real_name_authentication`='IS' AND u.`state` != 'disable'  ]]>
+		<dynamic>
+			<isNotEmpty property="certNo" prepend=" and ">
+				<![CDATA[p.cert_no = #certNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleCode" prepend=" and ">
+				<![CDATA[r.role_code = #roleCode#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+</sqlMap>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-USER" class="com.icebreak.p2p.dataobject.User" >
+     <result property="id" column="user_id" javaType="long" jdbcType="BIGINT"/>
+     <result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <select id="USER-GETBYUSERID" parameterClass="long" resultMap="RM-USER" resultClass="com.icebreak.p2p.dataobject.User">
+     SELECT 
+	     t.user_id,
+	     t.user_name
+     FROM user t WHERE t.user_id = #value#
+  </select>
+  
+  <select id="USER-GETBYUSERNAME" parameterClass="java.lang.String" resultMap="RM-USER" resultClass="com.icebreak.p2p.dataobject.User">
+     SELECT 
+	     t.user_id,
+	     t.user_name 
+     FROM user t WHERE t.user_name = #value#
+  </select>
+  
+  <insert id="USER-INSERT">
+     INSERT INTO user (
+	      user_name
+     ) VALUES (
+	     #userName#
+     )
+  </insert>
+  
+  <delete id="USER-DELETEBYUSERID" parameterClass="long">
+     DELETE FROM user WHERE user_id = #value#
+  </delete>
+  
+   <delete id="USER-DELETEBYUSERNAME" parameterClass="java.lang.String">
+     DELETE FROM user WHERE user_name = #value#
+  </delete>
+  
+  <select id="USER-EXISTS" parameterClass="java.lang.String" resultClass="int">
+     SELECT COUNT(0) FROM user WHERE user_name = #value#
+  </select>
+  
+  <select id="USER-GETBYSTATUS" parameterClass="java.lang.String" resultClass="java.util.List" resultMap="RM-USER">
+     SELECT 
+	     t.user_id,
+	     t.user_name 
+     FROM user t 
+     INNER JOIN user_base_info ON user_base_info.user_id = t.user_id
+     WHERE user_base_info.state = #value#
+  </select>
+</sqlMap>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-LOANTYPE" class="com.icebreak.p2p.dataobject.LoanTypeDO">
+  	  <result property="id" column="id" javaType="int" jdbcType="int" />
+	  <result property="code" column="code" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="hidden" column="hidden" javaType="java.lang.String" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="RM-LOANTYPE-INSERT">
+	  INSERT INTO loan_type (
+	  	  code,
+	  	  name,
+	  	  hidden
+	  ) VALUES (
+	  	  #code#,
+		  #name#,
+		  #hidden#
+	  )
+  </insert>
+  
+  	<update id="RM-LOANTYPE-UPDATE">
+		<![CDATA[
+		update loan_type set
+		code=#code#,
+		name=#name#,
+		hidden=#hidden#
+		]]>
+	</update>
+	
+	<delete id="RM-LOANTYPE-DELETE">
+		<![CDATA[
+		delete from loan_type
+		where id = #id#
+		]]>
+	</delete>
+
+  
+  <select id="RM-LOANTYPE-SELECT-LIST" resultClass="java.util.List" resultMap="RM-LOANTYPE">
+	  select * from loan_type
+	  WHERE 1 = 1
+	  <isNotEmpty prepend="AND" property="code">
+		  code = #code#
+	  </isNotEmpty>
+	  <isNotEmpty prepend="AND" property="name">
+		  name = #name#
+	  </isNotEmpty>
+	  <isNotEmpty prepend="AND" property="hidden">
+		  hidden = #hidden#
+	  </isNotEmpty>
+  </select>
+</sqlMap>

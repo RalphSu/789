@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-USERADDRESS" class="com.icebreak.p2p.dataobject.user.UserAddressInfoDO">
+     <result property="baseId" column="base_id" javaType="String" jdbcType="VARCHAR"/>
+     <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT"/>
+    <result property="addressType" column="address_type" javaType="String" jdbcType="VARCHAR"/>
+    <result property="recipient" column="recipient" javaType="String" jdbcType="VARCHAR"/>
+    <result property="recipientMobile" column="recipient_mobile" javaType="String" jdbcType="VARCHAR"/>
+    <result property="districtCode" column="district_code" javaType="String" jdbcType="VARCHAR"/>
+    <result property="officeNumber" column="office_number" javaType="String" jdbcType="VARCHAR"/>
+    <result property="extNumber" column="ext_number" javaType="String" jdbcType="VARCHAR"/> 
+	<result property="province" column="province" javaType="String" jdbcType="VARCHAR"/>
+    <result property="city" column="city" javaType="String" jdbcType="VARCHAR"/>
+    <result property="district" column="district" javaType="String" jdbcType="VARCHAR"/>
+    <result property="villages" column="villages" javaType="String" jdbcType="VARCHAR"/>
+    <result property="addressDetail" column="address_detail" javaType="String" jdbcType="VARCHAR"/>
+    <result property="postcCode" column="post_code" javaType="String" jdbcType="VARCHAR"/>
+    <result property="isDefault" column="is_default" javaType="short" jdbcType="TINYINT"/>
+    <result property="rem1" column="rem1" javaType="String" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <insert id="USERADDRESS-INSERT" parameterClass="com.icebreak.p2p.dataobject.user.UserAddressInfoDO">
+    INSERT INTO user_address_info (
+    	 base_id,
+	     user_id,
+	     address_type,
+	     recipient,
+	     recipient_mobile,
+	     district_code,
+	     office_number,
+	     ext_number,
+	     province,
+	     city,
+	     district,
+	     villages,
+	     address_detail,
+	     post_code,
+	     is_default,
+	     rem1
+    ) VALUES (
+	     #baseId#,
+	     #userId#,
+	     #addressType#,
+	     #recipient#,
+	     #recipientMobile#,
+	     #province#,
+	     #city#,
+	     #district#,
+	     #villages#,
+	     #addressDetail#,
+	     #postcCode#,
+	     #isDefault#,
+	     #rem1#
+    )
+  </insert>
+  
+  <delete id="USERADDRESS-DELETEBYBASEID" parameterClass="String">
+  	DELETE FROM user_address_info WHERE base_id = #value#
+  </delete>
+  
+  <select id="USERADDRESS-QUERYUSERADDRESS" parameterClass="java.util.Map" resultMap="RM-USERROLE" resultClass="java.util.List">
+    SELECT uad.* FROM user_address_info uad
+	WHERE 1 = 1
+	<isNotEmpty property="userId">
+		AND uad.user_id =#userId#
+	</isNotEmpty>
+	<isNotEmpty property="baseId">
+		AND uad.base_id =#baseId#
+	</isNotEmpty>
+	ORDER BY uad.row_add_time
+  </select>
+</sqlMap>

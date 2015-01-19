@@ -1,0 +1,59 @@
+
+#parse("/front/index/common/header.vm")
+<body>
+#parse("/front/index/common/header-menu.vm")
+<div class="blank"></div>
+<div class="alrod">
+<div class="reg_tit nav large_font">验证手机</div>
+<div class="load nav">
+    <ul class="four_load">
+        <li class="last start"><div class="num_last"><span class="green_t">1</span></div>
+        <span class="in start">选择融资类型</span></li>
+        <li class="load_link"><img src="/resources/images/new/load4.png"></li>
+        <li class="last"><div class="num_last"><span class="green_t">2</span></div>
+        <span class="next">填写基本信息</span></li>
+        <li class="load_link"><img src="/resources/images/new/load3.png"></li>
+        <li class="in"><div class="num_innext"><span class="green_o">3</span></div>
+        验证手机</li>
+        <li class="load_link"><img src="/resources/images/new/load1.png"></li>
+        <li class="next end"><div class="num_innext"><span class="gray_t">4</span></div>
+        提交完成</li>
+    </ul>
+</div>
+<div class="blank"></div>
+<div class="reg_form nav">
+    <ul class="prompt">
+        <li class="reg_name"> </li>
+        <li class="reg_input"><span class="red">手机号码不正确</span></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+        <li class="reg_name">输入原手机号码： </li>
+        <li class="reg_input"><input name="" type="text" class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+        <li class="reg_name">短信验证码： </li>
+        <li class="reg_input"><input name="" type="text" class="reg_input reg_ver"><a href="#" class="reg_bt"><div class="ver">获取验证码</div></a></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+        <li class="reg_name"></li>
+        <li class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+        <li class="reg_name"></li>
+        <li class="reg_input"><a class="reg_bt" href="$!{rc.contextPath}/loan/type/Suc"><div class="mid_font tran_but_suc reg_blue">下一步</div></a></li>
+        <li class="reg_text"></li>
+    </ul>
+</div>
+<div class=" form_blank"></div>
+<div class="reg_other nav">已有789金融账户？ <a href="login.html" class="reg_link"><span class="blue">现在登录</span></a></div>
+</div>
+<!--注册页面结束-->
+<div class="blank"></div>
+
+#parse("/front/index/common/footer.vm")
+</body>
+</html>

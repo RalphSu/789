@@ -1,0 +1,37 @@
+#parse("/front/index/common/header.vm")
+<body>
+#parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<div class="blank"></div>
+<div class="new nav" style="height: 600px;">
+    #parse("/front/help/helpLeftMenu.vm")
+    <ul class="new_list">
+    	<li class="new_list_tit large_font"><span class="blue">安全保障</span></li>
+    	<li class="new_list_text" style="padding-left:0px;">
+            <p>
+                <img  style="margin-left:1px;" src="/resources/images/aqbz/p1.jpg" />
+            </p>
+            <p>
+                <img src="/resources/images/aqbz/p2.jpg" />
+            </p>
+            <p>
+                <img src="/resources/images/aqbz/p3.jpg" />
+            </p>
+            <p>
+                <img src="/resources/images/aqbz/p4.jpg" />
+            </p>
+            <p>
+                <img src="/resources/images/aqbz/p5.jpg" />
+            </p>
+            <p>
+                <img src="/resources/images/aqbz/p6.jpg" />
+            </p>
+            <br/>
+        </li>
+    </ul>
+</div>
+<div style="clear:both;"></div>
+<!--通用新闻公告内容结束-->
+#parse("/front/index/common/footer.vm")
+</body>
+</html>

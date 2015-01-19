@@ -1,0 +1,23 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<div class="blank"></div>
+<!--通用新闻公告内容开始-->
+<div class="new nav" style="min-height: 600px;">
+    #parse("/front/help/helpLeftMenu.vm")
+    <ul class="new_list">
+        <li class="new_list_tit large_font blue">公告列表</li>
+        #foreach($info in $!newItems)
+            <li>
+                <p class="tit"><a href="/help/news/$!{info.popId}"><span class="mid_font blue">$!{info.title}</span></a><span class="gray_o font_left">$!{dateUtil.simpleFormat($!{info.addTime})}</span></p>
+                <p class="text"><span class="gray_o">$stringUtil.replaceHtml($stringUtil.subString( $!{info.content},80,".."))</span></p>
+            </li>
+        #end
+    </ul>
+</div>
+<div style="clear: both;margin-top:30px;"></div>
+<!--通用新闻公告内容结束-->
+    #parse("/front/index/common/footer.vm")
+</body>
+</html>

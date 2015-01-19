@@ -1,0 +1,50 @@
+#parse("/front/index/common/header-title.vm")
+<body>
+    #parse("/front/index/common/header-p2p.vm")
+<!--内容-->
+
+<div class="top_blank"></div>
+<!--用户菜单开始-->
+<div class="use_menu b_gray_o">
+    <ul class="nav">
+        <li><a href="invest_ext.html">我要推广</a></li>
+        <li><a href="invest_mes.html">消息中心</a></li>
+        <li><a href="invest_plan.html">回款计划</a></li>
+        <li class="light"><a href="/userManage/newBalanceChangeRecord">资金记录</a></li>
+        <li><a href="/tradeQuery/newEntries/12/1">我的项目</a></li>
+        <li><a href="/userManage/userHome">账户概览</a></li>
+    </ul>
+</div>
+<!--用户菜单结束-->
+<div class="blank"></div>
+<!--通用头部结束-->
+<div class="alrod">
+<!--银行卡信息开始-->
+    <div class="form form_nav">
+        #if($!{fail})
+            <div class="m-content fn-right">
+                <br>
+                <div class="log-success fn-fail">
+                    <em></em>
+                    <h1>$!{fail}</h1>
+                    <p>您可能需要：<a href="/userManage/userRealNameInfo" class="fn-o-btn ml5"><span>实名认证</span></a>
+                        #if($!{thirdPartAccountInfo.userStatus.code}=='W')或<a href="/anon/activeYjfAccount" class="fn-o-btn ml5"><span>激活支付账户</span></a>#end</p>
+                </div>
+            </div>
+        #else
+            <!--右侧内容-->
+            <div class="m-content fn-right">
+                <iframe frameborder="0" width="750" height="700" scrolling="no" src="$!withdrawUrl"></iframe>
+            </div>
+        #end
+    </div>
+
+<!--银行卡信息结束-->
+</div>
+<div class="blank"></div>
+<!--通用底部开始-->
+<div class="blank"></div>
+    #parse("/front/index/common/footer-yrd.vm")
+<!--通用底部结束-->
+</body>
+</html>

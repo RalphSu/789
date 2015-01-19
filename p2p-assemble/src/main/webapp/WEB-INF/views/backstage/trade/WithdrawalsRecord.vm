@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>交易管理-个人提现查询</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>交易管理</a></li>
+                            <li><a href>提现查询</a></li>
+                        </ul>
+                    </div>
+					<div class="search fn-clear">
+						<form action="/backstage/queryWithdrawalsRecord" method="post">
+							<dl>
+								<dt>$!appConstantsUtil.getProductName()用户名：</dt>
+								<dd><input type="text" class="u-input w140" name="userId" value="$!{userName}"/></dd>
+							</dl>
+
+							<dl>
+								<dt>时间区间(时间区间,不能大于92天)：</dt>
+								<dd><input type="date" class="u-input w90" name="startTime" value="$!dateUtil.dtSimpleFormat($!{queryOrder.startTime})"/> - <input type="date" yearRange='[-20,40]' class="u-input w90" name="endTime" value="$!dateUtil.dtSimpleFormat($!{queryOrder.endTime})" /></dd>
+							</dl>
+
+							<button type="submit" class="s-btn" style="cursor:pointer;">搜索</button>
+						</form>
+					</div>
+					<div class="t-box">
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+								<th width="130">($!appConstantsUtil.getProductName())提现流水号</th>
+								<th width="130">(托管机构)提现流水号</th>
+								<th width="130">资金账户名</th>
+								<th width="100">提现金额(元)</th>
+								<th width="100">提现银行</th>
+								<th width="120">银行卡号</th>
+                                <th width="60">提现状态</th>
+                                <th width="130">申请提现时间</th>
+							</tr>
+							</thead>
+							<tbody>
+							#if($!page.result.size()==0 || $!{size}==0)
+            				<tr class="even">
+                				<td colspan=9 align=center>暂时没有提现记录</td>
+                			</tr>
+							#end
+							#foreach($info in $page.result)
+							<tr>
+								<td>$!{info.outBizNo}</td>
+								<td>$!{info.payNo}</td>
+                                <td class="orange"><b>$!{info.accountName}</b></td>
+								<td>￥$!{info.amountIn}</td>
+								<td>$!{info.bankName}</td>
+								<td>$!{info.bankAccountNo}</td>
+                                <td class="orange"><b>
+                                    #if($!{info.status}=="WITHDRAWED" || $!{info.status}=="SUCCESS")
+                                        成功
+                                    #elseif($!{info.status}=="FAILURE" || $!{info.status}=="CANCELED" )
+                                        失败
+                                    #else
+                                        处理中
+                                    #end
+                                </b></td>
+                                <td>$!dateUtil.simpleFormat($!{info.payTime})</td>
+							</tr>
+							#end
+                            </tbody>
+						</table>
+						<div class="p-box pages-b fn-clear">
+							#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'demo');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			var url = "/backstage/queryWithdrawalsRecord"
+			+"?userId=$!{userName}"
+			+"&status=$!{queryOrder.status}"
+			+"&bankName=$!{queryOrder.bankName}"
+			+"&startTime=$!{queryOrder.startTime}"
+			+"&endTime=$!{queryOrder.endTime}"
+			+"&payNo=$!{queryOrder.payNo}"
+			+"&pageSize=$!{page.pageSize}&pageNo="+pageNo;
+			window.location.href=url;
+		}
+		$(".syschLocal").click(
+				function(){
+					if(window.confirm("确认进行同步？")){
+						var url = '/backstage/syschLocalWithdrawFlow';
+                		var data = {};
+                		var result = $_GLOBAL.ajax(url, data);
+    					alert(result.message);
+    					document.location.href = document.location.href;
+					}
+				}
+			);
+    </script>
+</body>
+</html>

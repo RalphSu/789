@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
+         http://www.springframework.org/schema/task
+		 http://www.springframework.org/schema/task/spring-task-3.0.xsd 
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+	<bean id="authorityService" class="com.icebreak.p2p.authority.impl.AuthorityServiceImpl" init-method="init">
+	   <property name="identityObtainer" ref="identityObtainer" />
+	   <property name="userDao" ref="userDao" />
+	   <property name="userRoleDao" ref="userRoleDao"/>
+	   <property name="rolePermissonDao" ref="rolePermissionDao" />
+	   <property name="roleDao" ref="roleDao" />
+	   <property name="permissionDao" ref="permissionDao" />
+	   <property name="cache" value="true" />
+	</bean>
+	
+	<bean id="transferService" class="com.icebreak.p2p.transfer.impl.TransferServiceImpl">
+		<property name="amountFlowDao" ref="amountFlowDao" />
+	</bean>
+	
+	<bean id="divisionService" class="com.icebreak.p2p.division.impl.DivisionServiceImpl">
+	   <property name="tradeDao" ref="tradeDao" />
+	   <property name="divisionRuleDao" ref="divisionRuleDao" />
+	   <property name="tradeDetailDao" ref="tradeDetailDao" />
+	   <property name="divisionDetailDao" ref="divisionDetailDao" />
+	   <property name="transferTradeDao" ref="transferTradeDao" />
+	   <property name="divisionTemplateDao" ref="divisionTemplateDao" />
+	   <property name="tradeDivisionDao" ref="tradeDivisionDao" />
+	   <property name="transferService" ref="transferService" />
+	   <property name="divisonRuleRoleDao" ref="divisonRuleRoleDao"></property>
+	</bean>
+	
+	<bean id="chargeService" class="com.icebreak.p2p.charge.impl.ChargeServiceImpl">
+		<property name="chargeTemplateDao" ref="chargeTemplateDao" />
+		<property name="chargeRuleDao" ref="chargeRuleDao" />
+		<property name="chargeProjectDao" ref="chargeProjectDao" />
+		<property name="chargeTemplateProjectDao" ref="chargeTemplateProjectDao" />
+		<property name="amountFlowDao" ref="amountFlowDao" />
+		<property name="chargeDetailDao" ref="chargeDetailDao" />
+		<property name="tradeDetailDao" ref="tradeDetailDao" />
+		<property name="transferService" ref="transferService" />
+	</bean>
+	
+	<bean id="userService" class="com.icebreak.p2p.user.impl.UserServiceImpl">
+		<property name="userDao" ref="userDao" />
+		<property name="userRoleDao" ref="userRoleDao" />
+	</bean>
+	<bean id="bankBaseService" class="com.icebreak.p2p.common.services.impl.BankBaseServiceImpl">
+		<property name="bankInfoDao" ref="bankInfoDao" />
+	</bean>
+	
+	<bean id="publishChargeService" class="com.icebreak.p2p.charge.impl.PublishChargeServiceImpl" />
+	<bean id="finishTradeChargeService" class="com.icebreak.p2p.charge.impl.FinishTradeChargeServiceImpl" />
+	
+	<bean id="tradeChargeServiceFactory" class="com.icebreak.p2p.charge.impl.TradeChargeServiceFactoryImpl">
+		<property name="tradeChargeService">
+			<map>
+				<entry key="publish" value-ref="publishChargeService"/>
+				<entry key="finish" value-ref="finishTradeChargeService"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="chargeTask" class="com.icebreak.p2p.task.ChargeTask">
+		<property name="chargeService" ref="chargeService" />
+		<property name="userService" ref="userService" />
+		<property name="delay" value="15000" />
+		<property name="period" value="600000" />
+	</bean>
+	
+	<bean id="amountTask" class="com.icebreak.p2p.task.AmountTask">
+		<property name="amountFlowDao" ref="amountFlowDao"/>
+		<property name="transferService" ref="transferService" />
+		<property name="delay" value="15000"/>
+		<property name="period" value="900000" />
+	</bean>
+	
+	
+	<bean id="payTogetherAmountFlowTask" class="com.icebreak.p2p.task.PayTogetherAmountFlowTask">
+		<property name="amountFlowDao" ref="amountFlowDao"/>
+		<property name="transferService" ref="transferService" />
+		<property name="tradeService" ref="tradeService" />
+		<property name="remoteTradeService" ref="remoteTradeService" />
+		<property name="payTogetherNotifyHandler" ref="payTogetherNotifyHandler" />
+		<property name="tradeDao" ref="tradeDao" />
+		<property name="delay" value="5000"/>
+		<property name="period" value="60000" />
+	</bean>
+	
+	<bean id="divisionTransferTask" class="com.icebreak.p2p.task.DivisionTransferTask">
+		<property name="transferService" ref="transferService" />
+		<property name="ctrlTransferService" ref="ctrlTransferService" />
+		<property name="userBaseInfoDAO" ref="userBaseInfoDAO" />
+		<property name="divisionDetailDao" ref="divisionDetailDao" />
+		<property name="delay" value="5000"/>
+		<property name="period" value="60000" />
+	</bean>
+	
+	<bean id="personalInfoManager" class="com.icebreak.p2p.user.impl.PersonalInfoManagerImpl">
+		
+	</bean>
+
+
+    <bean id="institutionsInfoManager" class="com.icebreak.p2p.user.impl.InstitutionsInfoManagerImpl">
+
+    </bean>
+	
+	<bean id="taskExecutor" class="com.icebreak.p2p.task.YrdTaskExecutor" init-method="init" destroy-method="shutdown">
+		<property name="tasks">
+			<array>
+ 				<ref bean="payTogetherAmountFlowTask"/>
+ 				<ref bean="divisionTransferTask"/>
+			</array>
+		</property>
+		<property name="corePool" value="100"/>
+		<property name="prefix" value="task-" />
+	</bean>
+	
+	<bean id="indexTradeService" class="com.icebreak.p2p.index.impl.IndexTradeServiceImpl">
+		<property name="indexTradeDao" ref="indexTradeDao" />
+	</bean>
+	
+	<bean id="loginService" class="com.icebreak.p2p.login.impl.LoginServiceImpl">
+		<property name="userBaseInfoDAO" ref="userBaseInfoDAO" />
+	</bean>
+	
+	<bean id="tradeService" class="com.icebreak.p2p.trade.impl.TradeServiceImpl">
+		<property name="investmentDao" ref="investmentDao" />
+		<property name="transferService" ref="transferService" />
+		<property name="tradeDao" ref="tradeDao" />
+		<property name="tradeDetailDao" ref="tradeDetailDao" />
+		<property name="transferTradeDao" ref="transferTradeDao" />
+		<property name="userInvestEntryDao" ref="userInvestEntryDao" />
+		<property name="divisionService" ref="divisionService" />
+	</bean>
+	
+	<bean id="chargeInterceptor" class="com.icebreak.p2p.charge.interceptor.ChargeInterceptor">
+		<property name="chargeTemplateDao" ref="chargeTemplateDao" />
+		<property name="tradeDetailDao" ref="tradeDetailDao" />
+		<property name="tradeDao" ref="tradeDao" />
+		<property name="chargeServiceFactory" ref="tradeChargeServiceFactory" />
+		<property name="chargeService" ref="chargeService" />
+		<property name="chargeProjectDao" ref="chargeProjectDao" />
+		<property name="methodNames">
+			<array>
+				<value>modifyStatus</value>
+			</array>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<array>
+				<value>tradeService</value>
+			</array>
+		</property>
+		<property name="interceptorNames">
+			<array>
+				<value>chargeInterceptor</value>
+			</array>
+		</property>
+	</bean>
+	
+	<bean id="projectStatisticsService" class="com.icebreak.p2p.statistics.impl.ProjectStatisticsServiceImpl"></bean>
+	<bean id="userBaseInfoManager" class="com.icebreak.p2p.user.impl.UserBaseInfoManagerImpl"></bean>
+	<bean id="iActivityService" class="com.icebreak.p2p.activity.impl.IActivityServiceImpl">
+		<property name="activityDao" ref="activityDao" />
+		<property name="giftManager" ref="giftManager" />
+	</bean>
+	<bean id="withdrawalService" class="com.icebreak.p2p.trade.impl.WithdrawalServiceImpl"></bean>
+	<bean id="commonAttachmentService" class="com.icebreak.p2p.common.services.impl.CommonAttachmentServiceImpl"></bean>
+	
+	
+	<bean id="pdfParseService" class="com.icebreak.p2p.front.controller.trade.download.PDFParse">
+		<property name="userBaseInfoManager" ref="userBaseInfoManager" />
+	</bean>
+	
+
+	<task:annotation-driven/>
+</beans>

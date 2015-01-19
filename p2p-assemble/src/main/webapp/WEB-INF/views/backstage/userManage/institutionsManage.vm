@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>用户管理-机构用户管理</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>开户管理</a></li>
+                            <li><a href>机构用户管理</a></li>
+                        </ul>
+                    </div>
+					<div class="search fn-clear">
+						<form action="/backstage/userManage/institutionManage"  method="post" >
+							<dl>
+								<dt>用户名：</dt>
+								<dd><input type="text" class="u-input" name="userName" value="$!{queryConditions.userName}"/></dd>
+							</dl>
+							<dl>
+								<dt>资金账户名：</dt>
+								<dd><input type="text" class="u-input" name="accountName" value="$!{queryConditions.accountName}"/></dd>
+							</dl>
+							<dl>
+								<dt>企业名称：</dt>
+								<dd><input type="text" class="u-input" name="realName" value="$!{queryConditions.realName}"/></dd>
+							</dl>
+							<dl>
+								<dt>状态：</dt>
+								<dd>
+									<div class="jqtransform jqtransform-select3">
+										<select name="state" id="">
+											<option value="">全部</option>
+											<option value="normal"   #if($!{queryConditions.state}=="normal")   selected="selected"  #end >正常</option>
+											<option value="inactive" #if($!{queryConditions.state}=="inactive") selected="selected"  #end >未激活</option>
+											<option value="freeze"   #if($!{queryConditions.state}=="freeze")   selected="selected"  #end >冻结</option>
+											<option value="disable"  #if($!{queryConditions.state}=="disable")  selected="selected"  #end >禁用</option>
+											<option value="locked"  #if($!{queryConditions.state}=="locked")  selected="selected"  #end >锁定</option>
+										</select>
+									</div>
+								</dd>
+							</dl>
+							<button type="submit" class="s-btn" style="cursor:pointer;" buttonMode=true>搜索</button>
+						</form>
+					</div>
+					<div class="t-box">
+						#set($t = $permission.check('/backstage/userManage/institutionManage/addInstitutionsUser/1/2'))
+						#if($t>0)
+							<div class="tools">
+								<ul class="toolbar">
+									<li class="click"><span>
+										<a href="/backstage/userManage/institutionManage/addInstitutionsUser">
+										<img src="/resources/back/images/t01.png"></span>创建机构用户</a></li>
+								</ul>
+							</div>
+						#end
+						#set($m = $permission.check('/backstage/userManage/updateState'))
+						#set($n = $permission.check('/backstage/userManage/resetPayPassword'))
+						#set($t = $permission.check('/backstage/userManage/institutionManage/updateInstitutionsUser/1/2'))
+						<table class="tablelist">
+                            <thead>
+							<tr>
+								<th width="130">机构ID</th>
+								<th width="100">用户名</th>
+								<th width="100">资金账户名</th>
+								<th width="120">企业名称</th>
+								<th width="100">机构简码</th>
+								<th width="120">创建时间</th>
+								<th width="80">状态</th>
+								#if($m>0||$n>0||$t>0)
+								<th width="150">操作</th>
+								#end
+							</tr>
+							</thead>
+                            <tbody>
+							#if($page.result.size()==0)
+								<tr class="even">
+									<td colspan=7 align=center>暂时没有机构用户记录</td>
+								</tr>
+							#end
+							#foreach($info in $page.result)
+							<tr>
+								<td>$!{info.userBaseId}</td>
+								<td>$!{info.userName}</td>
+								<td>$!{info.accountName}</td>
+								<td>$!{info.enterpriseName}</td>
+								<td>$!{info.identityName}</td>
+								<td>$!dateUtil.simpleFormat($!{info.rowAddTime})</td>
+								#if($!{info.state}=="freeze")
+									<td class="red">冻结</td>
+								#elseif($!{info.state}=="inactive")
+									<td class="gray">未激活</td>
+								#elseif($!{info.state}=="disable")
+									<td class="gray">禁用</td>
+								#elseif($!{info.state}=="normal")
+									<td>正常</td>
+								#elseif($!{info.state}=="locked")
+								<td>锁定</td>
+								#else
+									<td>状态暂无</td>
+								#end
+								<td >
+									#if($t>0)
+									<a href="/backstage/userManage/institutionManage/updateInstitutionsUser?userBaseId=$!{info.userBaseId}&userId=$!{info.userId}" class="updateUser">修改</a>
+    								#end
+									#if($m>0)
+									#if($!{info.state}=="normal")
+    								<span class="line">|</span><a href="javascript:;" class="udateState" state="freeze">冻结</a>
+    								#elseif($!{info.state}=="freeze")
+    								<span class="line">|</span><a href="javascript:;" class="udateState" state="normal">解冻</a>
+									#elseif($!{info.state}=="inactive" || $!{info.state}=="disable" || $!{info.state}=="locked")
+									<!--
+    								<span class="line">|</span><a href="javascript:;" class="udateState" state="normal">激活</a>
+									-->
+									#end
+									#end
+									<input type="hidden"  value="$!{info.userBaseId}" />
+									#if($n>0)
+									<!--
+									<span class="line">|</span><a href="javascript:;" class="resetPayPassword" state="normal">重置支付密码</a>
+									-->
+									#end
+									<input type="hidden"  value="$!{info.userBaseId}" />
+								</td>
+							</tr>
+						#end
+                            <tbody>
+						</table>
+						<input type="hidden" value="JG" data="userType"/>
+						<div class="p-box pages-b fn-clear">
+							#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'institutionsManage');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			var url = "/backstage/userManage/institutionManage"
+			+"?userName=$!{queryConditions.userName}"
+			+"&state=$!{queryConditions.state}"
+			+"&accountName=$!{queryConditions.accountName}"
+			+"&realName=$!{queryConditions.realName}"
+			+"&payNo=$!{order.payNo}"
+			+"&pageSize=$!{page.pageSize}&pageNo="+pageNo;
+			window.location.href=url;
+		}
+    </script>
+</body>
+</html>

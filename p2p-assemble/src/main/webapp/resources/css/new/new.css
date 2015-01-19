@@ -1,0 +1,33 @@
+.new {}
+.new ul.new_menu { float:left; width:230px}
+.new ul.new_menu li { height:30px; border:1px solid #ccc; margin-bottom:15px; background:#f7f7f7; line-height:30px; text-align:center}
+.new ul.new_menu li.light {  border:1px solid #009ED6;background:#009ED6; color:#fff}
+
+
+.new ul.new_list { float:right; width:825px; border-left:1px dotted #ccc; padding-left:30px}
+.new ul.new_list li.new_list_tit { border-bottom:1px solid #ccc; height:50px; padding:0px 10px 0px 10px}
+.new ul.new_list li.new_list_text { border-bottom:none; height:auto; min-height:500px; padding:10px 10px 0px 10px; line-height:200%}
+.new ul.new_list li.new_list_text:hover,.new ul.new_list li.coop_logo:hover,.new ul.new_list li.new_list_tit:hover { background:none}
+.new ul.new_list li { border-bottom:1px dotted #ccc; height:130px;padding:0px 10px 0px 10px}
+.new ul.new_list li:hover { background:#F7F7F7}
+.new ul.new_list li p.tit { line-height:60px}
+.new ul.new_list li p.text { line-height:200%}
+
+/*合作伙伴列表*/
+.coop { overflow:hidden}
+.coop ul { width:900px}
+.new ul.new_list li .coop ul li { width:240px; height:96px; border:1px solid #ccc; float:left; margin:15px 15px 0px 0px; padding:0px}
+.new ul.new_list li .coop ul li:hover { border:1px solid #009ED6}
+.new ul.new_list li .coop ul.coop_page li { width:auto; height:auto; border:none; float:none; margin:15px 0px 0px 0px; padding:0px}
+.new ul.new_list li.coop_logo img { border:1px solid #ccc}
+.new ul.new_list li.coop_logo { margin:25px 0px 0px 0px;  height:125px}
+.new ul.new_list li.coop_text { *min-height:auto;min-height:inherit; padding:30px 10px 0px 10px;}
+.new ul.new_list li.coop_text img { margin-right:8px; margin-top:15px; position:relative; top:3px}
+
+/**项目详情页审核表格***/
+.tab_index_invest_detail_audit {border:1px solid #E1E4E9;border-collapse: separate;margin:15px auto;}
+.tab_index_invest_detail_audit th {color:#444;background:#FAFBFC;border:2px solid #fff;height:45px;font-size:16px; }
+.tab_index_invest_detail_audit td{height:34px;border:2px solid #fff;text-align:center;}
+.tab_index_invest_detail_audit td.audit_name{text-align:left;padding-left:60px}
+.tab_index_invest_detail_audit .tr1 td{background-color: #e1e4e9;}
+.tab_index_invest_detail_audit .tr2 td{background-color: #fafbfc;}

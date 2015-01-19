@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>新增帮助页</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>帮助中心管理</a></li>
+                            <li><a href>新增帮助页</a></li>
+                        </ul>
+                    </div>
+					<form action="/backstage/popHelp/addHelpSubmit" method="post" class="ui-form" id="add_pop_form">
+						
+						<fieldset>
+							<legend><h3>新增帮助页</h3></legend>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>帮助标题：</label>
+								<input type="text" class="u-input" style="width:300px;" name="title"/>
+							</div>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>帮助类型：</label>
+								<input type="radio" name="type" class="radio" checked=checked  value="4"/><label for="">普通帮助页</label>
+								<input type="radio" name="type" class="radio"  value="5"/><label for="">帮助模块</label>
+							</div>
+							<div id="selectModules" class="item" style="z-index:10;">
+								<label for="" class="u-label"><span class="required">*</span>模块列表：</label>
+								<div class="jqtransform jqtransform-select3">
+									<select name="parentId">
+										<option value="-1">---&nbsp;请选择帮助模块&nbsp; ---</option>
+										#foreach($help in $!{helpModules})
+										<option value="$!{help.popId}">$!{help.title}</option>
+										#end
+									</select>
+									
+								</div>
+								<p ><span class="required" id="s2"></span></p>
+							</div><br/><br/>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>帮助内容：</label>
+								<textarea name="content" class="u-area" style="width:720px;height:480px;"></textarea>
+							</div> 
+							<div class="item">
+								<label for="" class="u-label">内容备注：</label>
+								<input type="text" class="u-input" style="width:300px;" name="remark"/>
+							</div>
+						</fieldset>
+						<input type="hidden" name="status" value="1"/>
+						<input type="hidden" name="hits" value="0"/>
+						<div class="item mt10">
+                            <a href="javascript:;"  class="u-btn u-btn-blue fn-submit1">立即保存</a><a href="javascript:history.go(-1);" class="u-btn u-btn-gray">取消</a>
+						</div>
+					</form>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="/resources/js/xheditor/xheditor-1.2.1.min.js"></script>
+	<script type="text/javascript" src="/resources/js/xheditor/xheditor_lang/zh-cn.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'popHelp');
+    </script>
+</body>
+</html>

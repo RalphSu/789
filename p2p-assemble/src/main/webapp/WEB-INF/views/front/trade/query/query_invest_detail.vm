@@ -1,0 +1,229 @@
+#parse("/front/index/common/header.vm")
+<body xmlns="http://www.w3.org/1999/html">
+#parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<!--通用头部结束-->
+<div class="blank"></div>
+<div class="alrod">
+<!--项目详情开始-->
+<div class="pbu" style="height: 300px;">
+<div class="pro_bas nav" style="height: 300px;">
+	<div class="bas_left">
+    	<div class="bl_pm">
+        	<div class="bl_pic"><img src="$!{proImageURL}" width="226" height="143"></div>
+            <div class="bl_mes">
+            	<ul class="tit">
+                	<li><span class="big_font font_right">项目名称：$stringUtil.subString($!{trade.name},25,"..")</span><img src="/resources/images/new/bao.png"/> <img src="/resources/images/new/p2c.png"/></li>
+                </ul>
+                <ul class="num">
+                    #set($unit = '天')
+                    #if($!{loanDemand.timeLimitUnit} == 'W' || $!{loanDemand.timeLimitUnit} == 'M')
+                        #set($unit = '个月')
+                    #elseif($!{loanDemand.timeLimitUnit} == 'Y')
+                        #set($unit = '年')
+                    #end
+                    <li><span class="blue bold_font large_font font_right">$!{moneyUtil.getPercentage($!{loanDemand.interestRate})}%</span>年化收益</li>
+                    <li><span class="blue bold_font large_font font_right">$!{moneyUtil.getMoneyByw($!{trade.amount})}</b>万</span>借款总额</li>
+                    <li><span class="blue bold_font large_font font_right">$!{trade.timeLimit} #if($!{trade.timeLimitUnit}=="W" || $!{trade.timeLimitUnit}=="M") 月 #elseif($!{trade.timeLimitUnit}=="D") 天 #else 年 #end</span>融资期限</li>
+                </ul>
+                <ul class="ic">
+                    <li><img src="/resources/images/new/bl_2.png"> <span class="font_right">本息保障</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bl_tim">
+        	<ul>
+            	<li><span class="font_right">预期还款日期</span><span class="blue font_right">
+                    #if(!${trade.expireDateTime})
+                        暂无还款日期
+                    #else
+                        $!{dateUtil.simpleFormat($!{trade.expireDateTime})}
+                    #end
+                </span></li>
+                <li><span class="font_right">还款方式</span><span class="blue font_right">$!{loanDemand.repayDivisionWayMsg}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="bas_right">
+        <div class="cast-money fn-right">
+            <h2 class="f-title">可投金额</h2>
+            <div class="cast-money-box">
+                #set($p = $moneyUtil.getPercentage($!{trade.loanedAmount},$!{trade.amount},$!{trade.leastInvestAmount}))
+                <ul>
+                    <li class="bl_load tt">
+                        <div class="mout_load tt_ld">
+                            <div class="mout_load_in b_blue tt_in" style="width:$!{percent};"></div>$!{percent}
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="blank50"></div>
+                <p>剩余可投资金额：#if($!{percent}=="100.0%")
+                    0
+                #else
+                    $!{moneyUtil.getFormatAmount($!{investableAmount})}
+                #end 元</p>
+                <div class="blank30"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--项目详情结束-->
+<div class="blank"></div>
+<!--项目内容开始-->
+<!--项目菜单代码开始-->
+<div class="nav">
+	<div class="pro_menu" >
+    	<ul>
+        	<li class="light" id="tradeinfo"><a href="javascript:;" >项目详情</a></li>
+            <li id="extendinfo"><a href="javascript:;" >担保信息</a></li>
+            <li id="investinfo"><a href="javascript:;" >审核记录</a></li>
+            <li id="investdetail"><a href="javascript:;" >投资详情</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="nav">
+    <div class="pro_box">
+    	<div class="pro_boxpara pro_wio" id="sumarydiv">
+            <div id="tradeinfodiv" style="display:block">
+                <div class="pro_boxpara">
+                    <ul class="pbp_room">
+                        <li>项目编号 : $!{trade.code}</li>
+                        <li>融资金额 : $!{moneyUtil.getFormatAmount($!{loanDemand.loanAmount})}元</li>
+                        <li>年化收益 : $!{moneyUtil.getPercentage($!{loanDemand.interestRate})}%</li>
+                        <li>还款方式 : $!{loanDemand.repayDivisionWayMsg}</li>
+                        <li>起始时间 : $!{dateUtil.simpleFormat($!{loanDemand.investAvalibleTime})}</li>
+                        <li>结束时间 : $!{dateUtil.simpleFormat($!{loanDemand.deadline})}</li>
+                        <li>还款日期 : $!{dateUtil.simpleFormat($!{trade.expireDateTime})}</li>
+                        <li>融资期限 : $!{loanDemand.timeLimit} $unit</li>
+                        <li>融资方   : $!{loanDemand.userName}</li>
+                        <li>项目地点 : $!{loanDemand.areaNbNo}</li>
+                    </ul>
+                </div>
+                <div class="pro_boxpara">
+                    <ul class="pbp_tit">
+                        <li>项目情况</li>
+                    </ul>
+                    <ul class="pbp_room">
+                        <li class="pb_full">$stringUtil.subString($!{loanDemand.loanNote},80,"...")</li>
+                    </ul>
+                </div>
+                <div class="pro_boxpara"id="">
+                    <ul class="pbp_tit">
+                        <li>资金用途</li>
+                    </ul>
+                    <ul class="pbp_room">
+                        <li class="pb_full">$stringUtil.subString($!{loanDemand.loanPurpose},10,"...")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="pro_boxpara" id="extendinfodiv" style="display:none">
+            <ul class="pbp_room">
+                <li>担保机构 :$!{loanDemand.guaranteeName}</li>
+                <li>担保机构话语：</span>$!{loanDemand.guaranteeStatement}</li>
+                <li>
+                    #if(1==$!{trade.status}||4==$!{trade.status}||6==$!{trade.status})担保承诺函#else 担保函#end：
+                    <div>
+                        #if($!{loanDemand.guaranteeLicenseUrl}!="")
+                            <img id="guaranteeLicenseUrl_Img" src="$!{loanDemand.guaranteeLicenseUrl}" width="291" height="127" alt="承诺函"/>
+                        #else
+                            <img id="guaranteeLicenseUrl_Img" src="/resources/images/common/assure_bg.jpg" width="291" height="127" alt="承诺函"/>
+                        #end
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="pro_boxpara" id="investinfodiv" style="display:none">
+            <ul class="pbp_room">
+                <li><span style="font-size: 14px; font-weight: bold;">一级审核记录:</span>
+                    #if($!{auditrecord1})
+                        $!{auditUser1}</span><span class="mr15">$!dateUtil.simpleFormat($!{auditrecord1.authTime})<span>完成审核</span>
+                    #else
+                        <em></em><span>暂无一级审核记录</span>
+                    #end
+                </li>
+                <li><span style="font-size: 14px; font-weight: bold;">二级审核记录:</span>
+                    #if($!{auditrecord2})
+                        $!{auditUser2}</span><span class="mr15">$!dateUtil.simpleFormat($!{auditrecord2.authTime})<span>完成审核</span></p>
+                    #else
+                        <em></em><span>暂无二级审核记录！</span>
+                    #end
+                </li>
+            </ul>
+        </div>
+
+        <div class="" id="investdetaildiv" style="display:none">
+            <table cellpadding="0" cellspacing="0" border="0" class="pro-table">
+                <tr>
+                    <th class="f-tac" width="10%">投资金额（元）</th>
+                    <th class="f-tac" width="10%">年化收益率(%)</th>
+                    <th class="f-tac" width="10%">期限</th>
+                    <th class="f-tac" width="10%">收益金额（元）</th>
+                    <th class="f-tac" width="10%">投资日期</th>
+
+                    #if($!{trade.effectiveDateTime})
+                        <th class="f-tac" width="10%">成立日期</th>
+                    #end
+                    #if($!{trade.expireDateTime})
+                        <th class="f-tac" width="10%">到期日期</th>
+                    #end
+
+                    <th class="f-tac" width="10%">状态</th>
+                </tr>
+                <tr>
+                    <td class="f-tac">$!{moneyUtil.getFormatAmount($!{tradeItem.amount})} </td>
+                    <td class="f-tac">$!{moneyUtil.getPercentage($!{loanDemand.interestRate})}   #if($!{showExtraProfit})
+                        #if($!{extInterest})<span title='返佣收益率' class="ft-f60">+$!{moneyUtil.getPercentage($!{extInterest})}</span>
+                        #end
+                    #end</td>
+                    #set($unit = '天')
+                    #if($!{loanDemand.timeLimitUnit} == 'W' || $!{loanDemand.timeLimitUnit} == 'M')
+                        #set($unit = '个月')
+                    #elseif($!{loanDemand.timeLimitUnit} == 'Y')
+                        #set($unit = '年')
+                    #end
+                    <td class="f-tac">$!{loanDemand.timeLimit} $unit </td>
+                    <td class="f-tac">$!{moneyUtil.getFormatAmount($!{divisionAmount})}#if($!{showExtraProfit})#if($!{extInterest})<span title='返佣收益' class="ft-f60">+$!{moneyUtil.getFormatAmount($!{profitAmount})}</span>#end#end </td>
+                    <td class="f-tac">$!{dateUtil.dtSimpleFormat($!{tradeItem.date})}</td>
+
+                    #if($!{trade.effectiveDateTime})
+                        <td class="f-tac">$!{dateUtil.dtSimpleFormat($!{trade.effectiveDateTime})}</td>
+                    #end
+                    #if($!{trade.expireDateTime})
+                        <td class="f-tac">$!{dateUtil.dtSimpleFormat($!{trade.expireDateTime})}</td>
+                    #end
+                    <td class="f-tac">$!{tradeItem.status} </td>
+                </tr>
+            </table>
+            <div class="blank30"></div>
+        </div>
+    </div>
+</div>
+    <div style="height: 20px;"></div>
+    <!--项目内容结束-->
+    #parse("/front/index/common/footer.vm")
+
+#parse("/front/index/common/js.vm")
+<script type="text/javascript">
+
+    $(".pro_menu ul li").click(function() {
+        $(".pro_menu ul li").removeClass();
+        $(this).addClass("light");
+        $("#tradeinfodiv").hide();
+        $("#extendinfodiv").hide();
+        $("#investinfodiv").hide();
+        $("#investdetaildiv").hide();
+        var id = $(this).attr("id");
+        $("#" + id + "div").show();
+    });
+
+</script>
+
+</body>
+</html>

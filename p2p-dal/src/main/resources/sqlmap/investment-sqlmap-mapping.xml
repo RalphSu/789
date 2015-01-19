@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-INVESTMENT" class="com.icebreak.p2p.dataobject.Investment">
+	  <result property="id" column="trade_detail_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="tradeId" column="trade_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="demandId" column="demand_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="tradeCode" column="trade_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="tradeName" column="trade_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="tradeStatus" column="trade_status" javaType="int" jdbcType="TINYINT"/>
+	  <result property="amount" column="amount" javaType="long" jdbcType="BIGINT"/>
+	  <result property="receiveId" column="receive_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="receiveRealName" column="receive_real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="receiveUserName" column="receive_user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="payId" column="pay_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="payRealName" column="pay_real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="payUserName" column="pay_user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="payUserEmail" column="pay_user_mail" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="payDate" column="pay_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="createDate" column="trade_create_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="finishDate" column="trade_finish_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="payNote" column="pay_note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="tradeNote" column="trade_note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="chargeAmount" column="charge_amount" javaType="java.lang.Long" jdbcType="BIGINT"/>
+  </resultMap>
+
+  <select id="INVESTMENT-GETBYPROPERTIES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-INVESTMENT">
+	    SELECT  /*INVESTMENT-GETBYPROPERTIES*/
+	    
+		    t2.trade_detail_id, 
+		    
+		    t.trade_id, 
+		    
+		    t.demand_id, 
+		    
+		    t.trade_code, 
+		    
+		    t.trade_name, 
+		    
+		    t.trade_status, 
+		    
+		    t2.amount, 
+		    
+		    t1.user_id receive_id, 
+		    
+		    t1.real_name receive_real_name, 
+		    
+		    t1.user_name receive_user_name,
+		    
+		    t2.user_id pay_id, 
+		    
+		    t2.real_name pay_real_name,
+		    
+		    t2.user_name pay_user_name,
+		    
+		    t2.mail pay_user_mail,
+		    
+		    t2.date pay_date,
+		    
+		    t2.note pay_note,
+		    
+		    t.trade_create_date,
+		    
+		    t.trade_finish_date,
+		    
+		    t.trade_note,
+		    
+		    charge_detail.charge_amount
+	    
+	    FROM trade t
+	
+		INNER JOIN (
+		
+		SELECT trade_detail.trade_id, user_base_info.real_name, trade_detail.user_id, user_base_info.user_name FROM trade_detail
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+		
+		WHERE role.role_code = 'loaner'
+		
+		) t1 ON t.trade_id = t1.trade_id
+		
+		INNER JOIN (
+		
+		SELECT trade_detail.trade_detail_id, trade_detail.amount, trade_detail.trade_id, user_base_info.real_name, trade_detail.user_id, trade_detail.date, user_base_info.user_name,user_base_info.mail,  trade_detail.note FROM trade_detail
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+		
+		WHERE role.role_code IN ('investor') AND trade_detail.`transfer_phase` = 'original' AND trade_detail.`status` = 'PS'
+		
+		) t2 ON t2.trade_id = t.trade_id
+		
+		LEFT JOIN charge_detail ON t2.trade_detail_id = charge_detail.trade_detail_id
+		
+		WHERE 1 = 1
+		<isNotEmpty property="receiveRealName">
+			AND t1.real_name = #receiveRealName#
+		</isNotEmpty>
+		<isNotEmpty property="payRealName">
+			AND t2.real_name = #payRealName#
+		</isNotEmpty>
+		<isNotEmpty property="receiveUserName">
+			AND t1.user_name = #receiveUserName#
+		</isNotEmpty>
+		<isNotEmpty property="payUserName">
+			AND t2.user_name = #payUserName#
+		</isNotEmpty>
+		<isNotEmpty property="status">
+			AND t.trade_status = #status#
+		</isNotEmpty>
+		<isNotEmpty property="tradeId">
+			AND t.trade_id = #tradeId#
+		</isNotEmpty>
+		<isNotEmpty property="startAmount">
+		<![CDATA[AND t2.amount >= #startAmount#]]>
+		</isNotEmpty>
+		<isNotEmpty property="endAmount">
+		<![CDATA[AND t2.amount <= #endAmount#]]>
+		</isNotEmpty>
+		<isNotEmpty property="startDate">
+		<![CDATA[AND t2.date >= #startDate#]]>
+		</isNotEmpty>
+		<isNotEmpty property="endDate">
+		<![CDATA[AND t2.date <= #endDate#]]>
+		</isNotEmpty>
+		ORDER BY t2.date DESC
+		
+		<isNotEmpty property="start">
+		   LIMIT #start#
+		   <isNotEmpty property="size">
+		     , #size#
+		   </isNotEmpty>
+		</isNotEmpty>
+  </select>
+  
+  <select id="INVESTMENT-GETBYPROPERTIESCOUNT" parameterClass="java.util.Map" resultClass="long">
+	    SELECT COUNT(0) FROM trade t
+	
+		INNER JOIN (
+		
+		SELECT trade_detail.trade_id, user_base_info.real_name, trade_detail.user_id, user_base_info.user_name FROM trade_detail
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+		
+		WHERE role.role_code = 'loaner'
+		
+		) t1 ON t.trade_id = t1.trade_id
+		
+		INNER JOIN (
+		
+		SELECT trade_detail.trade_detail_id, trade_detail.amount, trade_detail.trade_id, user_base_info.real_name, trade_detail.user_id, trade_detail.date, user_base_info.user_name, trade_detail.note FROM trade_detail
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+		
+		WHERE role.role_code IN ('investor') AND trade_detail.`transfer_phase` = 'original' AND trade_detail.`status` = 'PS'
+		
+		) t2 ON t2.trade_id = t.trade_id
+		
+		LEFT JOIN charge_detail ON t2.trade_detail_id = charge_detail.trade_detail_id
+		
+		WHERE 1 = 1
+		<isNotEmpty property="receiveRealName">
+			AND t1.real_name = #receiveRealName#
+		</isNotEmpty>
+		<isNotEmpty property="payRealName">
+			AND t2.real_name = #payRealName#
+		</isNotEmpty>
+		<isNotEmpty property="receiveUserName">
+			AND t1.user_name = #receiveUserName#
+		</isNotEmpty>
+		<isNotEmpty property="payUserName">
+			AND t2.user_name = #payUserName#
+		</isNotEmpty>
+		<isNotEmpty property="status">
+			AND t.trade_status = #status#
+		</isNotEmpty>
+		<isNotEmpty property="tradeId">
+			AND t.trade_id = #tradeId#
+		</isNotEmpty>
+		<isNotEmpty property="startAmount">
+		<![CDATA[AND t2.amount >= #startAmount#]]>
+		</isNotEmpty>
+		<isNotEmpty property="endAmount">
+		<![CDATA[AND t2.amount <= #endAmount#]]>
+		</isNotEmpty>
+		<isNotEmpty property="startDate">
+		<![CDATA[AND t2.date >= #startDate#]]>
+		</isNotEmpty>
+		<isNotEmpty property="endDate">
+		<![CDATA[AND t2.date <= #endDate#]]>
+		</isNotEmpty>
+  </select>
+  
+  <select id="INVESTMENT-GETBYID" parameterClass="long" resultClass="com.icebreak.p2p.dataobject.Investment" resultMap="RM-INVESTMENT">
+      SELECT 
+	    
+		    t2.trade_detail_id, 
+		    
+		    t.trade_id, 
+		    
+		    t.demand_id, 
+		    
+		    t.trade_code, 
+		    
+		    t.trade_name, 
+		    
+		    t.trade_status, 
+		    
+		    t2.amount, 
+		    
+		    t1.user_id receive_id, 
+		    
+		    t1.real_name receive_real_name, 
+		    
+		    t1.user_name receive_user_name,
+		    
+		    t2.user_id pay_id, 
+		    
+		    t2.real_name pay_real_name,
+		    
+		    t2.user_name pay_user_name,
+		    
+		    t2.date pay_date,
+		    
+		    t2.note pay_note,
+		    
+		    t.trade_create_date,
+		    
+		    t.trade_finish_date,
+		    
+		    t.trade_note,
+		    
+		    charge_detail.charge_amount
+	    
+	    FROM trade t
+	
+		INNER JOIN (
+		
+		SELECT trade_detail.trade_id, user_base_info.real_name, trade_detail.user_id, user_base_info.user_name FROM trade_detail
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+		
+		WHERE role.role_code = 'loaner'
+		
+		) t1 ON t.trade_id = t1.trade_id
+		
+		INNER JOIN (
+		
+		SELECT trade_detail.trade_detail_id, trade_detail.amount, trade_detail.trade_id, user_base_info.real_name, trade_detail.user_id, trade_detail.date, user_base_info.user_name, trade_detail.note FROM trade_detail
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+		
+		WHERE role.role_code IN ('investor')
+		
+		) t2 ON t2.trade_id = t.trade_id
+		
+		LEFT JOIN charge_detail ON t2.trade_detail_id = charge_detail.trade_detail_id
+		
+		WHERE t2.trade_detail_id = #value#
+  </select>
+</sqlMap>

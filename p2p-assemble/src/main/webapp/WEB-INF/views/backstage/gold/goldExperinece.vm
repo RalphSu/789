@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>体验金管理</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>体验金管理</a></li>
+                            <li><a href>体验金信息列表</a></li>
+                        </ul>
+                    </div>
+					<div class="t-box">
+                        <div class="tools">
+                            <ul class="toolbar">
+                                <li class="click"><span>
+									<a href="/backstage/goldExp/toAddGoldExp">
+                                    <img src="/resources/back/images/t01.png"></span>新增体验金</a></li>
+                            </ul>
+                        </div>
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+                                <th width="100">体验金名称</th>
+                                <th width="100">体验金类型</th>
+								<th width="80">体验金额</th>
+								<th width="120">体验金用途</th>
+								<th width="80">发放数量</th>
+								<th width="80">剩余数量</th>
+								<th width="150">开始时间</th>
+								<th width="150">结束时间</th>
+                                <th width="150">操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							#if($page.result.size()==0)
+                				<tr class="even">
+                					<td colspan=8 align=center>暂时没有记录</td>
+                				</tr>
+							#end
+							#foreach($goldExp in $page.result)
+							<tr>
+                                <td>$!{goldExp.name}</td>
+                                <td>$!{goldExp.activityType.message}</td>
+                                <td>$!{goldExp.amount}</td>
+								<td>$!{goldExp.purpose}</td>
+								<td>$!{goldExp.quantity}</td>
+                                <td>$!{goldExp.surplusQuantity}</td>
+								<td>$!dateUtil.simpleFormat($!{goldExp.startTime})</td>
+								<td>$!dateUtil.simpleFormat($!{goldExp.endTime})</td>
+                                <td><a href="" id="online"><a href="/backstage/goldExp/toEditGoldExp?id=$!{goldExp.id}">修改</a> |
+									<a href="/backstage/goldExp/detail?id=$!{goldExp.id}">详情</a> |
+                                    <a href="javascript: return false;" name="delete" goldExpId="$!{goldExp.id}">删除</a>
+								</td>
+							</tr>
+							#end
+                            </tbody>
+						</table>
+						<div class="p-box pages-b fn-clear">
+            				#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+	
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript">
+        seajs.use($_GLOBAL.mode + 'goldExperience');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			var url = "/backstage/getBankInfoList"
+			+"?&pageSize=$!{page.pageSize}&pageNo="+pageNo;
+			window.location.href=url;
+		}
+    </script>
+</body>
+</html>

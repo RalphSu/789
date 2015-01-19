@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>首页-$!appConstantsUtil.getProductName()金融官网</title>
+	<link type="text/css" href="/styles/style.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="home-newpro fn-left" style="border:none;" >
+			<h3><span>最新项目</span></h3>
+            <div class="newpro-list">
+                <table border="0" cellspacing="0" cellpadding="0" class="newpro-table">
+                    <tbody><tr>
+                        <th width="20%">项目名称</th>
+                        <th width="12%" class="f-tac">预期收益</th>
+                        <th width="10%" class="f-tac">期限</th>
+                        <th width="26%" class="f-tac">担保机构</th>
+                        <th width="20%" class="f-tac">投资进度</th>
+                        <th width="12%" class="f-tac">操作</th>
+                    </tr>
+                    
+                    
+                    #foreach($trade in $!{page.result})
+                    
+                    <tr>
+                        <td>  <a href="javascript:index($!{trade.demandId},$!{trade.tradeId});" >$stringUtil.subString($!{trade.name},10,"..")</a></td>
+                        <td class="f-tac"><em>$!{trade.strRaate}</em></td>
+                        <td class="f-tac">$!{loanUtil.getLoanTime($!{trade.time}, $!{trade.timeUnit})}</td>
+                        <td class="f-tac">$!{trade.guaranteeName}</td>
+
+
+                        <td class="f-tal"><span class="plan_bg mr10 ml10"><span class="plan" style="width:${trade.percent};"></span></span>${trade.percent}</td>
+                        <td class="f-tac">
+                           
+                        #set($needAmount =  $moneyUtil.getMoneyByw($!{trade.amount}, $!{trade.loanedAmount})) <!--还差多少万-->
+
+						#if($!{trade.status}==1 && ${needAmount}>0 )
+						     #if($!{trade.sponsorName})<a href="javascript:index($!{trade.demandId},$!{trade.tradeId});" >定向投资</a>#else<a href="javascript:index($!{trade.demandId},$!{trade.tradeId});" >投资</a>#end
+                        #elseif($!{trade.status}==3)
+
+                      <a  class="f-paid" href="javascript:index($!{trade.demandId},$!{trade.tradeId});">已正常还款</a>
+                        #elseif($!{trade.status}==7)
+                            <td class="button"><a  class="f-paid" href="javascript:index($!{trade.demandId},$!{trade.tradeId});">违约代偿完成</a>
+                        #elseif($!{trade.status}==8)
+                         <a  class="f-paid" href="javascript:index($!{trade.demandId},$!{trade.tradeId});">等待融资人还款</a>
+
+                        #else
+						     <a class="f-full" href="javascript:index($!{trade.demandId},$!{trade.tradeId});">投资已满</a>
+						#end
+						</td>
+                    </tr>
+                    
+                    #end
+                  
+                </tbody></table>
+                <p class="look-more"><a href="/index/moreIndex/10/1?status=1" target="_parent">查看更多项目</a></p>
+            </div>
+  </div>
+                
+
+
+
+</body>
+</html>	
+<script type="text/javascript">
+	function index(demandId, tradeId){
+		top.location.href = '$!{rc.contextPath}/index/lookup/' + demandId + '/' + tradeId;
+	}
+</script>

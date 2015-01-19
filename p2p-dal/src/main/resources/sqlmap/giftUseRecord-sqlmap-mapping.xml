@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="EL-GIFTUSERECORD" class="com.icebreak.p2p.dataobject.GiftUseRecord" >
+  	  <result property="tblBaseId" column="tbl_base_id" javaType="long" jdbcType="BIGINT" />
+  	  <result property="giftName" column="gift_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+  	  <result property="bizNumber" column="biz_number" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="useTime" column="use_time" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="useAmount" column="use_amount" javaType="int" jdbcType="int" />
+	  <result property="note" column="note" javaType="java.lang.String" jdbcType="VARCHAR" />
+	   <result property="status" column="status" javaType="int" jdbcType="tinyint" />
+  </resultMap>
+  
+ 	<insert id="EL-GIFTUSERECORD-INSERT" parameterClass="com.icebreak.p2p.dataobject.GiftUseRecord">
+  		<![CDATA[
+  			INSERT INTO gift_use_record (
+  				gift_name,biz_number,user_id,user_name,use_time,use_amount,status,note) 
+  			VALUES (
+  				#giftName#,#bizNumber#,#userId#,#userName#,#useTime#,#useAmount#,#status#,#note#)
+  		]]>
+  	</insert>
+  	
+  	<update id="EL-GIFTUSERECORD-UPDATE">
+  		update gift_use_record set 
+  			gift_name=#giftName#,biz_number=#bizNumber#,user_id=#userId#,
+  			use_time=#useTime#,use_amount=#useAmount#,note=#note#,status=#status#
+  		where tbl_base_id=#tblBaseId#
+  	</update>
+  	
+  	<select id="EL-GIFTUSERECORD-QUERY" resultMap="EL-GIFTUSERECORD">
+  		SELECT * FROM gift_use_record WHERE biz_number=#bizNumber#
+  	</select>
+  
+	<select id="EL-GIFTUSERECORD-LIST" resultMap="EL-GIFTUSERECORD">
+		<![CDATA[
+		SELECT * FROM gift_use_record a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="bizNumber" prepend=" and ">
+				<![CDATA[a.biz_number = #bizNumber#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftName" prepend=" and ">
+				<![CDATA[a.gift_name = #giftName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[a.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+				<![CDATA[a.use_time >= #startTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and ">
+				<![CDATA[a.use_time <= #endTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and ">
+				<![CDATA[a.use_time <= #endTime#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY a.use_time DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="EL-GIFTUSERECORD-QUERY-COUNT" resultClass="java.lang.Long" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT count(*) FROM gift_use_record a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="bizNumber" prepend=" and ">
+				<![CDATA[a.biz_number = #bizNumber#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftName" prepend=" and ">
+				<![CDATA[a.gift_name = #giftName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[a.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+				<![CDATA[a.use_time >= #startTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and ">
+				<![CDATA[a.use_time <= #endTime#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+</sqlMap>

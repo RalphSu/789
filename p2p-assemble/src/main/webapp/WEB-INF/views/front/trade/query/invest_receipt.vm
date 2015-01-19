@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>账户首页</title>
+	<link type="text/css" href="/styles/style.css" rel="stylesheet" />
+</head>
+<body >
+	<!--头部-->
+	#parse("/front/index/common/header-menu.vm")
+	<div class="home-section_bd pt20">
+  <div class="blank20"></div>
+  <div class="bd-box container fn-clear">
+  
+   
+			<form action="/" method="post" id="_form">
+						<div class="fn-item"  style="padding: 0 0 15px 100px;">
+							<iframe style="width:800px;height:600px;"  id="iframe1" src="/tradeQuery/investReceiptDownLoad/$!{trade.id}?detailId=$!{detailId}&checkType=preview"  runat="server" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+                        </div>
+						<div class="fn-item"  style="padding: 0 0 15px 100px;">
+							<center >
+								<a  href="/tradeQuery/investReceiptDownLoad/$!{trade.id}?detailId=$!{detailId}&checkType=downLoad"  class="fn-g-btn"><span>下载</span></a>&nbsp;&nbsp; 
+								<a  href="javascript:window.close();"  class="fn-h-btn"><span>返回</span></a> 
+							</center>
+						</div>
+			</form>
+  
+  
+  <div class="blank50"></div>
+  
+ 
+  
+</div>
+
+
+#parse("/front/index/common/footer.vm")
+
+#parse("/front/index/common/js.vm")
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>后台管理</title>
+<link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+
+<script type="text/javascript">
+$(function(){	
+	//导航切换
+	$(".menuson li").click(function(){
+		$(".menuson li.active").removeClass("active")
+		$(this).addClass("active");
+	});
+	
+	$('.title').click(function(){
+		var $ul = $(this).next('ul');
+		$('dd').find('ul').slideUp();
+		if($ul.is(':visible')){
+			$(this).next('ul').slideUp();
+		}else{
+			$(this).next('ul').slideDown();
+		}
+	});
+})	
+</script>
+
+
+</head>
+
+<body style="background:#f0f9fd;min-width: 184px;">
+
+    <dl class="leftmenu" style="padding-bottom:0px;margin-bottom:0px;">
+        
+    <dd>
+        <div class="title">
+            <span><img src="/resources/back/images/leftico01.png" /></span>用户管理
+        </div>
+    	<ul class="menuson">
+            #set($p = $permission.check('/backstage/userManage/personalManage'))
+            #if($p > 0)
+                <li class="active"><cite></cite><a href="/backstage/userManage/personalManage" target="mainFrame">个人用户管理</a></li>
+            #end
+            #set($p = $permission.check('/backstage/userManage/institutionManage'))
+            #if($p > 0)
+                <li><cite></cite><a href="/backstage/userManage/institutionManage" target="mainFrame">机构用户管理</a></li>
+            #end
+            #set($p = $permission.check('/backstage/userManage/institutions/1/2'))
+            #if($p > 0)
+                <li><cite></cite><a href="/backstage/userManage/institutions?roleId=0" target="mainFrame">机构人员管理</a></li>
+            #end
+            #set($p = $permission.check('/backstage/userManage/unRealNamePass/1/2'))
+            #if($p > 0)
+                <li><cite></cite><a href="/backstage/userManage/unRealNamePass" target="mainFrame">实名认证查询</a></li>
+            #end
+        </ul>    
+    </dd>
+
+    #set($t = $permission.check('/backstage/addLoanDemand/1/1'))
+    #set($m = $permission.check('/backstage/pageQueryLoanDemand/1/1'))
+    #set($p = $permission.check('/backstage/approvalPass'))
+    #set($q = $permission.check('/backstage/pageQueryOfflineLoanDemand'))
+    #if($t > 0||$m > 0||$p > 0||$q > 0)
+    <dd>
+        <div class="title">
+            <span><img src="/resources/back/images/leftico01.png" /></span>融资管理
+        </div>
+        <ul class="menuson">
+            #if($t > 0)
+                <li><cite></cite><a href="/backstage/addLoanDemand" target="mainFrame">发布融资需求</a></li>
+            #end
+            #if($m > 0)
+                <li><cite></cite><a href="/backstage/pageQueryLoanDemand?module=DRAFT" target="mainFrame">草稿箱</a></li>
+            ##if($p > 0)
+                <li><cite></cite><a href="/backstage/pageQueryLoanDemand?module=WITE" target="mainFrame">融资需求审核</a></li>
+            ##end
+                <li><cite></cite><a href="/backstage/pageQueryLoanDemand?module=PASSADNDISMISS" target="mainFrame">融资审核结果</a></li>
+                <li><cite></cite><a href="/backstage/pageQueryLoanDemand?module=ALL" target="mainFrame">借贷管理</a></li>
+            #end
+            #if($q > 0)
+                <li><cite></cite><a href="/backstage/pageQueryOfflineLoanDemand" target="mainFrame">已下线需求</a></li>
+##                <li><cite></cite><a href="/backstage/pageQueryLoanDemand?module=OVER" target="mainFrame">上传正式担保函</a></li>
+                <li><cite></cite><a href="/backstage/pageQueryLoanDemand?module=OVERALL" target="mainFrame">附件管理</a></li>
+
+            #end
+        </ul>
+    </dd>
+    #end
+    #set($t = $permission.check('/backstage/trade/mainTrade/1/1'))
+    #set($p = $permission.check('/backstage/queryWithdrawalsRecord'))
+    #set($q = $permission.check('/backstage/deductTopUp'))
+    #set($r = $permission.check('/backstage/trade/repayQuery/12/1'))
+    #if($t > 0||$p > 0)
+    <dd>
+        <div class="title">
+            <span><img src="/resources/back/images/leftico01.png" /></span>交易管理
+        </div>
+        <ul class="menuson">
+            #if($t > 0)
+                <li><cite></cite><a href="/backstage/trade/mainTrade/12/1" target="mainFrame">交易查询</a></li>
+            #end
+            #if($q > 0)
+                <li><cite></cite><a href="/backstage/deductTopUp" target="mainFrame">快捷划入查询</a></li>
+            #end
+            #if($q > 0)
+                <li><cite></cite><a href="/backstage/queryWithdrawalsRecord" target="mainFrame">个人提现查询</a></li>
+                <!-- <li><cite></cite><a href="/backstage/netSilverTopUpRecord" target="mainFrame">个人快捷充值查询</a></li> -->
+            #end
+            #if($r > 0)
+                <li><cite></cite><a href="/backstage/trade/repayQuery/12/1" target="mainFrame">还款查询</a></li>
+            #end
+        </ul>
+    </dd>
+    #end
+
+    #set($t = $permission.check('/backstage/userStatistics'))
+    #set($p = $permission.check('/backstage/queryProjectStatistics'))
+    #set($q = $permission.check('/backstage/amountStatistics'))
+    #set($m = $permission.check('/backstage/rechargeStatistics'))
+    #if($t > 0||$p>0||$q>0||$m>0)
+    <dd>
+        <div class="title">
+            <span><img src="/resources/back/images/leftico01.png" /></span>统计管理
+        </div>
+        <ul class="menuson">
+            #if($t > 0)
+                <li><cite></cite><a href="/backstage/userStatistics" target="mainFrame">用户注册统计</a></li>
+            #end
+            #if($p > 0)
+                <li><cite></cite><a href="/backstage/queryProjectStatistics" target="mainFrame">项目统计</a></li>
+            #end</html>
+            #if($q > 0)
+            <li><cite></cite><a href="/backstage/amountStatistics" target="mainFrame">资金统计</a></li>
+            #end
+        </ul>
+    </dd>
+    #end
+    #set($t = $permission.check('/backstage/divisiontemplate/1/2'))
+    #set($p = $permission.check('/backstage/chargetemplate/1/2'))
+    #if($t > 0||$p>0)
+    <dd>
+        <div class="title">
+            <span><img src="/resources/back/images/leftico01.png" /></span>模板管理
+        </div>
+        <ul class="menuson">
+            #if($t > 0)
+                <li><cite></cite><a href="$!{rc.contextPath}/backstage/divisiontemplate/conditions/1/10" target="mainFrame">分润模版管理</a></li>
+            #end
+        </ul>
+    </dd>
+    #end
+    #set($t = $permission.check('/backstage/divisiontemplate/1/2'))
+    #set($p = $permission.check('/backstage/chargetemplate/1/2'))
+    #if($t > 0||$p>0)
+    <dd>
+        <div class="title">
+            <span><img src="/resources/back/images/leftico01.png" /></span>权限管理
+        </div>
+        <ul class="menuson">
+            #if($t > 0)
+                <li><cite></cite><a href="/backstage/userManage/userBaseInfoManage" target="mainFrame">管理员维护</a></li>
+            #end
+##            #if($p > 0)
+##                <li><cite></cite><a href="/backstage/authority/roles/1/12" target="mainFrame">角色管理</a></li>
+##                <li><cite></cite><a href="/backstage/authority/permissions/1/12" target="mainFrame">权限管理</a></li>
+##            #end
+##            #if($q > 0)
+##                <li><cite></cite><a href="/backstage/userManage/changeBroker" target="mainFrame">变更经纪人/营销机构</a></li>
+##            #end
+            <li><cite></cite><a href="/backstage/userManage/toModifyPwd" target="mainFrame">修改密码</a></li>
+        </ul>
+    </dd>
+    #end
+    #set($t = $permission.check('/backstage/noticeCenter/1/2'))
+    #set($p = $permission.check('/backstage/popHelp/1/2'))
+    #set($q = $permission.check('/backstage/emailCenter/1/2'))
+    #if($t > 0||$p>0||$q>0||$m>0)
+    <dd>
+        <div class="title">
+            <span><img src="/resources/back/images/leftico01.png" /></span>消息服务中心
+        </div>
+        <ul class="menuson">
+            #if($t > 0)
+                <li><cite></cite><a href="/backstage/noticeCenter" target="mainFrame">新闻公告</a></li>
+            #end
+            #if($p > 0)
+                <li><cite></cite><a href="/backstage/popHelp" target="mainFrame">帮助中心</a></li>
+            #end
+            #if($q > 0)
+                <li><cite></cite><a href="/backstage/emailCenter" target="mainFrame">邮件模板</a></li>
+            #end
+        </ul>
+    </dd>
+    #end
+
+    #set($t = $permission.check('/backstage/userManage/userBaseInfoManage/1/2'))
+    #set($p = $permission.check('/backstage/authority/1/2'))
+    #set($q = $permission.check('/backstage/userManage/change/12'))
+    #set($m = $permission.check('/backstage/fixData/1/12'))
+    #set($t = $permission.check('/backstage/sysParamManage/1/2'))
+    #set($m = $permission.check('/backstage/OperationJournal/1/2'))
+    #if($t > 0)
+    <dd>
+        <div class="title">
+            <span><img src="/resources/back/images/leftico01.png" /></span>系统设置
+        </div>
+        <ul class="menuson">
+            #if($t > 0)
+                <li><cite></cite><a href="/backstage/sysParamManage" target="mainFrame">系统参数</a></li>
+            #end
+            #if($m > 0)
+                <li><cite></cite><a href="/backstage/OperationJournal" target="mainFrame">短信日志</a></li>
+            #end
+        </ul>
+    </dd>
+    #end
+    #set($t = $permission.check('/backstage/loadBankCard/1/2'))
+    #set($p = $permission.check('/backstage/getBankInfoList/1/2'))
+    #set($q = $permission.check('/backstage/uploadImages2Front/1/2'))
+    #if($t > 0||$p>0||$q>0)
+    <dd>
+        <div class="title">
+            <span><img src="/resources/back/images/leftico01.png" /></span>辅助工具
+        </div>
+        <ul class="menuson">
+            #if($p > 0)
+                <li><cite></cite><a href="/backstage/getBankInfoList" target="mainFrame">银行信息</a></li>
+            #end
+
+##            #if($q > 0)
+##                <li><cite></cite><a href="/backstage/uploadImages2Front" target="mainFrame">上传前台图片</a></li>
+##            #end
+
+            #*<li><cite></cite><a href="/backstage/homsfile/list" target="mainFrame">homs持仓文件管理</a></li>*#
+            <li><cite></cite><a href="/backstage/goldExp/goldExpList" target="mainFrame">体验金管理</a></li>
+        </ul>
+    </dd>
+    #end
+</body>
+</html>

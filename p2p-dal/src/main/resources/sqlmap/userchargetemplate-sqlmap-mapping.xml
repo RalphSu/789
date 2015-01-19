@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="eloan">
+
+ <resultMap id="RM-USERCHARGETEMPLATE" class="com.icebreak.p2p.dataobject.UserChargeTemplate">
+	 <result property="id" column="user_charge_template_id" javaType="long" jdbcType="BIGINT"/>
+	 <result property="templateId" column="charge_template_id" javaType="long" jdbcType="BIGINT"/>
+	 <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT"/>
+ </resultMap>
+ 
+ <insert id="USERCHARGETEMPLATE-ADD" parameterClass="com.icebreak.p2p.dataobject.UserChargeTemplate">
+	  ISNERT INTO user_charge_template (
+		  charge_template_id,
+		  user_id
+	  ) VALUES (
+		  #templateId#,
+		  #userId#
+	  )
+ </insert>
+ 
+ <delete id="USERCHARGETEMPLATE-DELETEBYUSERID" parameterClass="long">
+ 	DELETE FROM user_charge_template WHERE user_id = #value#
+ </delete>
+ 
+ <delete id="USERCHARGETEMPLATE-DELETEBYTEMPLATEID" parameterClass="long">
+ 	DELETE FROM user_charge_template WHERE charge_template_id = #value#
+ </delete>
+ 
+</sqlMap>

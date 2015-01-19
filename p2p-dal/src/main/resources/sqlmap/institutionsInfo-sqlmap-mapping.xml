@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+	<resultMap id="RM-INSTITUTIONS-INFO" class="com.icebreak.p2p.dataobject.InstitutionsInfoDO">
+		<result property="id" column="id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="enterpriseName" column="enterprise_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="organizationCode" column="organization_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="taxRegistrationNo" column="tax_registration_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="businessLicenseNo" column="business_license_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="businessLicenseProvince" column="business_license_province" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="businessLicenseCity" column="business_license_city" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="commonlyUsedAddress" column="commonly_used_address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="businessPeriod" column="business_period" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="legalRepresentativeName" column="legal_representative_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="legalRepresentativeCardNo" column="legal_representative_card_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="businessLicensePath" column="business_license_path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="businessLicenseCachetPath" column="business_license_cachet_path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="certFrontPath" column="cert_front_path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="certBackPath" column="cert_back_path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="openingLicensePath" column="opening_license_path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankOpenName" column="bank_open_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankCardNo" column="bank_card_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankType" column="bank_type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankKey" column="bank_key" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankProvince" column="bank_province" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankCity" column="bank_city" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="bankAddress" column="bank_address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="institutionsInCode" column="institutions_in_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="institutionsThemRoughly" column="institutions_them_roughly" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="referees" column="referees" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="contactName" column="contact_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="comPhone" column="company_phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="cardPeriod" column="legal_representative_card_period" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="contactCertNo" column="contact_cert_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="zipCode" column="zip_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		
+		<result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="logPassword" column="log_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="payPassword" column="pay_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="accountId" column="account_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="accountName" column="account_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mobile" column="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mobileBinding" column="mobile_binding" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="mail" column="mail" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mailBinding" column="mail_binding" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="type" column="type" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="state" column="state" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="rowAddTime" column="row_add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="rowUpdateTime" column="row_update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="identityName" column="identity_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="identityStartNo" column="identity_start_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="identityEndNo" column="identity_end_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="exIdentityNo" column="ex_identity_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="realNameAuthentication" column="real_name_authentication" javaType="java.lang.String" jdbcType="enum"/>
+	</resultMap>
+
+	<!-- ============================================= -->
+	<!-- mapped statements for IbatisInstitutionsInfoDAO -->
+	<!-- ============================================= -->
+	<!-- mapped statement for IbatisInstitutionsInfoDAO.insert -->
+	<insert id="MS-INSTITUTIONS-INFO-INSERT">
+		<![CDATA[
+		insert /*MS-ELOAN-INSTITUTIONS-INFO-INSERT*/ into institutions_info(user_base_id,enterprise_name,organization_code,tax_registration_no,business_license_no,business_license_province,business_license_city,commonly_used_address,business_period,legal_representative_name,legal_representative_card_no,business_license_path,business_license_cachet_path,cert_front_path,cert_back_path,opening_license_path,bank_open_name,bank_card_no,bank_type,bank_key,bank_province,bank_city,bank_address,institutions_in_code,institutions_them_roughly,referees,contact_name,legal_representative_card_period,contact_cert_no,company_phone,zip_code) values (#userBaseId#, #enterpriseName#, #organizationCode#, #taxRegistrationNo#, #businessLicenseNo#, #businessLicenseProvince#, #businessLicenseCity#, #commonlyUsedAddress#, #businessPeriod#, #legalRepresentativeName#, #legalRepresentativeCardNo#, #businessLicensePath#, #businessLicenseCachetPath#, #certFrontPath#, #certBackPath#, #openingLicensePath#, #bankOpenName#, #bankCardNo#,#bankType#, #bankKey#, #bankProvince#, #bankCity#, #bankAddress#, #institutionsInCode#, #institutionsThemRoughly#, #referees#, #contactName#,#cardPeriod#,#contactCertNo#, #comPhone#,#zipCode#)
+		]]>
+		<selectKey resultClass="long" keyProperty="id">
+			<![CDATA[SELECT LAST_INSERT_ID() AS id ]]>
+		</selectKey>
+	</insert>
+
+	<!-- mapped statement for IbatisInstitutionsInfoDAO.update -->
+	<update id="MS-INSTITUTIONS-INFO-UPDATE">
+		<![CDATA[
+		update /*MS-ELOAN-INSTITUTIONS-INFO-UPDATE*/ institutions_info set enterprise_name=#enterpriseName#, organization_code=#organizationCode#, tax_registration_no=#taxRegistrationNo#, business_license_no=#businessLicenseNo#, business_license_province=#businessLicenseProvince#, business_license_city=#businessLicenseCity#, commonly_used_address=#commonlyUsedAddress#, business_period=#businessPeriod#, legal_representative_name=#legalRepresentativeName#, legal_representative_card_no=#legalRepresentativeCardNo#, business_license_path=#businessLicensePath#, business_license_cachet_path=#businessLicenseCachetPath#, cert_front_path=#certFrontPath#, cert_back_path=#certBackPath#, opening_license_path=#openingLicensePath#, bank_open_name=#bankOpenName#, bank_card_no=#bankCardNo#,bank_type=#bankType#,bank_key=#bankKey#, bank_province=#bankProvince#, bank_city=#bankCity#, bank_address=#bankAddress#, institutions_in_code=#institutionsInCode#, institutions_them_roughly=#institutionsThemRoughly#, referees=#referees#, contact_name=#contactName#,legal_representative_card_period=#cardPeriod#,contact_cert_no=#contactCertNo#, company_phone=#comPhone#,zip_code=#zipCode# where (id = #id#)
+		]]>
+	</update>
+
+	<!-- mapped statement for IbatisInstitutionsInfoDAO.delete -->
+	<delete id="MS-INSTITUTIONS-INFO-DELETE">
+		<![CDATA[
+		delete /*MS-ELOAN-INSTITUTIONS-INFO-DELETE*/ from institutions_info where (id = #value#)
+		]]>
+	</delete>
+
+	<!-- mapped statement for IbatisInstitutionsInfoDAO.queryCount -->
+	<select id="MS-INSTITUTIONS-INFO-QUERY_COUNT" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /*MS-INSTITUTIONS-INFO-QUERY_COUNT*/ COUNT(1)
+		FROM institutions_info i INNER JOIN  user_base_info u ON i.user_base_id=u.user_base_id  WHERE u.type='JG']]>
+		<dynamic>
+			<isNotEmpty property="userBaseId" prepend=" and ">
+				<![CDATA[i.user_base_id = #userBaseId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[i.enterprise_name like '%$realName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="certNo" prepend=" and ">
+				<![CDATA[i.institutions_in_code = #certNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name like '%$userName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="accountName" prepend=" and ">
+				<![CDATA[u.account_name = #accountName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="state" prepend=" and ">
+				<![CDATA[u.state = #state#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<!-- mapped statement for IbatisInstitutionsInfoDAO.queryList -->
+	<select id="MS-INSTITUTIONS-INFO-QUERY_LIST" resultMap="RM-INSTITUTIONS-INFO">
+		<![CDATA[
+		SELECT /*MS-INSTITUTIONS-INFO-QUERY_LIST*/ *
+		FROM institutions_info i INNER JOIN  user_base_info u ON i.user_base_id=u.user_base_id  WHERE u.type='JG']]>
+		<dynamic>
+			<isNotEmpty property="userBaseId" prepend=" and ">
+				<![CDATA[i.user_base_id = #userBaseId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[i.enterprise_name like '%$realName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="certNo" prepend=" and ">
+				<![CDATA[i.institutions_in_code = #certNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name like '%$userName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="accountName" prepend=" and ">
+				<![CDATA[u.account_name = #accountName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="state" prepend=" and ">
+				<![CDATA[u.state = #state#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY row_add_time DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<!-- mapped statement for IbatisInstitutionsInfoDAO.query -->
+	<select id="MS-INSTITUTIONS-INFO-QUERY" resultMap="RM-INSTITUTIONS-INFO">
+		<![CDATA[
+		SELECT /*MS-INSTITUTIONS-INFO-QUERY*/ *
+		FROM institutions_info i INNER JOIN  user_base_info u ON i.user_base_id=u.user_base_id  WHERE u.type='JG' AND  u.user_base_id=#userBaseId#]]>
+	</select>
+
+
+	<!-- mapped statement for IbatisInstitutionsInfoDAO.query -->
+	<select id="MS-INSTITUTIONS-INFO-QUERY_USERID_ENTERPRISENAME" resultMap="RM-INSTITUTIONS-INFO">
+		<![CDATA[
+		SELECT /*MS-INSTITUTIONS-INFO-QUERY_USERID_ENTERPRISENAME*/ * FROM  institutions_info i  INNER JOIN user_base_info u ON u.user_base_id = i.user_base_id  INNER JOIN user_role s ON s.user_id=u.user_id INNER JOIN role r ON r.role_id =s.role_id WHERE r.role_id=#roleId#]]>
+	</select>
+	
+	<!-- mapped statement for IbatisInstitutionsInfoDAO.queryByUserId -->
+	<select id="MS-INSTITUTIONS-INFO-QUERY_USERID" resultMap="RM-INSTITUTIONS-INFO">
+		<![CDATA[
+		SELECT /*MS-INSTITUTIONS-INFO-QUERY_USERID*/ *
+		FROM institutions_info i INNER JOIN  user_base_info u ON i.user_base_id=u.user_base_id  WHERE u.user_id=#userId#]]>
+	</select>
+
+
+	<!-- mapped statement for IbatisInstitutionsInfoDAO.queryByRole -->
+	<select id="MS-INSTITUTIONS-INFO-QUERY_BY_ROLE" resultMap="RM-INSTITUTIONS-INFO">
+			<![CDATA[
+		SELECT /*MS-INSTITUTIONS-INFO-QUERY_BY_ROLE_COUNT*/ * FROM institutions_info i  
+		INNER JOIN user_base_info u ON i.user_base_id = u.user_base_id 
+		INNER JOIN user_role r ON u.user_id = r.user_id WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="enterpriseName" prepend=" and "> 
+			<![CDATA[i.enterprise_name = #enterpriseName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and "> <![CDATA[r.role_id in]]>
+				<iterate property="roleId" open="(" close=")" conjunction=","> <![CDATA[#roleId[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY u.row_add_time DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<!-- mapped statement for IbatisInstitutionsInfoDAO.queryByRoleCount -->
+	<select id="MS-INSTITUTIONS-INFO-QUERY_BY_ROLE_COUNT" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /*MS-INSTITUTIONS-INFO-QUERY_BY_ROLE_COUNT*/ COUNT(1) FROM institutions_info i  
+		INNER JOIN user_base_info u ON i.user_base_id = u.user_base_id 
+		INNER JOIN user_role r ON u.user_id = r.user_id WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="enterpriseName" prepend=" and ">
+				<![CDATA[i.enterprise_name = #enterpriseName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[r.role_id in]]>
+				<iterate property="roleId" open="(" close=")" conjunction=",">
+					<![CDATA[#roleId[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="MS-INSTITUTION-INFO-QUERY_COUNT_INVESTOR" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /*MS-INSTITUTION-INFO-QUERY_COUNT_INVESTOR*/ COUNT(1)
+		FROM institutions_info i INNER JOIN user_base_info u ON i.user_base_id = u.user_base_id
+		WHERE 1 = 1
+		AND u.user_id IN
+		(SELECT
+		r.child_id
+		FROM
+		user_relation r
+		WHERE r.parent_id = #userId#)]]>
+		<dynamic>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[p.real_name = #realName#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!-- mapped statement for IbatisPersonalInfoDAO.queryListByInvestor -->
+	<select id="MS-INSTITUTION-INFO-QUERY_COUNT_INVESTOR_LIST" resultMap="RM-INSTITUTIONS-INFO">
+		<![CDATA[
+		SELECT /*MS-INSTITUTION-INFO-QUERY_COUNT_INVESTOR_LIST*/ *
+		FROM institutions_info i INNER JOIN user_base_info u ON i.user_base_id = u.user_base_id
+		WHERE 1 = 1
+		AND u.user_id IN
+		(SELECT
+		r.child_id
+		FROM
+		user_relation r
+		WHERE r.parent_id = #userId#)]]>
+		<dynamic>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[p.real_name = #realName#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY u.row_add_time ASC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+</sqlMap>

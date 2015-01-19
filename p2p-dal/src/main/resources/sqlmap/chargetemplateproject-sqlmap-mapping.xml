@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-CHARGETEMPLATEPROJECT" class="com.icebreak.p2p.dataobject.ChargeTemplateProject">
+	  <result property="id" column="charge_template_project_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="projectId" column="charge_project_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="templateId" column="charge_template_id" javaType="long" jdbcType="BIGINT"/>
+  </resultMap>
+  
+  <insert id="CHARGETEMPLATEPROJECT-ADD" parameterClass="com.icebreak.p2p.dataobject.ChargeTemplateProject">
+	  INSERT INTO charge_template_project (
+		  charge_project_id,
+		  charge_template_id
+	  ) VALUES (
+		  #projectId#,
+		  #templateId#
+	  )
+  </insert>
+  
+  <delete id="CHARGETEMPLATEPROJECT-DELETEBYTEMPLATEID" parameterClass="long">
+  	  DELETE FROM charge_template_project WHERE charge_template_id = #value# 
+  </delete>
+  
+  <delete id="CHARGETEMPLATEPROJECT-DELETEBYPROJECTID" parameterClass="long">
+      DELETE FROM charge_template_project WHERE charge_project_id = #value# 
+  </delete>
+</sqlMap>

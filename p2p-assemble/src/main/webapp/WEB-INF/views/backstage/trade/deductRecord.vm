@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>交易管理-代扣查询</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>交易管理</a></li>
+                            <li><a href>代扣查询</a></li>
+                        </ul>
+                    </div>
+					<div class="search fn-clear">
+						<form action="/backstage/deductTopUp?type=back" method="post">
+							<dl>
+								<dt>时间区间：</dt>
+								<dd><input type="date" class="u-input w90" name="startDate" value="$!{queryTradeOrder.startDate}"/> - <input type="date" yearRange='[-20,20]' class="u-input w90" name="endDate" value="$!{queryTradeOrder.endDate}"/></dd>
+							</dl>
+                            <dl>
+								<dt>状态：</dt>
+								<dd>
+									<div class="jqtransform jqtransform-select3">
+										<select name="status" id="">
+											<option value="">全部</option>
+											<option value="1" #if($!{queryTradeOrder.status}=="1") selected="selected"  #end>代扣成功</option>
+											<option value="0" #if($!{queryTradeOrder.status}=="0") selected="selected"  #end>代扣失败</option>
+										</select>
+									</div>
+								</dd>
+							</dl>
+							<button type="submit" class="s-btn" style="cursor:pointer;">搜索</button>
+						</form>
+					</div>
+					<div class="t-box">
+                        <div class="tools">
+                            <ul class="toolbar">
+                                <li class="click"><span><a href="/tradeDownload/downloadExcel?type=DEDUCT">
+                                    <img src="/resources/back/images/icon05.png" style="height: 25px; width: 25px;"></span>下载数据</a></li>
+                            </ul>
+                        </div>
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+								<th width="130">代扣流水号</th>
+								<th width="130">账户ID</th>
+								<th width="100">代扣金额(元)</th>
+								<th width="100">代扣银行</th>
+								<th width="130">银行卡号</th>
+                                <th width="50">代扣状态</th>
+                                <th width="130">代扣时间</th>
+							</tr>
+							</thead>
+							<tbody>
+							#if($!page.result.size()==0 || !$!page.result)
+            				<tr class="even">
+                				<td colspan=9 align=center>暂时没有代扣记录</td>
+                			</tr>
+							#end
+							#foreach($info in $page.result)
+							<tr>
+								<td>$!{info.outBizNo}</td>
+                                <td class="orange"><b>$!{info.yjfAccountId}</b></td>
+								<td>$!{info.amount}</td>
+								<td>$!{info.bankName}</td>
+                                <td >$!{info.bankAccountNo}</td>
+								<td class="orange">
+									<b>
+									#if($!{info.status}=="1")
+										代扣成功
+        							#elseif($!{info.status}=="0")
+        								代扣失败
+                                    #else
+                                        处理中
+        							#end</b>
+								</td>
+                                <td>$!dateUtil.simpleFormat($!{info.payTime})</td>
+							</tr>
+							#end
+                            </tbody>
+						</table>
+						<div class="p-box pages-b fn-clear">
+							#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'demo');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			var url = "/backstage/deductTopUp"
+			+"?type=back"
+			+"&startTime=$!{queryTradeOrder.startTime}"
+			+"&endTime=$!{queryTradeOrder.endTime}"
+			+"&pageSize=$!{page.pageSize}&pageNo="+pageNo;
+			window.location.href=url;
+		}
+		#if($!{faild})
+			alert('$!{faild}');
+		#end
+    </script>
+</body>
+</html>

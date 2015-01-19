@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-DIVISION" class="com.icebreak.p2p.dataobject.Division">
+	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="yjfUserName" column="yjf_user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="rule" column="division_rule" javaType="double" jdbcType="DECIMAL"/>
+	  <result property="amount" column="amount" javaType="long" jdbcType="BIGINT"/>
+  </resultMap>
+  
+  <select id="DIVIDSION-GETDIVISIONS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-DIVISION">
+    SELECT 
+	    trade_detail.user_id, 
+	    user_base_info.account_name yjf_user_name, 
+	    division_rule.division_rule,
+	    trade_detail.amount 
+    FROM trade_detail
+	INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+	INNER JOIN division_rule ON division_rule.role_id = trade_detail.role_id
+	INNER JOIN trade_division ON trade_division.division_template_id = division_rule.rule_template_id AND trade_division.trade_id = trade_detail.trade_id
+	INNER JOIN role ON trade_detail.role_id = role.role_id
+	WHERE trade_detail.trade_id = #tradeId#
+	<isNotEmpty property="roles">
+	  AND role.role_code IN 
+	  <iterate conjunction="," open="(" close=")" property="roles">
+  		   #roles[]#
+  	  </iterate>
+	</isNotEmpty>
+  </select>
+  
+  <select id="DIVIDSION-GETPARENTDIVISION" parameterClass="java.util.Map" resultClass="com.icebreak.p2p.dataobject.Division" resultMap="RM-DIVISION">
+	  SELECT 
+		  trade_detail.user_id, 
+		  user_base_info.account_name yjf_user_name, 
+		  division_rule.division_rule, 
+		  trade_detail.amount 
+	  FROM trade_detail
+	  INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+	  INNER JOIN division_rule ON division_rule.role_id = trade_detail.role_id
+	  INNER JOIN trade_division ON trade_division.division_template_id = division_rule.rule_template_id AND trade_division.trade_id = trade_detail.trade_id
+	  INNER JOIN user_relation ON user_relation.parent_id = user_base_info.user_id
+	  WHERE user_relation.child_id = #userId# AND trade_detail.trade_id = #tradeId#
+  </select>
+  
+  <select id="DIVISION-GETRULEBYTRADEIDANDUSERID" parameterClass="java.util.Map" resultClass="double">
+	    SELECT DISTINCT(division_rule.division_rule) FROM division_rule 
+		
+		INNER JOIN trade_division ON trade_division.division_template_id = division_rule.rule_template_id
+		
+		INNER JOIN trade_detail ON trade_division.trade_id = trade_detail.trade_id AND division_rule.role_id = trade_detail.role_id
+		
+		WHERE trade_detail.user_id = #userId# AND trade_detail.trade_id = #tradeId#
+  </select>
+</sqlMap>

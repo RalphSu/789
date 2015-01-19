@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="MS-FUNDS_RECORD" class="com.icebreak.p2p.dataobject.FundsRecord" >
+  	  <result property="tbId" column="tb_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+  	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="certNo" column="cert_no" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="outBizNo" column="out_biz_no" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="payNo" column="pay_no" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="fundsFrom" column="funds_from" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="fundsTo" column="funds_to" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="amounts" column="amounts" javaType="double" jdbcType="decimal" />
+	  <result property="charges" column="charges" javaType="double" jdbcType="decimal" />
+	  <result property="acountName" column="acount_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="acountId" column="acount_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="bankName" column="bank_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="bankAcountNo" column="bankAcount_No" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="bankOpenName" column="bank_open_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="payTime" column="pay_time" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="payType" column="pay_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="status" column="status" javaType="int" jdbcType="int" />
+  </resultMap>
+  
+  <!-- mapped statement for TradeDaoImpl.queryCountByCondition -->
+  
+  	<insert id="MS-FUNDS_RECORD-INSERT" parameterClass="com.icebreak.p2p.dataobject.FundsRecord">
+  		<![CDATA[
+  			INSERT INTO funds_record (
+  				tb_id,user_id,real_name,cert_no,user_name,out_biz_no,
+  				pay_no,funds_from,funds_to,amounts,charges,acount_name,
+  				acount_id,bank_name,bankAcount_No,bank_open_name,pay_time,
+  				pay_type,status) 
+  			VALUES (
+  				#tbId#,#userId#,#realName#,#certNo#,#userName#,#outBizNo#,
+  				#payNo#,#fundsFrom#,#fundsTo#,#amounts#,#charges#,#acountName#,
+  				#acountId#,#bankName#,#bankAcountNo#,#bankOpenName#,#payTime#,
+  				#payType#,#status#)
+  		]]>
+  	</insert>
+  	
+  	 <update id="MS-FUNDS_RECORD-UPDATE">
+  		<![CDATA[
+  			update funds_record set
+  				user_id=#userId#,real_name=#realName#,cert_no=#certNo#,
+  				user_name=#userName#,out_biz_no=#outBizNo#,pay_no=#payNo#,
+  				funds_from=#fundsFrom#,funds_to=#fundsTo#,amounts=#amounts#,
+  				charges=#charges#,acount_name=#acountName#,acount_id=#acountId#,
+  				bank_name=#bankName#,bankAcount_No=#bankAcountNo#,bank_open_name=#bankOpenName#,
+  				pay_time=#payTime#,pay_type=#payType#,status=#status#
+  				where tb_id=#tbId#
+  		]]>
+   	 </update>
+	<select id="MS-FUNDS_RECORD-QUERY-COUNT" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT count(0)
+		FROM funds_record f WHERE 1=1 
+		 ]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[f.user_Id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[f.user_name = #"userName"#]]>
+			</isNotEmpty>
+			<isNotEmpty property="certNo" prepend=" and ">
+				<![CDATA[f.cert_no = #certNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[f.real_name = #realName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="outBizNo" prepend=" and ">
+				<![CDATA[f.out_biz_no = #outBizNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="payNo" prepend=" and ">
+				<![CDATA[f.pay_no = #payNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[f.status = #status#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+				<![CDATA[f.pay_time >= #startTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and ">
+				<![CDATA[f.pay_time <= #endTime#]]>
+			</isNotEmpty>
+		</dynamic> 
+	</select>
+	
+	<select id="MS-FUNDS_RECORD-QUERY-LIST" resultMap="MS-FUNDS_RECORD">
+		<![CDATA[
+		SELECT count(0)
+		FROM funds_record f WHERE 1=1 
+		 ]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[f.user_Id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[f.user_name = #"userName"#]]>
+			</isNotEmpty>
+			<isNotEmpty property="certNo" prepend=" and ">
+				<![CDATA[f.cert_no = #certNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[f.real_name = #realName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="outBizNo" prepend=" and ">
+				<![CDATA[f.out_biz_no = #outBizNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="payNo" prepend=" and ">
+				<![CDATA[f.pay_no = #payNo#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[f.status = #status#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+				<![CDATA[f.pay_time >= #startTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and ">
+				<![CDATA[f.pay_time <= #endTime#]]>
+			</isNotEmpty>
+			<![CDATA[ORDER BY f.pay_time DESC
+				LIMIT #limitStart#,#pageSize#;]]>
+		</dynamic> 
+	</select>
+  
+</sqlMap>

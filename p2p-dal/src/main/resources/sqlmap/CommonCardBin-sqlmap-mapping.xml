@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="specialmer">
+
+    <resultMap id="RM-COMMON-CARD-BIN" class="com.icebreak.p2p.dal.dataobject.CommonCardBinDO">
+        <result property="id" column="id" javaType="int" jdbcType="INT" nullValue="0"/>
+        <result property="bankName" column="bank_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="bankId" column="bank_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="cardName" column="card_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="cardType" column="card_type" javaType="java.lang.String" jdbcType="CHAR"/>
+        <result property="cardLength" column="card_length" javaType="int" jdbcType="INT" nullValue="0"/>
+        <result property="cardNum" column="card_num" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="cardFlagLen" column="card_flag_len" javaType="int" jdbcType="INT" nullValue="0"/>
+        <result property="cardFlag" column="card_flag" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="rawAddTime" column="raw_add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="rawUpdateTime" column="raw_update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisCommonCardBinDAO -->
+    <!-- ============================================= -->
+    <!-- mapped statement for IbatisCommonCardBinDAO.findByCardFlag -->
+    <select id="MS-COMMON-CARD-BIN-FIND-BY-CARD-FLAG" resultMap="RM-COMMON-CARD-BIN">
+    <![CDATA[
+        select /*MS-YRD-COMMON-CARD-BIN-FIND-BY-CARD-FLAG*/ * from common_card_bin where (card_flag = #value#)
+    ]]>
+    </select>
+
+    <!-- mapped statement for IbatisCommonCardBinDAO.getAllFlagLen -->
+    <select id="MS-COMMON-CARD-BIN-GET-ALL-FLAG-LEN" resultClass="int">
+    <![CDATA[
+        select /*MS-YRD-COMMON-CARD-BIN-GET-ALL-FLAG-LEN*/ card_flag_len from common_card_bin group by card_flag_len order by card_flag_len DESC
+    ]]>
+    </select>
+
+    <!-- mapped statement for IbatisCommonCardBinDAO.getAllFlagLen -->
+    <select id="MS-COMMON-CARD-BIN-GET-BY-CARD-NO" resultMap="RM-COMMON-CARD-BIN">
+    <![CDATA[
+        select /*MS-YRD-COMMON-CARD-BIN-FIND-BY-CARD-FLAG*/ * from common_card_bin where card_flag = LEFT(#cardNum#,card_flag_len) and bank_id = #bankId#
+    ]]>
+    </select>
+
+</sqlMap>

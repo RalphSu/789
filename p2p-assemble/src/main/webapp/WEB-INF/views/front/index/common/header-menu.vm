@@ -1,0 +1,58 @@
+<!--浮动图标开始-->
+##<div class="floco">
+##    <ul>
+##        <li><img src="/resources/images/new/qq.png" width="50" height="50" /></li>
+##        <li><img src="/resources/images/new/num.png" width="50" height="50" /></li>
+##    </ul>
+##</div>
+<!--浮动图标结束-->
+<!--通用头部开始-->
+<div class="top b_gray">
+    <ul>
+        <li class="left logo">
+            <a href="/index">
+                <img src="/resources/images/new/logo.png" width="230" height="70" style="margin-top:5px;">
+            </a>
+        </li>
+		#if($sessionScope)
+            <li class="left" style="color: #999;">
+                欢迎您 : $!{sessionScope.realName} !&nbsp;&nbsp;<a href="$!{rc.contextPath}/login/logout?redirect=/login/login" style="color: #a60000;">[安全退出]</a>
+                <strong>&nbsp;</strong>
+            </li>
+
+		#else
+            <li class="left"><a href="/login/login"><font color="red">登录</font></a></li>
+            <li class="left"><a href="/anon/register"><font color="red">注册</font></a></li>
+		#end
+
+        <li class="phone"><span class=" gray_o big_font">$!appConstantsUtil.getCustomerServicePhone()</span></li>
+    </ul>
+    <ul class="header_menu">
+        <li $!{helpSelected} id="header_about"><a href="/help/aboutus">帮助中心</a></li>
+        <li id="header_home"><a href="/usercenter/home">我的账户</a></li>
+##        <li id="header_loaner"><a href="$!{rc.contextPath}/loan/type">我要融资</a></li>
+        <li id="header_investor"><a href="$!{rc.contextPath}/index/invest/10/1">我要投资</a></li>
+        <li id="header_index" class="light"><a href="/">首页</a></li>
+    </ul>
+</div>
+
+<script>
+
+    (function(){
+        var old = window.onload;
+        window.onload = function(){
+            $('.fn-hr-menu a').mouseover(function(){
+                if(!$(this).hasClass('curr')) {
+                    $(this).addClass('curr');
+                    $(this).unbind('mouseout').mouseout(function(){
+                        $(this).removeClass('curr');
+                    });
+                }
+            });
+        }
+    })();
+    function addLiClass(id) {
+        $(".header_menu li").removeClass();
+        $("#" + id).addClass("light");
+    }
+</script>

@@ -1,0 +1,317 @@
+#parse("/front/index/common/header.vm")
+<style type="text/css">
+</style>
+
+<link type="text/css" href="/styles/style.css" rel="stylesheet" />
+<body>
+<!--头部-->
+	#parse("/front/index/common/header-menu.vm")
+
+
+<div class="home-section_bd pt20 role">
+	<div class="blank20"></div>
+    <div class="blank50"></div>
+    <div class="bd-box db-p14 container fn-clear">
+		<h2 class="title2 mt10"><span class="tit-name">项目详情</span><a class="return" href="/guaranteeCenter/newGuaranteeManager">《 返回</a></h2>
+        <div class="blank15"></div>
+        <div class="short-borrowing fn-left">
+        	<h2 class="f-title fn-clear"><span class="assure-icon fn-right">100%本息担保</span>项目名： $!{trade.name} </h2>
+            <ul class="fs-num fn-clear">
+            	<li class="bd-line">借款总额<strong class="g-green">$!{moneyUtil.getFormatAmount($!{trade.amount})}元</strong></li>
+                <li class="bd-line">年化利率<strong class="g-orange"> $!{totalAnnualInterest}%</strong></li>
+                <li>借款期限<strong>$!{trade.timeLimit} #if($!{trade.timeLimitUnit}=="W" || $!{trade.timeLimitUnit}=="M") 月 #elseif($!{trade.timeLimitUnit}=="D") 天 #else 年 #end</strong></li>
+            </ul>
+            <div class="fs-use">借款用途：$!{loanDemand.loanPurpose}</div>
+        </div>
+        <div class="cast-money fn-right">
+        	<h2 class="f-title">项目状态</h2>
+                 #set($t = $permission.check('/tradeQuery/manualReimbursement'))
+					#if($t>0)
+						
+    					#if($!{operate}=="hk")
+    						#if($!{trade.status}=="5")
+								#if($!{poorAmount}>=0)
+									<a href="/usercenter/deposit"class="fn-g-btn mr5 refund"><span>可用余额不足请先充值</span></a>
+								#else
+									<div class="cast-money-box">	
+									    <span id="payLoan">还款 </span>
+									</div>
+								#end
+							
+							#end
+							
+						#end
+					#end	
+        	<input type="hidden" id="demandId"  name="demandId"  value="$!{loanDemand.demandId}">
+			<input type="hidden" id="tradeId"  name="tradeId"  value="$!{trade.id}">
+			<input type="hidden" id="token" name="token"  value="$!{token}"/>
+        	
+        	#if($!{authOperator})
+				#if($!{trade.status}=="6"&& $!{authOperator}=="level1")
+		            <div class="cast-money-box">
+		                <div class="blank15"></div>
+		                <span>满标审核（一级审核）</span>
+		            </div>
+					<div class="pop-tip">
+						<em class="arw"></em>
+						<div class="pop-con">
+						
+						
+							<p>该操作将确认生成合同 <a href="javascript:;" id="loanAuditFinish"  data="$!{authOperator}">生成合同</a></p>
+							<form action="">
+								<div class="fn-item">
+									<label class="fn-label">审核密码：</label>
+									<input type="password" class="fn-text"  id="checkPasswordOne"　name="checkPassword">
+									<br /><b id="pay-password-messge" name="pay-password-messge" class="error-tip" for="checkPassword" generated="false"></b>
+								</div>
+								<div class="fn-item">
+								     <input type="hidden" id="loanAuditFinished1" value="no"> 
+								     <input type="hidden" id="checkType"  name="checkType"  value="MAKELOAN"/>
+									<a class="save-btn" id="confirm_check_one" name="confirm_check_one" >确认审核</a><a class="back-btn" href="javascript:window.location.href = window.location.href;">取消</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				#elseif($!{trade.status}=="6"&& $!{authOperator}=="level2")
+		            <div class="cast-money-box">
+		                <div class="blank15"></div>
+		                <span>满标审核（二级审核）</span>
+		            </div>
+					<div class="pop-tip">
+						<em class="arw"></em>
+						<div class="pop-con">
+							<!--<p>该操作将确认生成合同 <a href="">下载合同</a></p>-->
+								<div class="fn-item">
+									<label class="fn-label">审核密码：</label>
+									<input type="password" class="fn-text"   id="checkPasswordTwo" name="checkPassword">
+									<br /><b id="pay-password-messge" name="pay-password-messge" class="error-tip" for="checkPassword" generated="false"></b>
+								</div>
+								<div class="fn-item">
+								    <input type="hidden" id="loanAuditFinished2"  value="no"> 
+								    <input type="hidden" id="checkType"  name="checkType"  value="MAKELOAN"/>
+									<a class="save-btn"  id="confirm_check" name="confirm_check">确认审核</a><a class="back-btn" href="javascript:window.location.href = window.location.href;">取消</a>
+								</div>
+						</div>
+					</div>
+				#else
+				    <div class="cast-money-box">
+		                <div class="blank50"></div>
+		                <span>$!{tradeStatus}	</span>
+		            </div>
+				#end
+				
+			#else	
+					<div class="cast-money-box">
+		                 <div class="blank50"></div>
+		                <span>$!{tradeStatus}	</span>
+		            </div>
+			#end		
+					
+			
+        </div>
+        <div class="blank15"></div>
+        <div class="blank50"></div>
+        <div class="borrowing-info">
+        	<div class="b-tab fn-clear">
+            	<ul>
+                	<li class="curr" id="tradeinfo"><a href="javascript:;">借款信息</a></li>
+                    <li id="touziinfo"><a href="javascript:;">投资明细</a></li>
+                </ul>
+            </div>
+            <!--借款信息start-->
+            <div class="borrowing-list fn-clear" id="tradediv">
+            	<div class="blank5"></div>
+            	<div class="borrow-box fn-left ml20">
+                	<h2>项目信息</h2>
+                	<div class="b-border pro-info">
+                    	<ul>
+                        	<li><span>项目名称：</span>$!{trade.name}</li>
+                            <li><span>借款总额：</span><em>$!{moneyUtil.getFormatAmount($!{trade.amount})}</em> 元</li>
+                            <li><span>已投金额：</span><em>$!{moneyUtil.getFormatAmount($!{trade.loanedAmount})}</em> 元</li>
+
+                            <li><span>成本年化率：</span>$!{totalAnnualInterest}%</p></li>
+                            <li><span>期限：</span>$!{trade.timeLimit} #if($!{trade.timeLimitUnit}=="W" || $!{trade.timeLimitUnit}=="M") 月 #elseif($!{trade.timeLimitUnit}=="D") 天 #else 年 #end</li>
+                            <li><span>还款方式：</span>$!{loanDemand.repayDivisionWayMsg}</li>
+                            <li><span>最低投资额：</span><em>#set($leastInvestAmount=$!{moneyUtil.getFormatAmount($!{trade.leastInvestAmount})}) $!{leastInvestAmount}</em>元</li>
+                            <li><span>满标条件：</span><em>$!{tradeUtil.getSaturationCondition($!{trade.saturationConditionMethod}, $!{trade.saturationCondition})}</em></li>
+                            <li><span>担保函编号：</span>$!{loanDemand.guaranteeLicenseNo}</li>
+                            <li><span>投资截止时间：</span>$!dateUtil.simpleFormat($!{loanDemand.deadline})</li>
+                            #if($!{trade.effectiveDateTime})
+        					<li><span>合同成立时间：</span>$!{dateUtil.simpleFormat($!{trade.effectiveDateTime})}</li>
+        					#end
+        					#if($!{trade.expireDateTime})
+        					<li><span>到期时间：</span>$!{dateUtil.simpleFormat($!{trade.expireDateTime})}</li>
+    						#end
+    						<li><span>项目用途：</span>$!{loanDemand.loanPurpose}</li>
+							
+                        </ul>
+                    </div>
+            	</div>
+                <div class="borrow-box fn-left ml20">
+                	<h2>担保信息</h2>
+                	<div class="b-border ">   <!--class="assure-info"-->
+                    	<p>担保机构：$!{loanDemand.guaranteeName}</p>
+						<p><em>担保机构话语：</em> $!{loanDemand.guaranteeStatement} </p>
+	                	<p><em>#if(1==$!{trade.status}||4==$!{trade.status}||6==$!{trade.status})担保承诺函#else担保函#end：</em></p>
+	                	<p>
+	                
+						#if($!{loanDemand.guaranteeLicenseUrl}!="")
+							 <img id="guaranteeLicenseUrl_Img" src="$!{loanDemand.guaranteeLicenseUrl}" width="291" height="127" alt="承诺函"/>
+						#else
+							<img id="guaranteeLicenseUrl_Img" src="/resources/images/common/assure_bg.jpg" width="291" height="127" alt="承诺函"/>
+						#end
+	                	
+	                	</p>	
+	                	#if($!{audit})
+		                    <div>
+							#if($!{loanDemand.contractPdfUrl} && $!{loanDemand.letterPdfUrl})
+								<p>
+									<a href="/upload/downLoadFile?demandId=$!{loanDemand.demandId}&type=downLoad&fileType=letter" class="download">下载担保函(正式)</a>&nbsp;
+									<a target="_blank" href="/upload/downLoadFile?demandId=$!{loanDemand.demandId}&type=privew&fileType=letter" >预览</a>
+								</p>
+								<p>
+									<a href="/upload/downLoadFile?demandId=$!{loanDemand.demandId}&type=downLoad&fileType=contract" class="download">下载合同(正式)</a>&nbsp;
+									<a target="_blank" href="/upload/downLoadFile?demandId=$!{loanDemand.demandId}&type=privew&fileType=contract" >预览</a>
+								</p>
+							#else
+								<p>
+									<a href="$!{pdfhost}/tradeDownload/downLoadWord?type=contract&tradeId=$!{trade.id}&detailID=0&downType=downLoad" class="download">下载合同(原始)</a>
+									<a target="_blank" href="$!{pdfhost}/tradeDownload/downLoadWord?type=contract&tradeId=$!{trade.id}&detailID=0&downType=privew" >预览</a>
+								</p>
+								
+								<p>
+			    					<a href="$!{pdfhost}/tradeDownload/downLoadWord?type=letter&tradeId=$!{trade.id}&detailID=0&downType=downLoad" class="download">下载担保函(原始)</a>
+									<a target="_blank" href="$!{pdfhost}/tradeDownload/downLoadWord?type=letter&tradeId=$!{trade.id}&detailID=0&downType=privew" >预览</a>
+								</p>
+							#end
+							#if($!{downLoadableInvests})
+							    <p> 
+									<a href="/tradeDownload/downLoaduserInvests?demandId=$!{trade.demandId}" class="download">下载投资信息</a>
+								</p>
+							 #end		
+		    				</div>
+							<div><p style="color:#f60;">提示：“正式”为担保函、合同已加盖公章PDF文件 ,“原始”为未加盖公章PDF文件 </p></div>
+						#end
+	                	
+                    </div>
+            	</div>
+                <div class="borrow-box fn-left ml20">
+                	<h2>审核记录</h2>
+                	<div class="b-border borrow-record">
+                    	<ul class="ft-f60">
+                        	<li>
+                            	<h4>一级审核记录</h4>
+								#if($!{auditrecord1})
+                                <p><span class="mr15">$!{auditUser1}</span><span class="mr15">$!dateUtil.simpleFormat($!{auditrecord1.authTime})</span><span>完成审核</span></p>
+								#else
+									<p><em></em><span>暂无一级审核记录！</span></p>
+								#end
+
+							</li>
+                            <li>
+                            	<h4>二级审核记录</h4>
+								#if($!{auditrecord2})
+									
+                                <p><span class="mr15">$!{auditUser2}</span><span class="mr15">$!dateUtil.simpleFormat($!{auditrecord2.authTime})</span><span>完成审核</span></p>
+								#else
+									<p><em></em><span>暂无二级审核记录！</span></p>
+								#end
+							</li>
+                           
+                        </ul>
+                    </div>
+            	</div>
+                <div class="blank30"></div>
+            </div>
+            <!--借款信息end-->
+            <!--投资明细start-->
+            <div class="borrowing-list f-dn" id="touzhidiv">
+            	<table cellpadding="0" cellspacing="0" border="0" class="pro-table">
+                    <tr>
+                        <th class="f-tac" width="25%">投资人</th>
+                        <th class="f-tac" width="25%">投资金额（元）</th>
+                        <th class="f-tac" width="25%">投资时间</th>
+                        <th class="f-tac" width="25%">状态</th>
+                    </tr>
+					#if($!investorTradeDetails.size()==0)
+    				<tr >
+        				<td class="f-tac" colspan=4 align=center>暂时无投资记录</td>
+        			</tr>
+					#end
+    				#foreach($info in $!{investorTradeDetails})
+					<tr>
+						<td class="f-tac">$stringUtil.subString($!{info.investorUserName},1,"****")</td>
+						<td  class="f-tac">#set($amount=$!{moneyUtil.getFormatAmount($!{info.amount})}) $!{amount}</td>
+						<td class="f-tac">$!dateUtil.dtSimpleFormat($!{info.date})</td>
+						<td class="f-tac">$!{tradeStatus}</td>
+						
+					</tr>
+					#end
+					
+                </table>
+				<!--
+                <div class="pages account-page mt20">
+                    <div class="fn-clear">
+                        <span>显示第  0 -  10 条记录，共 21 条记录<em>|</em></span>
+                        <span class="nolink">首页</span>
+                        <span class="nolink">上一页</span>
+                        <span><a href="javascript:toPage(jQuery('#pageNum'), 2, jQuery('form'));">下一页</a></span>
+                        <span><a href="javascript:toPage(jQuery('#pageNum'), 3, jQuery('form'));">末页</a></span>
+                        <span class="page-jump"><input type="text" value="1" /></span>
+                        <span><a href="#">跳转</a></span>
+                    </div>	
+                </div>
+				-->
+                <div class="blank30"></div>
+            </div>
+            <!--投资明细end-->
+		</div>
+		
+		  <div id="payPasswordCheckContainer" style="display:none;width:480px;">
+    				<form action="" method="post" class="border-b price-active" id="payPasswrdChecking_form">
+        				<fieldset class="border-b fn-mb20">
+							<div class="fn-item">
+        						<label class="fn-label"><span class="required">*</span>还款金额：</label>
+								<span class="fn-words"><b id="f" class="ft-f60 mr5"> ￥$!{moneyUtil.getFormatAmount($!{repayAmount})} </b>元</span>
+                            </div>
+							<div class="fn-item">
+        						<label class="fn-label"><span class="required">*</span>还款金额大写：</label>
+								<span class="fn-words"><b id="f" class="ft-f60 mr5"> $!{moneyUtil.digitUppercase($!{repayAmount})} </b></span>
+                            </div>	
+        					<div class="fn-item" id="passwordDiv">
+        						<label class="fn-label"><span class="required">*</span>验证码：</label>
+        						<div id="flexContent"></div><input id="code1" type="text" class="fn-text w90" name="code" />
+        						
+        						 <a id="getCode1" class="fn-h-btn Y-countdown" href="javascript:;" style="display: inline-block;">
+		                             <span class="timedown">获取验证码</span>
+		                         </a>
+								<br/><p><b id="pay-code-messge" class="error-tip" for="code" generated="false"></b></p>
+							    <input id="mobile" type="hidden"   class="fn-text w130"  name="mobile" value="$!{userBaseInfo.mobile}"/>
+							    <input id="business1" type="hidden" name="business1" value="repayment"/>
+        					</div>
+        				</fieldset>
+        				<div class="fn-item">
+        					<input type="hidden" id="tradeId"  name="tradeId"  value="$!{trade.id}"/>
+							<input type="hidden" id="demandId" name="demandId"  value="$!{trade.demandId}"/>
+							<input type="hidden" id="token" name="token"  value="$!{token}"/>
+        					<a href="javascript:;" id="confirm_pay" class="fn-g-btn mr5"><span>确认还款</span></a>
+        					<a href="/guaranteeCenter/guaranteeDetails?demandId=$!{loanDemand.demandId}&operate=hk" class="fn-h-btn"><span>返回上一步</span></a>
+        				</div>
+        			</form>
+		</div>
+        <div class="blank10"></div>
+    </div>
+    <div class="blank20"></div>
+</div>
+#parse("/front/index/common/footer.vm")
+<script type="text/javascript">
+        	var $_GLOBAL = {};
+        </script>
+    	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+    	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+    	<script type="text/javascript" src="/resources/js/comp/swfobject.js"></script>
+    	<script type="text/javascript">
+        	seajs.use($_GLOBAL.mode + 'guarantee');
+    </script>
+</body>
+</html>

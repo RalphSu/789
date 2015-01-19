@@ -1,0 +1,28 @@
+/*按钮*/
+
+
+.reg_tit { text-align:center; height:120px; line-height:120px}
+.reg_form { }
+.reg_form ul li { height:55px; line-height:55px;width:390px; float:left}
+.reg_form ul.prompt li { height:20px; line-height:20px}
+.reg_form ul li.reg_name { text-align:right}
+.reg_form ul li.reg_input { text-align:left; width:340px; position:relative}
+.reg_form ul li.reg_input_text { width:500px}
+.reg_form ul li.full_text { width:100%; text-align:center}
+.reg_form ul.pay_mes li { height:40px; line-height:40px}
+.reg_form ul li.reg_text { text-align:left}
+.reg_other { text-align:center; border-top:1px dotted #ccc; height:30px; line-height:60px}
+.reg_line { width:600px; border-top:1px dotted #ccc}
+.login_other { width:800px;}
+.login_other ul li { text-align:center; float:left; width:790px; position:relative; top:-20px}
+.login_other ul li.ol { width:390px;top:0px}
+.ol_but { width:345px; height:58px; background:url(/resources/images/new/ol_bg_org.png); line-height:58px; color:#fff;-moz-border-radius: 5px; -webkit-border-radius: 5px; }
+.ol_but_green { width:345px; height:58px; background:url(/resources/images/new/ol_bg_green.png); line-height:58px; color:#fff;-moz-border-radius: 5px; -webkit-border-radius: 5px; }
+.forget { position:absolute; right:10px; top:0px}
+
+.ver { width:100px; height:30px; background:url(/resources/images/new/ver_bg.png) no-repeat; line-height:30px; color:#fff; text-align:center; position:absolute; right:15px; top:13px; *top:13px}
+
+/*表单样式*/
+input.reg_input { width:318px; height:28px; border:1px solid #ccc; padding:5px; color:#333; line-height:26px\9; position:relative; top:8px\9;*top:0px; *line-height:26px}
+input.reg_ver { padding-right:120px; width:203px;*top:7px;}
+input.agree { position:relative; top:3px; *border:none;border:none\9; *top:1px}

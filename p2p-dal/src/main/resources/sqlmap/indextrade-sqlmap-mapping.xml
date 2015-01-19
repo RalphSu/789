@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+	<resultMap id="RM-INDEXTRADE" class="com.icebreak.p2p.dataobject.IndexTrade">
+		<result property="tradeId" column="trade_id" javaType="long" jdbcType="BIGINT"/>
+		<result property="demandId" column="demand_id" javaType="long" jdbcType="BIGINT"/>
+		<result property="name" column="trade_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="amount" column="trade_amount" javaType="long" jdbcType="BIGINT"/>
+		<result property="rate" column="interest_rate" javaType="double" jdbcType="DECIMAL"/>
+		<result property="time" column="time_limit" javaType="int" jdbcType="INT"/>
+		<result property="timeUnit" column="time_limit_unit" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="createDate" column="trade_create_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+		<result property="deadline" column="deadline" javaType="java.util.Date" jdbcType="DATETIME"/>
+		<result property="effectiveDate" column="trade_effective_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+		<result property="finishDate" column="trade_finish_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+		<result property="loanedAmount" column="loaned_amount" javaType="long" jdbcType="BIGINT"/>
+		<result property="leastInvestAmount" column="least_invest_amount" javaType="long" jdbcType="BIGINT"/>
+		<!--<result property="guaranteeId" column="guarantee_id" javaType="long" jdbcType="BIGINT"/>-->
+		<!--<result property="guaranteeName" column="guarantee_name" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+		<!--<result property="sponsorId" column="sponsor_id" javaType="java.lang.Integer" jdbcType="BIGINT"/>-->
+		<!--<result property="sponsorName" column="sponsor_name" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+		<result property="investAvalibleTime" column="invest_avl_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+		<result property="status" column="trade_status" javaType="short" jdbcType="TINYINT" />
+		<result property="insureWay" column="insure_way" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="areaNbNo" column="area_nb_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="areaName" column="area_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="tradeNote" column="trade_note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<!--扩展属性 无条件兑付银行 -->
+		<result property="paymentBankName" column="paymentBankName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		
+		
+	</resultMap>
+
+<select id="INDEXTRADE-GETBYPROPERTIES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-INDEXTRADE">
+
+		<![CDATA[SELECT tb3.* FROM (SELECT tb1.* FROM (SELECT t.trade_id,t.trade_note, t.demand_id, t.trade_name, t.trade_amount, t.least_invest_amount,t.interest_rate, t.time_limit, t.time_limit_unit, t.trade_create_date, t.deadline,t.trade_effective_date, t.trade_finish_date, t.loaned_amount, t.trade_status, t.is_join_activity, t.loan_type, ld.invest_avl_date,ld.area_nb_no,ld.area_name,ld.insure_way,ext.attr_value paymentBankName
+		FROM trade t
+		INNER JOIN (SELECT  l.*,d.area_name FROM loan_demand l LEFT JOIN common_district d ON  l.area_nb_no = d.nb_no) ld ON t.demand_id = ld.demand_id
+		LEFT JOIN extend_attr ext on ext.record_id = t.demand_id and ext.attr_name='LOANDEMAND_PAYMENTBANKNAME'
+		WHERE  t.trade_status='1' AND (t.loaned_amount / ld.loan_amount<1 OR t.loaned_amount / ld.loan_amount=1) ORDER BY t.`trade_create_date` ASC) tb1
+
+		UNION ALL
+
+		SELECT tb2.* FROM (SELECT t.trade_id, t.trade_note,t.demand_id, t.trade_name, t.trade_amount, t.least_invest_amount,t.interest_rate, t.time_limit, t.time_limit_unit, t.trade_create_date, t.deadline,t.trade_effective_date,t.trade_finish_date, t.loaned_amount, t.trade_status, t.is_join_activity, t.loan_type, ld.invest_avl_date, ld.area_nb_no,ld.area_name,ld.insure_way,ext.attr_value paymentBankName
+		FROM trade t 
+		INNER JOIN (SELECT  l.*,d.area_name FROM loan_demand l LEFT JOIN common_district d ON  l.area_nb_no = d.nb_no) ld ON t.demand_id = ld.demand_id 
+		LEFT JOIN extend_attr ext on ext.record_id = t.demand_id and ext.attr_name='LOANDEMAND_PAYMENTBANKNAME'
+		WHERE t.trade_status<>'1' AND (t.loaned_amount / ld.loan_amount=1 or  t.loaned_amount / ld.loan_amount<1) ORDER BY t.`trade_create_date` DESC) tb2) tb3
+		
+		WHERE 1=1 ]]>
+       	<dynamic>
+			<isNotEmpty property="status" prepend=" and ">
+					<![CDATA[tb3.trade_status in]]>
+					<iterate property="status" open="(" close=")" conjunction=",">
+						<![CDATA[#status[]#]]>
+					</iterate>
+			</isNotEmpty>
+
+			<isNotEmpty property="timeUnit" prepend=" and ">
+				<![CDATA[tb3.time_limit_unit in]]>
+					<iterate property="timeUnit" open="(" close=")" conjunction=",">
+						<![CDATA[#timeUnit[]#]]>
+					</iterate>
+				<isNotEmpty property="startTime">
+					<![CDATA[AND tb3.time_limit >= #startTime#]]>
+				</isNotEmpty>
+				<isNotEmpty property="endTime">
+					<![CDATA[AND tb3.time_limit <= #endTime#]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isNotEmpty property="startAmount">
+				<![CDATA[AND tb3.trade_amount >= #startAmount#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="endAmount">
+				<![CDATA[AND tb3.trade_amount <= #endAmount#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="loanType">
+				<![CDATA[AND tb3.loan_type = #loanType#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="areaCode">
+				<![CDATA[ AND tb3.area_nb_no = #areaCode#]]>
+			</isNotEmpty>
+			
+		    <isNotEmpty property="insureWay"  >
+                <![CDATA[ AND tb3.insure_way = #insureWay#]]>
+            </isNotEmpty>
+            
+            
+            <isNotEmpty property="interestRateBegin"  >
+                <![CDATA[ AND tb3.interest_rate > #interestRateBegin#]]>
+            </isNotEmpty>
+            
+            <isNotEmpty property="interestRateEnd"  >
+                <![CDATA[ AND tb3.interest_rate <= #interestRateEnd#]]>
+            </isNotEmpty>
+			
+			
+			
+			<isNotEmpty property="startRate">
+				<![CDATA[AND tb3.loaned_amount / tb3.trade_amount >= #startRate#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="endRate">
+				<![CDATA[AND tb3.loaned_amount / tb3.trade_amount <= #endRate#]]>
+			</isNotEmpty>
+            <isEqual property="orderByCreateTime" compareValue="createTime">
+                <![CDATA[ORDER BY IF (tb3.trade_status =1,1,0) DESC,  tb3.trade_create_date DESC]]>
+            </isEqual>
+			<isEqual property="orderBy" compareValue="finishTime">  
+            	<![CDATA[ORDER BY  tb3.trade_finish_date DESC]]>
+            </isEqual>
+		</dynamic>
+		<isNotEmpty property="start">
+			LIMIT #start#
+			<isNotEmpty>
+			, #size#
+			</isNotEmpty>
+		</isNotEmpty>
+</select>
+
+
+<select id="INDEXTRADE-GETBYPROPERTIESCOUNT" parameterClass="java.util.Map" resultClass="long">
+
+		SELECT COUNT(0) FROM trade t 
+		
+		INNER JOIN loan_demand ld ON t.demand_id = ld.demand_id
+
+		WHERE 1=1 
+		<dynamic>
+			<isNotEmpty property="status" prepend=" and ">
+					<![CDATA[t.trade_status in]]>
+					<iterate property="status" open="(" close=")" conjunction=",">
+						<![CDATA[#status[]#]]>
+					</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="timeUnit" prepend=" and ">
+				<![CDATA[t.time_limit_unit in]]>
+					<iterate property="timeUnit" open="(" close=")" conjunction=",">
+						<![CDATA[#timeUnit[]#]]>
+					</iterate>
+				<isNotEmpty property="startTime">
+					<![CDATA[AND t.time_limit >= #startTime#]]>
+				</isNotEmpty>
+				<isNotEmpty property="endTime">
+					<![CDATA[AND t.time_limit <= #endTime#]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isNotEmpty property="startAmount">
+				<![CDATA[AND t.trade_amount >= #startAmount#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="endAmount">
+				<![CDATA[AND t.trade_amount <= #endAmount#]]>
+			</isNotEmpty>
+			
+				
+			<isNotEmpty property="areaCode">
+				<![CDATA[ AND ld.area_nb_no = #areaCode#]]>
+			</isNotEmpty>
+			
+		    <isNotEmpty property="insureWay"  >
+                <![CDATA[ AND ld.insure_way = #insureWay#]]>
+            </isNotEmpty>
+            
+            
+            <isNotEmpty property="interestRateBegin"  >
+                <![CDATA[ AND ld.interest_rate > #interestRateBegin#]]>
+            </isNotEmpty>
+            
+            <isNotEmpty property="interestRateEnd"  >
+                <![CDATA[ AND ld.interest_rate <= #interestRateEnd#]]>
+            </isNotEmpty>
+			
+			
+			<isNotEmpty property="startRate">
+				<![CDATA[AND t.loaned_amount / t.trade_amount >= #startRate#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="endRate">
+				<![CDATA[AND t.loaned_amount / t.trade_amount <= #endRate#]]>
+			</isNotEmpty>
+		</dynamic>
+</select>
+
+
+<select id="INDEXTRADE-GETINVESTCOMPLETETIME" parameterClass="long" resultClass="java.util.Date">
+		SELECT MAX(date)
+		FROM trade_detail t 
+		WHERE t.`transfer_phase` = 'original' AND t.`role_id` = '12' AND t.trade_id = #value# 
+</select>
+</sqlMap>

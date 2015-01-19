@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RECHARGE-STATISTICS" class="com.icebreak.p2p.dataobject.RechargeStatistics" >
+	  <result property="countFildOne" column="bankName" javaType="java.lang.String"  />
+	  <result property="countFildTwo" column="counts" javaType="java.lang.String"  />
+	  <result property="countFildThree" column="amount" javaType="java.lang.String"  />
+	  <result property="countFildFour" column="counts2" javaType="java.lang.String"  />
+	  <result property="countFildFive" column="amount2" javaType="java.lang.String"  />
+	   <result property="countFildSix" column="counts3" javaType="java.lang.String"  />
+	  <result property="countFildSeven" column="amount3" javaType="java.lang.String"  />
+  </resultMap>
+  
+   <resultMap id="RECHARGE-STATISTICS-O" class="com.icebreak.p2p.dataobject.RechargeStatistics" >
+	  <result property="countFildTwo" column="counts" javaType="java.lang.String"  />
+	  <result property="countFildThree" column="amount" javaType="java.lang.String"  />
+  </resultMap>
+  
+	<select id="RECHARGE-STATISTICS-QUERY-LIST" resultMap="RECHARGE-STATISTICS" parameterClass="java.util.Map">
+		<![CDATA[
+			SELECT tb1.bankName,tb1.counts,tb1.amount,IFNULL(tb2.amount2,0) amount2,IFNULL(tb2.counts2,0) counts2,
+			IFNULL(tb3.amount3,0) amount3,IFNULL(tb3.counts3,0) counts3
+			FROM (SELECT r.`bank_name` bankName,COUNT(*) counts,SUM(r.`amount`) amount  FROM recharge_flow r INNER JOIN user_base_info u ON r.`user_id` = u.`user_id`
+			WHERE r.`status` in (0,1)
+		]]>
+		<dynamic>
+			<isNotEmpty property="payType" prepend=" and ">
+				<![CDATA[r.`pay_type` in]]>
+				<iterate property="payType" open="(" close=")" conjunction=",">
+					<![CDATA[#payType[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="bankName" prepend=" and ">
+				<![CDATA[r.`bank_name` = #bankName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="type" prepend=" and ">
+				<![CDATA[u.`type` = #type#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+				<![CDATA[r.`pay_time`>= #startTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and ">
+				<![CDATA[r.`pay_time` <= #endTime#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[
+			GROUP BY r.`bank_name`) tb1 LEFT JOIN
+			(SELECT r.`bank_name` bankName1,COUNT(*) counts2,SUM(r.`amount`) amount2  FROM recharge_flow r INNER JOIN user_base_info u ON r.`user_id` = u.`user_id`
+			WHERE r.`status` = '1'
+		]]>
+		<dynamic>
+			<isNotEmpty property="payType" prepend=" and ">
+				<![CDATA[r.`pay_type` in]]>
+				<iterate property="payType" open="(" close=")" conjunction=",">
+					<![CDATA[#payType[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="type" prepend=" and ">
+				<![CDATA[u.`type` = #type#]]>
+			</isNotEmpty>
+			<isNotEmpty property="bankName" prepend=" and ">
+				<![CDATA[r.`bank_name` = #bankName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[r.`status` = #status#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+				<![CDATA[r.`pay_time`>= #startTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and ">
+				<![CDATA[r.`pay_time` <= #endTime#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[
+			GROUP BY r.`bank_name`) tb2 ON tb1.bankName = tb2.bankName1
+			LEFT JOIN(SELECT r.`bank_name` bankName3,COUNT(*) counts3,SUM(r.`amount`) amount3  FROM recharge_flow r INNER JOIN user_base_info u ON r.`user_id` = u.`user_id`
+			WHERE r.`status` = '0'
+		]]>
+		<dynamic>
+			<isNotEmpty property="payType" prepend=" and ">
+				<![CDATA[r.`pay_type` in]]>
+				<iterate property="payType" open="(" close=")" conjunction=",">
+					<![CDATA[#payType[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="type" prepend=" and ">
+				<![CDATA[u.`type` = #type#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[r.`status` = #status#]]>
+			</isNotEmpty>
+			<isNotEmpty property="bankName" prepend=" and ">
+				<![CDATA[r.`bank_name` = #bankName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+				<![CDATA[r.`pay_time`>= #startTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and ">
+				<![CDATA[r.`pay_time` <= #endTime#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[
+			GROUP BY r.`bank_name`) tb3 ON tb1.bankName = tb3.bankName3 LIMIT #limitStart#,#pageSize#
+		]]>
+	</select>
+	
+	
+	<select id="RECHARGE-STATISTICS-QUERY-LIST-COUNTS" parameterClass="java.util.Map" resultClass="long">
+		<![CDATA[
+			SELECT IFNULL(COUNT(*),0) FROM (SELECT r.`bank_name`  FROM recharge_flow r INNER JOIN user_base_info u 
+			ON r.`user_id` = u.`user_id` WHERE r.`status` IN (1,0)
+		]]>
+		<dynamic>
+			<isNotEmpty property="payType" prepend=" and ">
+				<![CDATA[r.`pay_type` in]]>
+				<iterate property="payType" open="(" close=")" conjunction=",">
+					<![CDATA[#payType[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="type" prepend=" and ">
+				<![CDATA[u.`type` = #type#]]>
+			</isNotEmpty>
+			<isNotEmpty property="bankName" prepend=" and ">
+				<![CDATA[r.`bank_name` = #bankName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+				<![CDATA[r.`pay_time`>= #startTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and ">
+				<![CDATA[r.`pay_time` <= #endTime#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[
+			GROUP BY r.`bank_name`) tb
+		]]>
+	</select>
+	
+	<select id="RECHARGE-STATISTICS-WITHDRAW-COUNTS" parameterClass="java.util.Map" resultMap="RECHARGE-STATISTICS-O" >
+		<![CDATA[
+			SELECT IFNULL(SUM(amount),0) amount,IFNULL(SUM(counts),0) counts FROM (SELECT r.`bank_name`, SUM(r.`amount`) amount,COUNT(*) counts FROM recharge_flow r INNER JOIN user_base_info u ON r.`user_id` = u.`user_id`
+			WHERE 1=1
+		]]>
+		<dynamic>
+			<isNotEmpty property="payType" prepend=" and ">
+				<![CDATA[r.`pay_type` in]]>
+				<iterate property="payType" open="(" close=")" conjunction=",">
+					<![CDATA[#payType[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="type" prepend=" and ">
+				<![CDATA[u.`type` = #type#]]>
+			</isNotEmpty>
+			<isNotEmpty property="bankName" prepend=" and ">
+				<![CDATA[r.`bank_name` = #bankName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[r.`status` in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+				<![CDATA[r.`pay_time`>= #startTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and ">
+				<![CDATA[r.`pay_time` <= #endTime#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[
+			GROUP BY r.`bank_name`) tb
+		]]>
+	</select>
+	
+</sqlMap>

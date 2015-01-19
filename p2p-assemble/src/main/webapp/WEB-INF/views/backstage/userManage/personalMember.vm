@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>用户管理-机构人员管理</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+			<div class="mc">
+                <div class="place">
+                    <span>位置：</span>
+                    <ul class="placeul">
+                        <li><a href>开户管理</a></li>
+                        <li><a href>机构人员管理</a></li>
+                    </ul>
+                </div>
+    			<div class="search fn-clear">
+    				<form action="/backstage/userManage/institutions/personalMember?userId=$!{queryConditions.userId}"  id="institutionMember_form" method="post">
+    					<dl>
+    						<dt>真实名称：</dt>
+    						<dd><input type="text" name="realName"  value="$!{queryConditions.realName}" maxlength="25" class="u-input w235" /></dd>
+    					</dl>
+    					<a href="javascript:;" class="s-btn mr5 submit_form">搜索</a>
+    				</form>
+    			</div>
+    			<div class="t-box">
+                    <table class="tablelist">
+                        <thead>
+    					<tr>
+    						<th width="200">用户ID</th>
+    						<th width="200">账户名</th>
+    						<th width="150">真实名称</th>
+							<th width="150">用户编号</th>
+    						<th width="200">状态</th>
+    						<th >操作</th>
+    					</tr>
+						</thead>
+						#if($page.result.size()==0 || !$page.result)
+            				<tr class="even">
+                				<td colspan=5 align=center>暂无人员信息</td>
+                			</tr>
+						#end
+                        </tbody>
+						#set($t = $permission.check('/backstage/userManage/personalManage/updatePersonalUser/1/1'))
+						#foreach($info in $page.result)
+    					<tr>
+    						<td>$!{info.userBaseId}</td>
+    						<td>$!{info.userName}</td>
+    						<td>$!{info.realName}</td>
+							<td>$!{info.memberNo}</td>
+    						#if($!{info.state}=="freeze")
+							<td class="red">冻结</td>
+    						#elseif($!{info.state}=="inactive")
+    							<td class="gray">未激活</td>
+    						#elseif($!{info.state}=="disable")
+    							<td class="gray">禁用</td>
+    						#elseif($!{info.state}=="normal")
+    							<td>正常</td>
+							#else
+								<td>状态暂无</td>
+    						#end
+    						<td></span>
+							#if($t>0)
+							<a href="/backstage/userManage/personalManage/updatePersonalUser?userBaseId=$!{info.userBaseId}&userId=$!{info.userId}">详情</a>
+							#end
+							</td>
+    					</tr>
+						#end
+                        </tbody>
+    				</table>
+    				<div class="p-box pages-b fn-clear">
+    					#parse("/backstage/page/page.vm")
+    				</div>
+    			</div>
+			</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+		$_GLOBAL.sessionID = "";
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'institutionsMember');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			var url = "/backstage/userManage/institutions/personalMember"
+			+"?userId=$!{queryConditions.userId}"
+			+"&realName=$!{queryConditions.realName}"
+			+"&pageSize=$!{page.pageSize}&pageNo="+pageNo;
+			window.location.href=url;
+		}
+    </script>
+</body>
+</html>

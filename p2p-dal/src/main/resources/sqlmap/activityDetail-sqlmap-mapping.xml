@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="EL-ACTIVITYDETAIL" class="com.icebreak.p2p.dataobject.ActivityDetail" >
+  	  <result property="tblBaseId" column="tbl_base_id" javaType="long" jdbcType="BIGINT" />
+  	  <result property="activityId" column="activity_id" javaType="long" jdbcType="BIGINT" />
+  	  <result property="activityName" column="activity_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="type" column="type" javaType="int" jdbcType="tinyint" />
+	  <result property="relationId" column="relation_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="relatedUserName" column="related_user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    <result property="relatedRealName" column="related_real_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="giftName" column="gift_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="giftCode" column="gift_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="giftNumber" column="gift_number" javaType="int" jdbcType="int" />
+	  <result property="addTime" column="add_time" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="finishTime" column="finish_time" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="status" column="status" javaType="int" jdbcType="smallint" />
+	  <result property="rem1" column="rem1" javaType="java.lang.String" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ 	<insert id="EL-ACTIVITYDETAIL-INSERT" parameterClass="com.icebreak.p2p.dataobject.ActivityDetail">
+  		<![CDATA[
+  			INSERT INTO activity_detail (
+  				activity_id,activity_name,user_id,user_name,real_name,type,relation_id,related_user_name,related_real_name,gift_name,gift_code,gift_number,add_time,finish_time,status,rem1) 
+  			VALUES (
+  				#activityId#,#activityName#,#userId#,#userName#,#realName#,#type#,#relationId#,#relatedUserName#,#relatedRealName#,#giftName#,#giftCode#,#giftNumber#,#addTime#,#finishTime#,
+  				#status#,#rem1#)
+  		]]>
+  	</insert>
+  	
+  	<update id="EL-ACTIVITYDETAIL-UPDATE">
+  		update activity_detail set 
+  			activity_id=#activityId#,activity_name=#activityName#,user_id=#userId#,type=#type#,gift_name=#giftName#,gift_code=#giftCode#,add_time=#addTime#,
+  			finish_time=#finishTime#,relation_id=#relationId#,gift_number=#giftNumber#,status=#status#,rem1=#rem1#
+  		where tbl_base_id=#tblBaseId#
+  	</update>
+  
+	<select id="EL-ACTIVITYDETAIL-QUERY" resultMap="EL-ACTIVITYDETAIL">
+		<![CDATA[
+		SELECT * FROM activity_detail at WHERE  tbl_base_id=#tblBaseId#
+		]]>
+	</select>
+	<select id="EL-ACTIVITYDETAIL-QUERY-LIST" resultMap="EL-ACTIVITYDETAIL" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT * FROM activity_detail a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[a.user_id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="activityId" prepend=" and ">
+				<![CDATA[a.activity_id = #activityId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="activityName" prepend=" and ">
+				<![CDATA[a.activity_name = #activityName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="type" prepend=" and ">
+				<![CDATA[a.type = #type#]]>
+			</isNotEmpty> 
+			<isNotEmpty property="relationId" prepend=" and ">
+				<![CDATA[a.relation_id = #relationId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[a.status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY a.add_time DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="EL-ACTIVITYDETAIL-QUERY-COUNT" resultClass="java.lang.Long" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT count(*) FROM activity_detail a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[a.user_id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="activityId" prepend=" and ">
+				<![CDATA[a.activity_id = #activityId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="activityName" prepend=" and ">
+				<![CDATA[a.activity_name = #activityName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="type" prepend=" and ">
+				<![CDATA[a.type = #type#]]>
+			</isNotEmpty> 
+			<isNotEmpty property="relationId" prepend=" and ">
+				<![CDATA[a.relation_id = #relationId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[a.status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="EL-ACTIVITYDETAIL-QUERY-ISUSERJOINACTIVITY" resultClass="java.lang.Long" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT count(*) FROM activity_detail a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[a.user_id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="activityId" prepend=" and ">
+				<![CDATA[a.activity_id = #activityId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="activityName" prepend=" and ">
+				<![CDATA[a.activity_name = #activityName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="type" prepend=" and ">
+				<![CDATA[a.type = #type#]]>
+			</isNotEmpty> 
+			<isNotEmpty property="relationId" prepend=" and ">
+				<![CDATA[a.relation_id = #relationId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[a.status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+</sqlMap>

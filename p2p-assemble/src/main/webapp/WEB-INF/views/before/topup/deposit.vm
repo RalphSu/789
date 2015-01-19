@@ -1,0 +1,120 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<!--内容-->
+
+<div class="top_blank"></div>
+<div class="use_menu b_gray_o">
+</div>
+<div class="alrod">
+    <form action="/usercenter/depositSubmit" id="deductForm" method="post" >
+    <div class="my_fud form_nav">
+        <div class="fud_money"><label style="font-size: 20px; font-weight: 400;"> 账户充值</label>&nbsp;&nbsp;当前可用余额：<span class="org large_font">$!{thirdPartAccountInfo.availableBalance}</span> 元</div>
+
+        <div class="fud_list">
+            <div class="r-pay">
+                <div style="float: left; margin-left: 10px; width: 450px;">
+                    <div class="r-pay">
+                        <ul>
+                            <li class="reg_name" style="width: 90px;">充值金额 </li>
+                            <li class="reg_input" style="width: 180px;">
+                                <input name="rechargeAmount" id="rechargeAmount" type="text" class="reg_input" style="width: 213px;">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="blank25"></div>
+                    <div class="r-pay" style="padding-top: 55px;">
+                        <ul>
+                            <li class="reg_name" style="width: 90px;">充值方式</li>
+                            <li class="deposit-click" style="width: 85px; margin-left: 15px;">
+                                <a id="wangyin" style="text-decoration:none;" href="javascript:;">网银充值</a>
+                            </li>
+                            <li class="deposit-default" style="width: 85px; margin-left: 30px;">
+                                #set($t = $permission.check('/guaranteeCenter/*'))
+                                #if($t == 0)
+                                    <a  href="javascript:;" style="text-decoration:none;" id="daikou">代扣充值</a>
+                                #end
+                            </li>
+                        </ul>
+                        <div class="cyber-bank " id="yinhang" style="display: none; margin-left: 0px;">
+
+                            <ul>
+                                #foreach($signBankInfo in $!{signBankInfos} )
+                                    <li style="margin-bottom: 30px; width: 180px;"><a class="bank-state" bankcode="$!signBankInfo.bankShort" href="javascript:;"><i class="bank-name" ><img
+                                            src="$!signBankInfo.bankGifUrl"></i><span class="sign-state">已签约</span></a>
+                                    </li>
+                                #end
+                                <li style="width: 150px;"><a class="add-bank" href="/usercenter/sign/redirect" target="_blank">添加银行</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="r-pay" style="padding-top: 45px;">
+                        <label></label>
+                        <div class="r-submit"><a href="javascript:;" id="btnChongzhi">充值</a></div>
+                        <div class="mt5" style="margin-top: 10px;"><a href="/usercenter/home">返回</a></div>
+                    <div class="blank30"></div>
+                </div>
+
+            </div>
+                <div style="float: left; width: 650px; margin-top: -50px;">
+                    <div class="tips" style="padding-top: 45px; padding-left: -20px;">
+                        <h3>温馨提示：</h3>
+
+                        <p>1.充值操作支持国内大部分银行的网上银行，只要您开通了网上银行的账户即可充值。</p>
+
+                        <p>2.由于大多数银行的网银系统只支持IE浏览器，请您进行充值时使用IE浏览器。</p>
+
+                        <p>3.充值过程中，请勿关闭浏览器窗口，操作完成后，浏览器会自动跳转返回到网站界面。</p>
+
+                        <p>4.如果您在充值过程中遇到任何问题，请咨询客服人员。</p>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </form>
+    <div class="m-layer" style="width:500px;display:none" id="wbndwindow">
+        <div class="invest-tit fn-clear">
+            <h2 class="u-tt">快捷充值</h2>
+            <a class="u-close" href="#"></a>
+        </div>
+        <div class="lyct">
+            <form name="deductForm1" id="deductForm1" method="post" action="/usercenter/depositSubmit" class="m-form">
+                <fieldset>
+                    <div class="invest-up">
+                        <div class="fn-item">
+                            <label class="fn-label">充值金额：</label>
+                            <input type="text" class="fn-text w245 mr10" name="rechargeAmount" id="ffmoney" value="" readonly/>元
+                        </div>
+                        <div class="fn-item fn-clear">
+                            <label class="fn-label">验证码：</label>
+                            <input type="text" id="validateCode" name="validateCode" class="fn-text fn-left w80 mr10" style="width: 77px;" value="" />
+                            <a id="getCode1" class="fn-h-btn Y-countdown" href="javascript:;" style="display: inline-block;">
+                                <span class="timedown">获取验证码</span>
+                            </a>
+                        </div>
+                        <div class="fn-item fn-clear">
+                            <label class="fn-label"></label>
+                            <a href="javascript:;" class="affirm mr15" id="btnConfirm">确认</a><a href="javascript:;" class="consider">取消</a>
+                        </div>
+                        <input type="hidden" name="curType" id="curType" value="wangyin">
+                        <input type="hidden" name="bankCode" id="bankCode" value="">
+                        <input type="hidden" name="sendCode" id="sendCode" value="">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <!--通用表单结束-->
+</div>
+
+    #parse("/front/index/common/footer.vm")
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+	seajs.use($_GLOBAL.mode+"withholdingIndex.js");
+    </script>
+</body>
+</html>

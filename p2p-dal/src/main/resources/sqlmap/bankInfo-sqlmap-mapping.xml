@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="MS-BANK" class="com.icebreak.p2p.dataobject.BankInfo">
+  	<result property="bankId" column="bank_id" javaType="long" jdbcType="bigint" />
+	  <result property="bankName" column="bank_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="bankCode" column="bank_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="logoUrl" column="bank_logoUrl" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="deduct" column="deduct" javaType="java.lang.String" jdbcType="enum" />
+	  <result property="singleDeductLimit" column="sigle_deduct_limit" javaType="int" jdbcType="int" />
+	  <result property="oddDeductLimit" column="odd_deduct_limit" javaType="int" jdbcType="int" />
+	  <result property="synChannel" column="syn_channel" javaType="java.lang.String" jdbcType="enum" />
+	  <result property="withdrawal" column="withdrawal" javaType="java.lang.String" jdbcType="enum" />
+	  <result property="singleWithdrawalLimit" column="single_withdrawal_limit" javaType="int" jdbcType="int" />
+	  <result property="oddWithdrawalLimit" column="odd_withdrawal_limit" javaType="int" jdbcType="int" />
+	  <result property="publicAccounts" column="public_accounts" javaType="java.lang.String" jdbcType="enum" />
+  </resultMap>
+  
+  <insert id="MS-BANK-INSERT" parameterClass="com.icebreak.p2p.dataobject.BankInfo">
+	  INSERT INTO bank_info (
+	  	  bank_name,
+	  	  bank_code,
+	  	  bank_logoUrl,
+	  	  deduct,
+	  	  sigle_deduct_limit,
+	  	  odd_deduct_limit,
+	  	  syn_channel,
+	  	  withdrawal,
+	  	  single_withdrawal_limit,
+	  	  odd_withdrawal_limit,
+	  	  public_accounts
+	  ) VALUES (
+	  	  #bankName#,
+		  #bankCode#,
+		  #logoUrl#,
+		  #deduct#,
+		  #singleDeductLimit#,
+		  #oddDeductLimit#,
+		  #synChannel#,
+		  #withdrawal#,
+		  #singleWithdrawalLimit#,
+		  #oddWithdrawalLimit#,
+		  #publicAccounts#
+	  )
+  </insert>
+  
+  	<update id="MS-BANK-UPDATE">
+		<![CDATA[
+		update /*MS-BANK-UPDATE*/ bank_info set 
+		bank_name=#bankName#, 
+		bank_code=#bankCode#, 
+		bank_logoUrl=#logoUrl#, 
+		deduct=#deduct#, 
+		sigle_deduct_limit=#singleDeductLimit#, 
+		odd_deduct_limit=#oddDeductLimit#, 
+		syn_channel=#synChannel#, 
+		withdrawal=#withdrawal#, 
+		single_withdrawal_limit=#singleWithdrawalLimit#, 
+		odd_withdrawal_limit=#oddWithdrawalLimit#,
+		public_accounts=#publicAccounts#
+		where bank_id = #bankId#
+		]]>
+	</update>
+	
+	<delete id="MS-BANK-DELETE">
+		<![CDATA[
+		delete /*MS-BANK-UPDATE*/ from bank_info 
+		where bank_id = #bankId#
+		]]>
+	</delete>
+
+  
+  <select id="MS-BANK-SELECTLIST" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="MS-BANK">
+	  <![CDATA[
+		SELECT /* MS-BANK-SELECTCOUNT */ *
+		FROM bank_info
+		WHERE 1=1]]>
+	  <isNotEmpty property="bankId">
+		<![CDATA[ AND bank_id = #bankId#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="bankName">
+		<![CDATA[ AND bank_name = #bankName#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="bankCode">
+		<![CDATA[ AND bank_code = #bankCode#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="deduct">
+		<![CDATA[ AND deduct = #deduct#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="withdrawal">
+		<![CDATA[ AND withdrawal = #withdrawal#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="publicAccounts">
+		<![CDATA[ AND public_accounts = #publicAccounts#]]>
+	  </isNotEmpty>
+	  <![CDATA[	LIMIT #limitStart#,#pageSize#;]]>
+  </select>
+  
+  <select id="MS-BANK-SELECTCOUNT" parameterClass="java.util.Map" resultClass="java.lang.Long">
+	  <![CDATA[
+		SELECT /* MS-BANK-SELECTCOUNT */ COUNT(1)
+		FROM bank_info
+		WHERE 1=1]]>
+	  <isNotEmpty property="bankName">
+		<![CDATA[AND bank_name = #bankName#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="bankCode">
+		<![CDATA[AND bank_code = #bankCode#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="deduct">
+		<![CDATA[AND deduct = #deduct#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="withdrawal">
+		<![CDATA[AND withdrawal = #withdrawal#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="publicAccounts">
+		<![CDATA[ AND public_accounts = #publicAccounts#]]>
+	  </isNotEmpty>
+  </select>
+</sqlMap>

@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html>
+<head><title>后台管理首页</title></head>
+<frameset rows="85px,*" border="none">
+  <frame src="/backstage/header" scrolling="No" noresize="noresize" />
+  <frameset cols="200,*">
+    <frame src="/backstage/left" name="leftFrame" scrolling="YES" id="leftFrame" title="leftFrame" />
+    <frame src="/backstage/main" name="mainFrame" scrolling="auto" id="mainFrame" title="mainFrame" />
+  </frameset>
+</frameset>
+
+
+</html>

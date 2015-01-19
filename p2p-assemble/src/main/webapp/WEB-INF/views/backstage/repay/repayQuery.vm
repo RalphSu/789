@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>交易管理-还款查询</title>
+	<link type="text/css" href="$!{rc.contextPath}/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>交易管理</a></li>
+                            <li><a href>还款查询</a></li>
+                        </ul>
+                    </div>
+					<div class="search fn-clear">
+					<form action="$!{rc.conextPath}/backstage/trade/repayQuery/12/1" method="post" name="frm">
+					<div class="mb-link fn-clear">
+					 <input type="hidden" name="status" value="$!{request.getParameter('status')}"/>
+                	  <div class="mb-link fn-left" t="repay-status">
+					    <a href="javascript:void(0);" status="0" id="a1" >待还款明细</a>
+						<a href="javascript:void(1);" status="1" id="a2">已还款明细</a>
+                    </div>
+					</div>		
+					<div class="mb-link fn-clear">
+                     <div class="blank20"></div>
+						#if($!{statusList.toString()}=="[NOTPAY]")
+
+                            <div class="mb-link fn-clear">
+                                <div class="mb-link fn-left" t="repay-status">
+                                    <input type="hidden" name="repayDate" value="$!{request.getParameter('repayDate')}" />
+                                    <a href="javascript:return false;" repayDate="today" id="rd1">&nbsp;&nbsp;今天&nbsp;&nbsp;</a>
+                                    <a href="javascript:return false;" repayDate="tomorrow" id="rd2">&nbsp;&nbsp;明天&nbsp;&nbsp;</a>
+                                    <a href="javascript:return false;" repayDate="week" id="rd3">&nbsp;&nbsp;下周&nbsp;&nbsp;</a>
+                                </div>
+                            </div>
+
+                            <dl>
+                            <dt>项目名称：</dt>
+                            <dd><input type="text" class="u-input w140" name="tradeName" value="$!{tradeName}"/></dd>
+                            </dl>
+							<dl>
+                            <dt>融资人：</dt>
+                            <dd><input type="text" class="u-input w140" name="repayUserName" value="$!{repayUserName}"/></dd>
+                            </dl>
+							<dl>
+                            <dt> 起止时间：</dt>
+                            <dd>
+                            <input type="date" class="u-input w90" name="startDate" value="$!{startDate}" /> - <input type="date" class="u-input w90" value="$!{endDate}" name="endDate" />
+							</dd>
+                            </dl>
+						#else
+							<dl>
+                            <dt>项目名称：</dt>
+                            <dd><input type="text" class="u-input w140" name="tradeName" value="$!{tradeName}"/></dd>
+                            </dl>
+							<dl>
+                            <dt>融资人：</dt>
+                            <dd><input type="text" class="u-input w140" name="repayUserName" value="$!{repayUserName}"/></dd>
+                            </dl>
+							<dl>
+                                <dt>已还款起止时间：</dt>
+								<dd>
+								<input type="date" class="u-input w90" name="startActualDate"  value="$!{startActualDate}" /> -  <input type="date" class="u-input w90" value="$!{endActualDate}" name="endActualDate" />
+                                </dd>
+						</dl>
+						#end   
+						<a href="javascript:;"><button type="submit" class="s-btn" >查询 </button></a>
+                </div>
+                 </form>
+					</div>
+					<div class="t-box">
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+							<th width="15%" >项目名称</th>
+							#if($!{statusList.toString()}=="[NOTPAY]")
+                       		 <th width="15%" >预期还款时间</th>
+							#else
+								<th width="15%">还款时间</th>
+							#end
+							<th width="20%">还款方式</th>
+							<th width="15%">还款总金额(元)</th>
+							<th width="15%">应还本金(元)</th>
+							#if($!{statusList.toString()}=="[NOTPAY]")
+							<th width="12%">应还利息(元)</th>
+							#else<th width="10%">收益(元)</th>#end
+							<th width="7%">状态</th>
+						</tr>
+						</thead>
+						<tbody>
+				      	#if($!page.result.size()==0)
+		    			<tr>
+							<td colspan=5 align=center>暂时没有融资记录</td>
+						</tr>
+						#end
+                        #foreach($info in $page.result)
+						<tr>
+                           	<td> $!{info.tradeName}</td>
+						   	#if($!{statusList.toString()}=="[NOTPAY]")
+							<td>$!{dateUtil.dtSimpleFormat($!{info.repayDate})}</td><!--预期还款时间 -->
+						 	#else<td>$!{dateUtil.dtSimpleFormat($!{info.actualRepayDate})}</td>#end  <!--实际还款时间-->
+							#if($!{info.repayDivisionWay}=="month")
+						   <td>按月还息，到期还本</td>
+							#else
+						   <td>到期归还本金及利息</td>
+							#end<!--还款方式-->
+							<td><em>$!{info.amount.toStandardString()}</em></td><!--还款总金额-->
+							<td><em>
+							#if($!info.periodNo.equals($!info.periodCount))
+								$!{info.originalAmount.toStandardString()}
+								#else 0.00#end
+							</em>
+							</td><!--本金-->
+						  #if($!{statusList.toString()}=="[NOTPAY]")
+							<td><em>$!{info.interest.toStandardString()}</em></td><!--利息-->
+							#else<td><em>$!{info.interest.toStandardString()}</em></td>#end <!---收益-->
+							<td>
+								<a href="/backstage/updateLoanDemand?demandId=$!{info.note}&info=info">详情</a>
+							</td>
+                            </tr>
+						#end
+						</tbody>
+						</table>
+						<div class="p-box pages-b fn-clear">
+							#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/plugins/jquery.window.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'backTradeMain');
+    </script>
+	<script type="text/javascript">
+		
+		$('.s-btn').click(function (){
+			toPage($!{page.totalPageCount}, $!{page.currentPageNo});
+		});
+		
+ 	$("#a1").click(function(){
+		$('input[name=startDate]').val("");
+		$('input[name=endDate]').val("");
+ 	});
+ 	$("#a2").click(function(){
+		$('input[name=startActualDate]').val("");
+		$('input[name=endActualDate]').val("");
+ 	});
+		 function toPage(totalPage, page){
+    	  if(page > totalPage){
+    	  	return ;
+    	  }
+    	  $('form[name=frm]').attr('action', '/backstage/trade/repayQuery/$!{page.pageSize}/' + page);
+    	  document.frm.submit();
+        }
+		$(function (){
+    	 var status = $('input[name=status]').val();
+         if(status == ''||status==null){
+           status = 0;
+         }
+         $('a[status=' + status + ']').attr('class', 'cur');
+
+            var repayDate = $('input[name=repayDate]').val();
+            if(repayDate != '' && repayDate != null){
+                $('a[repayDate=' + repayDate + ']').attr('class', 'cur');
+            }
+
+    	});
+    	$('a[status]').click(function (){
+    	    var status = $(this);
+    		$('input[name=status]').val(status.attr('status'));
+    		$('a[status]').removeAttr('class');
+    		status.attr('class', 'cur');
+			 document.frm.submit();
+			return false;
+    	});
+
+        $('a[repayDate]').click(function (){
+            var repayDate = $(this);
+            $('input[name=repayDate]').val(repayDate.attr('repayDate'));
+            $('a[repayDate]').removeAttr('class');
+            repayDate.attr('class', 'cur');
+            document.frm.submit();
+            return false;
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+

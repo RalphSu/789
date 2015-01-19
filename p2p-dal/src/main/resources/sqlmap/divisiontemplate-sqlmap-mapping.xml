@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-DIVISIONTEMPLATE" class="com.icebreak.p2p.dataobject.DivisionTemplate">
+	  <result property="id" column="division_template_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="name" column="template_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="phase" column="division_phase" javaType="java.lang.String" jdbcType="ENUM" />
+	  <result property="way" column="division_way" javaType="java.lang.String" jdbcType="ENUM" />
+	  <result property="status" column="template_status" javaType="java.lang.String" jdbcType="ENUM" />
+	  <result property="createDate" column="create_date" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="modifyDate" column="modify_date" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="note" column="template_note" javaType="java.lang.String" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="DIVISIONTEMPLATE-ADD" parameterClass="com.icebreak.p2p.dataobject.DivisionTemplate">
+	  INSERT INTO division_template (
+		  template_name,
+		  division_phase,
+		  division_way,
+		  template_status,
+		  create_date,
+		  modify_date,
+		  template_note
+	  ) VALUES (
+		  #name#,
+		  #phase#,
+		  #way#,
+		  #status#,
+		  #createDate#,
+		  #modifyDate#,
+		  #note#
+	  )
+  </insert>
+  
+  <delete id="DIVISIONTEMPLATE-DELETE" parameterClass="long">
+  	  DELETE FROM division_template WHERE division_template_id = #value#
+  </delete>
+  
+  <update id="DIVISIONTEMPLATE-UPDATE" parameterClass="com.icebreak.p2p.dataobject.DivisionTemplate">
+	  UPDATE division_template SET 
+		  template_name = #name#, 
+		  division_phase = #phase#,
+		  division_way = #way#,
+		  template_status = #status#,
+		  modify_date = #modifyDate#,
+		  template_note = #note#
+	  WHERE division_template_id = #id#
+  </update>
+  
+  <select id="DIVISIONTEMPLATE-GETBYTEMPLATE" parameterClass="long" resultClass="com.icebreak.p2p.dataobject.DivisionTemplate" resultMap="RM-DIVISIONTEMPLATE">
+	  SELECT  division_template_id,
+	  		  template_name,
+			  division_phase,
+			  division_way,
+			  template_status,
+			  create_date,
+			  modify_date,
+			  template_note
+	  FROM division_template WHERE division_template_id = #value#
+  </select>
+  
+  <select id="DIVISIONTEMPLATE-GETBYCONDITIONS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-DIVISIONTEMPLATE">
+      SELECT  division_template_id,
+	  		  template_name,
+			  division_phase,
+			  division_way,
+			  template_status,
+			  create_date,
+			  modify_date,
+			  template_note
+	  FROM division_template WHERE 1 = 1
+	  <isNotEmpty property="name">
+	    AND template_name = #name#
+	  </isNotEmpty>
+	  <isNotEmpty property="status">
+		  <isNotEqual property="status" compareValue="all">
+		    AND template_status = #status#
+		  </isNotEqual>
+	  </isNotEmpty>
+	  ORDER BY create_date DESC 
+	  <isNotEmpty property="start">
+	    LIMIT #start#
+	    <isNotEmpty property="size">
+	      , #size#
+	    </isNotEmpty>
+	  </isNotEmpty>
+  </select>
+  
+  <select id="DIVISIONTEMPLATE-GETBYPHASE" parameterClass="java.lang.String" resultClass="java.util.List" resultMap="RM-DIVISIONTEMPLATE">
+ 		 SELECT  division_template_id,
+	  		  template_name,
+			  division_phase,
+			  division_way,
+			  template_status,
+			  create_date,
+			  modify_date,
+			  template_note
+	     FROM division_template WHERE division_phase = #value# AND template_status = 'normal'
+  </select>
+  
+  <select id="DIVISIONTEMPLATE-GETBYCONDITIONSCOUNT" parameterClass="java.util.Map" resultClass="long">
+      SELECT COUNT(0) FROM division_template WHERE 1 = 1
+	  <isNotEmpty property="name">
+	    AND template_name = #name#
+	  </isNotEmpty>
+	  <isNotEmpty property="status">
+		  <isNotEqual property="status" compareValue="all">
+		    AND template_status = #status#
+		  </isNotEqual>
+	  </isNotEmpty>
+  </select>
+
+    <!-- mapped statement for IbatisDivisionTemplateDAO.changeStatus -->
+    <update id="MS-DIVISION-TEMPLATE-CHANGE-STATUS">
+        UPDATE /*MS-YRD-DIVISION-TEMPLATE-CHANGE-STATUS*/ division_template SET template_status=#templateStatus# WHERE division_template_id=#divisionTemplateId#
+    </update>
+</sqlMap>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-AMOUNTFLOW" class="com.icebreak.p2p.dataobject.AmountFlow">
+	  <result property="id" column="amount_flow_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="flowCode" column="flow_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="outUserId" column="out_user_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="inUserId" column="in_user_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="amountOut" column="amount_out" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="amountIn" column="amount_in" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="amount" column="amount" javaType="long" jdbcType="BIGINT" />
+	  <result property="status" column="status" javaType="int" jdbcType="INT" />
+	  <result property="type" column="amount_flow_type" javaType="java.lang.String" jdbcType="ENUM" />
+	  <result property="note" column="note" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="date" column="date" javaType="java.util.Date" jdbcType="DATETIME" />
+  </resultMap>
+  
+  <insert id="AMOUNTFLOW-ADDAMOUNTFLOW" parameterClass="com.icebreak.p2p.dataobject.AmountFlow">
+	  INSERT INTO amount_flow (
+	  	  flow_code,
+	  	  out_user_id,
+	  	  in_user_id,
+		  amount_out,
+		  amount_in,
+		  amount,
+		  amount_flow_type,
+		  status,
+		  note,
+		  date
+	  ) VALUES (
+	  	  #flowCode#,
+	      #outUserId#,
+	      #inUserId#,
+		  #amountOut#,
+		  #amountIn#,
+		  #amount#,
+		  #type#,
+		  #status#,
+		  #note#,
+		  #date#
+	  )
+	  <selectKey resultClass="long" keyProperty="id">
+			<![CDATA[SELECT LAST_INSERT_ID() AS amount_flow_id ]]>
+	  </selectKey>
+  </insert>
+  
+  <select id="AMOUNTFLOW-GETBYSTATUS" parameterClass="boolean" resultClass="java.util.List" resultMap="RM-AMOUNTFLOW">
+	  SELECT
+	          amount_flow_id,
+	          flow_code,
+	          out_user_id,
+	  	  	  in_user_id,
+	          amount_out,
+			  amount_in,
+			  amount,
+			  amount_flow_type,
+			  status,
+			  note,
+			  date
+	  FROM amount_flow WHERE status = #value# LIMIT 0,50 ;
+  </select>
+  
+  <select id="AMOUNTFLOW-GETTOTALAMOUNTFLOW" parameterClass="java.util.Map" resultClass="long">
+  	SELECT IFNULL(SUM(t.amount), 0) FROM amount_flow t
+	WHERE t.out_user_id = #userId# OR t.in_user_id = #userId#
+	<isNotEmpty property="start">
+		<![CDATA[AND amount_flow.date > #start#]]>
+	</isNotEmpty>
+	<isNotEmpty property="end">
+		<![CDATA[AND amount_flow.date <= #end#]]>
+	</isNotEmpty>
+	FOR UPDATE
+  </select>
+  
+  <update id="AMOUNTFLOW-MODIFYSTATUS" parameterClass="java.util.Map">
+  	UPDATE amount_flow SET status = #status# WHERE amount_flow_id = #id#
+  </update>
+   <select id="AMOUNTFLOW-GETBYFLOWID" parameterClass="long" resultClass="com.icebreak.p2p.dataobject.AmountFlow" resultMap="RM-AMOUNTFLOW">
+	  SELECT
+	          amount_flow_id,
+	          flow_code,
+	          out_user_id,
+	  	  	  in_user_id,
+	          amount_out,
+			  amount_in,
+			  amount,
+			  amount_flow_type,
+			  status,
+			  note,
+			  date
+	  FROM amount_flow WHERE amount_flow_id = #flowId#
+  </select>
+  <select id="AMOUNTFLOW-TRANSFLOWCOUNTBYTRADEDETAILIDTYPE"  parameterClass="java.util.Map"  resultClass="int">
+	  	SELECT
+		  COUNT(*)
+		FROM amount_flow af
+		
+		INNER JOIN amount_flow_trade aft ON aft.`amount_flow_id` = af.`amount_flow_id`
+		
+		WHERE af.`status` = '1'
+		<isNotEmpty property="tradeDetailId">
+		<![CDATA[ AND aft.trade_detail_id = #tradeDetailId#]]>
+	</isNotEmpty>
+	<isNotEmpty property="type">
+		<![CDATA[ AND af.amount_flow_type = #type#]]>
+	</isNotEmpty>
+  </select>
+  
+   <select id="AMOUNTFLOW-TRANSOHASEBYTRADEDETAILID" parameterClass="long" resultClass="java.lang.String">
+	  	SELECT td.transfer_phase FROM trade_detail td 
+		WHERE td.`trade_detail_id` = (SELECT aft.`trade_detail_id` 
+		FROM amount_flow af,amount_flow_trade aft WHERE af.amount_flow_id = aft.`amount_flow_id` AND af.amount_flow_id = #value# )
+  </select>
+  
+  
+    <select id="AMOUNTFLOW-REPAYPERIODNO-BYTRADEDETAILID" parameterClass="long" resultClass="int">
+	  SELECT td.repay_period_no FROM  amount_flow_trade t,trade_detail td   WHERE   td.trade_detail_id = t.trade_detail_id  AND t.amount_flow_id = #value#
+  </select>
+  
+  <select id="AMOUNTFLOW-queryPayTogetherForUpdate" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-AMOUNTFLOW">
+	  SELECT
+	          af.amount_flow_id,
+	          flow_code,
+	          out_user_id,
+	  	  	  in_user_id,
+	          amount_out,
+			  amount_in,
+			  amount,
+			  amount_flow_type,
+			  status,
+			  note,
+			  date
+	  FROM amount_flow af ,amount_flow_trade t
+	  WHERE af.amount_flow_id = t.amount_flow_id
+		AND trade_id = #tradeId# AND status = #status# for update
+  </select>
+  <update id="AMOUNTFLOW-UPDATE" parameterClass="java.util.Map">
+		UPDATE amount_flow SET `flow_code` = #flowCode#, `status` = #status# WHERE `flow_code` = #id#
+	</update>
+  
+</sqlMap>

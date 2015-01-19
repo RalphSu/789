@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-AMOUNTFLOWTRADE" class="com.icebreak.p2p.dataobject.AmountFlowTrade">
+	  <result property="baseId" column="base_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="tradeId" column="trade_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="amountFlowId" column="amount_flow_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="tradeDetailId" column="trade_detail_id" javaType="long" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <insert id="AMOUNTFLOWTRADE-ADDAMOUNTFLOWTRADE" parameterClass="com.icebreak.p2p.dataobject.AmountFlowTrade">
+	  INSERT INTO amount_flow_trade (
+	  	  trade_id,
+	  	  amount_flow_id,
+	  	  trade_detail_id
+	  ) VALUES (
+	  	  #tradeId#,
+		  #amountFlowId#,
+		   #tradeDetailId#
+	  )
+  </insert>
+  
+  <select id="AMOUNTFLOWTRADE-GETBYPARAMS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-AMOUNTFLOWTRADE">
+	  SELECT
+	          *
+	  FROM amount_flow_trade WHERE 1=1
+	  <isNotEmpty property="tradeId">
+		<![CDATA[AND trade_id = #tradeId#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="amountFlowId">
+		<![CDATA[AND amount_flow_id = #amountFlowId#]]>
+	  </isNotEmpty>
+	  <isNotEmpty property="tradeDetailId">
+		<![CDATA[AND trade_detail_id = #tradeDetailId#]]>
+	  </isNotEmpty>
+  </select>
+  <select id="AMOUNTFLOW-GETAMTFLOWTRADESBYPARAMSCOUNT" parameterClass="java.util.Map" resultClass="long">
+	  SELECT
+		  COUNT(*)
+		FROM amount_flow_trade aft
+		
+		INNER JOIN amount_flow af ON aft.`amount_flow_id` = af.`amount_flow_id`
+		
+		left JOIN user_base_info ub ON ub.`user_id` = af.`in_user_id`
+		
+		left JOIN user_base_info ub1 ON ub1.`user_id` = af.`out_user_id`
+		
+		WHERE 1=1
+		<dynamic>
+		  <isNotEmpty property="tradeId">
+			<![CDATA[AND aft.trade_id = #tradeId#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="receiveRealName">
+			<![CDATA[AND ub.real_name = #receiveRealName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="receiveUserName">
+			<![CDATA[AND ub.user_name = #receiveUserName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="payRealName">
+			<![CDATA[AND ub1.real_name = #payRealName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="payUserName">
+			<![CDATA[AND ub1.user_name = #payUserName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="startDate">
+			<![CDATA[AND af.date >= #startDate#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="endDate">
+			<![CDATA[AND af.date <= #endDate#]]>
+		  </isNotEmpty>
+	  </dynamic> 
+  </select>
+  <select id="AMOUNTFLOW-GETAMTFLOWTRADESBYPARAMS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-AMOUNTFLOWTRADE">
+	  SELECT
+		  *
+		FROM amount_flow_trade aft
+		
+		INNER JOIN amount_flow af ON aft.`amount_flow_id` = af.`amount_flow_id`
+		
+		left JOIN user_base_info ub ON ub.`user_id` = af.`in_user_id`
+		
+		left JOIN user_base_info ub1 ON ub1.`user_id` = af.`out_user_id`
+		
+		WHERE 1=1
+		<dynamic>
+			<isNotEmpty property="amountFlowId">
+			<![CDATA[AND aft.amount_flow_id = #amountFlowId#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="tradeId">
+			<![CDATA[AND aft.trade_id = #tradeId#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="receiveRealName">
+			<![CDATA[AND ub.real_name = #receiveRealName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="receiveUserName">
+			<![CDATA[AND ub.user_name = #receiveUserName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="payRealName">
+			<![CDATA[AND ub1.real_name = #payRealName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="payUserName">
+			<![CDATA[AND ub1.user_name = #payUserName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="startDate">
+			<![CDATA[AND af.date >= #startDate#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="endDate">
+			<![CDATA[AND af.date <= #endDate#]]>
+		  </isNotEmpty>
+	  </dynamic> 
+	  <![CDATA[ORDER BY af.date DESC
+		LIMIT #limitStart#,#pageSize# ;]]>
+  </select>
+</sqlMap>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+	<resultMap id="LOAN-AUTH-RECORD" class="com.icebreak.p2p.dataobject.LoanAuthRecord">
+		<result property="baseId" column="tb_base_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="authUserId" column="auth_user_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="loanDemandId" column="loan_demand_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="authType" column="auth_type" javaType="java.lang.String" jdbcType="enum"/>
+		<result property="authTime" column="auth_time" javaType="java.util.Date" jdbcType="DATETIME"/>
+		<result property="note" column="note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<!-- ============================================= -->
+	<!-- mapped statements for IbatisLoanAuthRecordDAO -->
+	<!-- ============================================= -->
+	<!-- mapped statement for IbatisLoanAuthRecordDAO.insert -->
+	<insert id="LOAN-AUTH-RECORD-INSERT">
+		<![CDATA[
+		INSERT /*LOAN-AUTH-RECORD-INSERT*/ INTO loan_auth_record (tb_base_id, auth_user_id, loan_demand_id, auth_type, auth_time,note) VALUES (#baseId#, #authUserId#, #loanDemandId#,#authType#, #authTime#, #note#)
+		]]>
+	</insert>
+
+	<select id="LOAN-AUTH-RECORD-COUNTBYCONDITIONS" parameterClass="java.util.Map" resultClass="java.lang.Long">
+      SELECT COUNT(0)
+	  FROM loan_auth_record lar
+	  WHERE 1 = 1
+	  <isNotEmpty property="baseId">
+			AND lar.tb_base_id = #baseId# 
+	  </isNotEmpty>
+	 <isNotEmpty property="authUserId">
+			AND lar.auth_user_id = #authUserId# 
+	  </isNotEmpty>
+	  <isNotEmpty property="loanDemandId">
+			AND lar.loan_demand_id = #loanDemandId# 
+	  </isNotEmpty>
+	  <isNotEmpty property="authType">
+			AND lar.auth_type = #authType# 
+	  </isNotEmpty>
+	  <isNotEmpty property="startTime">
+			AND lar.auth_time >= #startTime# 
+	  </isNotEmpty>
+	  <isNotEmpty property="endTime" prepend=" and ">
+			<![CDATA[lar.auth_time <= #endTime#]]> 
+	  </isNotEmpty>
+  </select>
+  <select id="LOAN-AUTH-RECORD-LISTBYCONDITIONS" parameterClass="java.util.Map" resultMap="LOAN-AUTH-RECORD">
+      SELECT *
+	  FROM loan_auth_record lar
+	  WHERE 1 = 1
+	  <isNotEmpty property="baseId">
+			AND lar.tb_base_id = #baseId# 
+	  </isNotEmpty>
+	 <isNotEmpty property="authUserId">
+			AND lar.auth_user_id = #authUserId# 
+	  </isNotEmpty>
+	  <isNotEmpty property="loanDemandId">
+			AND lar.loan_demand_id = #loanDemandId# 
+	  </isNotEmpty>
+	  <isNotEmpty property="authType">
+			AND lar.auth_type = #authType# 
+	  </isNotEmpty>
+	  <isNotEmpty property="startTime">
+			AND lar.auth_time >= #startTime# 
+	  </isNotEmpty>
+	  <isNotEmpty property="endTime" prepend=" and ">
+			<![CDATA[lar.auth_time <= #endTime#]]> 
+	  </isNotEmpty>
+  </select>
+</sqlMap>

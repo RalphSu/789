@@ -1,0 +1,125 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<!--内容-->
+
+<div class="top_blank"></div>
+<!--用户菜单开始-->
+<div class="use_menu b_gray_o">
+    <ul class="nav">
+        <li class="light"><a href="/usercenter/depositRecord">资金记录</a></li>
+
+        #set($t = $permission.check('/tradeQuery/invest/12/1'))
+        #if($t > 0)
+            <li><a href="/tradeQuery/invest/12/1">我的项目</a></li>
+        #end
+
+        #set($t = $permission.check('/tradeQuery/borrowingRecord'))
+        #if($t > 0)
+            <li style="margin-left: 28px;"><a href="/tradeQuery/borrowingRecord">投资接受记录</a></li>
+        #end
+
+        #set($t = $permission.check('/repay/*'))
+        #set($s = $permission.check('/collection/*'))
+        #if($t>0)
+            <li><a href="/repay/list">还款管理</a></li>
+        #end
+        #if($s>0)
+            <li><a href="/collection/list">收款管理</a></li>
+        #end
+
+        #set($t = $permission.check('/repayDB/*'))
+        #if($t>0)
+            <li><a href="/repayDB/repayDBManager">还款管理</a></li>
+        #end
+
+        #set($t = $permission.check('/guaranteeCenter/*'))
+        #set($s = $permission.check('/guaranteeOperator/operatorManager'))
+        #if($t>0)
+            <li><a href="/guaranteeCenter/newGuaranteeManager">业务管理</a></li>
+        #end
+        #if($s>0)
+            <li><a href="/guaranteeOperator/operatorManager">操作员管理</a></li>
+        #end
+        <li><a href="/usercenter/setting">账户设置</a></li>
+        <li><a href="/usercenter/home">账户概览</a></li>
+    </ul>
+</div>
+<!--用户菜单结束-->
+<div class="blank"></div>
+<!--通用头部结束-->
+<div class="alrod">
+<!--通用搜索开始-->
+<div class="search nav">
+	<ul>
+    	#*<li class="light">全部</li>
+        <li><a href="#">收入</a></li>
+        <li><a href="#">支出</a></li>
+        <li><a href="#">充值</a></li>
+        <li><a href="#">提现</a></li>
+        <li class="f_right but">筛选</li>
+        <li class="f_right f_inp"><input name="" type="text" class="f_inp" value="2014-03-18"></li>
+        <li class="f_right f_ot"> - </li>
+        <li class="f_right f_inp"><input name="" type="text" class="f_inp" value="2013-02-05"></li>
+        <li class="f_right f_sel"><select name="" class="f_sel"><option>全部选项</option></select></li>*#
+        <li $!selectedbalance><a href="/usercenter/depositRecord">收支明细</a></li>
+        <li $!selectedrecharge><a href="/usercenter/newRechargeRecord">充值记录</a></li>
+        <li $!selectedwithdraw><a href="/usercenter/newWithdrawRecord">提现记录</a></li>
+    </ul>
+</div>
+<!--通用搜索结束-->
+<div class="form_blank"></div>
+<!--通用表单开始-->
+        <div class="form f_tit">
+            <ul class="tit">
+                <li class="col1">时间</li>
+                <li class="col2">流水号</li>
+                <li class="col3">对方</li>
+                <li class="col6">状态</li>
+                <li class="col5">金额（元）</li>
+            </ul>
+        </div>
+        <div class="form form_nav">
+            #foreach($info in $page.result)
+                <ul>
+                    <li class="col1">$!info.payTime<br /></li>
+                    <li class="col2"><a href="#">$!info.outBizNo</a><br /></li>
+                    <li class="col3">
+                        #if($!info.depositCode=='W')
+                            网银充值
+                        #elseif($!info.depositCode=='D')
+                            快捷充值
+                        #end
+                    </li>
+                    <li class="col6">
+                        #if($!info.status=='SUCCESS')
+                            成功
+                        #elseif($!info.status=='FAILURE')
+                            失败
+                        #elseif($!info.status=='ING')
+                            充值中
+                        #end
+                    </li>
+                    <li class="col5"><span class="green">$!info.amount</span></li>
+                </ul>
+            #end
+    </div>
+<!--通用表单结束-->
+<div class="form_blank"></div>
+<!--通用翻页开始-->
+    <div class="pages account-page mt20">
+        <div class="fn-right">
+            #parse("/backstage/page/page.vm")
+        </div>
+    </div>
+    </form>
+    <div class="blank30"></div>
+<!--通用翻页结束-->
+</div>
+<div class="blank"></div>
+<!--通用底部开始-->
+<div class="blank"></div>
+    #parse("/front/index/common/footer.vm")
+<!--通用底部结束-->
+</body>
+</html>

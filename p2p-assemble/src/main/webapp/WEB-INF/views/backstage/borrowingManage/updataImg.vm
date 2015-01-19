@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>附件管理</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>融资管理</a></li>
+                            <li><a href>附件管理</a></li>
+                        </ul>
+                    </div>
+					<form action="/backstage/add/updateImg2" class="ui-form" id="img_form" method="POST">
+						<input type="hidden" class="u-input w170"  name="param_id" id="param_id"  value="$!{info.demandId}"  maxlength=""/>
+						<fieldset>
+							<legend><h3>$!appConstantsUtil.getProductName()附件修改</h3></legend>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>融资人：</label>$!{info.userName}
+								
+							</div>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span> 	融资金额(元)：</label>￥$!{moneyUtil.getFormatAmount($!{info.loanAmount})}
+								
+							</div>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>承诺机构：</label>$!{info.guaranteeName}
+								
+							</div>
+							
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>项目名称：</label>$!{info.loanName}
+                                <input type="hidden" class="u-input w170"  name="param_name" id="param_name"  value="$!{info.loanName}"  maxlength="">
+							</div>
+							<div class="item">
+        						#foreach($attachmentModuleTypeInfo in $list)
+        							<h2>${attachmentModuleTypeInfo.moduleType.message}（已经上传）</h2>
+        							<div class="b-border pro-info" style="overflow: hidden;">
+        							#foreach($attachmentInfo in $attachmentModuleTypeInfo.attachmentInfos)
+										<div style="position:relative;width:50px;height:50px;margin:5px; display: block; float:left;">
+            								<img style="width:50px;height:50px;"attachmentId="$!attachmentInfo.attachmentId" filePhysicalPath="$!attachmentInfo.filePhysicalPath" requestPath="$!attachmentInfo.requestPath" src='$!attachmentInfo.requestPath'/>
+    										<a style="position: absolute; right: 5px; top: 5px;" class="delimg" href="javascript:;">X</a>
+										</div>
+        							#end		
+        							</div>
+								#end
+								#foreach($!info in $!enumlist)
+									<li style="width:200px"><span>$!info.message</span><span  class=""><a code='$!{info.code}' href="javascript:;" class='loan_management fn-ys4-btn attach'>上传</a></span></li>	
+									
+								#end
+							</div>
+							<div class="fn-layer f-active upload-scan" style="width:750px;position:absolute;left:-9999px;">
+                            		<div class="f-con">
+                            			<div class="f-top mb10">
+                            				<p>图片支持jpg、jpeg、png、bmp格式，单张图片大小不超过1M，双击可编辑图片名称,图片名称不超过50字</p>
+                            			</div>
+										#set($index=1)
+										#foreach($!info in $!enumlist)
+												<input type="hidden" value="" name="pathName_$!info.code" id="pathHiddenId_$index"/>
+											#set($index=$index+1)
+										#end
+                					<input type="hidden" value="" name="OTHER_attachPaths" id="OTHER_attachPaths"/>
+                						<div class="fn-item fn-clear" style="width:550px;">
+                						<label class="fn-label">上传图片</label>
+                                        <img style="width:50px;height:50px;" class="uploadimg" />
+                                        </div>
+                						<input type="file" id='upfile' class="fn-text w205" value="" name="credentialsImage"/>
+                							<div id="queueDiv"></div>
+                							<ul id="hidden_imgs_ul" class="upload-img fn-clear hidden_imgs_ul_del">
+                								<li id="upimg-model" style='display:none'>
+                									<img src="" alt="" />
+                									<a href="javascript:;" class="del" title="删除"></a>
+                									<div class="fn-imgInfo" style="text-align:center;"><span></span><input style="display:none;" maxlength='50' /></div>
+                								</li>								
+                							</ul>
+                							<b class="fn-tip"></b>
+                						
+                						</div>
+                				<div class="fn-item">
+                					<a href="javascript:;" class="fn-g-btn loanChecckSubmit">完成</a>
+                				</div>
+                			</div>
+						</fieldset>
+
+						<div class="item">
+                            <a href="javascript:;"  class="u-btn u-btn-blue submit_form">更新</a><a href="/backstage/pageQueryLoanDemand?module=OVERALL" class="u-btn u-btn-gray">取消</a>
+						</div>
+					</form>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+
+    	seajs.use($_GLOBAL.mode + 'updataImg');
+		
+		
+    </script>
+</body>
+</html>

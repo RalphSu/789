@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-USERROLE" class="com.icebreak.p2p.dataobject.RolePermission">
+     <result property="id" column="role_permission_id" javaType="int" jdbcType="INT"/>
+     <result property="roleId" column="role_id" javaType="int" jdbcType="INT"/>
+     <result property="permissionId" column="permission_id" javaType="int" jdbcType="INT"/>
+  </resultMap>
+  
+  <insert id="ROLEPERMISSION-INSERT" parameterClass="com.icebreak.p2p.dataobject.RolePermission">
+    INSERT INTO role_permission (
+	     role_id,
+	     permission_id
+    ) VALUES (
+	     #roleId#,
+	     #permissionId#
+    )
+  </insert>
+  
+  <delete id="ROLEPERMISSION-DELETE" parameterClass="java.util.Map">
+    DELETE FROM role_permission WHERE role_id = #roleId# AND permission_id = #permissionId#
+  </delete>
+  
+  <delete id="ROLEPERMISSION-DELETEBYROLEID" parameterClass="int">
+    DELETE FROM role_permission WHERE role_id = #value#
+  </delete>
+  
+  <delete id="ROLEPERMISSION-DELETEBYPERMISSIONID" parameterClass="int">
+    DELETE FROM role_permission WHERE permission_id = #value#
+  </delete>
+</sqlMap>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="specialmer">
+
+    <resultMap id="RM-COMMON-DISTRICT" class="com.icebreak.p2p.dal.dataobject.CommonDistrictDO">
+        <result property="id" column="id" javaType="int" jdbcType="INT" nullValue="0"/>
+        <result property="nbNo" column="nb_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="fatherNo" column="father_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="areaName" column="area_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="shortName" column="short_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="areaPy" column="area_py" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="areaNagda" column="area_nagda" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="cnaps" column="cnaps" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="rawAddTime" column="raw_add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="rawUpdateTime" column="raw_update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <!-- ============================================= -->
+    <!-- mapped statements for IbatisCommonDistrictDAO -->
+    <!-- ============================================= -->
+    <!-- mapped statement for IbatisCommonDistrictDAO.getAll -->
+    <select id="MS-COMMON-DISTRICT-GET-ALL" resultMap="RM-COMMON-DISTRICT">
+    <![CDATA[
+        select /*MS-YRD-COMMON-DISTRICT-GET-ALL*/ * from common_district
+    ]]>
+    </select>
+
+    <!-- mapped statement for IbatisCommonDistrictDAO.getByDistrictNo -->
+    <select id="MS-COMMON-DISTRICT-GET-BY-DISTRICT-NO" resultMap="RM-COMMON-DISTRICT">
+    <![CDATA[
+        select /*MS-YRD-COMMON-DISTRICT-GET-BY-DISTRICT-NO*/ * from common_district where (nb_no = #value#)
+    ]]>
+    </select>
+
+    <!-- mapped statement for IbatisCommonDistrictDAO.getByDistrictName -->
+    <select id="MS-COMMON-DISTRICT-GET-BY-DISTRICT-NAME" resultMap="RM-COMMON-DISTRICT">
+        select /*MS-YRD-COMMON-DISTRICT-GET-BY-DISTRICT-NAME*/ * from common_district  where area_name like '%$areaName$%' and father_no !='001'
+    </select>
+
+    <!-- mapped statement for IbatisCommonDistrictDAO.getByProvinceName -->
+    <select id="MS-COMMON-DISTRICT-GET-BY-PROVINCE-NAME" resultMap="RM-COMMON-DISTRICT">
+        select /*MS-YRD-COMMON-DISTRICT-GET-BY-PROVINCE-NAME*/ * from common_district  where (area_name like '%$areaName$%'  or short_name like '%$areaName$%' ) and father_no ='001'
+    </select>
+
+    <!-- mapped statement for IbatisCommonDistrictDAO.getByCityName -->
+    <select id="MS-COMMON-DISTRICT-GET-BY-CITY-NAME" resultMap="RM-COMMON-DISTRICT">
+        select /*MS-YRD-COMMON-DISTRICT-GET-BY-CITY-NAME*/ * from common_district  where (area_name like '%$areaName$%'  or short_name like '%$areaName$%' ) and father_no !='001'
+    </select>
+
+</sqlMap>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="gold">
+
+  <resultMap id="RM-GOLD-EXPERIENCE" class="com.icebreak.p2p.dataobject.GoldExperienceDO">
+ 	<result property="id" column="id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+ 	<result property="activityType" column="activity_type" javaType="com.icebreak.p2p.dataobject.DOEnum.ActivityTypeEnum" jdbcType="ENUM"/>
+    <result property="name" column="name" javaType="String" jdbcType="VARCHAR"/>
+    <result property="amount" column="amount" javaType="java.math.BigDecimal" jdbcType="DECIMAL" nullValue="0"/>
+    <result property="purpose" column="purpose" javaType="String" jdbcType="VARCHAR"/>
+    <result property="quantity" column="quantity" javaType="int" jdbcType="int" nullValue="0"/>
+    <result property="surplusQuantity" column="surplus_quantity" javaType="int" jdbcType="int" nullValue="0"/>
+    <result property="status" column="status" javaType="int" jdbcType="int" nullValue="0"/>
+	<result property="startTime" column="start_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    <result property="endTime" column="end_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+  </resultMap>
+  
+  <insert id="RM-GOLD-EXPERIENCE-INSERT">
+  <![CDATA[
+    INSERT INTO gold_experience (
+	  activity_type, name, amount, purpose, quantity, surplus_quantity, status, start_time, end_time
+    ) VALUES (
+	     #activityType#, #name#, #amount#, #purpose#, #quantity#, #surplusQuantity#, #status#, #startTime#, #endTime#
+    )
+  ]]>
+    <selectKey resultClass="long" keyProperty="id">
+	  <![CDATA[SELECT LAST_INSERT_ID() AS id]]>
+    </selectKey>
+  </insert>
+  
+  <delete id="RM-GOLD-EXPERIENCE-DELETE">
+  	DELETE FROM gold_experience WHERE id = #id#
+  </delete>
+
+  <select id="RM-GOLD-EXPERIENCE-SELECT-COUNT" resultClass="java.lang.Long">
+	SELECT count(*) FROM gold_experience
+	  WHERE 1 = 1
+	  <isNotEmpty property="activityType">
+		  AND activity_type =#activityType#
+	  </isNotEmpty>
+	  <isNotEmpty property="status">
+		  AND status =#status#
+	  </isNotEmpty>
+	  <isNotEmpty property="startTime">
+		  AND start_time =#startTime#
+	  </isNotEmpty>
+	  <isNotEmpty property="endTime">
+		  AND end_time =#endTime#
+	  </isNotEmpty>
+  </select>
+
+  <select id="RM-GOLD-EXPERIENCE-SELECT-ONLY" resultMap="RM-GOLD-EXPERIENCE">
+  	SELECT * FROM gold_experience WHERE activity_type = #activityType# AND status = #status# AND
+	  <![CDATA[sysdate() > start_time]]> AND
+	  <![CDATA[sysdate() < end_time]]>
+  </select>
+
+	<select id="RM-GOLD-EXPERIENCE-SELECT-MAY" resultMap="RM-GOLD-EXPERIENCE" resultClass="java.util.List">
+		SELECT * FROM gold_experience WHERE status in (0, 1) AND
+		<![CDATA[sysdate() > start_time]]> AND
+		<![CDATA[sysdate() < end_time]]>
+	</select>
+
+  <select id="RM-GOLD-EXPERIENCE-SELECT-BY-ID" resultMap="RM-GOLD-EXPERIENCE">
+	SELECT * FROM gold_experience WHERE id = #id#
+  </select>
+
+  <select id="RM-GOLD-EXPERIENCE-SELECT-DYNAMIC"  resultMap="RM-GOLD-EXPERIENCE" resultClass="java.util.List">
+    SELECT * FROM gold_experience
+	WHERE 1 = 1
+	<isNotEmpty property="activityType">
+		AND activity_type =#activityType#
+	</isNotEmpty>
+    <isNotEmpty property="status">
+	    AND status =#status#
+    </isNotEmpty>
+    <isNotEmpty property="startTime">
+	    AND start_time =#startTime#
+	</isNotEmpty>
+	<isNotEmpty property="endTime">
+	    AND end_time =#endTime#
+	</isNotEmpty>
+	  LIMIT #limitStart#, #pageSize#;
+  </select>
+
+	<update id="RM-GOLD-EXPERIENCE-UPDATE">
+		update gold_experience
+		<dynamic prepend="set">
+			<isNotEmpty property="activityType" prepend=",">
+				activity_type = #activityType#
+			</isNotEmpty>
+			<isNotEmpty property="name" prepend=",">
+				name = #name#
+			</isNotEmpty>
+			<isNotEmpty property="amount" prepend=",">
+				amount = #amount#
+			</isNotEmpty>
+			<isNotEmpty property="purpose" prepend=",">
+				purpose = #purpose#
+			</isNotEmpty>
+			<isNotEmpty property="quantity" prepend=",">
+				quantity = #quantity#
+			</isNotEmpty>
+			<isNotEmpty property="surplusQuantity" prepend=",">
+				surplus_quantity = #surplusQuantity#
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=",">
+				status = #status#
+			</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=",">
+				start_time = #startTime#
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=",">
+				end_time = #endTime#
+			</isNotEmpty>
+		</dynamic>
+		where (id = #id#)
+	</update>
+</sqlMap>

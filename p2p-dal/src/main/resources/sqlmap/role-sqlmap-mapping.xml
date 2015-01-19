@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+   <resultMap id="RM-ROLE" class="com.icebreak.p2p.dataobject.Role" >
+       <result property="id" column="role_id" javaType="int" jdbcType="INT"/>
+       <result property="code" column="role_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+       <result property="name" column="role_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+       <result property="parent" column="role_parent_id" javaType="int" jdbcType="INT"/>
+       <result property="note" column="role_note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+   </resultMap>
+   
+   <select id="ROLE-GETBYROLEID" parameterClass="int" resultMap="RM-ROLE" resultClass="com.icebreak.p2p.dataobject.Role">
+	     SELECT 
+	          t.role_id,
+	          t.role_code,
+	          t.role_name,
+	          t.role_parent_id,
+	          t.role_note
+	     FROM role t WHERE t.role_id = #value#
+   </select>
+   
+   <select id="ROLE-GETBYROLECODE" parameterClass="java.lang.String" resultClass="com.icebreak.p2p.dataobject.Role" resultMap="RM-ROLE">
+        SELECT 
+          t.role_id,
+          t.role_code,
+          t.role_name,
+          t.role_parent_id,
+          t.role_note
+        FROM role t WHERE t.role_code = #value#
+   </select>
+   
+   <insert id="ROLE-INSERT" parameterClass="com.icebreak.p2p.dataobject.Role">
+      INSERT INTO role (
+          role_code,
+          role_name,
+          role_parent_id,
+          role_note
+      ) VALUES (
+         #code#,
+         #name#,
+         #parent#,
+         #note#
+      )
+   </insert>
+   
+   <delete id="ROLE-DELETEBYROLEID" parameterClass="int">
+     	DELETE FROM role WHERE role_id = #value#
+   </delete>
+   
+   <delete id="ROLE-DELETEBYROLECODE" parameterClass="java.lang.String">
+   		DELETE FROM role WHERE role_code = #value#
+   </delete>
+   
+   <update id="ROLE-UPDATE" parameterClass="com.icebreak.p2p.dataobject.Role">
+        UPDATE role set role_code=#code#, role_name=#name#, role_parent_id = #parent#, role_note = #note# WHERE role_id = #id#
+   </update>
+   
+   <select id="ROLE-EXISTS" parameterClass="java.lang.String" resultClass="int">
+        SELECT COUNT(0) FROM role WHERE role.role_code = #value#
+   </select>
+   
+   <select id="ROLE-GETALLROLES" resultClass="java.util.List" resultMap="RM-ROLE" parameterClass="java.util.Map">
+         SELECT 
+          t.role_id,
+          t.role_code,
+          t.role_name,
+          t.role_parent_id,
+          t.role_note
+        FROM role t
+        <isNotEmpty property="start">
+           LiMIT #start#
+           <isNotEmpty property="size">
+             , #size#
+           </isNotEmpty>
+         </isNotEmpty>
+   </select>
+   
+   <select id="ROLE-GETALLROLES-COUNT" resultClass="long">
+         SELECT COUNT(0) FROM role t
+   </select>
+   
+   <select id="ROLE-GETCHILDRENROLES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-ROLE">
+        SELECT 
+          t.role_id,
+          t.role_code,
+          t.role_name,
+          t.role_parent_id,
+          t.role_note
+        FROM role t WHERE t.role_parent_id = #roleId#
+        <isNotEmpty property="start">
+         LIMIT #start#
+           <isNotEmpty>
+             , #size#
+           </isNotEmpty>
+        </isNotEmpty>
+   </select>
+   
+   <select id="ROLE-GETCHILDRENROLES-COUNT" parameterClass="java.util.Map" resultClass="long">
+        SELECT COUNT(0) FROM role t WHERE t.role_parent_id = #roleId#
+   </select>
+   
+   <select id="ROLE-GETROLESBYUSERID" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-ROLE">
+   		 SELECT 
+          t.role_id,
+          t.role_code,
+          t.role_name,
+          t.role_parent_id,
+          t.role_note
+         FROM role t 
+         INNER JOIN user_role ON t.role_id = user_role.role_id
+         WHERE user_role.user_id = #userId#
+         <isNotEmpty property="start">
+           LiMIT #start#
+           <isNotEmpty property="size">
+             , #size#
+           </isNotEmpty>
+         </isNotEmpty>
+   </select>
+   
+   <select id="ROLE-GETROLESBYUSERID-COUNT" parameterClass="java.util.Map" resultClass="long">
+   		 SELECT 
+          COUNT(0)
+         FROM role t 
+         INNER JOIN user_role ON t.role_id = user_role.role_id
+         WHERE user_role.user_id = #userId#
+   </select>
+   
+   <select id="ROLE-GETGRANTABLEROLESBYUSERID" parameterClass="java.util.Map" resultMap="RM-ROLE" resultClass="java.util.List">
+		SELECT 
+			  t.role_id,
+	          t.role_code,
+	          t.role_name,
+	          t.role_parent_id,
+	          t.role_note
+		FROM role t
+		WHERE t.role_id NOT IN (
+			SELECT t1.role_id FROM user_role t1 WHERE t1.user_id = #userId#
+		)
+		<isNotEmpty property="start">
+           LiMIT #start#
+           <isNotEmpty property="size">
+             , #size#
+           </isNotEmpty>
+        </isNotEmpty>
+   </select>
+   
+   <select id="ROLE-GETGRANTABLEROLESBYUSERID-COUNT" parameterClass="java.util.Map" resultClass="long">
+		SELECT COUNT(0) FROM role t
+		WHERE t.role_id NOT IN (
+			SELECT t1.role_id FROM user_role t1 WHERE t1.user_id = #userId#
+		)
+   </select>
+</sqlMap>

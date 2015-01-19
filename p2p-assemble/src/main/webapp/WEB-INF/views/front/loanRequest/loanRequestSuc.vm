@@ -1,0 +1,52 @@
+
+#parse("/front/index/common/header.vm")
+<body>
+#parse("/front/index/common/header-menu.vm")
+<div class="blank"></div>
+<div class="alrod">
+<!--注册页面开始-->
+<div class="reg_tit nav large_font">恭喜您提交成功！</div>
+<div class="load nav">
+    <ul class="four_load">
+        <li class="last start"><div class="num_last"><span class="green_t">1</span></div>
+        <span class="in start">选择融资类型</span></li>
+        <li class="load_link"><img src="/resources/images/new/load4.png"></li>
+        <li class="last"><div class="num_last"><span class="green_t">2</span></div>
+        <span class="next">填写基本信息</span></li>
+        <li class="load_link"><img src="/resources/images/new/load4.png"></li>
+        <li class="last"><div class="num_last"><span class="green_t">3</span></div>
+        <span class="in">验证手机</span></li>
+        <li class="load_link"><img src="/resources/images/new/load3.png"></li>
+        <li class="in end"><div class="num_innext"><span class="green_o">4</span></div>
+        <span class="next end">提交完成</span></li>
+    </ul>
+</div>
+<div class="blank"></div>
+<div class="reg_form nav">
+    <ul class="prompt">
+        <li class="reg_name"> </li>
+        <li class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+        <li class="reg_input full_text">您已经提交成功，我们的客服会尽快联系您，如有疑问，请拨打我们的客服热线 <span class="blue">400-023-0733</span></li>
+    </ul>
+    <ul class="prompt">
+        <li class="reg_name"></li>
+        <li class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+        <li class="reg_name"></li>
+        <li class="reg_input"><a class="reg_bt" href="/index/index"><div class="mid_font tran_but_suc reg_blue">返回首页</div></a></li>
+        <li class="reg_text"></li>
+    </ul>
+</div>
+<div class=" form_blank"></div>
+<div class="reg_other nav">已有789金融账户？ <a href="/usercenter/home" class="reg_link"><span class="blue">现在登录</span></a></div>
+</div>
+<!--注册页面结束-->
+<div class="blank"></div>
+#parse("/front/index/common/footer.vm")
+</body>
+</html>

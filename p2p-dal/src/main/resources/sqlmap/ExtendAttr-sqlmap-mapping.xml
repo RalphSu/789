@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="p2p">
+  <resultMap id="RM-EXTEND-ATTR" class="com.icebreak.p2p.dal.dataobject.ExtendAttrDO">
+    <result property="tblBaseId" column="tbl_base_id" javaType="java.lang.Long" jdbcType="bigint"/>
+    <result property="recordId" column="record_id" javaType="java.lang.Long" jdbcType="bigint"/>
+    <result property="attrName" column="attr_name" javaType="String" jdbcType="varchar"/>
+    <result property="attrValue" column="attr_value" javaType="String" jdbcType="varchar"/>
+  </resultMap>
+  <insert id="MS-EXTEND-ATTR-INSERT"><![CDATA[
+	insert into extend_attr (record_id,
+		attr_name,
+		attr_value
+	) values (
+		#recordId#,
+		#attrName#,
+		#attrValue#)
+	]]>
+    <selectKey resultClass="java.lang.Long" keyProperty="tblBaseId"><![CDATA[SELECT LAST_INSERT_ID() AS tbl_base_id]]></selectKey>
+  </insert>
+
+  <update id="MS-EXTEND-ATTR-UPDATE-BY-ATTRNAME-AND-RECORDID"><![CDATA[
+	update extend_attr set attr_value = #attrValue# where record_id = #recordId# and attr_name = #attrName#
+	]]>
+  </update>
+
+  <update id="MS-EXTEND-ATTR-UPDATE"><![CDATA[
+	update extend_attr set record_id = #recordId#,
+	attr_name = #attrName#,
+	attr_value = #attrValue# where tbl_base_id=#tblBaseId#
+	]]></update>
+  <select id="MS-EXTEND-ATTR-SELECT" resultMap="RM-EXTEND-ATTR"><![CDATA[
+	select record_id,
+		attr_name,
+		attr_value,tbl_base_id where tbl_base_id=#tblBaseId#
+	]]></select>
+
+  <select id="MS-EXTEND-ATTR-SELECT-ATTR-VALUE" resultClass="string"><![CDATA[
+	select attr_value from extend_attr  where record_id=#recordId# and attr_name=#attrName#
+	]]></select>
+
+  <delete id="MS-EXTEND-ATTR-DELETE-BY-ID"><![CDATA[
+	delete from extend_attr where tbl_base_id=#tblBaseId#
+	]]></delete>
+</sqlMap>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-DIVISIONDETAIL" class="com.icebreak.p2p.dataobject.DivisionDetail">
+	  <result property="id" column="detail_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="businessCode" column="business_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="outBizNo" column="out_biz_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="tradeId" column="trade_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="tradeDetailId" column="trade_detail_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="amount" column="amount" javaType="long" jdbcType="BIGINT"/>
+	  <result property="status" column="division_status" javaType="int" jdbcType="INT"/>
+	  <result property="date" column="division_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+  </resultMap>
+  
+  <insert id="DIVISIONDETAIL-INSERT" parameterClass="com.icebreak.p2p.dataobject.DivisionDetail">
+		   INSERT INTO division_detail (
+			   user_id,
+			   business_code,
+			   trade_id,
+			   trade_detail_id,
+			   amount,
+			   division_status,
+			   division_date
+		   ) VALUES (
+			   #userId#,
+			   #businessCode#,
+			   #tradeId#,
+			   #tradeDetailId#,
+			   #amount#,
+			   #status#,
+			   #date#
+		   )
+  </insert>
+  
+  <update id="DIVISIONDETAIL-UPDATESTATUS" parameterClass="java.util.Map">
+  		UPDATE division_detail SET division_status = #status# WHERE detail_id = #id#
+  </update>
+  
+  <update id="DIVISIONDETAIL-UPDATE">
+  		UPDATE division_detail SET 
+  			division_status = #status#,
+  			out_biz_no = #outBizNo#
+  		WHERE detail_id = #id#
+  </update>
+  
+  <select id="DIVISIONDETAIL-GETBYTRADEIDANDROLES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-DIVISIONDETAIL">
+      SELECT
+		  division_detail.detail_id,
+		  division_detail.business_code,
+		  division_detail.user_id,
+		  division_detail.trade_id,
+		  division_detail.trade_detail_id,
+		  division_detail.amount,
+		  division_detail.division_status,
+		  division_detail.division_date
+	  FROM division_detail 
+	  <isNotEmpty property="roles">
+		  INNER JOIN user_role 
+		  	ON user_role.user_id = division_detail.user_id and user_role.role_id != '1'
+		  INNER JOIN role ON role.role_id = user_role.role_id
+	  </isNotEmpty> 
+	  WHERE division_detail.trade_id = #tradeId# 
+	  <isNotEmpty property="roles">
+	  AND role.code IN 
+	  <iterate conjunction="," open="(" close=")" property="roles">
+  		   #roles[]#
+  	  </iterate>
+  	 </isNotEmpty> 
+  </select>
+  
+   <select id="DIVISIONDETAIL-GETBYSTATUS" parameterClass="int" resultClass="java.util.List" resultMap="RM-DIVISIONDETAIL">
+      SELECT
+		  division_detail.detail_id,
+		  division_detail.business_code,
+		  division_detail.out_biz_no,
+		  division_detail.user_id,
+		  division_detail.trade_id,
+		  division_detail.trade_detail_id,
+		  division_detail.amount,
+		  division_detail.division_status,
+		  division_detail.division_date
+	  FROM division_detail WHERE division_detail.division_status = #value# LIMIT 0,50 ;
+  </select>
+  
+  <select id="DIVISIONDETAIL-GETBYTRADEIDANDROLESANDSTSTUSCOUNT" parameterClass="java.util.Map" resultClass="int">
+      SELECT COUNT(0)
+	  FROM division_detail 
+	  WHERE division_detail.trade_id = #tradeId# AND division_detail.user_id = #userId#
+  </select>
+  
+  <update id="DIVISIONDETAIL-MODIFYAMOUNT" parameterClass="java.util.Map">
+  	  UPDATE division_detail SET amount = amount + #amount# WHERE division_detail.trade_id = #tradeId# AND division_detail.division_status = #status# AND division_detail.user_id = #userId#
+  </update>
+  
+  <select id="DIVISIONDETAIL-GETBYTRADEIDANDUSERIDCOUNT" parameterClass="java.util.Map" resultClass="int">
+      SELECT COUNT(0)
+	  FROM division_detail 
+	  WHERE 1 = 1
+	  <isNotEmpty property="tradeId">
+			AND division_detail.trade_id = #tradeId# 
+	  </isNotEmpty>
+	  <isNotEmpty property="userId">
+		AND division_detail.user_id = #userId#
+	  </isNotEmpty>
+  </select>
+   <select id="DIVISIONDETAIL-GETBYTRADEIDANDUSERID" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-DIVISIONDETAIL">
+      SELECT *
+	  FROM division_detail 
+	  WHERE 1 = 1
+	  <isNotEmpty property="tradeId">
+			AND division_detail.trade_id = #tradeId# 
+	  </isNotEmpty>
+	  <isNotEmpty property="userId">
+		AND division_detail.user_id = #userId#
+	  </isNotEmpty>
+  </select>
+  
+  <select id="DIVISIONDETAIL-GETDVSAMTFLOWTRADESBYPARAMSCOUNT" parameterClass="java.util.Map" resultClass="long">
+      SELECT
+		  count(*)
+	  FROM division_detail dv
+	  INNER JOIN user_base_info ub ON ub.`user_id` = dv.user_id
+	  WHERE 1=1
+	  <dynamic>
+		  <isNotEmpty property="tradeId">
+			<![CDATA[AND dv.trade_id = #tradeId#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="receiveRealName">
+			<![CDATA[AND ub.real_name = #receiveRealName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="receiveUserName">
+			<![CDATA[AND ub.user_name = #receiveUserName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="startDate">
+			<![CDATA[AND dv.division_date >= #startDate#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="endDate">
+			<![CDATA[AND dv.division_date <= #endDate#]]>
+		  </isNotEmpty> 
+  	 </dynamic>
+  </select>
+  <select id="DIVISIONDETAIL-GETDVSAMTFLOWTRADESBYPARAMS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-DIVISIONDETAIL">
+      SELECT
+		  dv.detail_id,
+		  dv.business_code,
+		  dv.user_id,
+		  dv.trade_id,
+		  dv.trade_detail_id,
+		  dv.amount,
+		  dv.division_status,
+		  dv.division_date
+	  FROM division_detail dv
+	  INNER JOIN user_base_info ub ON ub.`user_id` = dv.user_id
+	  WHERE 1=1
+	  <dynamic>
+		  <isNotEmpty property="tradeId">
+			<![CDATA[AND dv.trade_id = #tradeId#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="receiveRealName">
+			<![CDATA[AND ub.real_name = #receiveRealName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="receiveUserName">
+			<![CDATA[AND ub.user_name = #receiveUserName#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="startDate">
+			<![CDATA[AND dv.division_date >= #startDate#]]>
+		  </isNotEmpty>
+		  <isNotEmpty property="endDate">
+			<![CDATA[AND dv.division_date <= #endDate#]]>
+		  </isNotEmpty> 
+  	 </dynamic>
+  	 <![CDATA[ORDER BY dv.division_date DESC
+		LIMIT #limitStart#,#pageSize# ;]]>
+  </select>
+  
+  <select id="DIVISIONDETAIL-SUMPAIDAMOUNTBYUSERID" parameterClass="LONG" resultClass="LONG">
+      SELECT IFNULL(SUM(amount), 0)
+	  FROM division_detail 
+	  WHERE 1 = 1 AND user_id = #userId#
+  </select>
+  <select id="DIVISIONDETAIL-TRANSDIVISIONCOUNTBYTRADEDETAILID" parameterClass="LONG" resultClass="INT">
+      SELECT COUNT(1)
+	  FROM division_detail 
+	  WHERE trade_detail_id >0  AND division_status='1' AND trade_detail_id = #value#
+  </select>
+  
+     <select id="DIVISIONDETAIL-query" resultClass="java.util.List" resultMap="RM-DIVISIONDETAIL">
+      SELECT
+		  division_detail.detail_id,
+		  division_detail.business_code,
+		  division_detail.out_biz_no,
+		  division_detail.user_id,
+		  division_detail.trade_id,
+		  division_detail.trade_detail_id,
+		  division_detail.amount,
+		  division_detail.division_status,
+		  division_detail.division_date
+	  FROM division_detail WHERE 1 = 1
+	  	<isNotEmpty property="businessCode">
+			AND dv.business_code >= #businessCode#
+		</isNotEmpty>
+	  	<isNotEmpty property="outBizNo">
+			AND dv.out_biz_no >= #outBizNo#
+		</isNotEmpty>
+	  	<isNotEmpty property="divisionStatus">
+			AND division_detail.division_status = #divisionStatus#
+		</isNotEmpty>
+	  
+  </select>
+</sqlMap>

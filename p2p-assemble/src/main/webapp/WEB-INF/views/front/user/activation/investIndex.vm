@@ -1,0 +1,228 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<!--内容-->
+
+<div class="top_blank"></div>
+<!--用户菜单开始-->
+    #parse("/front/index/common/usercenter-menu.vm")
+<!--用户菜单结束-->
+<div class="blank"></div>
+<!--通用头部结束-->
+<div class="alrod">
+    <!--个人信息开始-->
+    <div class="my_notic b_blue_o form_nav">
+        温馨提示：您可以登录 <a href="/anon/forwardyjf/$!accountId" target="_blank"><span class="blue">易极付官网</span></a> 修改您的支付密码/登录密码!
+        <div class="mybut_blue" style="top: 2px;"><a href="/index/invest/10/1"><div class="but_rod but_rod_blue">我要投资</div></a></div>
+    </div>
+    <div class="form_blank"></div>
+    <div class="my_mes form_nav">
+        <p><span class="mid_font">你好，$!{sessionScope.realName}！</span></p>
+        <p><span class="font_right gray_o">账户：
+            $!{sessionScope.userName}
+            #set($t = $permission.check('/investorManager/*'))
+            #if($t>0)
+                (编号：$!{userMemoNo})
+            #end
+		</span><span class="font_right gray_o">第三方支付帐号：$!{sessionScope.accountName} &nbsp;</span></p>
+    </div>
+    <div class="form_blank"></div>
+    <div class="my_fud form_nav">
+        <div class="fud_money">账户余额：<span class="org large_font">$!{thirdPartAccountInfo.availableBalance}</span> 元
+        	#if(${thirdPartAccountInfo.userStatus} && ${thirdPartAccountInfo.userStatus} != "W")
+        		##当已有第三方支付账户且已经激活时，才显示提现和充值的按钮
+            	<a href="/invest/towithdraw" id="withdraw1"><div class="but_rod">提现</div></a><a href="/usercenter/deposit"><div class="but_rod">充值</div></a>
+            #end
+         </div>
+        <div class="fud_list">
+            <ul>
+                <li>待收本金： $!{investCount.waitGetMoneyAmount.toStandardString()} 元</li>
+                <li>待收利息：$!{investCount.notPaidInvestedAmount.toStandardString()} 元</li>
+                <li>资产总额：
+                    #if(!${thirdPartAccountInfo.balance})
+                        0.00
+                    #else
+                        $!{thirdPartAccountInfo.balance}
+                    #end
+                    元</li>
+                <li>冻结金额：
+                    #if(!${thirdPartAccountInfo.freezeAmount})
+                        0.00
+                    #else
+                        $!{thirdPartAccountInfo.freezeAmount}
+                    #end
+                    元
+                </li>
+
+                <li>体验金：
+                    #if(!$userGodExpSum)
+                        0.00
+                    #else
+                        $!userGodExpSum
+                    #end
+                    元
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="form_blank"></div>
+    <div class="my_data form_nav">
+        <ul>
+            <li>支付账户：$!{sessionScope.accountName}
+                #if($!{thirdPartAccountInfo.userStatus.code}=='W')
+                    <div class="but_rod"><a href="/anon/activeYjfAccount" class="g-recharge ml5 mr5" style="width:60px">立即激活</a></div>
+                #end
+            </li>
+            <li>手机认证：
+                #if($!{userBaseInfo.mobileBinding}=="IS")
+                    已认证&nbsp;$!mobile<a href="/usercenter/setting"><div class="but_rod">修改</div></a>
+                #end
+            </li>
+
+            <li>邮箱认证：
+                #if($!{mailBinding}=="IS")
+                    已认证&nbsp;$!mail<a href="/usercenter/setting"><div class="but_rod">修改邮箱</div></a>
+                #end
+            </li>
+            <li>安全等级：
+                #if($!{userBaseInfo.mobileBinding}=="IS" && $!{mailBinding}=="IS"&&"IS" == $!{userBaseInfo.realNameAuthentication})
+                    高级
+                #elseif($!{userBaseInfo.mobileBinding}=="IS" || $!{mailBinding}=="IS"||"IS" == $!{userBaseInfo.realNameAuthentication})
+                    中级
+                #elseif($!{userBaseInfo.mobileBinding}=="NO" && $!{mailBinding}=="NO")
+                    低级
+                #end
+            </li>
+        </ul>
+    </div>
+    <div class="form_blank"></div>
+    <!--个人信息结束-->
+    <!--通用表单开始-->
+    <div class="form f_tit f_tab">
+        <ul class="tit tab_tit">
+            <li name="bidding" class="light">投标概况</li>
+            <li name="loan">借款概况</li>
+        </ul>
+    </div>
+    <div id="bidding" style="display: block">
+        <div class="form form_nav b_blue_o">
+            <ul class="tit_t">
+                <li class="col1">状态</li>
+                <li class="col2">笔数</li>
+                <li class="col3">金额</li>
+            </ul>
+        </div>
+        <div class="form form_nav">
+            <ul>
+                <li class="col1" style="height: 35px;">投标中</li>
+                <li class="col2" style="height: 35px;">$!{investCount.totalCollectingInvested}</li>
+                <li class="col3" style="height: 35px;">$!{investCount.collectingInvestedAmount.toStandardString()}</li>
+            </ul>
+            <ul>
+                <li class="col1" style="height: 35px;">回款中</li>
+                <li class="col2" style="height: 35px;">$!{investCount.totalNotPaidInvestedProfit}</li>
+                <li class="col3" style="height: 35px;">$!{investCount.notPaidInvestedProfitAmount.toStandardString()}</li>
+            </ul>
+            <ul>
+                <li class="col1" style="height: 35px;">已回款</li>
+                <li class="col2" style="height: 35px;">$!{investCount.totalPaidInvestedPrinciple}</li>
+                <li class="col3" style="height: 35px;">$!{investCount.paidInvestedPrincipleAmount.toStandardString()}</li>
+            </ul>
+            #if($Integer.parseInt($!investCount.faildTransactions) && $Integer.parseInt($!investCount.faildTransactions)>=1)
+                <ul class="blue">
+                    <li class="col1" style="height: 35px;">失败</li>
+                    <li class="col2" style="height: 35px;">$!{investCount.faildTransactions}</li>
+                    <li class="col3" style="height: 35px;">$!{investCount.faildInvestedAmount.toStandardString()}</li>
+                </ul>
+            #end
+            <ul>
+                <li class="col1" style="height: 35px;">总计</li>
+                <li class="col2" style="height: 35px;">$!{investCount.totalTransactions}</li>
+                <li class="col3" style="height: 35px;">$!{investCount.totalInvestedAmount.toStandardString()}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="loan" style="display: none;">
+        <div class="form form_nav b_blue_o">
+            <ul class="tit_t">
+                <li class="col1">状态</li>
+                <li class="col2">笔数</li>
+                <li class="col3">金额</li>
+            </ul>
+        </div>
+        <div class="form form_nav">
+            <ul>
+                <li class="col1" style="height: 35px;">借款中</li>
+                <li class="col2" style="height: 35px;">$!{loanedCount.totalCollectingLoaned}</li>
+                <li class="col3" style="height: 35px;">$!{loanedCount.collectingLoanedAmount.toStandardString()}</li>
+            </ul>
+            <ul>
+                <li class="col1" style="height: 35px;">还款中</li>
+                <li class="col2" style="height: 35px;">$!{loanedCount.totalToPayLoaned}</li>
+                <li class="col3" style="height: 35px;">$!{loanedCount.toPayLoanedAmount.toStandardString()}</li>
+            </ul>
+            <ul>
+                <li class="col1" style="height: 35px;">已还款</li>
+                <li class="col2" style="height: 35px;">$!{loanedCount.totalPaidLoaned}</li>
+                <li class="col3" style="height: 35px;">$!{loanedCount.paidLoanedAmount.toStandardString()}</li>
+            </ul>
+            <ul>
+                <li class="col1" style="height: 35px;">总计</li>
+                <li class="col2" style="height: 35px;">$!{loanedCount.totalTransactions}</li>
+                <li class="col3" style="height: 35px;">$!{loanedCount.totalLoanedMoney.toStandardString()}</li>
+            </ul>
+        </div>
+    </div>
+    <div id="dialog" class="m-layer" style="width:600px; display: none;">
+        <form name="investForm" id="investForm" action="/invest/forwardWithdraw" target="_blank" method="post">
+            <div class="lytt fn-clear">
+                <h2 class="u-tt">提现</h2><a href="" class="lyclose">关闭</a>
+            </div>
+            <div class="lyct">
+                <div class="lycheck">
+                    <div class="m-form">
+                        <div class="m-item fn-clear" id="validDate">
+                            <label class="label">开户银行：</label>
+                            <div class="jqtransform jqtransform-select3">
+                                <input type="hidden" name="bankType" />
+                                <select name="bankCode" data="selectBranch" style="width: 190px;">
+                                </select>
+                            </div>
+                            <div id="selectmsg" class="error-tip"></div>
+                        </div>
+                        <div class="m-item">
+                            <label class="label">输入卡号：</label>
+                            <input type="text" name="cardNo" class="input w200" />
+                        </div>
+                        <div class="m-item">
+                            <label class="label">提现金额：</label>
+                            <input type="text" name="amount" class="input w200" />
+                        </div>
+                        <div class="m-item">
+                            <button id="confirm" class="u-btn u-btn-g" style="width:90px;">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--通用表单结束-->
+</div>
+<div class=" form_blank"></div>
+<!--注册页面结束-->
+<div class="blank"></div>
+    #parse("/front/index/common/footer.vm")
+
+<script type="text/javascript">
+    var $_GLOBAL = {};
+</script>
+<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.mode + 'investindex');
+    //修改头部菜单样式
+    addLiClass("header_home");
+</script>
+</body>
+</html>

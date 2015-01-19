@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+	 <resultMap id="RM-DIVISIONRULEROLE" class="com.icebreak.p2p.dataobject.DivsionRuleRole" >
+	  <result property="roleName" column="role_name" javaType="String" jdbcType="varchar" />
+	  <result property="roleId" column="role_id" javaType="int" jdbcType="INT" />
+	  <result property="phase" column="division_phase" javaType="String" jdbcType="varchar" />
+	  <result property="rule" column="division_rule" javaType="double" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <select id="DIVSION_RULE_ROLE" parameterClass="java.lang.String" resultMap="RM-DIVISIONRULEROLE">
+      SELECT 
+      	l.role_name,
+      	l.role_id,
+      	r.division_rule,
+      	t.division_phase
+       FROM division_template t,division_rule r,role l WHERE 1 = 1
+       AND t.division_template_id=r.rule_template_id
+       AND r.role_id=l.role_id
+	    AND t.division_template_id = #name#	 
+  </select>
+</sqlMap>

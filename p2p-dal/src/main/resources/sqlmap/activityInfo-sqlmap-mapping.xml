@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="EL-ACTIVITYINFO" class="com.icebreak.p2p.dataobject.ActivityInfo" >
+  	  <result property="tblBaseId" column="tbl_base_id" javaType="long" jdbcType="BIGINT" />
+  	  <result property="activityName" column="activity_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+  	   <result property="sendGiftCode" column="send_gift_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="description" column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="properties" column="properties" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="startTime" column="start_time" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="endTime" column="end_time" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="status" column="status" javaType="int" jdbcType="TINYINT" />
+	  <result property="rem1" column="rem1" javaType="java.lang.String" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ 	<insert id="EL-ACTIVITYINFO-INSERT" parameterClass="com.icebreak.p2p.dataobject.ActivityInfo">
+  		<![CDATA[
+  			INSERT INTO activity_info (
+  				activity_name,send_gift_code,description,properties,start_time,end_time,status,rem1) 
+  			VALUES (
+  				#activityName#,#sendGiftCode#,#description#,#properties#,#startTime#,#endTime#,
+  				#status#,#rem1#)
+  		]]>
+  	</insert>
+  	
+  	<select id="EL-ACTIVITYINFO-QUERY-ACTIVITY" resultMap="EL-ACTIVITYINFO">
+  		SELECT * FROM activity_info where tbl_base_id=#tblBaseId#
+  	</select>
+  	<update id="EL-ACTIVITYINFO-UPDATE">
+  		update activity_info set 
+  			activity_name=#activityName#,send_gift_code=#sendGiftCode#,description=#description#,properties=#properties#,
+  			start_time=#startTime#,end_time=#endTime#,status=#status#,rem1=#rem1#
+  		where tbl_base_id=#tblBaseId#
+  	</update>
+  
+	<select id="EL-ACTIVITYINFO-QUERY-LIST" resultMap="EL-ACTIVITYINFO">
+		<![CDATA[
+		SELECT * FROM activity_info a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="activityName" prepend=" and ">
+				<![CDATA[a.activity_name = #activityName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[a.status = #status#]]>
+			</isNotEmpty>
+			<isNotEmpty property="sendGiftCode" prepend=" and ">
+				<![CDATA[a.send_gift_code = #sendGiftCode#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY a.start_time DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="EL-ACTIVITYINFO-QUERY-COUNT" resultClass="java.lang.Long" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT count(*) FROM activity_info a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="activityName" prepend=" and ">
+				<![CDATA[a.activity_name = #activityName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[a.status = #status#]]>
+			</isNotEmpty>
+			<isNotEmpty property="sendGiftCode" prepend=" and ">
+				<![CDATA[a.send_gift_code = #sendGiftCode#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="EL-ACTIVITYINFO-QUERY-BYNAME" resultMap="EL-ACTIVITYINFO" parameterClass="java.lang.String">
+		<![CDATA[
+		SELECT * FROM activity_info  WHERE activity_name=#value#
+		]]>
+	</select>
+</sqlMap>

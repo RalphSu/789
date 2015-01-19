@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>经纪人营销记录</title>
+	<link type="text/css" href="/resources/css/loan.css" rel="stylesheet" />
+</head>
+<body class="warp">
+	#parse("/front/index/common/header-menu.vm")
+	<!--内容-->
+	<div class="container fn-clear">
+		<!--左侧导航-->
+		#parse("/front/user/common/left.vm")
+		<!--右侧内容-->
+		<div class="main-content mc-border fn-right">
+			<!--查询条件-->
+			<form action="/marketingCenter/salesList" method="post">
+				<div class="fn-inquiry">
+					<div class="fn-condition time-cond">
+						<dl class="fn-clear">
+							<dt>交易号：</dt>
+							<dd>
+								<input type="text" class="fn-text w120" value="$!{request.getParameter('tradeCode')}" name="tradeCode"/>
+							</dd>
+							<dt>投资人：</dt>
+							<dd>
+								<input type="text" class="fn-text w120" value="$!{request.getParameter('userName')}" name="userName"/>
+							</dd>
+						</dl>
+						<dl class="fn-clear">
+							<dt>投资日期：</dt>
+							<dd>
+								<span class="fn-time">
+									<input type="date" class="fn-text w90" name="startDate" value="" />
+									<img src="$!{rc.contextPath}/resources/images/common/time-ico.gif" alt="时间" class="time-img" />
+								</span>
+								-
+								<span class="fn-time">
+									<input type="date" class="fn-text w90" name="endDate"  value="" />
+									<img src="$!{rc.contextPath}/resources/images/common/time-ico.gif" alt="时间" class="time-img" />
+								</span>
+							</dd>
+							<dd class="ml10">
+								<a href="javascript:;" class="fn-h-btn"><button type="submit" >搜索 </button></a>
+							</dd>
+                        </dl>
+					</div>
+				</div>
+			</form>
+			<div style="font-weight:bold;font-size:18pt;">合计营销收入:<span class="ft-f60">￥$!{moneyUtil.getFormatAmount($!{totalAmount})}</span> 元</div>
+			<!--列表-->
+			<table cellpadding="0" cellspacing="0" border="0" width="100%" class="fn-table sl-wrap sl-wrap-table">
+				<tr class="thead">
+					<td width="100">申请号</td>
+					<td width="50">投资人</td>
+					<td width="70">投资日期</td>
+					<td width="70">成立日期</td>
+					<td width="70">到期日期</td>
+					<td width="80">投资金额(元)</td>
+					<td width="80">营销收入(元)</td>
+					<td class="50">投资状态</td>
+					<td class="text-r">操作</td>
+				</tr>
+				#if($!page.result.size()==0 || !$!page.result)
+    				<tr class="even">
+        				<td colspan=9 align=center>暂时没有交易记录</td>
+        			</tr>
+				#end
+				#foreach($info in $page.result)
+					<tr>
+                        <td><a href="/marketingCenter/salesDetails/$!{info.tradeId}/$!{info.detailId}?investDetailId=$!{info.investDetailId}">$!{info.tradeName}</a><br />$!{info.tradeCode}</td>
+						<td>$!{info.investorName}</td>
+                        <td>$!dateUtil.dtSimpleFormat($!{info.investDate})</td>
+						#if($!{info.effectiveDate})
+						 <td>$!dateUtil.dtSimpleFormat($!{info.effectiveDate})</td>
+						#else
+							<td>暂无数据</td>
+						#end
+						#if($!{info.expireDate})
+						 <td>$!dateUtil.dtSimpleFormat($!{info.expireDate})</td>
+						#else
+							<td>暂无数据</td>
+						#end
+                        <td><span class="ft-f60">$!{moneyUtil.getFormatAmount($!{info.investAmount})} </span></td>
+                        <td><span class="ft-f60">$!{moneyUtil.getFormatAmount($!{info.brokerBenifitAmount})}</span></td>
+						<td>#if($!{info.status}=="1")
+								待成立
+							#elseif($!{info.status}=="2") 
+								未到期
+							#elseif($!{info.status}=="3") 
+								正常收款
+							#elseif($!{info.status}=="4")  
+								未成立
+							#elseif($!{info.status}=="5")  
+								违约处理中	
+							#elseif($!{info.status}=="6")  
+								担保机构审核中
+							#elseif($!{info.status}=="8")  
+								等待还款
+							#elseif($!{info.status}=="7")  
+								超期收款
+							#end
+						</td>
+                        <td class="text-r"><a href="/marketingCenter/salesDetails/$!{info.tradeId}/$!{info.detailId}?investDetailId=$!{info.investDetailId}">详情</a></td>
+					</tr>
+				#end
+			</table>
+			<!--分页-->
+			<div class="fn-tb-bottom fn-clear">
+				<!--<p class="fn-left"><a href="/tradeDownload/downloadExcel?type=trade" class="download">下载查询数据</a></p>-->
+				#parse("/backstage/page/page.vm")
+			</div>
+		</div>
+	</div>
+	#parse("/front/index/common/footer.vm")
+	
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'demo');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			var url = "/marketingCenter/salesList"
+			+"?startDate=$!{queryTradeOrder.startDate}"
+			+"&endDate=$!{queryTradeOrder.endDate}"
+			+"&maiLoanAmount=$!{queryTradeOrder.maiLoanAmount}"
+			+"&maxLoanAmount=$!{queryTradeOrder.maxLoanAmount}"
+			+"&pageSize=$!{page.pageSize}&pageNo="+pageNo;
+			window.location.href=url;
+		}
+    </script>
+</body>
+</html>

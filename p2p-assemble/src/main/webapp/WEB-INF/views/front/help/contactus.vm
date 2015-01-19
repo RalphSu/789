@@ -1,0 +1,29 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<div class="blank"></div>
+<!--通用新闻公告内容开始-->
+<div class="new nav" style="height: 600px;">
+    #parse("/front/help/helpLeftMenu.vm")
+    <ul class="new_list">
+        <li class="new_list_tit large_font"><span class="blue">联系我们</span></li>
+        <li class="new_list_text">
+
+            <p class="blue" style="font-size:15px;">公司名称：重庆柒捌玖网络科技有限公司</p>
+            <p><b>网址：</b>http://www.789jinrong.com</p>
+            <p><b>公司地址：</b>$!appConstantsUtil.getPlatformAddress()（邮编：404000）</p>
+            <p><b>客服电话：</b>$!appConstantsUtil.getCustomerServicePhone()</p>
+##            <p><b>传真号：</b>023-2222222</p>
+            <p><b>服务邮箱：</b>$!appConstantsUtil.getCustomerServiceEmail()</p>
+            <br/>
+            <p><b>工作时间：</b>09：00-18：00，周一至周五（国家法定节假日除外）</p>
+            <p>如果您在使用789金融(www.789jinrong.com)的过程中有任何疑问请您与789金融客服人员联系。</p>
+            <br>
+        </li>
+    </ul>
+</div>
+<!--通用新闻公告内容结束-->
+    #parse("/front/index/common/footer.vm")
+</body>
+</html>

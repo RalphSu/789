@@ -1,0 +1,84 @@
+#parse("/front/index/common/header.vm")
+<body>
+#parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<!--用户菜单开始-->
+#parse("/front/index/common/usercenter-menu.vm")
+<!--用户菜单结束-->
+<div class="blank"></div>
+<!--通用头部结束-->
+<div class="alrod">
+    <!--通用搜索开始-->
+    <div class="search nav">
+        <ul>
+        <li $!depositMenu><a href="/usercenter/depositRecord">充值记录</a></li>
+        <li $!withdrawMenu><a href="/usercenter/withdrawRecord">提现记录</a></li>
+        <li $!fundMenu><a href="/usercenter/fundRecord">收支明细</a></li>
+#*<li class="f_right but">筛选</li>
+<li class="f_right f_inp"><input name="" type="text" class="f_inp" value="2014-03-18"></li>
+<li class="f_right f_ot"> - </li>
+<li class="f_right f_inp"><input name="" type="text" class="f_inp" value="2013-02-05"></li>
+<li class="f_right f_sel"><select name="" class="f_sel"><option>全部选项</option></select></li>*#
+        </ul>
+</div>
+<!--通用搜索结束-->
+<div class="form_blank"></div>
+<!--通用表单开始-->
+<div class="form f_tit">
+<ul class="tit">
+    <li class="col1" style="width: 200px;">流水号</li>
+    <li class="col7" style="width: 200px;">时间</li>
+    <li class="col3" style="width: 200px;">收支类型</li>
+    <li class="col3" style="width: 200px;">收支（元）</li>
+    <li class="col3" style="width: 200px;">备注</li>
+</ul>
+</div>
+<div class="form form_nav">
+#foreach($info in $page.result)
+    <ul>
+        <li class="col1" style="width: 200px; height: 40px;">$!info.localNo<br/></li>
+        <li class="col7" style="width: 200px; height: 40px;">$!{dateUtil.simpleFormat($!info.payTime)}<br/></li>
+        <li class="col3" style="width: 200px; height: 40px;">
+            $!{vmUtil.getDivisionName($!info.payType)}
+        </li>
+        <li class="col3" style="width: 200px; height: 40px;">
+            #if($!vmUtil.isDivisionIn($!info.payType, $!loaner)=='IN')
+                <span class="red">+$!{moneyUtil.formatAmountByDouble($!info.amount)}</span>
+            #else
+                <span class="green">-$!{moneyUtil.formatAmountByDouble($!info.amount)}</span>
+            #end
+        </li>
+        <li class="col3" style="width: 200px; height: 40px;line-height:120%;">$!info.payMemo</li>
+    </ul>
+#end
+</div>
+<!--通用表单结束-->
+<div class="form_blank"></div>
+<!--通用翻页开始-->
+<div class="pages account-page mt20">
+    #parse("/backstage/page/page.vm")
+</div>
+</form>
+<div class="blank30"></div>
+<!--通用翻页结束-->
+</div>
+<div class="blank"></div>
+<!--通用底部开始-->
+<div class="blank"></div>
+#parse("/front/index/common/footer.vm")
+<!--通用底部结束-->
+<script type="text/javascript">
+    //修改头部菜单样式
+    addLiClass("header_home");
+</script>
+<script type="text/javascript">
+    function toPage(totalPage, page){
+        if(page > totalPage){
+            return ;
+        }
+
+        window.location.href = "$!{rc.contextPath}/usercenter/fundRecord?pageNo="+page+"&pageSize=$!{page.pageSize}";
+    }
+</script>
+</body>
+</html>

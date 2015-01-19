@@ -1,0 +1,59 @@
+#parse("/front/index/common/header.vm")
+<body>
+	#parse("/front/index/common/header-menu.vm")
+	<!--内容-->
+<div class="blank"></div>
+<div class="alrod">
+<!--注册页面开始-->
+<div class="reg_tit nav large_font">帐号激活</div>
+<div class="load nav">
+	<ul class="four_load">
+    	<li class="last start"><div class="num_last"><span class="green_t">1</span></div>填写基本信息并验证手机</li>
+        <li class="load_link"><img src="/resources/images/new/load3.png"></li>
+        <li class="in"><div class="num_innext"><span class="green_o">2</span></div>帐号激活</li>
+        <li class="load_link"><img src="/resources/images/new/load1.png"></li>
+        <li class="next"><div class="num_innext"><span class="gray_t">3</span></div>开通第三方支付账户</li>
+        <li class="load_link"><img src="/resources/images/new/load2.png"></li>
+        <li class="next end"><div class="num_innext"><span class="gray_t">4</span></div>注册完成</li>
+    </ul>
+</div>
+<div class="blank"></div>
+<form action="/anon/unactivate/resendEmail" id="investorsOpen_form" method="post">
+<div class="reg_form nav">
+	<ul>
+    	<li class="reg_name"></li>
+        <li class="reg_input">您还未激活帐号，请查看邮箱激活邮件或重新发送新邮件</li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+    	<li class="reg_name"></li>
+        <li class="reg_input"><a class="reg_bt" href><div class="mid_font tran_but_suc reg_blue" id="confirmEmail">重新发送</div></a></li>
+        <li class="reg_text"></li>
+    </ul>
+</div>
+<div class=" form_blank"></div>
+<div class="reg_other nav">已有789金融账户？ <a href="/login/login" class="reg_link"><span class="blue">现在登录</span></a></div>
+</div>
+<input type="hidden" name="userName" value="$!{userName}" />
+<input type="hidden" name="userBaseId" value="$!{userBaseId}" />
+</form>
+<!--通用底部结束-->
+<div class="blank"></div>
+	#parse("/front/index/common/footer.vm")
+	
+	<script type="text/javascript">
+        $(document).ready(function(){
+            var investorsOpen_form = $('#investorsOpen_form');
+            /**
+             * 发邮件
+            **/
+            $("#confirmEmail").click(function() {
+                investorsOpen_form.submit();
+                return false;
+            });
+        })
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+</body>
+</html>

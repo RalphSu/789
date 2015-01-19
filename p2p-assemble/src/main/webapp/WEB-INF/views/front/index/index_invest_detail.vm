@@ -1,0 +1,826 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<!--通用头部结束-->
+<div class="blank"></div>
+<div class="alrod">
+    <!--项目详情开始-->
+    <div class="pbu">
+        <div class="pro_bas nav">
+            <div class="bas_left">
+                <div class="bl_pm">
+                    <div class="bl_pic"><img src="$!{commonUtil.getProjectThumbnailUrl($!{proImageURL},$request)}" width="234" height="143"></div>
+                    <div class="bl_mes">
+                        <ul class="tit">
+                            <li><span class="big_font font_right" style="padding-left:12px;">项目名称：$stringUtil.subString($!{trade.name},25,"..")</span><img src="/resources/images/new/bao.png"/> <img src="/resources/images/new/p2c.png"/></li>
+                        </ul>
+                        <ul class="num"  style="padding-left:12px;">
+                            #set($unit = '天')
+                            #if($!{loanDemand.timeLimitUnit} == 'W' || $!{loanDemand.timeLimitUnit} == 'M')
+                                #set($unit = '个月')
+                            #elseif($!{loanDemand.timeLimitUnit} == 'Y')
+                                #set($unit = '年')
+                            #end
+                            <li><span class="blue bold_font large_font font_right">$!{moneyUtil.getPercentage($!{loanDemand.interestRate})}%</span>年化收益</li>
+                            <li><span class="blue bold_font large_font font_right">$!{moneyUtil.getMoneyByw($!{loanDemand.loanAmount})}</b>万</span>融资金额</li>
+                            <li style="border-right:0px;"><span class="blue bold_font large_font font_right">$!{loanDemand.timeLimit}$unit</span>融资期限</li>
+                        </ul>
+                        <ul class="ic">
+                            <li style="padding-left:12px;"><img src="/resources/images/new/bl_2.png" style="left:0px;top:9px;"> <span class="font_right">本息保障</span>
+                                &nbsp;项目上线时间：$!{dateUtil.simpleFormat($!{trade.createDate})}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bl_tim" style="border-bottom: 0px;">
+                    <ul>
+                        <li><span class="font_right">起息日期：</span><span class="blue font_right">
+                            #if($trade.effectiveDateTime)
+                                $!{dateUtil.dtSimpleFormat($!{trade.effectiveDateTime})}
+                            #else
+                                满标立即起息
+                            #end
+                            </span>
+                        </li>
+                        <li><span class="font_right">还款方式：</span><span class="blue font_right">$!{loanDemand.repayDivisionWayMsg}</span></li>
+                        <li><span class="font_right">最低起投金额：</span><span class="blue font_right">$!{moneyUtil.getFormatAmount($!{trade.leastInvestAmount})} 元</span></li>
+##
+##                        <li><span class="font_right">起投时间：</span><span class="blue font_right">
+##                            #if($trade.expireDateTime)
+##                                $!{dateUtil.simpleFormat($!{trade.expireDateTime})}
+##                            #else
+##                                暂无数据
+##                            #end
+##
+##                        </span></li>
+                        #if($trade.expireDateTime)
+                            <li style="clear:both;margin-top:-20px;"><span class="font_right">结息日期：</span><span class="blue font_right"> $!{dateUtil.dtSimpleFormat($!{trade.expireDateTime})} </span></li>
+                            <li style="margin-top:-20px;"><span class="font_right">最迟还款日：</span><span class="blue font_right">$!{dateUtil.dtSimpleFormat($!{lastExpireDate})} </span></li>
+                        #end
+                    </ul>
+                </div>
+                <div class="bl_ll" style="clear:both;border-top: 1px solid #ccc;padding-top:10px;margin-top:0px;">
+                    <ul>
+                        <li class="tt">投资进度</li>
+                        <li class="bl_load tt">
+                            <div class="mout_load tt_ld">
+                                <div class="mout_load_in b_blue tt_in" style="width:$!{percent};"></div>
+                            </div>
+                        </li>
+                        <li class="tt">
+                            已完成融资$!{percent}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            #set($balance = 0)
+            #if($!{thirdPartAccountInfo.availableBalance} != '')
+                #set($balance = $!{thirdPartAccountInfo.availableBalance})
+            #end
+
+            #if($!{percent} =="100.0%")
+                <div class="bas_right b_gray_t" style="background: #C3C1C1;">
+                    <ul>
+                        <li class="br_text"></li>
+                    ##            <li class="br_text">投资总金额 : <span class="mid_font">$!{moneyUtil.getFormatAmount($!{trade.loanedAmount})}</span>元</li>
+                    ##            <li class="br_text">投资完成时间 :
+                    ##                #if($!{trade.finishDate})
+                    ##                    $!{dateUtil.simpleFormat($!{trade.finishDate})}
+                    ##                #else
+                    ##                    暂无数据
+                    ##                #end
+                    ##            </li>
+                        #if($sessionScope)
+                        ##                <li class="br_text">账户余额 : $balance 元</li>
+                            <li class="br_text" style="height: 10px;"></li>
+                            <li class="br_text">
+                                <a><img src="/resources/images/new/br_but_fin.png"></a>&nbsp;&nbsp;
+                                <a href="/index/invest/10/1">选择其他项目</a>
+                            </li>
+                        #else
+                            <li class="br_text"></li>
+                            <li class="br_text">
+                                <a><img src="/resources/images/new/br_but_fin.png"></a>&nbsp;&nbsp;
+                                <span class="br_text"><a href="/index/invest/10/1">选择其他项目</a></span>
+                            </li>
+                            <li class="br_text" style="margin-top:5px">您还未登录<div class="br_right"><a href="/login/login" class="reg_link" id="all_in"><span class="white">登录</span></a></div></li>
+                        #end
+                        <input type="hidden" id="token" name="token" value="$!{token}"/>
+                    </ul>
+                </div>
+            #else
+                <div class="bas_right b_blue">
+                    <ul>
+                        #if($!{investAvlTimeReached})
+                            <input type="hidden" name="istDate" value="$!{dateUtil.simpleFormat($!{loanDemand.deadline})}"/>
+                            #set($timeDesc = '投资结束')
+                        #else
+                            <input type="hidden" name="istDate" value="$!{dateUtil.simpleFormat($!{loanDemand.investAvalibleTime})}"/>
+                            #set($timeDesc = '投资开始')
+                        #end
+
+                        <li class="br_text">$timeDesc : <span class="mid_font" id="t_d"><em>00</em> 天 </span>  <span class="mid_font" id="t_h"><em>00</em> 小时 </span>  <span class="mid_font" id="t_m"><em>00</em> 分 </span>  <span class="mid_font" id="t_s"><em>00</em> 秒</span></li>
+                        <li class="br_text">可投金额 :
+                <span class="mid_font">
+                    #if($!{percent} =="100.0%")
+                        0
+                    #else
+                        $!{moneyUtil.getFormatAmount($!{investableAmount})}
+                    #end
+                </span>
+                            元</li>
+
+                    ##若为投资人或没有登录
+                        #if($!{sessionScope.roleCodes} == "investor" || $!{sessionScope.roleCodes.indexOf("investor|")}>-1 || $!{sessionScope.roleCodes.indexOf("|investor")}>0 || !$sessionScope)
+                            <li class="br_input" style="height:auto;margin-top:-1px;">
+                                <span class="fn-span" id="invest-pay-amount-income"></span><br/>
+                                #if(!$overDeadLine && !$finishTrade)
+                                <input id="invest-pay-amount" name="" type="text" class="br_inp" value="请输入投资金额" /><b class="error-tip" id="invest-pay-amount-messge"></b><br/><p class="fn-span" id="invest-pay-amount-chinese"></p></li>
+                                #end
+                            #if($sessionScope)
+                                <li class="br_text">账户余额 : $balance 元<div class="br_right">
+                                #if(!$overDeadLine && !$finishTrade)
+                                    <a href="#" class="reg_link" id="all_in"><span class="white">全部投入</span></a></div></li>
+                                #end
+                                #if($userGoldExp)
+                                    <li class="br_text"></input>体验金额 : $!userGoldExp.amount 元<div class="br_right">
+                                    #if(!$overDeadLine && !$finishTrade)
+                                        <input type="checkbox" name="goldExp" id="goldExp" value="$!userGoldExp.amount" /> 立即使用</div></li>
+                                    #end
+                                #end
+                            #else
+                                <li class="br_text"></input>您还未登录<div class="br_right"><a href="/login/login" class="reg_link" id="all_in"><span class="white">登录</span></a></div></li>
+                            #end
+                            <li class="br_blank"></li>
+                            <li class="br_but br_cen">
+                                #if($!{percent} =="100.0%")
+                                    <a href="javascript:void(0);"><img src="/resources/images/new/br_but_fin.png"></a>
+                                #else
+                                    #if($overDeadLine)
+                                        融资已结束
+                                    #elseif($finishTrade)
+                                        交易已结束
+                                    #else
+                                        <a href="javascript:void(0);" id="invest-ok"><img src="/resources/images/new/br_but.png"></a>
+                                    #end
+                                #end
+                                <br/>
+                                <b class="error-tip" id="invest-result-messge"></b>
+                            </li>
+                            #if(!$sessionScope)
+                                <li class="br_text br_cen">没有帐号？<a href="/anon/register" class="reg_link"><span class="white">立即注册</span></a></li>
+                            #end
+                        #end
+                        <input type="hidden" id="token" name="token" value="$!{token}"/>
+                    </ul>
+                </div>
+            #end
+        </div>
+    </div>
+    <!--项目详情结束-->
+    <div class="blank"></div>
+    <!--项目内容开始-->
+    <!--项目菜单代码开始-->
+    <div class="nav">
+        <div class="pro_menu" >
+            <ul>
+                <li class="light" id="tradeinfo"><a href="javascript:;" >项目详情</a></li>
+                <li id="extendinfo"><a href="javascript:;" >资料图片</a></li>
+##                <li id="investinfo"><a href="javascript:;" >投资记录</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--项目菜单代码结束-->
+    <!--下拉后项目菜单代码开始-->
+    <div class="alrod b_gray_o scr_menu" style="display:none">
+        <div class="pro_menu scr nav">
+            <ul>
+                <li class="light">项目详情</li>
+                <li>资料图片</li>
+##                <li>投资记录</li>
+##                <li class="br_t"><span class="green">年化利率：11-14%</span> <a href="#"><img src="/resources/images/new/br_but_t.png"></a></li>
+            </ul>
+        </div>
+    </div>
+    <!--下拉后项目菜单代码结束-->
+    <div class="nav">
+        <div class="pro_box">
+##            <div id="detaildiv" style="display:block">
+##                <div class="pro_boxpara">
+##                    <ul class="pbp_tit">
+##                        <li>审核状态</li>
+##                    </ul>
+                    <div>
+                        #if($paymentBankName)
+                            <div style="margin-left:24px;height: 30px;line-height: 30px;"><img src="/resources/images/new/icon_alarm_clock.png"/> 到期由 <span class="blue">$!{paymentBankName}</span> 无条件兑付</div>
+                        #end
+                    </div>
+                    <table id="auditInfo" class="tab_index_invest_detail_audit">
+                        <tr>
+                            <th width="400">审核项目</th>
+                            <th width="200">已审核</th>
+                            <th></th>
+                        </tr>
+                        <tr class="tr1">
+                            <td class="audit_name">企业名称</td>
+                            <td><img src="/resources/images/new/icon-blue-ok.png" title="已审核"></td>
+                            <td></td>
+                        </tr>
+                        <tr class="tr2">
+                            <td class="audit_name">营业执照</td>
+                            <td><img src="/resources/images/new/icon-blue-ok.png" title="已审核"></td>
+                            <td></td>
+                        </tr>
+                        <tr class="tr1">
+                            <td class="audit_name">融资方经营场所实地认证</td>
+                            <td><img src="/resources/images/new/icon-blue-ok.png" title="已审核"></td>
+                            <td></td>
+                        </tr>
+                        <tr class="tr2">
+                            <td class="audit_name">基本账户开户许可证</td>
+                            <td><img src="/resources/images/new/icon-blue-ok.png" title="已审核"></td>
+                            <td></td>
+                        </tr>
+                        <tr class="tr1">
+                            <td class="audit_name">税务登记证</td>
+                            <td><img src="/resources/images/new/icon-blue-ok.png" title="已审核"></td>
+                            <td></td>
+                        </tr>
+                        <tr class="tr2">
+                            <td class="audit_name">组织机构代码证</td>
+                            <td><img src="/resources/images/new/icon-blue-ok.png" title="已审核"></td>
+                            <td></td>
+                        </tr>
+                    </table>
+##                </div>
+##            </div>
+
+##            <div id="detaildiv" style="display:block">
+##                <div class="pro_boxpara">
+##                    <ul class="pbp_tit">
+##                        <li>项目详情</li>
+##                    </ul>
+##                    <ul class="pbp_room">
+##                        <li>项目编号 : $!{trade.code}</li>
+##                        <li>融资人   : $!{loanDemand.userName}</li>
+##                        <li>融资金额 : $!{moneyUtil.getFormatAmount($!{loanDemand.loanAmount})}元</li>
+##                        <li>融资期限 : $!{loanDemand.timeLimit} $unit</li>
+##                        <li>年化收益 : $!{moneyUtil.getPercentage($!{loanDemand.interestRate})}%</li>
+##                        <li>到期无条件兑付银行：$!{paymentBankName} </li>
+##                        <li>起始时间 : $!{dateUtil.simpleFormat($!{loanDemand.investAvalibleTime})}</li>
+##                        <li>结束时间 : $!{dateUtil.simpleFormat($!{loanDemand.deadline})}</li>
+##                        <li>还款方式 : $!{loanDemand.repayDivisionWayMsg}</li>
+##                        <li>还款日期 : $!{dateUtil.simpleFormat($!{trade.expireDateTime})}</li>
+##                        <li>项目地点 : $!{loanDemand.areaNbNo}</li>
+##                    </ul>
+##                </div>
+            ##            <div class="pro_boxpara">
+            ##                <ul class="pbp_tit">
+            ##                    <li>抵押物状况</li>
+            ##                </ul>
+            ##                <ul class="pbp_room">
+            ##                    <li>抵押物名称 : 房产</li>
+            ##                    <li>抵押物估价 : 50万</li>
+            ##                    <li class="pb_full">抵押物简介 : 小区名称：重庆市渝北区回兴东衡槟城小区 建筑面积：82.34 平方米 公用面积：7.81 平方米 使用年限：70 年。</li>
+            ##                    <li class="pb_full">信用记录：个人征信良好。</li>
+            ##                </ul>
+            ##            </div>
+##                <div class="pro_boxpara">
+##                    <ul class="pbp_tit">
+##                        <li>项目情况</li>
+##                    </ul>
+##                    <ul class="pbp_room">
+##                        <li class="pb_full">$!{loanDemand.loanNote}</li>
+##                    </ul>
+##                </div>
+            ##            <div class="pro_boxpara"id="">
+            ##                <ul class="pbp_tit">
+            ##                    <li>资金用途</li>
+            ##                </ul>
+            ##                <ul class="pbp_room">
+            ##                    <li class="pb_full">$stringUtil.subString($!{loanDemand.loanPurpose},10,"...")</li>
+            ##                </ul>
+            ##            </div>
+
+
+
+            ##            <div class="pro_boxline" id="expandextendbt"><img src="/resources/images/new/down.png"></div>
+            ##            <div class="pro_boxline" id="collextendbt" style="display:none"><img src="/resources/images/new/up.png"></div>
+            ## </div>
+            <div class="pro_boxpara" style="display: none;" id="extenddiv">
+                <ul class="pbp_tit">
+                    <li>项目图片</li>
+                </ul>
+                <ul class="pbp_room pbp_bg">
+                    #set($tempCount=1)
+                    #foreach($attachmentModuleType in $!{list})
+
+                        #foreach($commonAttachmentInfo in $!{attachmentModuleType.attachmentInfos})
+                            <a href="${commonAttachmentInfo.requestPath}" target="_blank">
+                                <li class="pb_pic">
+                                    <img src="${commonAttachmentInfo.requestPath}" width="185" height="158" />
+                                    <div class="pic_name">附件第$tempCount张</div>
+                                    #set($tempCount=$tempCount+1)
+                                </li>
+                            </a>
+                        #end
+                    #end
+                </ul>
+            </div>
+##            <div class="pro_boxpara" id="investdiv" style="display:none">
+##                <ul class="pbp_tit">
+##                    <li>投资列表
+##                    </li>
+##                </ul>
+##                <ul class="pbp_room pbp_r_u">
+##                    <li class="pb_user">用户名</li>
+##                    <li class="pb_user">投资金额（元）</li>
+##                    <li class="pb_user">投资时间</li>
+##                    <li class="pb_user">状态</li>
+##                </ul>
+##
+##                #foreach($item in $!{page.result})
+##                    <ul class="pbp_room pbp_r_u">
+##                        <li class="pb_user">$stringUtil.subString($!{item.payUserName},1,"****")</li>
+##                        <li class="pb_user"><span class="org">￥$!{moneyUtil.getFormatAmount($!{item.amount})}</span></li>
+##                        <li class="pb_user">$!dateUtil.simpleFormat($!{item.payDate})</li>
+##                        <li class="pb_user"><span class="green">$!{item.status}</span></li>
+##                    </ul>
+##                #end
+##
+##                <input type="hidden" name="demandId" value="$!{loanDemand.demandId}"/>
+##                <div class="pages account-page mt10">
+##                    <div class="fn-right">
+##                        #parse("/backstage/page/page.vm")
+##                    </div>
+##                </div>
+            </div>
+        </div>
+    </div>
+    <!--项目内容结束-->
+
+
+    <!--分页请求form开始-->
+    <div class="lyct">
+        <form name="gform" method="post" action="#" class="m-form" >
+            <input type="hidden"  name="pageSize"  value="$!{pageParam.pageSize}">
+            <input type="hidden"  name="pageNo"  value="$!{pageParam.pageNo}">
+        </form>
+    </div>
+
+    <!--分页请求form结束-->
+
+</div>
+    #parse("/front/index/common/js.vm")
+##<script src="/resources/js/lib/jquery.slidy.min.js" type="text/javascript"></script>
+##<script src="/js/Y-all/Y-script/Y-countdown.js" type="text/javascript"></script>
+##<script src="/js/Y-all/Y-script/Y-date.js" type="text/javascript"></script>
+<script src="/resources/js/content/chineseAmountExchange.js" type="text/javascript"></script>
+
+
+
+## tab标签
+<script type="text/javascript">
+
+    $("#tradeinfo").click(function(){
+        $("#sumarydiv").show();
+        $("#detaildiv").show();
+        $("#auditInfo").show();
+        $("#extenddiv").hide();
+        $("#investdiv").hide();
+        $('#extendinfo').removeClass('light');
+        $('#investinfo').removeClass('light');
+        $(this).addClass('light');
+
+        $("#expandextendbt").show();
+        $("#collextendbt").hide();
+        $("#expandinvestbt").hide();
+        $("#collinvestbt").hide();
+    });
+
+    $("#extendinfo").click(function(){
+        $("#auditInfo").hide();
+        $("#sumarydiv").hide();
+        $("#detaildiv").hide();
+        $("#extenddiv").show();
+        $("#investdiv").hide();
+        $('#tradeinfo').removeClass('light');
+        $('#investinfo').removeClass('light');
+        $(this).addClass('light');
+
+        $("#expandextendbt").hide();
+        $("#collextendbt").hide();
+        $("#expandinvestbt").hide();
+        $("#collinvestbt").hide();
+    });
+
+    $("#investinfo").click(function(){
+        $("#sumarydiv").hide();
+        $("#auditInfo").hide();
+        $("#detaildiv").hide();
+        $("#extenddiv").hide();
+        $("#investdiv").show();
+        $('#tradeinfo').removeClass('light');
+        $('#extendinfo').removeClass('light');
+        $(this).addClass('light');
+
+        $("#expandextendbt").hide();
+        $("#collextendbt").hide();
+        $("#expandinvestbt").hide();
+        $("#collinvestbt").hide();
+    });
+
+    $("#expandextendbt").click(function(){
+        $("#sumarydiv").show();
+        $("#detaildiv").show();
+        $("#extenddiv").show();
+        $("#investdiv").hide();
+
+        $("#expandextendbt").hide();
+        $("#collextendbt").show();
+        $("#expandinvestbt").show();
+        $("#collinvestbt").hide();
+    });
+
+    $("#expandinvestbt").click(function(){
+        $("#sumarydiv").show();
+        $("#detaildiv").show();
+        $("#extenddiv").show();
+        $("#investdiv").show();
+
+
+        $("#expandextendbt").hide();
+        $("#collextendbt").show();
+        $("#expandinvestbt").hide();
+        $("#collinvestbt").show();
+    });
+
+    $("#collextendbt").click(function(){
+        $("#sumarydiv").show();
+        $("#detaildiv").show();
+        $("#extenddiv").hide();
+        $("#investdiv").hide();
+
+        $("#expandextendbt").show();
+        $("#collextendbt").hide();
+        $("#expandinvestbt").hide();
+        $("#collinvestbt").hide();
+    });
+
+    $("#collinvestbt").click(function(){
+        $("#sumarydiv").show();
+        $("#detaildiv").show();
+        $("#extenddiv").show();
+        $("#investdiv").hide();
+
+        $("#expandextendbt").hide();
+        $("#collextendbt").show();
+        $("#expandinvestbt").hide();
+        $("#collinvestbt").hide();
+    });
+
+
+    ###
+    function toPage(totalPage, pageNo){
+        if(totalPage<pageNo){
+            return false;
+        }
+        $('[name=pageSize]').val($!{page.pageSize}) ;
+        $('[name=pageNo]').val(pageNo);
+
+        $('form[name=gform]').attr('action', '$!{rc.contextPath}/index/lookup/$!{demandId}/$!{tradeId}?tab=invest');
+        document.gform.submit();
+    }
+    //分页跳转后显示正确的tab页面
+        #if($!{tab}=='invest')
+        $("#investinfo").click();
+        ##window.onload($("#investinfo").click());
+        #end
+
+</script>
+
+## 全部投入
+<script type="text/javascript">
+    $('#all_in').click(function (){
+
+        if($!{investableAmount} == 0)
+        {
+            return;
+        }
+
+        var investableAmountStr = new String($!{investableAmount});
+        var investableAmountInYuan = investableAmountStr.substring(0,investableAmountStr.length - 2);
+        if($balance > investableAmountInYuan)
+        {
+            $('#invest-pay-amount').val(investableAmountInYuan);
+        }else
+        {
+            $('#invest-pay-amount').val($!{thirdPartAccountInfo.availableBalance});
+        }
+        $('#invest-pay-amount').keyup();
+    });
+</script>
+
+## 金额输入框
+<script  type="text/javascript">
+    $('#invest-pay-amount').click(function (){
+        if("请输入投资金额" == $('#invest-pay-amount').val())
+        {
+            $('#invest-pay-amount').val("");
+        }
+
+        if( $('#invest-pay-amount-messge').html().length > 0)
+        {
+            $('#invest-pay-amount').val("");
+            $('#invest-pay-amount-messge').hide();
+            $('#invest-pay-amount-chinese').hide();
+            $('#invest-pay-amount-income').hide();
+        }
+
+    });
+
+    $('#invest-pay-amount').focusout(function (){
+        if($('#invest-pay-amount').val().length == 0 || $('#invest-pay-amount').val() == null || "" == $('#invest-pay-amount').val())
+        {
+            $('#invest-pay-amount').val("请输入投资金额");
+        }
+    });
+
+    $('#goldExp').change(function(){
+        $('#invest-pay-amount').keyup();
+    });
+
+    $('#invest-pay-amount').keyup(function (){
+        var timeNum = parseInt('$!{loanDemand.timeLimit}' || 1);
+        var timeUnit = '$!{loanDemand.timeLimitUnit}';
+        var days = timeNum;
+        var rate = parseFloat('$!{loanDemand.interestRate}');
+        if(timeUnit == 'Y'){
+            days = timeNum * 360;
+        }
+        if(timeUnit == 'M'){
+            days = timeNum * 30;
+        }
+
+        var inputAmount = $(this).val() * 1;
+        if(inputAmount <= 0){
+            $('#invest-pay-amount-chinese').html("").hide();
+            $('#invest-pay-amount-income').hide();
+            return;
+        }
+        var chineseAmount = convertCurrency(inputAmount);
+        if(chineseAmount.indexOf("error") >= 0){
+            $('#invest-pay-amount-income').hide();
+            return;
+        }else{
+            var amountPreWord = "金额大写： ";
+            $('#invest-pay-amount-chinese').html(amountPreWord + chineseAmount).show();
+
+            //体验金
+            var goldExpValue = $('#goldExp').attr('checked') ? parseFloat($('#goldExp').val()) : 0;
+            //预期收益
+            var willIncome = Number((inputAmount + goldExpValue) * rate/360 * days).toFixed(3);
+            willIncome = willIncome.substring(0,willIncome.length-1);
+            $('#invest-pay-amount-income').html('<span style="color:#FFC90E;">预期收益 : ' + willIncome + '元</span>').show();
+        }
+    });
+</script>
+
+
+## ajax request
+<script type="text/javascript">
+    function requestAjax(url, data){
+        var json = null;
+        $.ajax({
+            url:url,
+            dataType:'json',
+            type:'post',
+            async:false,
+            data:data,
+            success:function(result){
+                json = result;
+            }
+        });
+        return json;
+    }
+</script>
+
+
+##
+<script type="text/javascript">
+
+    $('#pass-btn').click(function (){
+        var e3 = $('#loan-password-messge');
+        var e4 = $('#loan-password-re-messge');
+
+        e3.hide();
+        e4.hide();
+
+        if(islogin()){
+
+            $('input[name=loan-pass]').val('');
+            $('.fn-item label[id]').empty();
+            window.investWnd = $('body').window({
+                key:'pass-window',
+                content:'#pass-window',
+                simple:true,
+                closeEle:'#pass-cancel',
+                close:function(){
+                    document.location.href = document.location.href;
+                }
+            });
+        }else{
+            document.location.href = '$!{rc.contextPath}/login/login?redirect=' + document.location.href;
+        }
+    });
+
+
+    function checkCode(){
+        return true;
+        var code = $('#code1').val();
+        if(code.length < 1){
+            alert('手机验证码不能为空');
+            return false;
+        }
+        return true;
+    }
+
+    function checkAmount(){
+        var amount = $('#invest-pay-amount').val();
+        var e = $('#invest-pay-amount-messge').hide();
+        if(amount.length < 1){
+            e.html('请输入投资金额').show();
+            return false;
+        }else if(isNaN(amount)){
+            e.html('投资金额必须为数字').show();
+            return false;
+        }else if(parseFloat(amount*1) < 1){
+            e.html('投资金额必须大于0元').show();
+            return false;
+        }
+        return true;
+    ##        else if(parseFloat(amount*1) < 100){
+    ##        e.html('投资金额必须为大于100的数字').show();
+    ##            return false;
+    ##    }else if(parseFloat(amount)%100!=0){
+    ##        e.html('投资金额必须为100元的整数倍').show();
+    ##        return false;
+    ##    }
+##        var url = '$!{rc.contextPath}/invest/checkamount/$!{tradeId}';
+##        var data = {'amount' : parseInt(amount*1) * 100};
+##        var result = requestAjax(url, data);
+##        if(!result.status){
+##            alert(result.message);
+##            e.html(result.message).show();
+##        }
+##        return result.status;
+    }
+
+
+    $('#invest-ok').click(function (){
+    //如果设置了disabled 第二次点无效
+    if($(this).attr('disabled'))return false;
+    var isLogin = islogin();
+    if(!isLogin){
+        window.location = '/login/login';
+        return;
+    }
+	var option = {
+		url : '/usercenter/checkThirdpartAccountcomplete',
+		type : 'post',
+		dataType : 'json',
+		success : function(res) {
+			if(res.code == "0"){
+				//如果没有注册三方账户
+				var o = confirm("您还没有注册支付账户，现在注册吗?");
+				if(o){
+					window.location.href("/anon/toRegYJFAccount/${userBaseInfo.userName}");
+				}
+			}else{
+				if(checkCode() && checkAmount()){   //&& checkPayPassword()
+		            var url = '$!{rc.contextPath}/invest/goinvest';
+		            var data = {amount : (parseInt($('#invest-pay-amount').val()*1) * 100), tradeId : $!{tradeId} , token : $('#token').val()};
+		            //判断是否使用体验金
+		            if("checked" == $("#goldExp").attr("checked")) {
+		                data.virtualMoney = $("#goldExp").attr('value');
+		            }
+		            //disabled处理
+		            var str = "处理中..." ;
+		            var _this = $(this);
+		            _this.html(str).attr('disabled',true);
+		            var myWin = window.open("/goto.htm","_blank");
+		            setTimeout(function(){
+		                var result = requestAjax(url, data);
+		                if(!result.investStatus)
+		                {
+		                    $('#invest-result-messge').html(result.message).show();
+		                    _this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);
+		                    myWin.close();
+		                }else
+		                {
+		                    if(result.redirectURL != null)
+		                    {
+		                        _this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);
+		                        //window.open(result.redirectURL);
+		                        myWin.location.href = result.redirectURL;
+		                    }else
+		                    {
+		                        _this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);
+		                    }
+		                }
+		          	 }, 100);
+		            	return false;
+		        	};
+				}
+			},
+			error : function(res){
+				alert("系统错误，请刷新页面!");
+			}
+		};
+	    $.ajax(option);
+	});
+
+    function islogin(){
+        var url = '$!{rc.contextPath}/login/islogin';
+        return requestAjax(url);
+    }
+
+    function isInvest(){
+        var url = '/invest/isInvest';
+        var data = {'demandId' : $('[name=demandId]').val()};
+        return requestAjax(url,data);
+
+    }
+
+    function checkTrade(tradeId){
+        var url = '$!{rc.contextPath}/invest/checktrade/$!{tradeId}';
+        return requestAjax(url);
+    }
+
+    function checkInvest(){
+        var url = '$!{rc.contextPath}/invest/checkinvest/$!{tradeId}';
+        return requestAjax(url);
+    }
+</script>
+
+##倒计时
+<script type="text/javascript">
+    var temp = $('[name=istDate]').val().replace(/-/g, "/");
+    var istDate = new Date(Date.parse(temp));
+    function GetRTime(){
+        var ts = istDate - (new Date());//计算剩余的毫秒数
+        if(ts>0){
+            var dd = parseInt(ts / 1000 / 60 / 60 / 24, 10);//计算剩余的天数
+            var hh = parseInt(ts / 1000 / 60 / 60 % 24, 10);//计算剩余的小时数
+            var mm = parseInt(ts / 1000 / 60 % 60, 10);//计算剩余的分钟数
+            var ss = parseInt(ts / 1000 % 60, 10);//计算剩余的秒数
+
+            if(dd>0 || hh>0 || mm>0 || ss>0){
+            ##var dh = dd*24 + hh;
+
+                dd = checkTime(dd);
+                hh = checkTime(hh);
+                mm = checkTime(mm);
+                ss = checkTime(ss);
+
+                document.getElementById("t_d").innerHTML = "<em>" + dd + "</em>天";
+                document.getElementById("t_h").innerHTML = "<em>" + hh + "</em>小时";
+                document.getElementById("t_m").innerHTML = "<em>" + mm + "</em>分";
+                document.getElementById("t_s").innerHTML = "<em>" + ss + "</em>秒";
+            }else{
+                document.getElementById("t_d").innerHTML = "<em>00</em>天";
+                document.getElementById("t_h").innerHTML = "<em>00</em>小时";
+                document.getElementById("t_m").innerHTML = "<em>00</em>分";
+                document.getElementById("t_s").innerHTML = "<em>00</em>秒";
+
+                var url = "/index/lookup/$!{trade.demandId}/$!{trade.id}";
+                window.location.href=url;
+            }
+
+        }
+    };
+
+    function checkTime(i)
+    {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    }
+
+    if(!jQuery.isEmptyObject($('#t_h'))){
+        var ts2 = istDate - (new Date());//计算剩余的毫秒数
+        if(ts2 > 0){
+            setInterval(GetRTime,1000);
+        }
+    }
+</script>
+
+<!--首页内容结束-->
+<div class="blank"></div>
+#parse("/front/index/common/footer.vm")
+###parse("/front/index/common/js.vm")
+</body>
+</html>

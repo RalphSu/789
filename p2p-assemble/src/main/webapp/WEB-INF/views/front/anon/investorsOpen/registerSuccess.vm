@@ -1,0 +1,57 @@
+#parse("/front/index/common/header.vm")
+<body>
+	#parse("/front/index/common/header-menu.vm")
+	<!--内容-->
+<div class="blank"></div>
+<div class="alrod">
+<!--注册页面开始-->
+<div class="reg_tit nav large_font">恭喜您注册成功！</div>
+<div class="load nav">
+	<ul class="four_load">
+    	<li class="last start"><div class="num_last"><span class="green_t">1</span></div>填写基本信息并验证手机</li>
+        <li class="load_link"><img src="/resources/images/new/load4.png"></li>
+        <li class="last"><div class="num_last"><span class="green_t">2</span></div>验证邮箱</li>
+        <li class="load_link"><img src="/resources/images/new/load4.png"></li>
+        <li class="last"><div class="num_last"><span class="green_t">3</span></div>开通第三方支付账户</li>
+        <li class="load_link"><img src="/resources/images/new/load3.png"></li>
+        <li class="in end"><div class="num_innext"><span class="green_o">4</span></div>注册完成</li>
+    </ul>
+</div>
+<div class="blank"></div>
+<div class="reg_form nav">
+	<ul class="prompt">
+    	<li class="reg_name"> </li>
+        <li class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+	<ul>
+        <li class="reg_input full_text">您已经注册成功，请妥善管理您的账户和密码，如有疑问，请拨打我们的客服热线 <span class="blue">400-023-0733</span></li>
+    </ul>
+    <ul class="prompt">
+    	<li class="reg_name"></li>
+        <li class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+    	<li class="reg_name"></li>
+        <li class="reg_input"><a class="reg_bt" href="/usercenter/home"><div class="mid_font tran_but_suc reg_blue">进入用户管理中心</div></a></li>
+        <li class="reg_text"></li>
+    </ul>
+</div>
+<div class=" form_blank"></div>
+<div class="reg_other nav">已有789金融账户？ <a href="/login/login" class="reg_link"><span class="blue">现在登录</span></a></div>
+</div>
+<!--通用底部结束-->
+<div class="blank"></div>
+	#parse("/front/index/common/footer.vm")
+	
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'investorsOpen');
+    </script>
+</body>
+</html>

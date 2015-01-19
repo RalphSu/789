@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>交易查询</title>
+	<link type="text/css" href="$!{rc.contextPath}/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>交易管理</a></li>
+                            <li><a href>交易流水详情</a></li>
+                        </ul>
+                    </div>
+					<div class="m-demand">
+						<input type="hidden" id="id" name="id" value="$!{item.id}"/>
+						<table class="d-table d-table-c">
+							<tr>
+								<td colspan="2" class="text-l">交易号： $!{item.flowCode}</td>
+								<td colspan="4"><span class="text-r">状态：#if($!{item.status})转账成功 #else 转账失败 #end
+                                </span></td>
+							</tr>
+							<tr>
+								<td width="100">流水类型</td>
+								<td width="200">交易名称</td>
+								<td width="100">付款金额(元)</td>
+								<td width="100">托管机构手续费(元)</td>
+								<td width="100">商户服务费(元)</td>
+								<td width="100">备注</td>
+							</tr>
+							<tr>
+								<td> $!{item.flowType}</td>
+								<td>
+									<p> $!{trade.name}</p>
+								</td>
+								<td>$!{moneyUtil.getFormatAmount($!{item.amount})}</td>
+								<td>0</td>
+								<td>0</td>
+								<td>$!{item.note}</td>
+							</tr>
+							<tr>
+								<td>付款方</td>
+								<td>($!{item.outUserName})</td>
+								<td>收款方</td>
+								<td colspan="2">($!{item.inUserName})</td>
+								<td>交易类型：#if($!{item.type}=='invest') 投资 #elseif($!{item.type}=='repay')还款#elseif($!{item.type}=='division')分润#end</td>
+							</tr>
+							<tr>
+								<td rowspan="2">交易时间</td>
+								<td>创建时间</td>
+								<td colspan="2">付款时间</td>
+								<td colspan="2">结束时间</td>
+							</tr>
+							<tr>
+								<td>$!{dateUtil.simpleFormat($!{trade.createDate})}</td>
+								<td colspan="2">$!{dateUtil.simpleFormat($!{item.date})}</td>
+								<td colspan="2">$!{dateUtil.simpleFormat($!{trade.finishDate})}</td>
+							</tr>
+						</table>
+						<br/>
+					</div>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/plugins/jquery.window.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/sea.js"></script>
+</body>
+</html>
+
+
+
+
+

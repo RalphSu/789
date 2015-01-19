@@ -1,0 +1,374 @@
+
+#parse("/front/index/common/header.vm")
+<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+<style>
+	h2 {
+		font-weight: bold;
+		font-size: 25px;
+	}
+</style>
+<body class="warp">
+	#parse("/front/index/common/header-menu.vm")
+
+<div class="blank30" style="margin-top: 35px;"></div>
+<div class="home-section_bd pt20" style="">
+    <div class="" style="width: 1128px;margin-left: auto; margin-right: auto; " >
+		<form action="/backstage/addLoanDemandSubmit" method="post" class="ui-form" id="add_loandemand_form">
+			<fieldset>
+				<legend><h3>融资基本信息</h3></legend>
+				<input type="hidden" name="guaranteeAudit" value="NO"/>
+				<div class="item" style="margin-bottom: 30px;">
+					<div style="float: left; width: 300px;">
+						<label for="" class="u-label"><span class="required">*</span>用户名：</label>
+						<input type="text" class="u-input w170" readOnly name="userName" value="$!userName" />
+					</div>
+					<div style="float: left;width: 300px; padding-left: 100px;">
+						<label for="" class="u-label"><span class="required"></span>真实姓名：</label>
+						<input type="text" readOnly class="u-input w170" name="realName" value="$!realName" />
+					</div>
+				</div>
+
+				<div class="item">
+					<label for="" class="u-label"><span class="required">*</span>融资标题：</label>
+					<input type="text" class="u-input w170" style="width: 410px;" name="loanName" maxlength="25" />
+					<label class="u-tip" id="ckloanName" >字数限制25个字</label>
+				</div>
+
+				<div class="item fn-clear" style="z-index:19">
+					<div style="float: left; width: 300px;">
+						<label for="" class="u-label"><span class="required">*</span>融资规模：</label>
+						<div class="jqtransform jqtransform-select3">
+							<select name="dimensions" id="">
+								<option value="">---&nbsp;请选择融资规模&nbsp; ---</option>
+								#foreach($foo in ['50,000 ~ 100,000','100,000 ~ 500,000','500,000 ~ 1,000,000','1,000,000 ~ 5,000,000','5,000,000 ~ 10,000,000','10,000,000 ~ 20,000,000','20,000,000 ~ 50,000,000','50,000,000 ~ 100,000,000'])
+									<option value="$!{foo}">$foo</option>
+								#end
+							</select>
+						</div>
+					</div>
+					<div style="float: left;width: 300px; padding-left: 100px;">
+						<label for="" class="u-label"><span class="required">*</span>融资金额：</label>
+						<input type="text" class="u-input w170 mask_money" name="loanAmount" value="$!{amount}"/> <b class="u-tip">元  </b>
+						<label class="u-tip">人民币大写：  <b id="loanAmountChinese" class="u-tip"></b></label>
+					</div>
+				</div>
+				<div class="item">
+					<label for="" class="u-label"><span class="required" id="loanPassword1">*</span>是否定向融资：</label>
+					<input type="radio" name="isDirectional" id="ps" value="Y" />是<input type="radio"  name="isDirectional" value="N" checked="checked" />否
+					<label class="u-tip" id="passwordHint">选择是时请设置定向融资密码，长度限制在6-8位，必须是数字和字母的组合</label>
+				</div>
+				<div class="item" style="z-index:18">
+					<label for="" class="u-label"><span class="required">*</span>融资期限：</label>
+					<div class="fn-clear mb10" style="position:relative; z-index:17">
+						<p class="fn-left"><input type="radio" class="radio" name="timeLimitUnit" value="W"/><label for="">固定期限：</label></p>
+						<div class="jqtransform jqtransform-select3">
+							<select name="timeLimit" id="">
+								<option value=" ">---&nbsp;请选择固定期限&nbsp; ---</option>
+								#foreach($foo in [1,3,6,9,12])
+								 <option value="$!{foo}">${foo}月期</option>
+								#end
+							</select>
+						</div>
+					</div>
+					<div class="fn-clear mb10" style="position:relative; z-index:16">
+						<p class="fn-left"><input type="radio" class="radio" name="timeLimitUnit" value="D"/><label for="">定制天数：</label></p>
+						<div class="jqtransform jqtransform-select3">
+							<select name="timeLimit" id="">
+								<option value=" ">---&nbsp;请选择定制天数&nbsp; ---</option>
+								#foreach($foo in [1..31])
+								 <option value="$!{foo}">${foo}天</option>
+								#end
+							</select>
+						</div>
+					</div>
+					<div class="fn-clear" style="position:relative; z-index:15">
+						<p class="fn-left"><input type="radio" class="radio" name="timeLimitUnit" value="M"/><label for="">定制月份：</label></p>
+						<div class="jqtransform jqtransform-select3">
+							<select name="timeLimit" id="">
+								<option value=" ">---&nbsp;请选择定制月份&nbsp; ---</option>
+								#foreach($foo in [1..12])
+								 <option value="$!{foo}">${foo}个月</option>
+								#end
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="item fn-clear" style="z-index:16">
+					<label for="" class="u-label"><span class="required">*</span>还款方式：</label>
+					<div class="jqtransform jqtransform-select3">
+
+						<select name="repayDivisionWay" id="">
+							#foreach($btype in $!{divisionWayList})
+								<option value="$!{btype.code}" >$!{btype.message}</option>
+							#end
+						</select>
+
+					</div>
+				</div>
+				<div class="item fn-clear" style="z-index:15">
+					<label for="" class="u-label"><span class="required">*</span>最低投资：</label>
+					<div class="jqtransform jqtransform-select3">
+						<select name="leastInvestAmount" id="leastInvestAmountSel">
+							#foreach($foo in [50000,100000,200000,500000,1000000])
+								<option value="$!{foo}"> #set($amount=$!{foo}/10000)$amount 万</option>
+							#end
+						</select>
+					</div>
+					<input type="checkbox" id="leastInvestAmountCkbox" class="checkbox"/><label for="">其他金额：</label><input disabled="disabled" type="text" id="leastInvestAmountTxt" class="u-input w170 mask_money" name="leastInvestAmount"/> 元<label class="u-tip">人民币大写：  <b id="leastInvestAmountChinese" class="u-tip"></b></label>
+				</div>
+
+				<!--
+				<div class="item fn-clear" style="z-index:14">
+					<label for="" class="u-label"><span class="required"></span>保障方式：</label>
+					<div class="jqtransform jqtransform-select3">
+
+						<select name="insureWay" id="">
+							#foreach($btype in $!{insureWayList})
+								<option value="$!{btype.code}" >$!{btype.message}</option>
+							#end
+						</select>
+
+					</div>
+				</div>
+				-->
+
+
+				<div class="item fn-clear" style="z-index:13">
+					<label for="" class="u-label"><span class="required"></span>所属地区：</label>
+					<div class="jqtransform jqtransform-select3">
+						<!--地区代码来自 common_district.nb_no-->
+						<select name="areaNbNo" id="areaNbNo">
+							 <option value="001" >全国</option>
+							 <option value="001007002" >深圳</option>
+							 <option value="001007001" >广州</option>
+							 <option value="001030001" >北京</option>
+							 <option value="001032001" >上海</option>
+							 <option value="001001001" >杭州</option>
+							 <option value="001012001" >长沙</option>
+							 <option value="001011001" >武汉</option>
+							 <option value="001004001" >福州</option>
+						</select>
+
+					</div>
+				</div>
+
+				<div class="item">
+					<label for="" class="u-label"><span class="required">*</span>满标条件：</label>
+					<p class="mb10">
+						<input type="radio" name="saturationConditionMethod" class="radio" value="amount"/><label for="">固定金额：</label>
+						<input type="text" id="saturationConditionAmount" class="u-input w170 mask_money" name="saturationCondition"/> 元
+						<label class="u-tip">人民币大写：  <b id="saturationConditionAmountChinese" class="u-tip"></b></label>
+					</p>
+					<p class="mb10">
+						<input type="radio" name="saturationConditionMethod" class="radio"  value="rate"/><label for="">固定比率：</label>
+						<input type="text"  class="u-input w170" name="saturationCondition"/> %
+					</p>
+					<p class="mb10">
+						<input type="radio" name="saturationConditionMethod" class="radio" value="date"/><label for="">固定时间：</label>
+						<input type="text" class="u-input w170 time" name="saturationCondition"/>
+					</p>
+				</div>
+				<div class="item">
+					<label for="" class="u-label"><span class="required">*</span>融资用途：</label>
+					<textarea class="u-area" name="loanPurpose" maxlength="64"  checklen="ckloanPurpose" maxlen ="32" ></textarea>
+					<label class="u-tip"  id ="ckloanPurpose" >字数限制32个字</label>
+				</div>
+				<div class="item">
+					<label for="" class="u-label"><span class="required">*</span>截止日期：</label>
+					<input type="text" class="u-input w170 time" name="deadline" id="deadline"/>
+				</div>
+				<div class="item">
+					<label for="" class="u-label"><span class="required">*</span>可投资时间:</label>
+					<input type="text" class="u-input w170 time" name="investAvalibleTime" id ="investAvalibleTime" />
+				</div>
+				<div class="item">
+					<label for="" class="u-label">定义标题：</label>
+					<input type="text" class="u-input w170" name="selfDefinedTitle" />
+					<p class="u-tip">为了让您的需求更容易引发投资人的兴趣，请填写标题，若不填写，将由系统自动生成</p>
+				</div>
+			</fieldset>
+			<fieldset>
+							<legend><h3>项目信息</h3></legend>
+							<div class="item">
+								<textarea name="loanNote" class="u-area" style="width:600px;height:200px;"></textarea>
+							</div> 
+							<div class="item">
+								<label for="" class="u-label">融资人补充话语：</label>
+								<textarea name="loanStatement" id="" class="u-area"   checklen="ckloanStatement" maxlen ="125"  ></textarea>
+								<label class="u-tip" id ="ckloanStatement">字数限制125个字</label>
+							</div>
+						</fieldset>
+			<fieldset>
+							<legend><h3>担保信息</h3></legend>
+							
+							<div class="item" style="z-index:15">
+								<label for="" class="u-label"><span class="required">*</span>担保机构：</label>
+								<div class="jqtransform jqtransform-select3">
+									<select name="guaranteeId" id="">
+										<option value="-1">---&nbsp;请选择担保机构&nbsp;---</option>
+										#foreach($guarantee in $!{guarantee})
+										<option value="$!{guarantee.userId}">$!{guarantee.enterpriseName}</option>
+										#end
+									</select>
+								</div>
+							</div>
+							<br/>
+							<div class="item">
+								<label for="" class="u-label">担保人话语：</label>
+								<textarea name="guaranteeStatement" id="" class="u-area"  checklen="ckguaranteeStatement" maxlen ="125" ></textarea>
+								<label class='u-tip' id="ckguaranteeStatement">字数限制125个字</label> 
+							</div>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>担保函编号：</label>
+								<input type="text" class="u-input w170" name="guaranteeLicenseNo" maxlength="32"/>
+							</div>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>担保函名称：</label>
+								<input type="text" class="u-input w170" name="guaranteeLicenseName" maxlength="32"/>
+							</div>
+							<div class="item">
+								<label for="" class="u-label">上传担保函附件：</label>
+								<span class="sl-file" style="width:300px">
+									<input type="file" exts="png|jpg|bmp" class="sl-file-input" id="guaranteeLicenseUrl_Upload" />
+								</span>
+								<div id="guaranteeLicenseUrl_imgcontainer" style = "display:none;height:265px;">
+									<input type='hidden' id="guaranteeLicenseUrl" name="guaranteeLicenseUrl"/>
+									<input type='hidden' id="uploadHost" value="$!{uploadHost}"/>
+									<a href="javascript:;" id="guaranteeLicenseUrl_ImgLink" name="guaranteeLicenseUrl_ImgLink" title="担保函照片">  
+										<img id="guaranteeLicenseUrl_Img" name="guaranteeLicenseUrl_Img" title="担保函照片" style = "width:450px;height:260px;"  src=""/>
+                                    </a> 
+								</div>
+							</div>
+						</fieldset>
+			<fieldset>
+							<legend><h3>保荐人信息</h3></legend>
+							<div class="item" style="z-index:15">
+								<label for="" class="u-label">保荐机构：</label>
+								<div class="jqtransform jqtransform-select3">
+									<select name="sponsorId" id="">
+										<option value="-1">---&nbsp;请选择保荐机构&nbsp; ---</option>
+										#foreach($sponsor in $!{sponsor})
+										<option value="$!{sponsor.userId}">$!{sponsor.enterpriseName}</option>
+										#end
+									</select>
+								</div>
+							</div>
+							<br/>
+							<div class="item">
+								<label for="" class="u-label">保荐人话语：</label>
+								<textarea class="u-area" name="sponsorStatement" checklen="cksponsorStatement" maxlen ="125" ></textarea>
+								<label class="u-tip" id ="cksponsorStatement">字数限制125个字</label>
+							</div>
+						</fieldset>
+			<fieldset>
+							<legend><h3>分润信息</h3></legend>
+							<div class="item" style="z-index:20;">
+								<label for="" class="u-label"><span class="required">*</span>筹资阶段：</label>
+								<div class="jqtransform jqtransform-select3">
+									<select name="templateIds" id="divisionTemplateId1">
+										<option value="">---&nbsp;请选择分润模版&nbsp; ---</option>
+										#foreach($invest in $!{invest})
+										<option value="$!{invest.id}">$!{invest.name}</option>
+										#end
+									</select>
+								</div>
+                                <p ><span class="required" id="s1"></span></p>
+							</div><br/><br/>
+							<div class="item" style="z-index:15;">
+								<label for="" class="u-label"><span class="required">*</span>还款阶段：</label>
+								<div class="jqtransform jqtransform-select3">
+									<select name="templateIds" id="divisionTemplateId2">
+										<option value="">---&nbsp;请选择分润模版&nbsp; ---</option>
+										#foreach($repay in $!{repay})
+										<option value="$!{repay.id}">$!{repay.name}</option>
+										#end
+									</select>
+									
+								</div>
+								<p ><span class="required" id="s2"></span></p>
+								<!--<p class="u-tip mt5">易贷网：0%  担保机构：0%  保荐机构：0%  营销机构：0%  经纪人：0%</p>-->
+							</div><br/><br/>
+							<div class="item">
+								<div style="font-size:13pt; color:red">
+									<label for="" class="u-label"><span class="required">*</span>融资成本利率：</label>
+									<input id="templateRate1" type="hidden" class="u-input w170  mask_money mask_only_number" name="templateRate"/>
+									<input id="templateRate2" type="hidden" class="u-input w170  mask_money mask_only_number" name="templateRate"/>
+                                    <input id="templateRate3" type="hidden" class="u-input w170  mask_money mask_only_number" name="templateRate3"/>
+									<input type="hidden"  class="u-input w170" style="color:red;width:520px" id="loanInterest" name="loanInterest" value="0"/><span class="fn-words" style="display: none">%</span>
+
+                                    <input type="text"  class="u-input w170" style="color:red;width:520px" id="loanInterest_txt" name="loanInterest_txt" value="0"/><span class="fn-words"></span>
+
+								</div><br/>
+                            </div>
+							<div class="item">
+								<!--<label for="" class="u-label"><span class="required">*</span>投资年化利率：</label>-->
+								<input id="investRate1" type="hidden" class="u-input w170  mask_money mask_only_number" name="investRate"/>
+									<input id="investRate2" type="hidden" class="u-input w170  mask_money mask_only_number" name="investRate"/>
+								<input id="investInterestRate" type="hidden" class="u-input w170  mask_money mask_only_number" name="interestRate"/>
+							</div>
+						<legend><h3>附件上传</h3></legend>
+							<div class="item">
+								
+								<ul>
+								#foreach($!info in $!enumlist)
+									<li style="width:500px"><span>$!info.message</span><span  class=""><a code='$!{info.code}' href="javascript:;" class='loan_management fn-ys4-btn attach u-btn u-btn-blue ' style="margin:5px;">上传</a></span></li>	
+									
+								#end
+								</ul>
+							</div>
+							
+	<!--上传扫描件-->
+                            <div class="fn-layer f-active upload-scan" style="width:750px;position:absolute;left:-9999px;">
+                            		<div class="f-con">
+                            			<div class="f-top mb10">
+                            				<p>图片支持jpg、jpeg、png、bmp格式，单张图片大小不超过1M，双击可编辑图片名称,图片名称不超过50字</p>
+                            			</div>
+										#set($index=1)
+										#foreach($!info in $!enumlist)
+												<input type="hidden" value="" name="pathName_$!info.code" id="pathHiddenId_$index"/>
+											#set($index=$index+1)
+										#end
+                					<input type="hidden" value="" name="OTHER_attachPaths" id="OTHER_attachPaths"/>
+                						<div class="fn-item fn-clear" style="width:550px;">
+                						<label class="fn-label">上传图片</label>
+                                        <img style="width:50px;height:50px;" class="uploadimg" />
+                                        </div>
+                						<input type="file" id='upfile' class="fn-text w205" value="" name="credentialsImage"/>
+                							<div id="queueDiv"></div>
+                							<ul id="hidden_imgs_ul" class="upload-img fn-clear hidden_imgs_ul_del">
+                								<li id="upimg-model" style='display:none'>
+                									<img src="" alt="" />
+                									<a href="javascript:;" class="del" title="删除"></a>
+                									<div class="fn-imgInfo" style="text-align:center;"><span></span><input style="display:none;" maxlength='50' /></div>
+                								</li>								
+                							</ul>
+                							<b class="fn-tip"></b>
+                						
+                						</div>
+                				<div class="fn-item">
+                					<a href="javascript:;" class="fn-g-btn loanChecckSubmit">完成</a>
+                				</div>
+                			</div>
+                         </div>
+
+			<input type="hidden" name="status" />
+    		<input type="hidden" name="source" value="$!{source}" />
+			<input type="hidden" name="bizType" value="$!{bizType}"/>
+			<div class="item mt10">
+				<a href="javascript:;"  class="u-btn u-btn-blue fn-submit1">发布</a><a href="javascript:history.go(-1);" class="u-btn u-btn-gray">取消</a>
+			</div>
+		</form>
+</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="/resources/js/xheditor/xheditor-1.2.1.min.js"></script>
+	<script type="text/javascript" src="/resources/js/xheditor/xheditor_lang/zh-cn.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'addLoanDemand');
+    </script>
+</body>
+</html>

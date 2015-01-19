@@ -1,0 +1,84 @@
+#parse("/front/index/common/header.vm")
+<body>
+	#parse("/front/index/common/header-menu.vm")
+	<!--内容-->
+<div class="blank"></div>
+<div class="alrod">
+<!--注册页面开始-->
+<div class="reg_tit nav large_font">开通易极付平台账户</div>
+<div class="load nav">
+	<ul class="four_load">
+    	<li class="last start"><div class="num_last"><span class="green_t">1</span></div>填写基本信息并验证手机</li>
+        <li class="load_link"><img src="/resources/images/new/load4.png"></li>
+        <li class="last"><div class="num_last"><span class="green_t">2</span></div>实名认证</li>
+        <li class="load_link"><img src="/resources/images/new/load3.png"></li>
+        <li class="in"><div class="num_innext"><span class="green_o">3</span></div>开通第三方支付账户</li>
+        <li class="load_link"><img src="/resources/images/new/load1.png"></li>
+        <li class="next end"><div class="num_innext"><span class="gray_t">3</span></div>注册完成</li>
+    </ul>
+</div>
+<div class="blank"></div>
+<div class="reg_form nav">
+	<ul class="prompt">
+    	<li class="reg_name"></li>
+        <li class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+	<ul class="pay_mes">
+    	<li class="reg_name">商户名称： </li>
+        <li class="reg_input"><span class="blue"></span></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul class="pay_mes">
+    	<li class="reg_name">用户名称： </li>
+        <li class="reg_input"><span class="blue">$!{userName}</span></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul class="pay_mes">
+    	<li class="reg_name">已绑邮箱： </li>
+        <li class="reg_input"><span class="blue"></span></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+    	<li class="reg_name">真实姓名： </li>
+        <li class="reg_input"><input name="" type="text" class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+    	<li class="reg_name">身份证号码： </li>
+        <li class="reg_input"><input name="" type="text" class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul class="pay_mes">
+    	<li class="reg_name"><span class="red">注意：</span> </li>
+        <li class="reg_input reg_input_text"><span class="red">此处的真实姓名和身份证号码将作为后续绑定银行卡时该卡的持卡人</span></li>
+    </ul>
+    <ul>
+    	<li class="reg_name"></li>
+        <li class="reg_input"><input name="" type="checkbox" value="" class="agree"> 已阅读并同意 <a href="#" class="reg_link"><span class="blue">易极付账户开户协议</span></a></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+    	<li class="reg_name"></li>
+        <li class="reg_input"><a class="reg_bt" href="/anon/open3thAccount"><div class="mid_font tran_but_suc reg_blue">确认并开通易极付账户</div></a></li>
+        <li class="reg_text"></li>
+    </ul>
+</div>
+<div class=" form_blank"></div>
+<div class="reg_other nav">已有789金融账户？ <a href="/login/login" class="reg_link"><span class="blue">现在登录</span></a></div>
+</div>
+<!--注册页面结束-->
+<div class="blank"></div>
+	#parse("/front/index/common/footer.vm")
+	
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'investorsOpen');
+    </script>
+</body>
+</html>
+

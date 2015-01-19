@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-USERINVESTENTRY" class="com.icebreak.p2p.dataobject.UserInvestEntry">
+	  <result property="id" column="trade_detail_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="tradeId" column="trade_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="tradeCode" column="trade_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="investflowCode" column="trade_flow_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="tradeName" column="trade_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="date" column="date" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="tradeStatus" column="trade_status" javaType="short" jdbcType="TINYINT"/>
+	  <result property="amount" column="amount" javaType="long" jdbcType="BIGINT"/>
+	  <result property="investorId" column="investoer_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="investorUserName" column="investor_user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="investorRealName" column="investor_real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="loanerId" column="loaner_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="loanerUserName" column="loaner_user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="loanerRealName" column="loaner_real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="transferPhase" column="transfer_phase" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="expireDateTime" column="trade_expire_date" javaType="java.util.Date" jdbcType="DATETIME" />
+  </resultMap>
+
+  <select id="USERINVESTENTRY-GETBYPROPERTIES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-USERINVESTENTRY">
+
+		SELECT 
+		
+		t.trade_detail_id, 
+		
+		t.trade_id, 
+		
+		trade.trade_code, 
+		
+		tfc.trade_flow_code,
+		
+		trade.trade_name, 
+		
+		t.date, 
+		
+		trade.trade_status, 
+		
+		t.amount, 
+		
+		t.transfer_phase,
+		
+		t.user_id investoer_id, 
+		
+		user_base_info.real_name investor_real_name, 
+		
+		user_base_info.user_name investor_user_name, 
+		
+		t1.user_id loaner_id, 
+		
+		t1.user_name loaner_user_name, 
+		
+		t1.real_name loaner_real_name,
+		
+		trade.trade_expire_date
+		
+		FROM trade_detail t
+		
+		INNER JOIN trade ON trade.trade_id = t.trade_id
+		
+		INNER JOIN (
+		
+		SELECT trade_detail.trade_id, user_base_info.user_id, user_base_info.user_name, user_base_info.real_name FROM trade_detail
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+		
+		WHERE role.role_code = 'loaner'
+		
+		) t1 ON t1.trade_id = t.trade_id
+		
+		INNER JOIN role ON role.role_id = t.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = t.user_id
+		
+		INNER JOIN trade_flow_code tfc ON t.trade_detail_id = tfc.trade_detail_id
+		
+		WHERE t.user_id = #userId# AND role.role_code = 'investor' AND t.transfer_phase = 'original' 
+		
+		<isNotEmpty property="status">
+			AND trade.trade_status = #status#
+		</isNotEmpty>
+		
+		<isNotEmpty property="startDate">
+			<![CDATA[ 
+			AND t.date >= #startDate#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty property="endDate">
+			<![CDATA[ 
+			AND t.date <= #endDate#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty property="code">
+			AND tfc.trade_flow_code = #code#
+		</isNotEmpty>
+		
+		<isNotEmpty property="loanerUserName">
+			AND t1.user_name = #loanerUserName#
+		</isNotEmpty>
+		
+		<isNotEmpty property="loanerRealName">
+			AND t1.real_name = #loanerRealName#
+		</isNotEmpty>
+		
+		<isNotEmpty property="name">
+			AND trade.trade_name = #name#
+		</isNotEmpty>
+		
+		<isNotEmpty property="startAmount">
+			<![CDATA[
+			AND t.amount >= #startAmount#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty property="endAmount">
+			<![CDATA[
+			AND t.amount <= #endAmount#
+			]]>
+		</isNotEmpty>
+		
+		ORDER BY t.date DESC
+		
+		<isNotEmpty property="start">
+			LIMIT #start#
+				<isNotEmpty property="size">
+					, #size#
+				</isNotEmpty>
+		</isNotEmpty>
+
+  </select>
+  
+  <select id="USERINVESTENTRY-ALLAMOUNT" parameterClass="java.util.Map" resultClass="long" >
+
+		SELECT IFNULL(SUM(t.amount),0)
+		FROM trade_detail t
+		
+		INNER JOIN trade ON trade.trade_id = t.trade_id
+		
+		INNER JOIN (
+		
+		SELECT trade_detail.trade_id, user_base_info.user_id, user_base_info.user_name, user_base_info.real_name FROM trade_detail
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+		
+		WHERE role.role_code = 'loaner'
+		
+		) t1 ON t1.trade_id = t.trade_id
+		
+		INNER JOIN role ON role.role_id = t.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = t.user_id
+		
+		INNER JOIN trade_flow_code tfc ON t.trade_detail_id = tfc.trade_detail_id
+		
+		WHERE t.user_id = #userId# AND role.role_code = 'investor' AND t.transfer_phase = 'original' 
+		
+		<isNotEmpty property="status">
+			AND trade.trade_status = #status#
+		</isNotEmpty>
+		
+		<isNotEmpty property="startDate">
+			<![CDATA[ 
+			AND t.date >= #startDate#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty property="endDate">
+			<![CDATA[ 
+			AND t.date <= #endDate#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty property="code">
+			AND tfc.trade_flow_code = #code#
+		</isNotEmpty>
+		
+		<isNotEmpty property="loanerUserName">
+			AND t1.user_name = #loanerUserName#
+		</isNotEmpty>
+		
+		<isNotEmpty property="loanerRealName">
+			AND t1.real_name = #loanerRealName#
+		</isNotEmpty>
+		
+		<isNotEmpty property="name">
+			AND trade.trade_name = #name#
+		</isNotEmpty>
+		
+		<isNotEmpty property="startAmount">
+			<![CDATA[
+			AND t.amount >= #startAmount#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty property="endAmount">
+			<![CDATA[
+			AND t.amount <= #endAmount#
+			]]>
+		</isNotEmpty>
+  </select>
+  
+  <select id="USERINVESTENTRY-GETCOUNTBYPROPERTIES" parameterClass="java.util.Map" resultClass="long">
+
+		SELECT 
+		
+		COUNT(0)
+		
+		FROM trade_detail t
+		
+		INNER JOIN trade ON trade.trade_id = t.trade_id
+		
+		INNER JOIN (
+		
+		SELECT trade_detail.trade_id, user_base_info.user_id, user_base_info.user_name, user_base_info.real_name FROM trade_detail
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+		
+		WHERE role.role_code = 'loaner'
+		
+		) t1 ON t1.trade_id = t.trade_id
+		
+		INNER JOIN role ON role.role_id = t.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = t.user_id
+		
+		INNER JOIN trade_flow_code tfc ON t.trade_detail_id = tfc.trade_detail_id
+		
+		WHERE t.user_id = #userId# AND role.role_code = 'investor' AND t.transfer_phase = 'original'
+		
+		<isNotEmpty property="status">
+			AND trade.trade_status = #status#
+		</isNotEmpty>
+		
+		<isNotEmpty property="startDate">
+			<![CDATA[ 
+			AND t.date >= #startDate#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty property="endDate">
+			<![CDATA[ 
+			AND t.date <= #endDate#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty property="code">
+			AND tfc.trade_flow_code = #code#
+		</isNotEmpty>
+		
+		<isNotEmpty property="loanerUserName">
+			AND t1.user_name = #loanerUserName#
+		</isNotEmpty>
+		
+		<isNotEmpty property="loanerRealName">
+			AND t1.real_name = #loanerRealName#
+		</isNotEmpty>
+		
+		<isNotEmpty property="name">
+			AND trade.trade_name = #name#
+		</isNotEmpty>
+		
+		<isNotEmpty property="startAmount">
+			<![CDATA[
+			AND t.amount >= #startAmount#
+			]]>
+		</isNotEmpty>
+		
+		<isNotEmpty property="endAmount">
+			<![CDATA[
+			AND t.amount <= #endAmount#
+			]]>
+		</isNotEmpty>
+		
+  </select>
+  
+  
+  
+  <select id="USERINVESTENTRY-GETENTRIESBYTRADEID" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-USERINVESTENTRY">
+
+		SELECT 
+		
+		t.trade_detail_id, 
+		
+		t.trade_id, 
+		
+		trade.trade_code, 
+		
+		tfc.trade_flow_code,
+		
+		trade.trade_name, 
+		
+		t.date, 
+		
+		trade.trade_status, 
+		
+		t.amount, 
+		
+		t.transfer_phase,
+		
+		t.user_id investoer_id, 
+		
+		user_base_info.real_name investor_real_name, 
+		
+		user_base_info.user_name investor_user_name, 
+		
+		t1.user_id loaner_id, 
+		
+		t1.user_name loaner_user_name, 
+		
+		t1.real_name loaner_real_name,
+		
+		trade.trade_expire_date
+		
+		FROM trade_detail t
+		
+		INNER JOIN trade ON trade.trade_id = t.trade_id
+		
+		INNER JOIN (
+		
+		SELECT trade_detail.trade_id, user_base_info.user_id, user_base_info.user_name, user_base_info.real_name FROM trade_detail
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = trade_detail.user_id
+		
+		WHERE role.role_code = 'loaner'
+		
+		) t1 ON t1.trade_id = t.trade_id
+		
+		INNER JOIN role ON role.role_id = t.role_id
+		
+		INNER JOIN user_base_info ON user_base_info.user_id = t.user_id
+		
+		INNER JOIN trade_flow_code tfc ON t.trade_detail_id = tfc.trade_detail_id
+		
+		WHERE 1 = 1 
+		<isNotEmpty property="tradeId">
+			<![CDATA[ 
+			AND t.trade_id = #tradeId# 
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="detailId">
+			<![CDATA[ 
+			AND t.trade_detail_id = #detailId# OR t.note = #detailId#
+			]]>
+		</isNotEmpty>
+		AND role.role_code = 'investor' 
+		
+		ORDER BY t.date DESC
+		
+  </select>
+</sqlMap>

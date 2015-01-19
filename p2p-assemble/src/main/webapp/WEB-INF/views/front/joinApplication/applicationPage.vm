@@ -1,0 +1,56 @@
+#parse("/front/index/common/reg-header.vm")
+<div class="blank"></div>
+<div class="new nav" style="height: 600px;">
+    <ul class="new_menu">
+        <li><a href="#">媒体报道</a></li>
+        <li><a href="#">平台公告</a></li>
+        <li><a href="/about/us">关于我们</a></li>
+        <li><a href="/about/guidelines">新手指引</a></li>
+        <li><a href="/about/investment">投资流程</a></li>
+        <li><a href="/about/financing">融资流程</a></li>
+        <li><a href="#">加入我们</a></li>
+        <li><a href="#">合作机构</a></li>
+        <li><a href="#">联系我们</a></li>
+        <li class="light">常见问题</li>
+
+    </ul>
+    <ul class="new_list">
+        <li class="new_list_tit large_font"><span class="blue">常见问题</span></li>
+        <li class="new_list_text">
+
+            <p class="blue" style="font-size:15px;">
+                <b> 1.如何注册?</b>
+            </p>
+            <P>
+
+            </P><br/>
+
+            <p class="blue" style="font-size:15px;">
+                <b>2.如何认证? </b>
+            </p>
+            <p></p><br/>
+
+            <p class="blue" style="font-size:15px;">
+                <b>3.如何充值?</b>
+            </p>
+            <p></p><br/>
+
+            <p class="blue" style="font-size:15px;">
+                <b>4.如何投资?</b>
+            </p>
+            <p></p><br/>
+
+            <p class="blue" style="font-size:15px;">
+                <b>5.如何提现?</b>
+            </p>
+            <p></p><br/>
+
+            <p class="blue" style="font-size:15px;">
+                <b>6.安全保障?</b>
+            </p>
+            <p></p><br/>
+        </li>
+    </ul>
+</div>
+#parse("/front/index/common/footer.vm")
+</html>

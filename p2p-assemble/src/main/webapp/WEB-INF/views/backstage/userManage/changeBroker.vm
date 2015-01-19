@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>变更经纪人/营销机构</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>开户管理</a></li>
+                            <li><a href>变更经纪人/营销机构</a></li>
+                        </ul>
+                    </div>
+					<form action="/backstage/userManage/changeBrokerSubmit" class="ui-form" id="changeBroker_form">
+						<fieldset>
+							<legend><h3>变更投资人的经纪人</h3></legend>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>投资人用户名：</label>
+								<input type="text" class="u-input w170"  name="userName" maxlength=""/>
+							</div>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>经纪人编号：</label>
+								<input type="text" class="u-input w170"  name="brokerNo" maxlength=""/>
+							</div>
+							<div class="item">
+        						<a href="javascript:;" id="formSubmit" class="u-btn u-btn-blue submit_form">提交</a>
+								<input type="hidden" name="token" value="$!{token}"/>
+        						<a href="javascript:window.history.back(-1);" class="u-btn u-btn-gray">返回</a>
+        					</div>
+						</fieldset>
+					</form>
+					<form action="/backstage/userManage/changeMarkettingSubmit" class="ui-form" id="changeMarketting_form">
+						<fieldset>
+							<legend><h3>变更经纪人的营销机构</h3></legend>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>经纪人用户名：</label>
+								<input type="text" class="u-input w170"  name="brokerUserName" maxlength=""/>
+							</div>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>营销机构用户名：</label>
+								<input type="text" class="u-input w170"  name="markettingUserName" maxlength=""/>
+							</div>
+							<div class="item">
+        						<a href="javascript:;" id="changeMarketing" class="u-btn u-btn-blue submit_form">提交</a>
+        						<a href="javascript:window.history.back(-1);" class="u-btn u-btn-gray">返回</a>
+        					</div>
+						</fieldset>
+					</form>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+		seajs.use($_GLOBAL.mode + 'changeBroker');
+    </script>
+</body>
+</html>

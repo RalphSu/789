@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>email中心</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>对外服务管理</a></li>
+                            <li><a href>邮件模板管理</a></li>
+                        </ul>
+                    </div>
+					<div class="t-box">
+                        <div class="tools">
+                            <ul class="toolbar">
+                                <li class="click"><span>
+									<a href="/backstage/emailCenter/addEmailTemplate">
+                                    <img src="/resources/back/images/t01.png"></span>新增邮件模板</a></li>
+                            </ul>
+                        </div>
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+								<th width="80">邮件模板ID</th>
+								<th width="200">邮件模板标题</th>
+								<th width="120">创建时间</th>
+								<th width="150">操作</th>
+							</tr>
+							</thead>
+							<tbody>
+						#if($page.result.size()==0)
+            				<tr class="even">
+                				<td colspan=8 align=center>暂时没有记录</td>
+                			</tr>
+						#end
+						#foreach($info in $page.result)
+							<tr>
+								<td>$!{info.id}</td>
+								<td>$!{info.subject}</td>
+								<td>$!{dateUtil.simpleFormat($!{info.addTime})}</td>
+								<td><a href="/backstage/emailCenter/setEmailTemplate?templateId=$!{info.id}">修改</a> |
+									<a href="/backstage/emailCenter/emailTemplateInfo?templateId=$!{info.id}">详情</a></td>
+								
+							</tr>
+						#end
+                            </tbody>
+						</table>
+						<input type="hidden" value="JG" data="userType"/>
+						<div class="p-box pages-b fn-clear">
+							#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'emailCenter');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			var url = "/backstage/emailCenter?"
+			+"pageSize=$!{page.pageSize}&pageNo="+pageNo;
+			window.location.href=url;
+		}
+    </script>
+</body>
+</html>

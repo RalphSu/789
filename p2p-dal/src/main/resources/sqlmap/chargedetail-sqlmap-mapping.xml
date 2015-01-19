@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+   <resultMap id="RM-CHARGEDETAIL" class="com.icebreak.p2p.dataobject.ChargeDetail">
+	   <result property="id" column="charge_detail_id" javaType="long" jdbcType="BIGINT"/>
+	   <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT"/>
+	   <result property="amount" column="charge_amount" javaType="long" jdbcType="BIGINT"/>
+	   <result property="status" column="charge_status" javaType="boolean" jdbcType="BOOLEAN"/>
+	   <result property="tradeDetailId" column="trade_detail_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+	   <result property="actualDate" column="charge_actual_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+	   <result property="date" column="charge_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+	   <result property="note" column="note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+   </resultMap>  
+   
+   <insert id="CHARGEDETAIL-ADD" parameterClass="com.icebreak.p2p.dataobject.ChargeDetail">
+	   INSERT INTO charge_detail (
+		   user_id,
+		   charge_amount,
+		   charge_status,
+		   trade_detail_id,
+		   charge_actual_date,
+		   charge_date,
+		   note
+	   ) VALUES (
+		   #userId#,
+		   #amount#,
+		   #status#,
+		   #tradeDetailId#,
+		   #actualDate#,
+		   #date#,
+		   #note#
+	   )
+   </insert>
+   
+   <select id="CHARGEDETAIL-GETBYUSERID" parameterClass="long" resultClass="java.util.List" resultMap="RM-CHARGEDETAIL">
+	   SELECT 
+		   charge_detail_id,
+		   user_id,
+		   charge_amount,
+		   charge_status,
+		   trade_detail_id,
+		   charge_actual_date,
+		   charge_date,
+		   note
+	   FROM charge_detail
+	   WHERE user_id = #value#;
+   </select>
+   
+   <update id="CHARGEDETAIL-MODIFY" parameterClass="java.util.Map">
+   		UPDATE charge_detail SET charge_status = #status#, charge_actual_date = #date# WHERE charge_detail_id = #id#
+   </update>
+   
+   <select id="CHARGEDETAIL-GETLASTCHARGEDATE" parameterClass="long" resultClass="java.util.Date">
+   	    SELECT MAX(charge_date) FROM charge_detail WHERE user_id = #value#
+   </select>
+</sqlMap>

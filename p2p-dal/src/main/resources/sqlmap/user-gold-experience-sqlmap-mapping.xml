@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="userGoldExpo">
+
+  <resultMap id="RM-USER-GOLD-EXPERIENCE" class="com.icebreak.p2p.dataobject.UserGoldExperienceDO">
+ 	<result property="id" column="id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+ 	<result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+    <result property="tradeId" column="trade_id" javaType="long" jdbcType="BIGINT"/>
+  	<result property="tradeDetailId" column="trade_detail_id" javaType="long" jdbcType="BIGINT"/>
+    <result property="goldExpId" column="gold_exp_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+    <result property="amount" column="amount" javaType="java.math.BigDecimal" jdbcType="DECIMAL" nullValue="0"/>
+    <result property="status" column="status" javaType="String" jdbcType="VARCHAR"/>
+    <result property="createTime" column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    <result property="usageTime" column="usage_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+  </resultMap>
+  
+  <insert id="RM-USER-GOLD-EXPERIENCE-INSERT">
+  <![CDATA[
+    INSERT INTO user_gold_experience (
+	  user_id, trade_id, trade_detail_id, gold_exp_id, amount, status, usage_time
+    ) VALUES (
+      #userId#, #tradeId#, #tradeDetailId#, #goldExpId#, #amount#, #status#, #usageTime#
+    )
+  ]]>
+    <selectKey resultClass="long" keyProperty="id">
+	  <![CDATA[SELECT LAST_INSERT_ID() AS id]]>
+    </selectKey>
+  </insert>
+
+  <select id="RM-USER-GOLD-EXPERIENCE-SELECT-COUNT" resultClass="java.math.BigDecimal">
+	SELECT SUM(amount) FROM user_gold_experience WHERE user_id = #userId# and status = '1'
+  </select>
+
+  <select id="RM-USER-GOLD-EXPERIENCE-SELECT-LIST" resultMap="RM-USER-GOLD-EXPERIENCE">
+  	SELECT * FROM user_gold_experience
+	  WHERE 1 = 1
+	  <isNotEmpty property="userId">
+		  AND user_id =#userId#
+	  </isNotEmpty>
+	  <isNotEmpty property="status">
+		  AND status =#status#
+	  </isNotEmpty>
+  </select>
+
+	<update id="RM-USER-GOLD-EXPERIENCE-UPDATE">
+		update user_gold_experience
+		set
+		usage_time = sysdate()
+		<dynamic prepend=" ">
+			<isNotEmpty prepend="," property="tradeId">
+				trade_id = #tradeId#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="goldExpId">
+				gold_exp_id = #goldExpId#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="tradeDetailId">
+				trade_detail_id = #tradeDetailId#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="amount">
+				amount = #amount#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="status">
+				status = #status#
+			</isNotEmpty>
+		</dynamic>
+		where (id = #id#)
+	</update>
+
+
+	<select id="RM-USER-GOLD-EXPERIENCE-SELECT-BYID" resultMap="RM-USER-GOLD-EXPERIENCE">
+		SELECT * FROM user_gold_experience WHERE id = #id#
+	</select>
+</sqlMap>

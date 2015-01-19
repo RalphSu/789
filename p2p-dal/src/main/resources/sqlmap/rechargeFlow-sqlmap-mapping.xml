@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+				
+  <resultMap id="RM-RECHARGEFLOW" class="com.icebreak.p2p.dataobject.RechargeFlow" >
+  		<result property="flowId" column="flow_id" javaType="long" jdbcType="bigint"/>
+  		<result property="localNo" column="local_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="outBizNo" column="out_biz_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="payType" column="pay_type" javaType="java.lang.String" jdbcType="enum"/>
+  		<result property="status" column="status" javaType="int" jdbcType="tinyint"/>
+  		<result property="amount" column="amount" javaType="double" jdbcType="decimal"/>
+  		<result property="userId" column="user_id" javaType="long" jdbcType="bigint"/>
+  		<result property="yjfAccountId" column="yjf_account_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="bankName" column="bank_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="bankAccountNo" column="bank_account_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="bankAcountName" column="bank_acount_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="payTime" column="pay_time" javaType="java.util.Date" jdbcType="datetime"/>
+  		<result property="payFinishTime" column="pay_finish_time" javaType="java.util.Date" jdbcType="datetime"/>
+  		<result property="payMemo" column="pay_memo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="rem1" column="rem1" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+ 
+  <insert id="RECHARGEFLOW-INSERT" parameterClass="com.icebreak.p2p.dataobject.RechargeFlow">
+  <![CDATA[
+      INSERT INTO recharge_flow (
+	  		flow_id,
+	  		local_no,
+	  		out_biz_no,
+	  		pay_type,
+	  		status,
+	  		amount,
+	  		user_id,
+	  		yjf_account_id,
+	  		pay_time,
+	  		pay_memo
+      ) VALUES (
+            #flowId#,
+            #localNo#,
+            #outBizNo#,
+            #payType#,
+            #status#,
+            #amount#,
+            #userId#,
+            #yjfAccountId#,
+            #payTime#,
+            #payMemo#
+      )]]>
+      <selectKey resultClass="long" keyProperty="flowId">
+			<![CDATA[SELECT LAST_INSERT_ID() AS flowId ]]>
+		</selectKey>
+  </insert>
+  
+  <update id="RECHARGEFLOW-UPDATE" parameterClass="com.icebreak.p2p.dataobject.RechargeFlow">
+	  UPDATE recharge_flow SET
+	  	status = #status#,
+	  	out_biz_no = #outBizNo#,
+	  	pay_finish_time = #payFinishTime#
+	  WHERE local_no = #localNo#
+  </update>
+
+  <select id="RECHARGEFLOW-SELECT" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-RECHARGEFLOW">
+  		SELECT * 
+  		FROM recharge_flow r
+  		WHERE r.status != -1
+  		<isNotEmpty property="accountId">
+  			<![CDATA[AND r.yjf_account_id = #accountId#]]>
+		</isNotEmpty>
+  		<isNotEmpty property="status">
+  			<![CDATA[AND r.status = #status#]]>
+		</isNotEmpty>
+		<isNotEmpty property="payType">
+  			<![CDATA[AND r.pay_type = #payType#]]>
+		</isNotEmpty>
+		<isNotEmpty property="startTime">
+			<![CDATA[ AND r.pay_time >= #startTime#]]>
+		</isNotEmpty>
+		<isNotEmpty property="endTime">
+			<![CDATA[ AND r.pay_time <= #endTime#]]>
+		</isNotEmpty>
+	    <isNotEmpty property="userId">
+		   <![CDATA[ AND r.user_id = #userId#]]>
+	    </isNotEmpty>
+		<![CDATA[ORDER BY r.pay_time DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+  </select>
+  
+  <select id="RECHARGEFLOW-SELECT-OUTBIZNO" resultMap="RM-RECHARGEFLOW">
+  		SELECT * FROM recharge_flow WHERE 1 = 1
+	  <isNotEmpty property="localNo">
+		  AND local_no = #localNo#
+	  </isNotEmpty>
+	  <isNotEmpty property="outBizNo">
+		  AND out_biz_no = #outBizNo#
+	  </isNotEmpty>
+  </select>
+
+  <select id="RECHARGEFLOW-COUNT" parameterClass="java.util.Map" resultClass="java.lang.Long">
+  		SELECT COUNT(0) 
+  		FROM recharge_flow r
+  		WHERE 1=1
+  		<isNotEmpty property="accountId">
+  			<![CDATA[AND r.yjf_account_id = #accountId#]]>
+		</isNotEmpty>
+  		<isNotEmpty property="status">
+  			<![CDATA[AND r.status = #status#]]>
+		</isNotEmpty>
+		<isNotEmpty property="payType">
+  			<![CDATA[AND r.pay_type = #payType#]]>
+		</isNotEmpty>
+		<isNotEmpty property="startTime">
+			<![CDATA[ AND r.pay_time >= #startTime#]]>
+		</isNotEmpty>
+		<isNotEmpty property="endTime">
+			<![CDATA[ AND r.pay_time <= #endTime#]]>
+		</isNotEmpty>
+	    <isNotEmpty property="userId">
+		    <![CDATA[ AND r.user_id = #userId#]]>
+	    </isNotEmpty>
+  </select>
+</sqlMap>

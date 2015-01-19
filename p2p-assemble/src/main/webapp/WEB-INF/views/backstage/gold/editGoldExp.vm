@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>修改体验金</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="mc">
+        <div class="place">
+            <span>位置：</span>
+            <ul class="placeul">
+                <li><a href>体验金管理</a></li>
+                <li><a href>新增体验金</a></li>
+            </ul>
+        </div>
+        <form action="/backstage/goldExp/updateGoldExp" method="post" class="ui-form" id="updateGoldExpForm">
+            <fieldset>
+                <legend><h3>修改体验金基本信息</h3></legend>
+                <div class="item">
+                    <label for="" class="u-label"><span class="required">*</span>体验金名称：</label>
+                    <input type="text" class="u-input w170" name="name" value="$!goldExp.name"/>
+                </div>
+                <div class="item" style="margin-bottom: 30px;">
+                    <label for="" class="u-label"><span class="required">*</span>体验金类型：</label>
+                    <div class="jqtransform jqtransform-select3" style="width: 175px;">
+                        <select name="activityType" id="activityType">
+                            <option value="">---&nbsp;请选择活动类型&nbsp; ---</option>
+                            #foreach($activityType in $!activityTypes)
+                                <option value="$activityType" #if($!goldExp.activityType == $activityType) selected #end>$activityType.message</option>
+                            #end
+                        </select>
+                    </div>
+                </div>
+                <div class="item" name="syn">
+                    <label for="" class="u-label"><span class="required">*</span>体验金额：</label>
+                    <input type="text" class="u-input w170" name="amount" value="$!goldExp.amount"/>
+                </div>
+                <div class="item" name="syn">
+                    <label for="" class="u-label"><span class="required">*</span>发放数量：</label>
+                    <input type="text" class="u-input w170" name="quantity" value="$!goldExp.quantity"/>
+                    <input type="hidden" class="u-input w170" name="surplusQuantity" value="$!goldExp.surplusQuantity"/>
+                </div>
+                <div class="item" name="syn">
+                    <label for="" class="u-label"><span class="required">*</span>用途：</label>
+                    <input type="text" class="u-input w170" name="purpose" value="$!goldExp.purpose" />
+                </div>
+                <div class="item">
+                    <label for="" class="u-label"><span class="required">*</span>开始时间：</label>
+                    <input type="text" class="u-input w170 time" name="startTime" id="startTime" value="$!{dateUtil.simpleFormat($!goldExp.startTime)}"/>
+                </div>
+                <div class="item">
+                    <label for="" class="u-label"><span class="required">*</span>结束时间:</label>
+                    <input type="text" class="u-input w170 time" name="endTime" id ="endTime" value="$!{dateUtil.simpleFormat($!goldExp.endTime)}" />
+                </div>
+            </fieldset>
+            <div class="item mt10">
+                <a href class="u-btn u-btn-blue fn-submit2">确定</a><a href="javascript:history.go(-1);" class="u-btn u-btn-gray">取消</a>
+            </div>
+        </form>
+    </div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript">
+        seajs.use($_GLOBAL.mode + 'goldExperience');
+    </script>
+</body>
+</html>

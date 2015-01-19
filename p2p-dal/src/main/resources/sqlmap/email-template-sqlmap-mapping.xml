@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-EMAILTEMPLATE" class="com.icebreak.p2p.dataobject.EmailTemplate" >
+	  <result property="id" column="id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="subject" column="subject" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="content" column="content" javaType="java.lang.String" jdbcType="TEXT"/>
+	  <result property="updateTime" column="raw_update_time" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="addTime" column="raw_add_time" javaType="java.util.Date" jdbcType="DATETIME"/>
+  </resultMap>
+  
+  <select id="EMAILTEMPLATE-GETBYTEMPLATEID" parameterClass="long" resultClass="com.icebreak.p2p.dataobject.ChargeTemplate" resultMap="RM-EMAILTEMPLATE">
+  		SELECT 
+          *
+		FROM email_template  
+		WHERE id = #value#
+  </select>
+  <insert id="EMAILTEMPLATE-INSERT" parameterClass="com.icebreak.p2p.dataobject.EmailTemplate">
+  		<![CDATA[
+  			INSERT INTO email_template (
+  				id,subject,content,raw_add_time) 
+  			VALUES (
+  				#id#,#subject#,#content#,#addTime#)
+  		]]>
+  	</insert>
+  <update id="EMAILTEMPLATE-UPDATE">
+		<![CDATA[
+		update /*EMAILTEMPLATE-UPDATE*/ email_template set  id=#id#,subject=#subject#, content=#content#, raw_update_time=#updateTime# where (id = #id#)
+		]]>
+	</update>
+  <select id="EMAILTEMPLATE-COUNTBYCONDITIONS" parameterClass="java.util.Map" resultClass="java.lang.Long">
+      SELECT COUNT(0)
+	  FROM email_template et
+	  WHERE 1 = 1
+	  <isNotEmpty property="id">
+			AND et.id = #id# 
+	  </isNotEmpty>
+	 <isNotEmpty property="subject">
+			AND et.subject = #subject# 
+	  </isNotEmpty>
+  </select>
+ <select id="EMAILTEMPLATE-LISTBYCONDITIONS" parameterClass="java.util.Map" resultMap="RM-EMAILTEMPLATE">
+      SELECT *
+	  FROM email_template et
+	  WHERE 1 = 1
+	 <isNotEmpty property="id">
+			AND et.id = #id# 
+	  </isNotEmpty>
+	 <isNotEmpty property="subject">
+			AND et.subject = #subject# 
+	  </isNotEmpty>
+	  <![CDATA[ ORDER BY et.raw_add_time DESC]]> 
+  </select>
+</sqlMap>

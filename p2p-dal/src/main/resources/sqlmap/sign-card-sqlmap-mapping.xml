@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sign">
+
+  <resultMap id="RM-SIGN-CARD-INFO" class="com.icebreak.p2p.dataobject.SignCardInfo" >
+    <result property="id" column="id" javaType="int" jdbcType="INT"/>
+    <result property="pactNo" column="pactNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="signType" column="signType" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="userId" column="userId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="upUserNo" column="upUserNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="cardNo" column="cardNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="cardType" column="cardType" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="cardName" column="cardName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="certNo" column="certNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="userPhoneNo" column="userPhoneNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="bankName" column="bankName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="bankShort" column="bankShort" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="status" column="status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="province" column="province" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="city" column="city" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result property="createTime" column="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    <result property="updateTime" column="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+  </resultMap>
+
+  <select id="RM-SIGN-CARD-INFO-QUERY-BY-PACT-NO" parameterClass="java.lang.String" resultMap="RM-SIGN-CARD-INFO">
+     SELECT * FROM sign_card_info WHERE pactNo = #pactNo#
+  </select>
+
+
+    <select id="RM-SIGN-CARD-INFO-QUERY-BY-ONLY" parameterClass="java.util.Map" resultMap="RM-SIGN-CARD-INFO">
+        SELECT * FROM sign_card_info WHERE userId = #userId# AND cardName = #cardName# AND cardNo = #cardNo# AND certNo = #certNo# AND signType = #signType#
+    </select>
+
+  <insert id="RM-SIGN-CARD-INFO-INSERT">
+     INSERT INTO sign_card_info (
+	  pactNo,
+      signType,
+      userId,
+      upUserNo,
+      cardNo,
+      cardType,
+      cardName,
+      certNo,
+      userPhoneNo,
+      bankName,
+      bankShort,
+      status,
+      province,
+      city
+     ) VALUES (
+      #pactNo#,
+      #signType#,
+      #userId#,
+      #upUserNo#,
+      #cardNo#,
+      #cardType#,
+      #cardName#,
+      #certNo#,
+      #userPhoneNo#,
+      #bankName#,
+      #bankShort#,
+      #status#,
+      #province#,
+      #city#
+     )
+  </insert>
+  
+  <delete id="RM-SIGN-CARD-INFO-DELETE-BY-PACT-NO" parameterClass="long">
+     DELETE FROM sign_card_info WHERE pactNo = #pactNo#
+  </delete>
+
+  <select id="SIGN-CARD-INFO-QUERY-DYNAMIC" resultMap="RM-SIGN-CARD-INFO">
+    SELECT * FROM sign_card_info
+    <dynamic prepend="where">
+        <isNotEmpty prepend=" and" property="pactNo">
+            pactNo = #pactNo#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="userId">
+            userId = #userId#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="upUserNo">
+            upUserNo = #upUserNo#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="cardNo">
+            cardNo = #cardNo#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="cardName">
+            cardName = #cardName#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="bankShort">
+            bankShort = #bankShort#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="userPhoneNo">
+            userPhoneNo = #userPhoneNo#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="status">
+            status = #status#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="createTime">
+            createTime = #createTime#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="updateTime">
+            updateTime = #updateTime#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="cardType">
+            cardType = #cardType#
+        </isNotEmpty>
+        <isNotEmpty prepend=" and" property="signType">
+            signType = #signType#
+        </isNotEmpty>
+    </dynamic>
+  </select>
+
+</sqlMap>

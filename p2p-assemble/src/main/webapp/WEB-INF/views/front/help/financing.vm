@@ -1,0 +1,33 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<div class="blank"></div>
+<!--通用新闻公告内容开始-->
+<div class="new nav" style="height: 600px;">
+    #parse("/front/help/helpLeftMenu.vm")
+    <ul class="new_list">
+        <li class="new_list_tit large_font"><span class="blue">融资流程</span></li>
+        <li class="new_list_text">
+            <p class="blue" style="font-size:15px;">
+                <b>加入我们</b>
+            </p>
+            <P>
+                789金融是目前中国互联网金融中P2P信贷行业的领军企业，是一个以个人对个人小额借贷为主要产品，
+                为借贷两端搭建的公平、透明、安全、高效的互联网金融服务平台。借款用户可以在789金融上获得信用评级、
+                发布借款请求来实现个人快捷的融资需要；理财用户可以把自己的部分闲余资金通过789金融平台出借给信用
+                良好有资金需求的个人，在获得有保障，高收益的理财回报的同时帮助了优质的借款人。
+            </P><br/>
+            <p class="blue" style="font-size:15px;">
+                <b>为什么选择789金融</b>
+            </p>
+            <p><b>12%-14%的高收益</b></p>
+            <p>成为理财人后，通过投资散标或加入U计划，最高获得12-14%的预期年化收益。</p>
+            <p><b>理财“零”门槛</p>
+        </li>
+    </ul>
+</div>
+<!--通用新闻公告内容结束-->
+    #parse("/front/index/common/footer.vm")
+</body>
+</html>

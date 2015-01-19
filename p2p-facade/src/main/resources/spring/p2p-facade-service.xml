@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd" >
+
+
+	<bean id="serviceFacade" class="com.icebreak.p2p.rs.service.base.impl.ServiceFacadeImpl"></bean>
+	<bean id="controllerBase" class="com.icebreak.p2p.rs.web.ControllerBase"></bean>
+	<bean id="remoteServiceHandler" class="com.icebreak.p2p.rs.web.RemoteServiceHandler"></bean>
+	<bean id="userLogin" class="com.icebreak.p2p.rs.service.userManage.LoginService"></bean>   
+	<bean id="queryAcountInfoService" class="com.icebreak.p2p.rs.service.accountManage.QueryAcountInfoService"></bean>
+	<bean id="getBanksInfoService" class="com.icebreak.p2p.rs.service.accountManage.AppGetBanksInfoService"></bean>
+	<bean id="validationBankCard" class="com.icebreak.p2p.rs.service.accountManage.AppValidationBankCardService"></bean>
+	<bean id="addBankCardService" class="com.icebreak.p2p.rs.service.accountManage.AppAddBankCardService"></bean>
+	<bean id="deductService" class="com.icebreak.p2p.rs.service.accountManage.AppDeductService"></bean>
+	<bean id="withdrawasRecordService" class="com.icebreak.p2p.rs.service.accountManage.AppWithdrawasRecordService"></bean>
+	<bean id="appInvestDetail" class="com.icebreak.p2p.rs.service.tradeQuery.AppInvestDetailService"></bean>
+	<bean id="appUserActive" class="com.icebreak.p2p.rs.service.userManage.AppUserActiveService"></bean>
+	<bean id="indexTradeDetail" class="com.icebreak.p2p.rs.service.tradeQuery.AppIndexTradeDetailService"></bean>
+	<bean id="indexTrade" class="com.icebreak.p2p.rs.service.tradeQuery.AppIndexTradeService"></bean>
+	<bean id="appInvest" class="com.icebreak.p2p.rs.service.trade.AppInvestService"></bean>
+	<bean id="appSetUserPwd" class="com.icebreak.p2p.rs.service.userManage.AppSetUserPwdService"></bean>
+	<bean id="appBrokerageRecord" class="com.icebreak.p2p.rs.service.tradeQuery.AppBrokerageRecordService"></bean>
+	<bean id="appBrokerageDetail" class="com.icebreak.p2p.rs.service.tradeQuery.AppBrokerageDetailService"></bean>
+	<bean id="appInvestorRecordService" class="com.icebreak.p2p.rs.service.customer.AppInvestorRecordService"></bean>
+	<bean id="appInvestorInfoService" class="com.icebreak.p2p.rs.service.customer.AppInvestorInfoService"></bean>
+	<bean id="appMobileService" class="com.icebreak.p2p.rs.service.userManage.AppMobileService"></bean>
+	<bean id="appValidationUserNameService" class="com.icebreak.p2p.rs.service.userManage.AppValidationUserNameService"></bean>
+	<bean id="appGetAllDistrictService" class="com.icebreak.p2p.rs.service.tradeQuery.AppGetAllDistrictService"></bean>
+	<bean id="appFileUploadService" class="com.icebreak.p2p.rs.service.upload.AppFileUploadService"></bean>
+	<bean id="appGetUserRoleService" class="com.icebreak.p2p.rs.service.userManage.AppGetUserRoleService"></bean>
+	<bean id="appGetUserMemberNoService" class="com.icebreak.p2p.rs.service.userManage.AppGetUserMemberNoService"></bean>
+	<bean id="appBindingMobileService" class="com.icebreak.p2p.rs.service.userManage.AppBindingMobileService"></bean>
+	<bean id="queryUserInfoService" class="com.icebreak.p2p.rs.service.userManage.AppQueryUserInfoService"></bean>
+	<bean id="forgotPasswordService" class="com.icebreak.p2p.rs.service.userManage.AppForgotPasswordService"></bean>
+</beans>

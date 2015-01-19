@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="MS-USERlOGINLOG" class="com.icebreak.p2p.dataobject.UserLoginLog">
+  	  <result property="tblBaseId" column="tbl_base_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="loginIp" column="login_ip" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="loginAddress" column="login_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="loginTime" column="login_time" javaType="java.util.Date" jdbcType="timestamp" />
+  </resultMap>
+  
+  <insert id="MS-USERlOGINLOG-INSERT" parameterClass="com.icebreak.p2p.dataobject.UserLoginLog">
+  <![CDATA[
+	  INSERT INTO user_login_log (
+	  	  tbl_base_id,
+	  	  user_id,
+	  	  login_ip,
+	  	  login_address,
+	  	  login_time
+	  ) VALUES (
+	  	  #tblBaseId#,
+		  #userId#,
+		  #loginIp#,
+		  #loginAddress#,
+		  #loginTime#
+	  )
+	  ]]>
+  </insert>
+  
+  <select id="MS-USERlOGINLOG-SELECT" parameterClass="java.util.Map" resultClass="java.util.List"  resultMap="MS-USERlOGINLOG">
+	  <![CDATA[
+		SELECT /* MS-USERlOGINLOG-SELECT */ *
+		FROM user_login_log WHERE user_id=#userId# 
+		ORDER BY login_time DESC LIMIT 0,2]]>
+  </select>
+</sqlMap>

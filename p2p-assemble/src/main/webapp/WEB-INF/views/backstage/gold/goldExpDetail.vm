@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>体验金详情</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+</head>
+<style type="text/css">
+</style>
+<body>
+    <div class="mc">
+        <div class="place">
+            <span>位置：</span>
+            <ul class="placeul">
+                <li><a href>体验金管理</a></li>
+                <li><a href>体验金详情</a></li>
+            </ul>
+        </div>
+        <form action="/backstage/goldExp/addGoldExp" method="post" class="ui-form" id="addGoldExpForm">
+            <fieldset>
+                <legend><h3>体验金基本详情</h3></legend>
+                <div class="item">
+                    <label for="" class="u-label"><span class="required"></span>体验金名称：</label>
+                    <p class="u-tip" id="name">$!goldExp.name</p>
+                </div>
+                <div class="item">
+                    <label for="" class="u-label"><span class="required"></span>体验金类型：</label>
+                    <p class="u-tip" id="name">$!goldExp.activityType.message</p>
+                </div>
+                <div class="item" name="syn">
+                    <label for="" class="u-label"><span class="required"></span>体验金额：</label>
+                    <p class="u-tip" id="amount">$!goldExp.amount</p>
+                </div>
+                <div class="item" name="syn">
+                    <label for="" class="u-label"><span class="required"></span>发放数量：</label>
+                    <p class="u-tip" id="amount">$!goldExp.quantity</p>
+                    <input type="hidden" class="u-input w170" name="surplusQuantity"/>
+                </div>
+                <div class="item" name="syn">
+                    <label for="" class="u-label"><span class="required"></span>剩余数量：</label>
+                    <p class="u-tip" id="amount">$!goldExp.surplusQuantity</p>
+                </div>
+                <div class="item" name="syn">
+                    <label for="" class="u-label"><span class="required"></span>用途：</label>
+                    <p class="u-tip" id="amount">$!goldExp.purpose</p>
+                </div>
+                <div class="item">
+                    <label for="" class="u-label"><span class="required"></span>开始时间：</label>
+                    <p class="u-tip" id="amount">$!{dateUtil.simpleFormat($!goldExp.startTime)}</p>
+                </div>
+                <div class="item">
+                    <label for="" class="u-label"><span class="required"></span>结束时间:</label>
+                    <p class="u-tip" id="amount">$!{dateUtil.simpleFormat($!goldExp.endTime)}</p>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>

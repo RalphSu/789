@@ -1,0 +1,35 @@
+<div class="use_menu b_gray_o">
+    <ul class="nav">
+        <li $!{funds}><a href="/usercenter/depositRecord">资金记录</a></li>
+
+        #set($t = $permission.check('/tradeQuery/borrowingRecord'))
+        #if($t > 0)
+            <li><a href="/tradeQuery/borrowingRecord">我的项目</a></li>
+        #end
+
+##        #set($t = $permission.check('/repay/*'))
+        #set($s = $permission.check('/collection/*'))
+        #*#if($t>0)
+            <li><a href="/repay/list">还款管理</a></li>
+        #end*#
+        #if($s>0)
+            <li $!{myinvest}><a href="/collection/list">我的投资</a></li>
+        #end
+
+        #set($t = $permission.check('/repayDB/*'))
+        #if($t>0)
+            <li $!{selected}><a href="/repayDB/repayDBManager">还款管理</a></li>
+        #end
+
+        #set($t = $permission.check('/guaranteeCenter/*'))
+        #set($s = $permission.check('/guaranteeOperator/operatorManager'))
+        #if($t>0)
+            <li $!{selected}><a href="/guaranteeCenter/newGuaranteeManager">业务管理</a></li>
+        #end
+        #if($s>0)
+            < $!{selected}><a href="/guaranteeOperator/operatorManager">操作员管理</a></li>
+        #end
+        <li $!{setting}><a href="/usercenter/setting">账户设置</a></li>
+        <li $!{home}><a href="/usercenter/home">账户概览</a></li>
+    </ul>
+</div>

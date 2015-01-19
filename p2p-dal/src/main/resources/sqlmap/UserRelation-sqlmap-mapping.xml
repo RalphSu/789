@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap relation.                    -->
+<!-- ==========================================================  -->
+
+<sqlMap namespace="eloan">
+	<!-- ============================================= -->
+	<!-- RESULT MAPS                                   -->
+	<!-- ============================================= -->
+
+	<!-- result maps for database table user_relation -->
+	<resultMap id="RM-USER-RELATION" class="com.icebreak.p2p.dataobject.UserRelationDO">
+		<result property="userRelationId" column="user_relation_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="parentId" column="parent_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="childId" column="child_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="memberNo" column="member_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="relationStatus" column="relation_status" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<!-- ============================================= -->
+	<!-- mapped statements for IbatisUserRelationDAO -->
+	<!-- ============================================= -->
+	<!-- mapped statement for IbatisUserRelationDAO.insert -->
+	<insert id="MS-USER-RELATION-INSERT">
+		<![CDATA[
+		INSERT /*MS-ELOAN-USER-RELATION-INSERT*/ INTO user_relation(parent_id,child_id, member_no) VALUES (#parentId#, #childId#, #memberNo#)
+		]]>
+		<selectKey resultClass="long" keyProperty="userRelationId">
+			<![CDATA[SELECT LAST_INSERT_ID() AS user_relation_id ]]>
+		</selectKey>
+	</insert>
+
+	<!-- mapped statement for IbatisUserRelationDAO.update -->
+	<update id="MS-USER-RELATION-UPDATE">
+		<![CDATA[
+		UPDATE /*MS-ELOAN-USER-RELATION-UPDATE*/ user_relation SET parent_id=#parentId#, child_id=#childId#, member_no=#memberNo# WHERE (user_relation_id = #userRelationId#)
+		]]>
+	</update>
+
+	<!-- mapped statement for IbatisUserRelationDAO.delete -->
+	<delete id="MS-USER-RELATION-DELETE">
+		<![CDATA[
+		DELETE /*MS-ELOAN-USER-RELATION-DELETE*/ FROM user_relation WHERE (user_relation_id = #value#)
+		]]>
+	</delete>
+	<select id="MS-USER-RELATIONS-COUNTBYCONDITIONS" parameterClass="java.util.Map" resultClass="int">
+      SELECT COUNT(0)
+	  FROM user_relation ur
+	  WHERE 1 = 1
+	  <isNotEmpty property="userRelationId">
+			AND ur.user_relation_id = #userRelationId# 
+	  </isNotEmpty>
+	  <isNotEmpty property="parentId">
+		AND ur.parent_id = #parentId#
+	  </isNotEmpty>
+	  <isNotEmpty property="childId">
+		AND ur.child_id = #childId#
+	  </isNotEmpty>
+	  <isNotEmpty property="memberNo">
+		AND ur.member_no = #memberNo#
+	  </isNotEmpty>
+	  <isNotEmpty property="relationStatus">
+		AND ur.relation_status = #relationStatus#
+	  </isNotEmpty>
+  </select>
+  <select id="MS-USER-RELATIONS-BYCONDITIONS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-USER-RELATION">
+      SELECT *
+	  FROM user_relation ur
+	  WHERE 1 = 1
+	  <isNotEmpty property="userRelationId">
+			AND ur.user_relation_id = #userRelationId# 
+	  </isNotEmpty>
+	  <isNotEmpty property="parentId">
+		AND ur.parent_id = #parentId#
+	  </isNotEmpty>
+	  <isNotEmpty property="childId">
+		AND ur.child_id = #childId#
+	  </isNotEmpty>
+	  <isNotEmpty property="memberNo">
+		AND ur.member_no = #memberNo#
+	  </isNotEmpty>
+	   <isNotEmpty property="relationStatus">
+		AND ur.relation_status = #relationStatus#
+	  </isNotEmpty>
+  </select>
+  <select id="MS-USER-RELATIONS-COUNTINVESTORSBYJGID" parameterClass="long" resultClass="int">
+      SELECT COUNT(ur2.`child_id`) FROM user_relation ur1 INNER JOIN user_relation ur2 ON ur2.`parent_id` = ur1.`child_id` 
+		WHERE ur1.parent_id = #value#
+  </select>
+</sqlMap>

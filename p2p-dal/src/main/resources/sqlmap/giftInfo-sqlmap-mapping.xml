@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="EL-GIFTINFO" class="com.icebreak.p2p.dataobject.GiftInfo" >
+  	  <result property="tblBaseId" column="tbl_base_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="giftName" column="gift_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="giftCode" column="gift_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="giftType" column="gift_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="startTime" column="start_time" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="endTime" column="end_time" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="giftStatus" column="gift_status" javaType="int" jdbcType="TINYINT" />
+	  <result property="description" column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ 	<insert id="EL-GIFTINFO-INSERT" parameterClass="com.icebreak.p2p.dataobject.GiftInfo">
+  		<![CDATA[
+  			INSERT INTO gift_info (
+  				gift_name,gift_code,gift_type,start_time,end_time,gift_status,description) 
+  			VALUES (
+  				#giftName#,#giftCode#,#giftType#,#startTime#,#endTime#,#giftStatus#,#description#)
+  		]]>
+  	</insert>
+  	
+  	<update id="EL-GIFTINFO-UPDATE" parameterClass="com.icebreak.p2p.dataobject.GiftInfo">
+  		update gift_info set 
+  			gift_name=#giftName#,gift_code=#giftCode#,gift_type=#giftType#,start_time=#startTime#,
+  			end_time=#endTime#,gift_status=#giftStatus#,description=#description#
+  		where tbl_base_id=#tblBaseId#
+  	</update>
+	
+	<select id="EL-GIFTINFO-QUERY-COUNT" resultClass="java.lang.Long" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT count(*) FROM gift_info a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="giftName" prepend=" and ">
+				<![CDATA[a.gift_name = #giftName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftType" prepend=" and ">
+				<![CDATA[a.gift_type = #giftType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftCode" prepend=" and ">
+				<![CDATA[a.gift_code = #giftCode#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="EL-GIFTINFO-QUERY-BYCONDITION" parameterClass="java.util.Map" resultMap="EL-GIFTINFO" resultClass="java.util.List">
+		<![CDATA[
+		SELECT * FROM gift_info a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="giftName" prepend=" and ">
+				<![CDATA[a.gift_name = #giftName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftType" prepend=" and ">
+				<![CDATA[a.gift_type = #giftType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftCode" prepend=" and ">
+				<![CDATA[a.gift_code = #giftCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftCodes" prepend=" and ">
+				<![CDATA[a.gift_code in]]>
+				<iterate property="giftCodes" open="(" close=")" conjunction=",">
+					<![CDATA[#giftCodes[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="tblBaseId" prepend=" and ">
+				<![CDATA[a.tbl_base_id = #tblBaseId#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY a.start_time DESC]]>
+	</select>
+	<select id="EL-GIFTINFO-QUERY-BYCONDITION-WITHLIMIT" parameterClass="java.util.Map" resultMap="EL-GIFTINFO" resultClass="java.util.List">
+		<![CDATA[
+		SELECT * FROM gift_info a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="giftName" prepend=" and ">
+				<![CDATA[a.gift_name = #giftName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftType" prepend=" and ">
+				<![CDATA[a.gift_type = #giftType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftCode" prepend=" and ">
+				<![CDATA[a.gift_code = #giftCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftCodes" prepend=" and ">
+				<![CDATA[a.gift_code in]]>
+				<iterate property="giftCodes" open="(" close=")" conjunction=",">
+					<![CDATA[#giftCodes[]#]]>
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="tblBaseId" prepend=" and ">
+				<![CDATA[a.tbl_base_id = #tblBaseId#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY a.start_time DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+</sqlMap>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="interchange">
+    <!-- ============================================= -->
+    <!-- RESULT MAPS                                   -->
+    <!-- ============================================= -->
+
+    <!-- result maps for database table common_branch_info -->
+    <resultMap id="RM-COMMON-BRANCH-INFO" class="com.icebreak.p2p.dal.dataobject.CommonBranchInfoExtendDO">
+        <result property="bankLasalle" column="bank_lasalle" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="bankId" column="bank_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="branchName" column="branch_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="branchDistrictNo" column="branch_district_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="fatherNo" column="father_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  		<result property="areaName" column="area_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  
+  
+    </resultMap>
+
+    <!-- mapped statement for IbatisCommonBranchInfoDAO.findBankInfosByBankId -->
+    <select id="MS-COMMON-BRANCH-INFO-FIND-BANK-INFOS-BY-BANK-ID" resultMap="RM-COMMON-BRANCH-INFO">
+    <![CDATA[
+        select cbi.bank_lasalle, cbi.bank_id, cbi.branch_name, cd.area_name, cd.nb_no as branch_district_no, cd.father_no 
+         from common_branch_info cbi, common_district cd 
+        where ((cd.nb_no = cbi.branch_district_no) AND (cbi.bank_id = #value#)) order by branch_district_no ASC 
+    ]]>
+    </select>
+
+    <select id="MS-COMMON-BRANCH-INFO-FIND-BANK-INFOS-BY-DISTRICT-NO" resultMap="RM-COMMON-BRANCH-INFO">
+    <![CDATA[
+        select cbi.bank_lasalle, cbi.bank_id, cbi.branch_name, cd.area_name, cd.nb_no as branch_district_no, cd.father_no 
+         from common_branch_info cbi, common_district cd 
+        where ((cd.nb_no = cbi.branch_district_no) AND (cbi.bank_id = #bankId#) AND (branch_district_no = #districtNo#)) order by branch_district_no ASC 
+    ]]>
+    </select>
+    
+    <select id="MS-COMMON-BRANCH-INFO-FIND-OPENING-BANK-BY-DISTRICT-NO" resultMap="RM-COMMON-BRANCH-INFO">
+    <![CDATA[
+        select cbi.bank_lasalle, cbi.bank_id, cbi.branch_name, cd.area_name, cd.nb_no as branch_district_no, cd.father_no 
+         from common_branch_info cbi, common_district cd 
+        where ((cd.nb_no = cbi.branch_district_no) AND (cbi.bank_id = #bankId#) AND (branch_district_no = #nbNo#) AND (cbi.branch_bank_flag = #branchBankFlag#)) order by branch_district_no ASC 
+    ]]>
+    </select>
+    
+</sqlMap>

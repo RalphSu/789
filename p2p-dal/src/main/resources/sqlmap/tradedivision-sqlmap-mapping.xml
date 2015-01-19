@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-TRADEDIVISION" class="com.icebreak.p2p.dataobject.TradeDivision">
+	  <result property="id" column="trade_division_id" />
+	  <result property="templateId" column="division_template_id" />
+	  <result property="tradeId" column="trade_id" />
+  </resultMap>
+  
+  <insert id="TRADEDIVISION-ADD" parameterClass="com.icebreak.p2p.dataobject.TradeDivision">
+	  INSERT INTO trade_division (
+		  division_template_id,
+		  trade_id
+	  ) VALUES (
+		  #templateId#,
+		  #tradeId#
+	  )
+  </insert>
+  
+  <select id="TRADEDIVISION-GETBYTEMPLATEID" parameterClass="long" resultClass="com.icebreak.p2p.dataobject.TradeDivision" resultMap="RM-TRADEDIVISION">
+  		SELECT trade_division_id, division_template_id, trade_id FROM trade_division WHERE trade_id = #value#
+  </select>
+
+    <select id="MS-DIVISION-TEMPLATE-TRADE-IS-USE-BY-DIVISION-TEMPLATE-ID" resultClass="long">
+        <![CDATA[
+        select /*MS-YRD-DIVISION-TEMPLATE-TRADE-IS-USE-BY-DIVISION-TEMPLATE-ID*/ count(base_id) from division_template_trade where ((invest_template_id = #investTemplateId#) OR (repay_template_id = #repayTemplateId#))
+    ]]>
+    </select>
+</sqlMap>

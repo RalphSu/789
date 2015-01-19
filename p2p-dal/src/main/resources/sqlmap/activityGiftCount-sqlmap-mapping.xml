@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="EL-ACTIVITYGIFTCOUNT" class="com.icebreak.p2p.dataobject.ActivityGiftCount" >
+  	  <result property="tblBaseId" column="tbl_base_id" javaType="long" jdbcType="BIGINT" />
+  	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="giftName" column="gift_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="giftCode" column="gift_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="giftType" column="gift_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="startTime" column="start_time" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="endTime" column="end_time" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="status" column="status" javaType="int" jdbcType="TINYINT" />
+	  <result property="giftCount" column="gift_count" javaType="int" jdbcType="int" />
+  </resultMap>
+  
+ 	<insert id="EL-ACTIVITYGIFTCOUNT-INSERT" parameterClass="com.icebreak.p2p.dataobject.ActivityGiftCount">
+  		<![CDATA[
+  			INSERT INTO activity_gift_count (
+  				user_id,gift_name,gift_code,gift_type,start_time,end_time,status,gift_count) 
+  			VALUES (
+  				#userId#,#giftName#,#giftCode#,#giftType#,#startTime#,#endTime#,#status#,#giftCount#)
+  		]]>
+  	</insert>
+  	
+  	<update id="EL-ACTIVITYGIFTCOUNT-UPDATE" parameterClass="com.icebreak.p2p.dataobject.ActivityGiftCount">
+  		update activity_gift_count set 
+  			user_id=#userId#,gift_name=#giftName#,gift_type=#giftType#,start_time=#startTime#,end_time=#endTime#,status=#status#,gift_count=#giftCount#
+  		where tbl_base_id=#tblBaseId#
+  	</update>
+  
+	<select id="EL-ACTIVITYGIFTCOUNT-QUERY-LIST" parameterClass="java.util.Map" resultMap="EL-ACTIVITYGIFTCOUNT" resultClass="java.util.List">
+		<![CDATA[
+		SELECT * FROM activity_gift_count a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[a.user_id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftName" prepend=" and ">
+				<![CDATA[a.gift_name = #giftName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftType" prepend=" and ">
+				<![CDATA[a.gift_type = #giftType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[a.status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY a.start_time DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="EL-ACTIVITYGIFTCOUNT-QUERY-COUNT" resultClass="java.lang.Long" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT count(0) FROM activity_gift_count a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[a.user_id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftName" prepend=" and ">
+				<![CDATA[a.gift_name = #giftName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftType" prepend=" and ">
+				<![CDATA[a.gift_type = #giftType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[a.status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="EL-ACTIVITYGIFTCOUNT-SUM" resultClass="java.lang.Long" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT IFNULL(SUM(gift_count) , 0) FROM activity_gift_count a WHERE 1=1 
+		]]>
+		<dynamic>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[a.user_id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="giftType" prepend=" and ">
+				<![CDATA[a.gift_type = #giftType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[a.status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+</sqlMap>

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>担保费统计</title>
+	<link type="text/css" href="/resources/css/loan.css" rel="stylesheet" />
+</head>
+<body class="warp">
+	#parse("/front/index/common/header-menu.vm")
+	<!--内容-->
+	<div class="container fn-clear">
+		<!--左侧导航-->
+		#parse("/front/user/common/left.vm")
+		<!--右侧内容-->
+		<div class="main-content mc-border fn-right">
+			<div class="trad-detail">
+    			<div class="my-list mb10 fn-clear">
+					<div class="mc-border">
+        				<h3 class="con-title">担保费统计</h3>
+        				<!--列表-->
+        				<table cellpadding="0" cellspacing="0" border="0" width="100%" class="fn-table sl-wrap sl-wrap-table">
+        					<tr>
+								<td>已收款的担保费金额(元)：<span class="ft-f60">￥$!{moneyUtil.getFormatAmount($!{paidInvestAmount})}</span> </td>
+								<td>待收款的担保费金额(元)：<span class="ft-f60">￥$!{moneyUtil.getFormatAmount($!{waitToPayInvestAmount})}</span> </td>
+        					</tr>
+                            <tr>
+                                <td><span style="font-weight:bold">合计担保费金额(元)：</span> <span class="ft-f60">￥$!{moneyUtil.getFormatAmount($!{totalAmount})}</span> </td>
+                            </tr>
+        				</table>
+        			</div>
+					
+					#set($t = $permission.check('/guaranteeCenter/guaranteeManager'))
+        			#if($t > 0)
+        			<div class="my-list mb10 fn-clear">
+        				<div class="list-1 mc-border fn-left">
+        					<h3 class="con-title">快捷访问</h3>
+        					<table cellpadding="0" cellspacing="0" border="0" width="100%" class="fn-table sl-wrap sl-wrap-table">
+        						<tr>
+        							<td width="30">001</td>
+        							<td width="320">担保函管理>  查看履约已签发担保函</td>
+        							<td><a href="/guaranteeCenter/guaranteeManager?singleState=1" class="fn-h-btn"><span>立即查看</span></a></td>
+        						</tr>
+								<tr>
+        							<td width="30">002</td>
+        							<td width="320">担保函管理>  查看履约审核中担保函</td>
+        							<td><a href="/guaranteeCenter/guaranteeManager?singleState=6" class="fn-h-btn"><span>立即查看</span></a></td>
+        						</tr>
+        						<tr>
+        							<td>003</td>
+        							<td>担保函管理  >  查看履约中担保函</td>
+        							<td><a href="/guaranteeCenter/guaranteeManager?singleState=2" class="fn-h-btn"><span>立即查看</span></a></td>
+        						</tr>
+								<tr>
+        							<td>004</td>
+        							<td>担保函管理  >  查看融资人还款中的担保函</td>
+        							<td><a href="/guaranteeCenter/guaranteeManager?singleState=8" class="fn-h-btn"><span>立即查看</span></a></td>
+        						</tr>
+        						<tr>
+        							<td>005</td>
+        							<td>担保函管理  >  查看违约处理中的担保函</td>
+        							<td><a href="/guaranteeCenter/guaranteeManager?singleState=5" class="fn-h-btn"><span>立即查看</span></a></td>
+        						</tr>
+        						<tr>
+        							<td>006</td>
+        							<td>担保函管理  >  查看正常履约完成的担保函</td>
+        							<td><a href="/guaranteeCenter/guaranteeManager?singleState=3" class="fn-h-btn"><span>立即查看</span></a></td>
+        						</tr>
+								<tr>
+        							<td>007</td>
+        							<td>担保函管理  >  查看违约代偿完成的担保函</td>
+        							<td><a href="/guaranteeCenter/guaranteeManager?singleState=7" class="fn-h-btn"><span>立即查看</span></a></td>
+        						</tr>
+        					</table>
+        				</div>
+        				<div class="list-2 mc-border fn-right">
+        					<h3 class="con-title">担保函统计</h3>
+        					<table cellpadding="0" cellspacing="0" border="0" width="100%" class="fn-table sl-wrap sl-wrap-table">
+        						<tr>
+        							<td>已签发的个数：</td>
+        							<td class="text-r ft-f60"><span style="color:red;">$!{collectingInvestCount}个</span></td>
+        						</tr>
+								<tr>
+        							<td>审核中的个数：</td>
+        							<td class="text-r ft-f60"><span style="color:red;">$!{auditingInvestCount}个</span></td>
+        						</tr>
+        						<tr>
+        							<td>履约中的个数：</td>
+        							<td class="text-r ft-f60"><span style="color:red;">$!{repaingInvestCount}个</span></td>
+        						</tr>
+								<tr>
+        							<td>融资人还款中的个数：</td>
+        							<td class="text-r ft-f60"><span style="color:red;">$!{doRepayInvestCount}个</span></td>
+        						</tr>
+        						<tr>
+        							<td>违约处理中的个数：</td>
+        							<td class="text-r ft-f60"><span style="color:red;">$!{repayFaildInvestCount}个</span></td>
+        						</tr>
+        						<tr>
+        							<td>正常履约完成的个数：</td>
+        							<td class="text-r ft-f60"><span style="color:red;">$!{repayFinishInvestCount}个</span></td>
+        						</tr>
+								<tr>
+        							<td>违约代偿完成的个数：</td>
+        							<td class="text-r ft-f60"><span style="color:red;">$!{compensatoryRepayFinishInvestCount}个</span></td>
+        						</tr>
+        					</table>
+        				</div>
+        			</div>
+        			#end
+    			</div>
+		</div>
+	</div>
+   </div>
+	#parse("/front/index/common/footer.vm")
+    <script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'demo');
+    </script>
+</body>
+</html>

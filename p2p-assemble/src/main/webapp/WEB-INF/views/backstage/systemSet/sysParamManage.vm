@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Pragma" contect="no-cache"> 
+	<title>系统管理-参数设置</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>系统管理</a></li>
+                            <li><a href>参数设置</a></li>
+                        </ul>
+                    </div>
+					<div class="search fn-clear">
+						<form action="/backstage/sysParamManage"  method="post">
+							<dl>
+								<dt>系统参数：</dt>
+								<dd><input type="text" class="u-input" name="paramName" id="paramName" value="$!{queryConditions.paramName}"/></dd>
+							</dl>
+
+							<button type="submit" class="s-btn" style="cursor:pointer;">搜索</button>
+						</form>
+					</div>
+					<div class="t-box">
+                        <div class="tools">
+                            <ul class="toolbar">
+                                <li class="click"><span>
+									<a href="/backstage/sysParamManage/toAddSysParam">
+                                    <img src="/resources/back/images/t01.png"></span>创建系统参数</a></li>
+                            </ul>
+                        </div>
+
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+								<th width="200">参数名称</th>
+								<th width="200">参数值</th>
+								<th width="200">扩展属性一</th>
+								<th width="200">扩展属性二</th>
+
+                                <th width="120">操作</th>
+                                <th class="text-r"></th>
+							</tr>
+							</thead>
+							<tbody>
+						#if($page.result.size()==0)
+            				<tr class="even">
+                				<td colspan=8 align=center>暂时没有系统参数记录</td>
+                			</tr>
+						#end
+						#foreach($info in $page.result)
+							<tr>
+								<td>$!{info.paramName}</td>
+								<td>$!{info.paramValue}</td>
+								<td>$!{info.extendAttributeOne}</td>
+								<td>$!{info.extendAttributeTwo}</td>
+
+
+                                <td><a href="/backstage/sysParamManage/editSysParam?paramName=$!{info.paramName}">修改</a>
+                                    <span class="line">|</span>
+                                    <a href="/backstage/sysParamManage/editSysParam?paramName=$!{info.paramName}">详情</a></td>
+
+							</tr>
+							#end
+                            </tbody>
+						</table>
+						<div class="p-box pages-b fn-clear">
+							#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>	
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+        function toPage(totalPage, pageNo){
+            if(totalPage<pageNo){
+                return false;
+            }
+            var url = "/backstage/sysParamManage"
+                    +"?paramName=$!{queryConditions.paramName}"
+                    +"&pageSize=$!{page.pageSize}&pageNo="+pageNo;
+            window.location.href=url;
+        }
+    </script>
+</body>
+</html>

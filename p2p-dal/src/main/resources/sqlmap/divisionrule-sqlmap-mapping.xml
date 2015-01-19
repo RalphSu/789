@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-DIVISIONRULE" class="com.icebreak.p2p.dataobject.DivisionRule" >
+	  <result property="id" column="rule_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="roleId" column="role_id" javaType="int" jdbcType="INT" />
+	  <result property="templateId" column="rule_template_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="rule" column="division_rule" javaType="double" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <insert id="DIVISIONRULE-ADDRULE" parameterClass="com.icebreak.p2p.dataobject.DivisionRule" >
+	  INSERT INTO division_rule (
+		  role_id,
+		  rule_template_id,
+		  division_rule
+	  ) VALUES (
+		  #roleId#,
+		  #templateId#,
+		  #rule#
+	  )
+  </insert>
+  
+  <select id="DIVISIONRULE-GETBYTEMPLATEID" parameterClass="long" resultClass="java.util.List" resultMap="RM-DIVISIONRULE">
+	   SELECT
+		   rule_id,
+		   role_id,
+		   rule_template_id,
+		   division_rule
+	   FROM division_rule WHERE rule_template_id = #value#
+  </select>
+  
+  <delete id="DIVISIONRULE-DELETEBYTEMPLATEID" parameterClass="long">
+ 	  DELETE FROM division_rule WHERE rule_template_id = #value#
+  </delete>
+</sqlMap>

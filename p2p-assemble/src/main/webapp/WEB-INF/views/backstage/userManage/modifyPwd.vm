@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>密码修改</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>权限管理</a></li>
+                            <li><a href>修改登录密码</a></li>
+                        </ul>
+                    </div>
+					<form action="/backstage/userManage/modifyPwd" id="pwdForm" class="ui-form" method="POST">
+						<fieldset>
+							<legend><h3>修改登录密码</h3></legend>
+                            <div class="item">
+                                <label for="" class="u-label">用户名：</label>
+                                <input type="text" class="u-input w170"   value="$!{userName}"  disabled="disabled"/>
+                            </div>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>原密码：</label>
+								<input type="password" class="u-input w170"  name="oldPwd"/>
+							</div>
+							<div class="item">
+                                <label for="" class="u-label"><span class="required">*</span>新密码：</label>
+                                <input type="password" class="u-input w170"  name="newPwd1"/>
+							</div>
+							<div class="item">
+                                <label for="" class="u-label"><span class="required">*</span>确认密码：</label>
+                                <input type="password" class="u-input w170"  name="newPwd2"/>
+							</div>
+
+						</fieldset>
+                        <div class="item" style="color:#f00;" id="messageDiv">
+							$!{message}
+                        </div>
+						<div class="item">
+                            <a href="javascript:modifyPwdFormSubmit();"  class="u-btn u-btn-blue submit_form">确认更新</a>
+##							<a href="/backstage/sysParamManage" class="u-btn u-btn-gray">取消</a>
+						</div>
+					</form>
+				</div>
+	<script type="text/javascript">
+    	function modifyPwdFormSubmit(){
+			if($('input[name=oldPwd]').val()==''){
+                $('#messageDiv').html('请输入旧密码');
+				return;
+			}
+            if($('input[name=newPwd1]').val()==''){
+                $('#messageDiv').html('请输入新密码');
+                return;
+            }
+            if($('input[name=newPwd2]').val()==''){
+                $('#messageDiv').html('请输入确认密码');
+                return;
+            }
+            if($('input[name=newPwd1]').val()!=$('input[name=newPwd2]').val()){
+				$('#messageDiv').html('两次输入的密码不一致');
+                return;
+            }
+			$('#pwdForm').submit();
+		}
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+</body>
+</html>

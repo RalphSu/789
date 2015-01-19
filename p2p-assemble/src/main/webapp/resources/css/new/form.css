@@ -1,0 +1,118 @@
+.form {  border:1px solid #ccc; border-top:none; overflow:hidden; z-index:1}
+.f_tit {width:1120px; border:none }
+.form ul:hover { background:#F7F7F7}
+.form ul.bot { border-bottom:none}
+.form ul.org { background:#FFF0E6}
+.form ul.blue { background:#F0FDFF}
+
+/*用户菜单*/
+.use_menu {clear:both; height:50px; border-bottom:1px dotted #ccc; min-width:1280px}
+.use_menu ul li { float:right; width:100px; text-align:right; line-height:50px}
+.use_menu ul li.light a { color:#009ED6}
+
+
+
+/*表单样式一*/
+.form ul li { float:left; margin-left:15px; height:60px; line-height:25px; margin-top:10px}
+
+.form ul { border-bottom:1px dotted #ccc; overflow:hidden; z-index:1}
+
+.form ul.tit { height:50px; color:#fff; background:url(/resources/images/new/form_tit_bg.png); border-bottom:none}
+.form ul.tit_t { height:50px;  border-bottom:none}
+.form ul.tit_t:hover { background:none}
+.form ul.tit li { height:50px; line-height:50px; overflow:hidden; margin-top:0px}
+
+/*表单样式二*/
+.form ul li { float:left; margin-left:15px; height:60px; line-height:25px; margin-top:10px}
+.f_plan ul li { float:left; margin-left:15px; height:35px; line-height:30px; margin-top:10px}
+.form ul { border-bottom:1px dotted #ccc; overflow:hidden; z-index:1}
+.form ul.tit { height:50px; color:#fff; background:url(/resources/images/new/form_tit_bg.png); border-bottom:none}
+.form ul.tit li { height:50px; line-height:50px; overflow:hidden; margin-top:0px}
+
+/*首页选项卡*/
+.f_tab ul.tab_tit li { width:100px; height:45px; line-height:40px; position:relative; top:10px; color:#fff; text-align:center;-moz-border-radius: 5px; -webkit-border-radius: 5px; cursor:pointer}
+.f_tab ul.tab_tit li.light {  background:#F0FDFF; color:#333; cursor:default}
+
+/*通用搜索*/
+.search {}
+.search ul li { float:left; width:100px; text-align:center; height:26px; line-height:26px}
+.search ul li.light { background:url(/resources/images/new/search_bg.png)}
+.search ul li.f_right  { float:right; margin-left:8px; *margin-left:0px}
+.search ul li.f_inp { width:140px}
+.search ul li.f_ot { width:auto; *width:15px; text-align:center;*position:relative; *left:5px}
+.search ul li.f_sel { width:112px}
+.search ul li.but { background:url(/resources/images/new/search_bg.png); cursor:pointer; *margin-left:15px}
+
+/*还款计划标题*/
+.plan_tit { height:50px; line-height:50px}
+
+/*表单结构*/
+select.f_sel { height:25px; width:112px; line-height:19px; *padding-top:5px; *padding-bottom:5px}
+input.f_inp { width:140px; height:23px; line-height:23px; text-indent:5px; background:url(/resources/images/new/cal_bg.png) no-repeat 116px 4px}
+input.f_card { background:#fff; width:80px; position:relative; *top:3px}
+input.card_num { width:250px}
+
+/*个人信息*/
+.my_notic { border:1px solid #009ED6;height:58px; line-height:58px; text-indent:15px; position:relative}
+.my_mes { line-height:230%; text-indent:15px}
+.my_fud { border:1px solid #ccc; text-indent:45px; overflow:hidden; z-index:-1}
+	.fud_money { background:url(/resources/images/new/money.png) no-repeat 15px 30px; height:70px;line-height:70px; border-bottom:1px dotted #ccc}
+	.fud_list { margin-top:15px; height:75px}
+	.fud_list ul li { float:left; width:325px; height:30px; line-height:30px; text-indent:15px}
+.my_data { border:1px solid #009ED6; background:#F0FDFF; overflow:hidden; z-index:-1;padding-top:15px; height:90px}
+	.my_data ul li { float:left; width:530px; height:40px; line-height:40px; text-indent:15px}
+.my_ext { line-height:230%; text-indent:15px; border:1px solid #ccc}
+	.ext_tit { background:none}
+
+/*银行卡信息*/
+.card { border:1px solid #ccc; overflow:hidden; z-index:1; padding-bottom:30px}
+.card ul li { border:1px solid #ccc; width:228px; height:140px; float:left; margin-top:30px; margin-left:40px; cursor:pointer}
+.card ul li:hover,.card ul.add_c li:hover { border:1px solid #009ED6}
+.card ul li.light,.card ul.add_c li.light { border:1px solid #F60}
+.card ul li.add { border:1px dotted #ccc; background:url(/resources/images/new/add.png) no-repeat 100px 40px #f7f7f7; text-align:center; line-height:190px}
+.card ul li.add a:hover{ text-decoration:none}
+.card_pic { height:110px; background:url(/resources/images/new/bank.png) no-repeat center}
+.card_mes { height:30px; line-height:30px; padding-left:10px; padding-right:10px; border-top:1px dotted #ccc}
+.float_right { float:right; height:30px; line-height:30px; position:relative; *top:-30px; text-align:right}
+.card ul.card_tit { height:70px; border-bottom:1px dotted #ccc; overflow:hidden; z-index:1}
+.card ul.card_tit li { line-height:70px; width:100%; height:70px; margin:0px; border:none; position:relative; text-indent:15px}
+.card ul.card_tit li:hover { cursor:auto} 
+.card ul.card_people { height:80px; margin-top:15px}
+.card ul.card_people li { line-height:35px;}
+.card ul.card_led { height:45px; border-bottom:none}
+.card ul.card_led li { line-height:45px; height:45px }
+.card ul.add_c { background:#F7F7F7; margin-left:15px; margin-right:15px; overflow:hidden; z-index:1; padding-bottom:15px}
+.card ul.add_c li { width:190px; height:38px; border:1px solid #ccc; float:left; margin-left:15px; margin-top:15px; background:#fff}
+.card ul.card_inum { height:60px; border-top:1px dotted #ccc; border-bottom:none}
+.card ul.card_inum li { height:60px; line-height:80px}
+.card ul li p { text-indent:15px}
+.ct_more { float:right; text-align:right; position:absolute; right:25px; top:0px}
+img.bank_pic { position:relative; top:8px; left:10px}
+
+/*转让表单*/
+.tran_left { float:left; width:746px; border:1px solid #ccc}
+	.tl_tit { height:50px; line-height:50px; text-indent:15px; border-bottom:1px dotted #ccc} 
+	.tl_list { margin-top:15px; padding-bottom:15px; overflow:hidden; z-index:1}
+	.tl_list ul li { float:left; width:50%; text-indent:15px; height:35px; line-height:35px}
+.tran_right { float:right; width:342px; border:1px solid #ccc; border:1px solid #009ED6; padding-top:15px}
+	.tran_right ul li { height:60px; line-height:60px; margin-left:15px; clear:both}
+	.tran_right ul li.od { height:auto; line-height:30px}
+	.tran_right ul li.blank { height:30px; clear:both}
+.reg_blue_tran { width:277px; height:40px; line-height:40px; background:#009ED6; color:#fff; margin:0px; text-align:center}
+.blue_tran { width:277px; height:40px; line-height:40px; background:#009ED6; color:#fff;text-align:center}
+.reg_blue_tran:hover,.blue_tran:hover { background:#0089B7; text-decoration:none}
+input.f_tran { top:-2px; width:100px}
+.my_tran { text-indent:0px}
+.suc { height:auto; line-height:185px; text-align:center; overflow:hidden; z-index:1}
+
+.form ul li.col1 { width:135px}
+.form ul li.col2 { width:400px}
+.form ul li.col3 { width:110px}
+.form ul li.col4 { width:175px}
+.form ul li.col5 { width:auto}
+.form ul li.col6 { width:100px}
+.form ul li.col7 { width:180px}
+.form ul li.col8 { width:170px}
+.form ul li.col9 { width:500px}
+.form ul li.col0 { width:80px}
+

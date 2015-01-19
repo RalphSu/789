@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>人员详细信息</title>
+	<link type="text/css" href="/resources/css/loan.css" rel="stylesheet" />
+</head>
+<body class="warp">
+	<!--头部-->
+	#parse("/front/index/common/header-menu.vm")
+	<!--内容-->
+	<div class="container fn-clear">
+		<!--左侧导航-->
+		#parse("/front/user/common/left.vm")
+		<!--右侧内容-->
+		<div class="main-content mc-border fn-right">
+			<div class="trad-detail invest-detail">
+				<h3 class="con-title">人员详细信息</h3>
+				<div class="detail-1">
+					<h4>开户与认证信息</h4>
+					<ul>
+						<li><em>客户编号：</em><span>$!{userMemoNo}</span></li>
+						<li><em>#if('JG'==$!{userType})单位名称：</em><span>$!{info.enterpriseName}</span>#else真实姓名：</em><span>$!{info.realName}</span>#end</li>
+						<li><em>手机号码：</em><span>$!{info.mobile}</span></li>
+						<li><em>是否已实名认证：</em><span>#if($!{info.realNameAuthentication})#if($!{info.realNameAuthentication}=="IS")已认证#elseif($!{info.realNameAuthentication}=="IN") 认证中 #else 认证未通过 #end#else未认证 #end</span></li>
+					</ul>
+				</div>
+				<div class="detail-2">
+					<h4>银行卡签约信息</h4>
+					<ul>
+						<li><em>是否已绑定银行账户：</em><span>#if($!{info.bankCardNo})#if($!{info.bankCardNo}!="") 已绑定 #else未绑定 #end#else 未绑定 #end</span></li>
+					</ul>
+				</div>
+				<!--
+				<div class="detail-3">
+					<h4>银行卡签约信息</h4>
+					<ul>
+						<li><em>登录密码：</em><span><a href="javascript:;">修改登录密码</a></span></li>
+						<li><em>支付密码：</em><span><a href="javascript:;">修改支付密码</a></span></li>
+					</ul>
+				</div>-->
+				<div class="bottom-btn">
+					<a href="javascript:window.history.back(-1);" class="fn-h-btn"><span>返回</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	#parse("/front/index/common/footer.vm")
+	
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'demo');
+    </script>
+</body>
+</html>

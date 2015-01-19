@@ -1,0 +1,45 @@
+<!--通用底部开始-->
+<div class="alrod b_blue">
+    <div class="nav map">
+        <ul>
+            <li><a href="/help/aboutus"><span class="small_font">关于我们</span></a><a href="/help/guidelines"><span class="small_font">新手指引</span></a><a href="/help/investment"><span class="small_font">投资流程</span></a><a href="/help/security"><span class="small_font">安全保障</span></a><a href="/help/joinus"><span class="small_font">加入我们</span></a><a href="/help/contactus"><span class="small_font">联系我们</span></a><a href="$!{rc.contextPath}/help/qa"><span class="small_font">常见问题</span></a></li>
+            <li><span class="small_font">客服热线 （工作时间：工作日 9:00-17:30）</span><span class="small_font">客服邮箱 $!appConstantsUtil.getCustomerServiceEmail()</span>
+            	<!--在线客服代码-->
+            	<span class="small_font"><div style='display:none;'><a href='http://www.live800.com'>web对话</a></div><script language="javascript" src="http://chat32.live800.com/live800/chatClient/floatButton.js?jid=5718803319&companyID=463850&configID=57464&codeType=custom"></script><div style='display:none;'><a href='http://en.live800.com'>live chat</a></div></span>
+            	<script language="javascript" src="http://chat32.live800.com/live800/chatClient/monitor.js?jid=5718803319&companyID=463850&configID=57455&codeType=custom"></script>
+            	<div style='display:none;'><a href='http://www.live800.com'>客服软件</a></div>
+				<script type="text/javascript">
+					var _gaq = _gaq || [];
+					
+					_gaq.push(['_setAccount', 'UA-37245790-48']);
+					
+					 _gaq.push(['_trackPageview']);
+					
+					(function() {
+					
+					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					
+					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+					
+					 })();
+				</script>
+				<div style='display:none;'><a href='http://en.live800.com'>live chat</a></div>
+            </li>
+            <li class="up"><span class="large_font">手机客户端</span><a href="#"><span class="down"><img src="/resources/images/new/phone_ap.png"></span></a><a href="#"><span class="down"><img src="/resources/images/new/phone_ad.png"></span></a><a href="#"><span class="down"><img src="/resources/images/new/phone_wp.png"></span></a></li>
+            <li class="up"><span class="tit_font">$!appConstantsUtil.getCustomerServicePhone()</span></li>
+        </ul>
+    </div>
+</div>
+
+<div class="alrod b_gray">
+    <div class="nav copy">
+        <ul>
+            <li>Copyright © 2014-2015 789jinrong.com, All Rights Reserved</li>
+            <li class="down"><a href="#"><span><img src="/resources/images/new/copy_ico1.png"></span></a><a href="#"><span><img src="/resources/images/new/copy_ico2.png"></span></a><a href="#"><span><img src="/resources/images/new/copy_ico3.png"></span></a><a href="#"><span><img src="/resources/images/new/copy_ico4.png"></span></a><a href="#"><span><img src="/resources/images/new/copy_ico5.png"></span></a></li>
+            <li class="up">版权所有 $!appConstantsUtil.getProductICP()  市场有风险 投资需谨慎！</li>
+        </ul>
+    </div>
+</div>
+<!--通用底部结束-->

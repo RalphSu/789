@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>担保交易详情</title>
+	<link type="text/css" href="/resources/css/loan.css" rel="stylesheet" />
+</head>
+<body class="warp">
+	#parse("/front/index/common/header-menu.vm")
+	<!--内容-->
+	<div class="container fn-clear">
+		<!--左侧导航-->
+		#parse("/front/user/common/left.vm")
+		<!--右侧内容-->
+		<div class="main-content mc-border fn-right">
+			<div class="trad-detail">
+				<h3 class="con-title">需求详情</h3>
+				<div class="detail-1">
+					<h4>基本信息</h4>
+					<ul>
+						<li><em>申请号：</em><span>TRB$!{loanDemand.demandId}</span></li>
+						<li><em>交易名称：</em><span>$!{loanDemand.loanName}</span></li>
+						<li><em>需求金额：</em><span>$!{moneyUtil.getFormatAmount($!{loanDemand.loanAmount})}元</span></li>
+						<li><em>成本年化率：</em><span> $!{totalAnnualInterest}%</span></li>
+						<li><em>期限：</em><span>$!{loanDemand.timeLimit} #if($!{loanDemand.timeLimitUnit}=="W" || $!{loanDemand.timeLimitUnit}=="M") 月 #elseif($!{loanDemand.timeLimitUnit}=="D") 天 #else 年 #end</span></li>
+						<li><em>还款方式：</em><span>$!{loanDemand.repayDivisionWayMsg}</span></li>
+						<li><em>最低投资：</em><span>#set($leastInvestAmount=$!{moneyUtil.getFormatAmount($!{loanDemand.leastInvestAmount})}) $!{leastInvestAmount} 元</span></li>
+						<li>
+							<em>满标条件：</em>$!{tradeUtil.getSaturationCondition($!{loanDemand.saturationConditionMethod}, $!{loanDemand.saturationCondition})}
+						<!--	
+							#if($!{trade.saturationConditionMethod}=="amount")
+							<span>$!{trade.saturationCondition}元</span>
+							#elseif($!{trade.saturationConditionMethod}=="rate")
+								#set($saturation=$!{trade.saturationCondition}) $!{saturation}%
+							<span></span>
+							#else
+							<span>截止到  $!{trade.saturationCondition}</span>
+							#end-->
+						</li>
+						<li><em>担保函编号：</em>$!{loanDemand.guaranteeLicenseNo}</li>
+						<li><em>投资截止时间：</em><span>$!dateUtil.simpleFormat($!{loanDemand.deadline})</span></li>
+						<li><em>项目用途：</em><span>$!{loanDemand.loanPurpose}</span></li>
+						<li><em>定义标题：</em><span>$!{loanDemand.selfDefinedTitle}</span></li>
+					</ul>
+				</div>
+				<div class="detail-2">
+					<h4>项目信息</h4>
+					<dl>
+						<dt><span>$!{loanDemand.loanNote}</span></dt>
+						<dt class="mt20">投资接受人补充话语：<span>$!{loanDemand.loanStatement}</span></dt>
+					</dl>
+				</div>
+				<div class="detail-3">
+					<h4>担保信息</h4>
+					<ul>
+						<li><em>担保机构：</em><span>$!{loanDemand.guaranteeName}</span></li>
+						<li><em>担保机构话语：</em><span>$!{loanDemand.guaranteeStatement}</span></li>
+						<li><em>#if(1==$!{trade.status}||4==$!{trade.status}||6==$!{trade.status})担保承诺函#else担保函#end：</em></li>
+						<li class="clear"><em></em><img id="guaranteeLicenseUrl_Img" src="$!{loanDemand.guaranteeLicenseUrl}" width="291" height="127" alt="担保函"/></li>
+					</ul>
+				</div>
+				#if($!{loanDemand.sponsorId} > 0)
+				<div class="detail-4">
+					<h4>保荐信息</h4>
+					<ul>
+						<li><em>保荐机构：</em><span>$!{loanDemand.sponsorName}</span></li>
+						<li><em>保荐机构话语：</em><span>$!{loanDemand.sponsorStatement}</span></li>
+					</ul>
+				</div>
+				#end
+				
+				<div class="bottom-btn">
+					#set($t = $permission.check('/tradeQuery/manualReimbursement'))
+					#if($t>0)
+						#if($!{notAuth})
+							<a id="loanAuditFinish" href="javascript:;" class="fn-g-btn mr5 refund"><span>融资发布审核</span></a>
+						#end
+        				
+					#end
+					<a href="/guaranteeCenter/loanDeployGuaranteeAuth" class="fn-h-btn"><span>返回</span></a>
+				</div>
+				<div id="checkPasswordCheckContainer" style="display:none;">
+					<ul class="fn-steps fn-clear">
+            			<li class="current">1.一次审核</li>
+            			<li>2.再次审核</li>
+            		</ul>
+					<div class="fn-item" id="passwordDiv">
+						<label class="fn-label"><span class="required">*</span>一级审核密码：</label>
+						<input type="password" class="fn-text w235" id="checkPasswordOne"　name="checkPassword"/>
+						<br /><b id="pay-password-messge" name="pay-password-messge" class="error-tip" for="checkPassword" generated="false"></b>
+					</div>	
+					<div class="fn-item">
+    					<a href="javascript:;" id="confirm_check_one" name="confirm_check_one" class="fn-g-btn mr5"><span>确认审核</span></a>
+    					<a href="javascript:window.location.href = window.location.href;" class="fn-h-btn"><span>返回上一步</span></a>
+    				</div>
+				</div>
+				<div id="recCheckPasswordContainer" style="display:none;">
+					<ul class="fn-steps fn-clear">
+            			<li>1.一次审核</li>
+            			<li class="current">2.再次审核</li>
+            		</ul>
+					<div class="fn-item" id="passwordDiv">
+						<label class="fn-label"><span class="required">*</span>二级审核密码：</label>
+						<input type="password" class="fn-text w235" id="checkPasswordTwo" name="checkPassword"/>
+						<br /><b id="pay-password-messge" name="pay-password-messge" class="error-tip" for="checkPassword" generated="false"></b>
+					</div>	
+					<div class="fn-item">
+						<input type="hidden" id="demandId"  name="demandId"  value="$!{loanDemand.demandId}"/>
+						<input type="hidden" id="checkType"  name="checkType"  value="DEPLOY"/>
+						<input type="hidden" id="token" name="token"  value="$!{token}"/>
+    					<a href="javascript:;" id="confirm_check" name="confirm_check" class="fn-g-btn mr5"><span>确认审核</span></a>
+    					<a href="javascript:;" id="recheckGoback" class="fn-h-btn"><span>返回上一步</span></a>
+    				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	#parse("/front/index/common/footer.vm")
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/comp/swfobject.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'guarantee_noTrade');
+    </script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-CHARGETEMPLATE" class="com.icebreak.p2p.dataobject.ChargeTemplate" >
+	  <result property="id" column="charge_template_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="name" column="template_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="roleId" column="role_id" javaType="int" jdbcType="INT"/>
+	  <result property="type" column="template_type" javaType="java.lang.String" jdbcType="ENUM"/>
+	  <result property="ruleModel" column="rule_model" javaType="java.lang.String" jdbcType="ENUM"/>
+	  <result property="method" column="charge_method" javaType="java.lang.String" jdbcType="ENUM"/>
+	  <result property="chargeDate" column="charge_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="createDate" column="create_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="modifyDate" column="modify_date" javaType="java.util.Date" jdbcType="DATETIME"/>
+  </resultMap>
+  
+  <insert id="CHARGETEMPLATE-ADD" parameterClass="com.icebreak.p2p.dataobject.ChargeTemplate">
+	  INSERT INTO charge_template (
+		  template_name,
+		  role_id,
+		  template_type,
+		  rule_model,
+		  charge_method,
+		  charge_date,
+		  create_date,
+		  modify_date
+	  ) VALUES (
+		  #name#,
+		  #roleId#,
+		  #type#,
+		  #ruleModel#,
+		  #method#,
+		  #chargeDate#,
+		  #createDate#,
+		  #modifyDate#
+	  )
+  </insert>
+  
+  <select id="CHARGETEMPLATE-GETBYTEMPLATEID" parameterClass="long" resultClass="com.icebreak.p2p.dataobject.ChargeTemplate" resultMap="RM-CHARGETEMPLATE">
+  		SELECT 
+          charge_template_id,
+  		  template_name,
+		  role_id,
+		  template_type,
+		  rule_model,
+		  charge_method,
+		  charge_date,
+		  create_date,
+		  modify_date
+		FROM charge_template  
+		WHERE charge_template_id = #value#
+  </select>
+  
+  <select id="CHARGETEMPLATE-GETBYPROPERTIES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-CHARGETEMPLATE">
+  		SELECT 
+          t.charge_template_id,
+  		  t.template_name,
+		  t.role_id,
+		  t.template_type,
+		  t.rule_model,
+		  t.charge_method,
+		  t.charge_date,
+		  t.create_date,
+		  t.modify_date
+		FROM charge_template t
+		<isNotEmpty property="roles">
+		   INNER JOIN role ON role.role_id = t.role_id
+		</isNotEmpty>
+		WHERE 1=1
+		<isNotEmpty property="name">
+			AND t.template_name = #name#
+		</isNotEmpty>
+		<isNotEmpty property="roles">
+		        AND role.role_code IN 
+	  		<iterate conjunction="," open="(" close=")" property="roles">
+  		        #roles[]#
+  	        </iterate>
+		</isNotEmpty>
+		<isNotEmpty property="type">
+			AND t.template_type = #type#
+		</isNotEmpty>
+		ORDER BY t.modify_date DESC 
+		<isNotEmpty property="start">
+			LIMIT #start#
+			<isNotEmpty property="size">
+				, #size#
+			</isNotEmpty>
+		</isNotEmpty>
+		
+  </select>
+  
+  <select id="CHARGETEMPLATE-GETBYPROPERTIESCOUNT" parameterClass="java.util.Map" resultClass="long">
+  		SELECT 
+          COUNT(0)
+		FROM charge_template t
+		<isNotEmpty property="roles">
+		   INNER JOIN role ON role.role_id = t.role_id
+		</isNotEmpty>
+		WHERE 1=1
+		<isNotEmpty property="name">
+			AND t.template_name = #name#
+		</isNotEmpty>
+		<isNotEmpty property="roles">
+		        AND role.role_code IN 
+	  		<iterate conjunction="," open="(" close=")" property="roles">
+  		        #roles[]#
+  	        </iterate>
+		</isNotEmpty>
+		<isNotEmpty property="type">
+			AND t.template_type = #type#
+		</isNotEmpty>
+		
+  </select>
+  
+  <update id="CHARGETEMPLATE-MODIFY" parameterClass="com.icebreak.p2p.dataobject.ChargeTemplate">
+	  UPDATE charge_template SET 
+	  	template_name = #name#,
+	  	role_id = #roleId#,
+	  	template_type = #type#,
+	  	rule_model = #ruleModel#,
+	  	charge_method = #method#,
+	  	charge_date = #chargeDate#,
+	  	modify_date = #modifyDate#
+	  WHERE charge_template_id = #id#
+  </update>
+  
+  <select id="CHARGETEMPLATE-GETBYUSERID-PUBLIC" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-CHARGETEMPLATE">
+		SELECT 
+	      t.charge_template_id,
+  		  t.template_name,
+		  t.role_id,
+		  t.template_type,
+		  t.rule_model,
+		  t.charge_method,
+		  t.charge_date,
+		  t.create_date,
+		  t.modify_date
+		FROM charge_template t
+		INNER JOIN user_role ON user_role.role_id = t.role_id
+		WHERE user_role.user_id = #userId# AND t.role_id = #roleId# LIMIT 1
+  </select>
+  
+  <select id="CHARGETEMPLATE-GETBYUSERID-PRIVATE" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-CHARGETEMPLATE">
+  	     SELECT 
+  	      t.charge_template_id,
+  		  t.template_name,
+		  t.role_id,
+		  t.template_type,
+		  t.rule_model,
+		  t.charge_method,
+		  t.charge_date,
+		  t.create_date,
+		  t.modify_date
+  		FROM charge_template t
+		INNER JOIN user_charge_template ON user_charge_template.charge_template_id = t.charge_template_id
+		INNER JOIN user u ON u.user_id = user_charge_template.user_id
+		WHERE u.user_id = #userId# AND t.role_id = #roleId# LIMIT 1
+  </select>
+</sqlMap>

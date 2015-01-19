@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>交易管理-交易查询</title>
+	<link type="text/css" href="$!{rc.contextPath}/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>交易管理</a></li>
+                            <li><a href>投资详情查询</a></li>
+                        </ul>
+                    </div>
+					<div class="search fn-clear">
+						<form action="$!{rc.contextPath}/backstage/trade/investTrade/$!{tradeId}" method="post" name="frm">
+							<dl>
+								<dt>投资人用户名(付)：</dt>
+								<dd><input type="text" class="u-input w120" name="payUserName" value="$!{request.getParameter('payUserName')}"/></dd>
+							</dl>
+							<dl>
+								<dt>融资人用户名(收)：</dt>
+								<dd><input type="text" class="u-input w120" name="receiveUserName" value="$!{request.getParameter('receiveUserName')}"/></dd>
+							</dl>
+							<dl>
+								<dt>金额区间：</dt>
+								<dd><input type="text" class="u-input w60" name="startAmount" value="$!{request.getParameter('startAmount')}"/> - <input type="text" class="u-input w60" name="endAmount" value="$!{request.getParameter('endAmount')}"/></dd>
+							</dl>
+							<dl>
+								<dt>时间区间：</dt>
+								<dd><input type="date" class="u-input w90" name="startDate" value="$!{request.getParameter('startDate')}"/> - <input type="date" class="u-input w90" name="endDate" value="$!{request.getParameter('endDate')}"/></dd>
+							</dl>
+							<dl>
+								<dt>真实姓名(付)：</dt>
+								<dd><input type="text" class="u-input w120" name="payRealName" value="$!{request.getParameter('payRealName')}"/></dd>
+							</dl>
+							<dl>
+								<dt>真实姓名(收)：</dt>
+								<dd><input type="text" class="u-input w120" name="receiveRealName" value="$!{request.getParameter('receiveRealName')}"/></dd>
+							</dl>
+							<dl>
+								<dt>交易状态：</dt>
+								<dd>#set($status = $!{request.getParameter('status')})
+									<div class="jqtransform jqtransform-select3">
+										<select name="status">
+											<option value="-1"#if($status == -1) selected="selected"#end>全部</option>
+											<option value="1"#if($status == 1) selected="selected"#end>待成立</option>
+											<option value="2"#if($status == 2) selected="selected"#end>已成立</option>
+											<option value="3"#if($status == 3) selected="selected"#end>正常还款</option>
+											<option value="4"#if($status == 4) selected="selected"#end>未成立</option>
+											<option value="5"#if($status == 5) selected="selected"#end>违约处理中</option>
+											<option value="6"#if($status == 6) selected="selected"#end>担保机构审核中</option>
+											<option value="7"#if($status == 7) selected="selected"#end>违约代偿完成</option>
+											<option value="8"#if($status == 8) selected="selected"#end>等待融资人还款</option>
+										</select>
+									</div>
+								</dd>
+							</dl>
+							<a href="javascript:void(0);" class="s-btn">搜索</a>
+						</form>
+					</div>
+					<div class="t-box">
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+								<th width="130">交易流水号</th>
+                                <th width="150">投资时间</th>
+							<!--	<th width="80">交易类型</th> -->
+								<th width="200">交易名称</th>
+								<th width="120">投资方</th>
+								<th width="120">金额(元)</th>
+								<th width="120">融资方</th>
+                                <th width="150">交易状态</th>
+							</tr>
+							</thead>
+							<tbody>
+							#foreach($item in $!{page.result})
+							<tr>
+								<td>$!{item.tradeCode}</td>
+                                <td>$!dateUtil.simpleFormat($!{item.payDate})</td>
+							<!--	<td>还款</td> -->
+								<td>$!{item.tradeName}</td>
+								<td>$!{item.payUserName}($!{item.payRealName})</td>
+								<td>￥$!{moneyUtil.getFormatAmount($!{item.amount})}</td>
+								<td>$!{item.receiveUserName}($!{item.receiveRealName})</td>
+                                <td>$!{item.status}</td>
+							</tr>
+							#end
+                            </tbody>
+						</table>
+						<div class="p-box pages-b fn-clear">
+							#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/plugins/jquery.window.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'demo');
+    </script>
+	<script type="text/javascript">
+		
+		$('.s-btn').click(function (){
+			toPage($!{page.totalPageCount}, $!{page.currentPageNo});
+		});
+		
+		
+		function toPage(totalPage, curr){
+		    if(isNaN(curr)){ return; }
+		    if(curr < 1){ return ;}
+			if(curr > totalPage){ return ;}
+			$('form[name=frm]').attr('action', '$!{rc.contextPath}/backstage/trade/investTrade/$!{tradeId}?pageSize=$!{page.pageSize}&pageNo=' + curr);
+			document.frm.submit();
+		}
+    </script>
+</body>
+</html>
+
+
+
+
+

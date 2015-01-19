@@ -1,0 +1,122 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<!--内容-->
+
+<div class="top_blank"></div>
+<!--用户菜单开始-->
+    #parse("/front/index/common/usercenter-menu.vm")
+<!--用户菜单结束-->
+<div class="blank"></div>
+<!--通用头部结束-->
+<div class="alrod">
+    <!--通用搜索开始-->
+    <div class="search nav">
+        <ul>
+            <li $!list><a href="/collection/list">全部</a></li>
+            <li $!wait><a href="/collection/wait">待收款</a></li>
+            <li $!repaid><a href="/collection/repaid">已收款</a></li>
+        </ul>
+    </div>
+    <!--通用搜索结束-->
+    <div class="form_blank"></div>
+    <!--通用表单开始-->
+    <div class="form f_tit">
+        <ul class="tit">
+            <li class="col1" style="width:200px;">项目名称</li>
+            <li class="col1" style="width: 90px;">收款(元)</li>
+            <li class="col1" style="width: 90px;">本金(元)</li>
+            <li class="col1">
+                #if($!repaid)
+                    收益(元)
+                #else
+                    预期收益(元)
+                #end
+            </li>
+            <li class="col1">投资时间</li>
+            <li class="col1">到期时间</li>
+            <li class="col1" style="width: 45px;">进度</li>
+            <li class="col1">状态</li>
+        </ul>
+    </div>
+    <div class="form form_nav">
+        #foreach($info in $page.result)
+            <ul style="height: 50px;">
+                <li class="col1" style="width:200px;"><a href="/index/lookup/$!info.demandId/$!info.tradeId">$!info.name</a><br /></li>
+                #if('D' == $!info.timeLimitUnit)
+                    #set($income = $!info.amount * $!info.profitRate * $info.timeLimit / 360)
+                #*#elseif('W' == $!info.timeLimitUnit)
+                    #set($income = $!info.amount * $!info.profitRate * $info.timeLimit / 52)*#
+                #elseif('W' == $!info.timeLimitUnit)
+                    #set($income = $!info.amount * $!info.profitRate * $info.timeLimit / 12)
+                #elseif('Y' == $!info.timeLimitUnit)
+                    #set($time = $info.timeLimit)
+                #end
+                #set($total = $!info.amount + $!income)
+                <li class="col1" style="width: 90px;">$!{moneyUtil.formatAmountByDouble($!{total})}<br /></li>
+                <li class="col1" style="width: 90px;">$!{moneyUtil.getFormatAmount($!{info.amount})}<br /></li>
+                <li class="col1">$!{moneyUtil.formatAmountByDouble($!income)} </li>
+                <li class="col1">${newDateUtil.simpleFormat($!info.date)}</li>
+                <li class="col1">
+                    #if(!$info.repayDate)
+                        暂无数据
+                    #else
+                        ${newDateUtil.simpleFormat($!info.repayDate)}
+                    #end
+                </li>
+                <li class="col1" style="width: 45px;"><span class="green">$!{moneyUtil.getPercentage($!{info.loanedAmount}, $!{info.tradeAmount}, 0)}</span></li>
+                <li class="col1"><span class="green">
+                    #if($!list)
+                        #if("PS" == $!info.tradeDetailStatus)
+                            投资支付成功
+                        #elseif("IT" == $!info.tradeDetailStatus)
+                            投资失败
+                        #elseif("AS" == $!info.tradeDetailStatus)
+                            申请成功
+                        #elseif("AF" == $!info.tradeDetailStatus)
+                            申请失败
+                        #elseif("IT" == $!info.tradeDetailStatus)
+                            投资失败
+                        #elseif("PF" == $!info.tradeDetailStatus)
+                            投资支付是失败
+                        #end
+                    #elseif($!wait)
+                        待还款
+                    #elseif($!repaid)
+                        已还款
+                    #end
+                    </span>
+                </li>
+            </ul>
+        #end
+    </div>
+    <!--通用表单结束-->
+    <div class="form_blank"></div>
+    <!--通用翻页开始-->
+    <div class="pages account-page mt20">
+        #parse("/backstage/page/page.vm")
+    </div>
+    </form>
+    <div class="blank30"></div>
+    <!--通用翻页结束-->
+</div>
+<div class="blank"></div>
+<!--通用底部开始-->
+<div class="blank"></div>
+    #parse("/front/index/common/footer.vm")
+<!--通用底部结束-->
+<script type="text/javascript">
+    //修改头部菜单样式
+    addLiClass("header_home");
+</script>
+<script type="text/javascript">
+    function toPage(totalPage, page){
+        if(page > totalPage){
+            return ;
+        }
+
+        window.location.href = "$!{rc.contextPath}/collection/list?pageNo="+page+"&pageSize=$!{page.pageSize}";
+    }
+</script>
+</body>
+</html>

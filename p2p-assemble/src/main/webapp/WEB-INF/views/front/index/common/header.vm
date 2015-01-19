@@ -1,0 +1,25 @@
+<!Doctype html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+<head>
+	<meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>$!appConstantsUtil.getProductName()官网</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="/resources/css/new/main.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/css/new/recep.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/css/new/banner.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/css/new/reg.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/css/new/form.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/new.css"/>
+	<script language="javascript" type="text/javascript" src="/resources/js/jquery/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/resources/js/jquery/jQueryDatepicker-CN.js"></script>
+    <script language="javascript" type="text/javascript" src="/resources/js/jquery/ui.core.js"></script>
+    <script language="javascript" type="text/javascript" src="/resources/js/jquery/ui.datepicker.js"></script>
+    <script language="javascript" type="text/javascript" src="/resources/js/jquery/jquery.validate.js"></script>
+	<script language="javascript" type="text/javascript" src="/resources/js/jquery/imgAuto.js"></script>
+    <script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+        var $_GLOBAL = {};
+    </script>
+    <script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+</head>

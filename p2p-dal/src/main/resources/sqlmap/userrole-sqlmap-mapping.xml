@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-USERROLE" class="com.icebreak.p2p.dataobject.UserRole">
+     <result property="id" column="user_role_id" javaType="long" jdbcType="BIGINT"/>
+     <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT"/>
+     <result property="roleId" column="role_id" javaType="int" jdbcType="INT"/>
+  </resultMap>
+  
+  <insert id="USERROLE-INSERT" parameterClass="com.icebreak.p2p.dataobject.UserRole">
+    INSERT INTO user_role (
+	     user_id,
+	     role_id
+    ) VALUES (
+	     #userId#,
+	     #roleId#
+    )
+  </insert>
+  
+  <insert id="USERROLE-DELETE" parameterClass="java.util.Map">
+    DELETE FROM user_role WHERE user_id = #userId# AND role_id = #roleId#
+  </insert>
+  
+  <delete id="USERROLE-DELETEBYUSERID" parameterClass="long">
+  	DELETE FROM user_role WHERE user_id = #value#
+  </delete>
+  
+  <delete id="USERROLE-DELETEBYROLEID" parameterClass="int">
+  	DELETE FROM user_role WHERE role_id = #value#
+  </delete>
+  
+  <select id="USERROLE-GETALL" parameterClass="java.util.Map" resultMap="RM-USERROLE" resultClass="java.util.List">
+    SELECT user_role.* FROM user_role
+	INNER JOIN role ON role.role_id = user_role.role_id
+	INNER JOIN user_base_info ON user_base_info.user_id = user_role.user_id
+	WHERE 1 = 1
+	<isNotEmpty property="statuses">
+		AND user_base_info.state IN
+		<iterate conjunction="," open="(" close=")" property="statuses">
+  		   #statuses[]#
+  	   </iterate>
+	</isNotEmpty>
+	
+	<isNotEmpty property="statuses">
+		AND role.role_code IN
+		<iterate conjunction="," open="(" close=")" property="roleCodes">
+  		   #roleCodes[]#
+  	   </iterate>
+	</isNotEmpty>
+	FOR UPDATE
+  </select>
+</sqlMap>

@@ -1,0 +1,120 @@
+#parse("/front/index/common/header.vm")
+<body>
+	#parse("/front/index/common/header-menu.vm")
+	<!--内容-->
+<!--注册页面开始-->
+<div class="blank"></div>
+<div class="alrod">
+<div class="reg_tit nav large_font">注册789金融</div>
+<div class="load nav">
+    <ul class="four_load">
+        <li class="in start"><div class="num_innext"><span class="green_o">1</span></div>填写基本信息并验证手机</li>
+        <li class="load_link"><img src="/resources/images/new/load1.png"></li>
+        <li class="next"><div class="num_innext"><span class="gray_t">2</span></div>实名认证</li>
+        <li class="load_link"><img src="/resources/images/new/load2.png"></li>
+        <li class="next"><div class="num_innext"><span class="gray_t">3</span></div>开通第三方支付账户</li>
+        <li class="load_link"><img src="/resources/images/new/load2.png"></li>
+        <li class="next end"><div class="num_innext"><span class="gray_t">4</span></div>注册完成</li>
+    </ul>
+</div>
+<div class="blank"></div>
+<form action="/anon/perfectInfo"  id="investorsOpen_form" method="post">
+<div class="reg_form nav">
+##    <ul>
+##        <li class="reg_name"><span class="required">*</span>用户名称： </li>
+##        <li class="reg_input" style="width: 500px;"><input name="userName" type="text" class="reg_input"></li>
+##    </ul>
+    <ul>
+        <li class="reg_name"><span class="required">*</span>手机号码： </li>
+        <li class="reg_input" style="width: 500px;"><input name="mobile" id="validPhone" type="text" class="reg_input">
+            <input type="hidden" id="smsBizType" name="business" value="register"/>
+        </li>
+    </ul>
+    <ul>
+        <li class="reg_name"><span class="required">*</span>登录密码： </li>
+        <li class="reg_input" style="width: 500px;"><input name="logPassword" type="password" class="reg_input"></li>
+    </ul>
+    <ul>
+        <li class="reg_name"><span class="required">*</span>确认密码： </li>
+        <li class="reg_input" style="width: 500px;"><input name="confirmLogPassword" type="password" class="reg_input"></li>
+    </ul>
+    <ul>
+        <li class="reg_name"><span class="required">*</span>常用电子邮箱：</li>
+        <li class="reg_input" style="width: 500px;">
+            <input type="text" class="reg_input" maxlength="30" name="mail" />
+            ##<b class="fn-tip">注册完成后需要通过邮箱激活用户<br />由6—20英文字母、数字或符号组成，建议使用大小写字母与数字混合设置密码。</b>
+        </li>
+    </ul>
+
+    <ul>
+        <li class="reg_name"><span class="required">*</span>图片验证码：</li>
+        <li class="reg_input" style="width: 500px;">
+            <input type="text" class="reg_input" style="width:150px;" maxlength="4" name="imgCode" onblur="validImgCode(this.value)" />&nbsp;
+            <img src="/anon/getImgCode" class="code-img newImgCod" width="102" height="30" id="newImgCod" style="vertical-align: middle;"/>
+            <a name="aImg" href="javascript:;" class="newImgCod">换一张</a>&nbsp;<span id="imgCodeErrorTip" style="color:#f60;"></span>
+            <div></div>
+        ## <b class="fn-tip">请填入上图中的字母和数字，不用区分大小写。</b>
+        </li>
+    </ul>
+
+    <ul>
+
+            #if($!{brokerNo})
+                <input type='hidden' name="referees" value="$!{brokerNo}" />
+            ##<input type="text" disabled=disabled class="fn-text w235" name="referees" value="$!{brokerNo}"/>#if($!{referNotExist})<b class="error-tip">$!{referNotExist}</b>#end
+            #else
+                <li class="reg_name"></span>推荐人编号：</li>
+                <li class="reg_input" style="width: 500px;">
+                    <input type="text" class="reg_input" name="referees" />
+                </li>
+            #end
+
+
+    </ul>
+
+    <ul>
+        <li class="reg_name"><span class="required">*</span>短信验证码： </li>
+        <li class="reg_input" style="width: 500px;">
+            <input name="verifyCode" type="text" class="reg_input" style="width: 213px;" />
+            <a href="javascript:;" id="getCode" class="reg_bt Y-countdown"><span class="ver" style="right: 170px;">获取验证码</span></a>
+        </li>
+    </ul>
+
+    <ul>
+        <li class="reg_name"></li>
+        <li class="reg_input" style="width:500px;">
+            <input name="checkOK" type="checkbox" value="" class="agree" checked="true"> 已阅读并同意
+            <a href="#" class="reg_link"><span class="blue">789金融用户协议</span></a>
+        </li>
+    </ul>
+    <ul>
+        <li class="reg_name"></li>
+        <li class="reg_input" style="width: 500px;"><a class="reg_bt" href><div class="mid_font tran_but_suc reg_blue" id="confirm">确认并创建帐号</div></a></li>
+    </ul>
+</div>
+</div>
+<input type="hidden" name="token" value="$!{token}" />
+</form>
+<div class=" form_blank"></div>
+</div>
+<!--注册页面结束-->
+<div class="blank"></div>
+#parse("/front/index/common/footer.vm")
+	<script type="text/javascript">
+        function validImgCode(code){
+            $.ajax({
+                type : 'get',
+                url : '/anon/verifyRegCode?imageVerifyCode='+code+"&tag=" + (new Date().getTime()),
+                success : function(resText){
+                    if(resText != 'success'){
+                        $('#imgCodeErrorTip').html('*图片验证码错误');
+                    }else{
+                        $('#imgCodeErrorTip').html('');
+                    }
+                }
+            });
+        }
+    	seajs.use($_GLOBAL.mode + 'investorsOpen');
+    </script>
+</body>
+</html>

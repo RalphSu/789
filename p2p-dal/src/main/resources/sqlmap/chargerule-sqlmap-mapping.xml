@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-CHARGERULE" class="com.icebreak.p2p.dataobject.ChargeRule">
+	  <result property="id" column="charge_rule_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="templateId" column="charge_template_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="method" column="rule_method" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="start" column="start_amount" javaType="long" jdbcType="BIGINT"/>
+	  <result property="end" column="end_amount" javaType="long" jdbcType="BIGINT"/>
+	  <result property="chargeValue" column="charge_value" javaType="double" jdbcType="DECIMAL"/>
+  </resultMap>
+  
+  <select id="CHARGERULE-GETBYTEMPLATEID" parameterClass="long" resultClass="java.util.List" resultMap="RM-CHARGERULE">
+	  SELECT 
+		  charge_rule_id,
+		  charge_template_id, 
+		  rule_method,
+		  start_amount,
+		  end_amount,
+		  charge_value
+      FROM charge_rule
+	  WHERE charge_template_id = #value#
+  </select>
+  
+  <delete id="CHARGERULE-DELETEBYTEMPLATEID" parameterClass="long">
+  	 DELETE FROM charge_rule WHERE charge_template_id = #value#
+  </delete>
+  
+  <insert id="CHARGERULE-ADDCHARGERULE" parameterClass="com.icebreak.p2p.dataobject.ChargeRule">
+     INSERT INTO charge_rule (
+          charge_template_id, 
+		  rule_method,
+		  start_amount,
+		  end_amount,
+		  charge_value
+     ) VALUES (
+	     #templateId#,
+	     #method#,
+	     #start#,
+	     #end#,
+	     #chargeValue#
+     )
+  </insert>
+  
+  <select id="CHARGERULE-GETBYAMOUNT" parameterClass="java.util.Map" resultClass="com.icebreak.p2p.dataobject.ChargeRule" resultMap="RM-CHARGERULE">
+  		<![CDATA[
+	  		SELECT 
+			  charge_rule_id,
+			  charge_template_id, 
+			  rule_method,
+			  start_amount,
+			  end_amount,
+			  charge_value
+	 		FROM charge_rule WHERE charge_template_id = #templateId# AND start_amount <= #amount# AND end_amount >= #amount#
+	 	]]>
+  </select>
+</sqlMap>

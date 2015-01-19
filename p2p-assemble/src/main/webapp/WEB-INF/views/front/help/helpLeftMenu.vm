@@ -1,0 +1,10 @@
+<ul class="new_menu">
+    <li $!{aboutus}><a href="/help/aboutus" href="#">关于我们</a></li>
+    <li $!{newsmenu}><a href="/help/news/list">平台公告</a></li>
+    <li $!{security}><a href="/help/security">安全保障</a></li>
+    <li $!{guidelines}><a href="/help/guidelines">新手指引</a></li>
+    <li $!{investment}><a href="/help/investment">投资流程</a></li>
+##    <li $!{joinus}><a href="/help/joinus">加入我们</a></li>
+    <li $!{contactus}><a href="/help/contactus">联系我们</a></li>
+    <li $!{qa}><a href="/help/qa">常见问题</a></li>
+</ul>

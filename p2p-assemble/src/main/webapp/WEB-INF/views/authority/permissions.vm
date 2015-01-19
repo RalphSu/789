@@ -1,0 +1,75 @@
+<html >
+	<head >
+		<title >
+			权限列表
+        </title>
+		<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+        <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+		<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+    </head>
+	<body >
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>权限管理</a></li>
+                            <li><a href>权限管理</a></li>
+                        </ul>
+                    </div>
+                    <div class="t-box">
+                        <div class="tools">
+                            <ul class="toolbar">
+                                <li class="click"><span>
+									<a href="javascript:document.location.href = '$!{rc.contextPath}/backstage/authority/toAddPermission?redirect=' + document.location.href;">
+                                    <img src="/resources/back/images/t01.png"></span>添加权限</a></li>
+                            </ul>
+                        </div>
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+								<th>权限ID</th>
+								<th>权限代码</th>
+								<th>权限名称</th>
+								<th>权限操作</th>
+								<th>回执操作</th>
+								<th>备注</th>
+								<th>操作</th>
+                            </tr>
+                        	</thead>
+            				<tbody>
+							#foreach($info in $!{page.result})
+            				<tr>
+								<td>$!{info.id}</td>
+								<td>$!{info.code}</td>
+								<td>$!{info.name}</td>
+								<td>$!{info.operate}</td>
+								<td>$!{info.backOperate}</td>
+								<td>$!{info.note}</td>
+								<td>
+									<a href="javascript:if(window.confirm('此操作将会修改该条权限,您确定修改吗?')){document.location.href = '$!{rc.contextPath}/backstage/authority/toModifyPermission?permissionId=$!{info.id}&redirect=' + document.location.href;}">编辑</a>&nbsp;|&nbsp;
+									<a href="javascript:if(window.confirm('此操作将会删除该条权限,您确定删除吗?')){document.location.href = '$!{rc.contextPath}/backstage/authority/permissions_del?ids=$!{info.id}&redirect=' + document.location.href;}">删除</a>
+								</td>
+            				</tr>
+							#end
+                        </tbody>
+                    </table>
+					</div>
+					<div class="p-box pages-b fn-clear">
+						#parse("common/page.vm")
+					</div>
+					
+                </div>
+		<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript">
+		   function toPage(totalPage, current){
+		     if(isNaN(current)){
+			   return ;
+			 }
+			 if(current < 1 || current > totalPage){
+			   return ;
+			 }
+		     document.location.href = '$!{rc.contextPath}/backstage/authority/permissions/' + current + '/$!{page.pageSize}';
+		   }
+        </script>
+    </body>
+</html>

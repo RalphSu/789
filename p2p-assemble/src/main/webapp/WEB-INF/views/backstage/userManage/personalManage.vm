@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>后台管理</title>
+    <link type="text/css" href="/resources/css/after.css" rel="stylesheet">
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<style>
+		.page span {
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="place">
+		<span>位置：</span>
+		<ul class="placeul">
+			<li><a href>开户管理</a></li>
+			<li><a href>个人用户管理</a></li>
+		</ul>
+	</div>
+    <!--体验金发放-->
+    <div class="m-layer m-layer-pub" id="pass" style="width:390px;display:none;">
+        <div class="title">
+            <h2>体验金发放</h2>
+        </div>
+        <form action="" id="passForm">
+            <div class="cont">
+                <div class="item" style="margin-bottom: 10px; padding-left: 55px;">
+                    <label for="" class="u-label"><span class="required">*</span>体验金类型：</label>
+                    <div class="" style="width: 175px;">
+                        <select name="goldExpId" id="goldExpId" style="width:180px; height: 25px;">
+                            <option value="">---&nbsp;请选择活动类型&nbsp; ---</option>
+							#foreach($goldExp in $!goldExps)
+                                <option value="$goldExp.id" amount="$!goldExp.amount">$!goldExp.name</option>
+							#end
+                        </select>
+                    </div>
+                </div>
+                <div class="item" name="syn" style="padding-left: 55px;">
+                    <label for="" class="u-label"><span class="required">*</span>体验金额：</label>
+                    <input type="text" class="u-input w170" name="amount"/>
+                </div>
+                <div class="item" name="syn" style="padding-left: 55px;">
+                        <input type="hidden" name="userId" />
+                        <a href="javascript:;" class="u-btn u-btn-blue fn-ok">确认</a><a href="javascript:;" class="u-btn u-btn-gray" title="关闭">关闭</a>
+                </div>
+            </div>
+        </form>
+    </div>
+	<div class="mc">
+		<div class="search fn-clear">
+			<form action="/backstage/userManage/personalManage"  method="post">
+				<dl>
+					<dt>真实姓名：</dt>
+					<dd><input type="text" class="u-input" name="realName" value="$!{queryConditions.realName}"/></dd>
+				</dl>
+				<dl>
+					<dt>用户名：</dt>
+					<dd><input type="text" class="u-input" name="userName" value="$!{queryConditions.userName}"/></dd>
+				</dl>
+				<dl>
+					<dt>资金账户名：</dt>
+					<dd><input type="text" class="u-input" name="accountName" value="$!{queryConditions.accountName}"/></dd>
+				</dl>
+				<dl>
+					<dt>$!appConstantsUtil.getProductName()编号：</dt>
+					<dd><input type="text" class="u-input" name="memberNo" value="$!{queryConditions.memberNo}"/></dd>
+				</dl>
+				<dl>
+					<dt>身份证号：</dt>
+					<dd><input type="text" class="u-input" name="certNo" value="$!{queryConditions.certNo}"/></dd>
+				</dl>
+				<dl>
+					<dt>手机号：</dt>
+					<dd><input type="text" class="u-input" name="mobile" value="$!{queryConditions.mobile}"/></dd>
+				</dl>
+				<dl>
+					<dt>推荐人编号：</dt>
+					<dd><input type="text" class="u-input" name="referees" value="$!{queryConditions.referees}"/></dd>
+				</dl>
+				<dl>
+					<dt>角色：</dt>
+					<dd>
+						<div class="jqtransform jqtransform-select3">
+							<select name="role" id="">
+								<option value="">全部</option>
+								<option value="12"   #if($!{queryConditions.role}=="12")   selected="selected"  #end >投资人</option>
+								<option value="11" #if($!{queryConditions.role}=="11") selected="selected"  #end >经纪人</option>
+								<option value="13"   #if($!{queryConditions.role}=="13")   selected="selected"  #end >融资人</option>
+							</select>
+						</div>
+					</dd>
+				</dl>
+				<dl>
+					<dt>状态：</dt>
+					<dd>
+						<div class="jqtransform jqtransform-select3">
+							<select name="state" id="">
+								<option value="">全部</option>
+								<option value="normal"   #if($!{queryConditions.state}=="normal")   selected="selected"  #end >正常</option>
+								<option value="inactive" #if($!{queryConditions.state}=="inactive") selected="selected"  #end >未激活</option>
+								<option value="freeze"   #if($!{queryConditions.state}=="freeze")   selected="selected"  #end >冻结</option>
+								<option value="disable"  #if($!{queryConditions.state}=="disable")  selected="selected"  #end >禁用</option>
+								<option value="locked"  #if($!{queryConditions.state}=="locked")  selected="selected"  #end >锁定</option>
+							</select>
+						</div>
+					</dd>
+				</dl>
+				<button type="submit" class="s-btn" style="cursor:pointer;">搜索</button>
+			</form>
+		</div>
+					<div class="t-box">
+						#set($t = $permission.check('/backstage/userManage/personalManage/addPersonalUser/1/2'))
+						#if($t>0)
+                        <div class="tools">
+                            <ul class="toolbar">
+                                <li class="click"><span><a href="/backstage/userManage/personalManage/addPersonalUser?parentId=0">
+									<img src="/resources/back/images/t01.png"></span>创建个人用户</a></li>
+                            </ul>
+                        </div>
+						#end
+                        <table class="tablelist">
+                            <thead>
+								<tr>
+									<th align="center" width="100">用户编号<i class="sort"><img src="/resources/back/images/px.gif" /></i></th>
+									<th width="90">用户名</th>
+									<th width="90">资金账户</th>
+									<th width="90">真是姓名</th>
+									<th width="120">身份证号</th>
+									<th width="90">网贷编号</th>
+									<th width="66">角色</th>
+                                    <th width="140">创建时间</th>
+                                    <th width="68">状态</th>
+									<th>操作</th>
+								</tr>
+                            </thead>
+                            <tbody>
+								#if($page.result.size()==0)
+                                <tr class="even">
+                                    <td colspan=8 align=center>暂时没有个人用户记录</td>
+                                </tr>
+								#end
+								#set($m = $permission.check('/backstage/userManage/updateState'))
+								#set($n = $permission.check('/backstage/userManage/resetPayPassword'))
+								#set($t = $permission.check('/backstage/userManage/personalManage/detailPersonalInfo'))
+								#set($p = $permission.check('/backstage/userManage/personalManage/updatePersonalUser/1/2'))
+								#foreach($info in $page.result)
+								<tr>
+									<td>$!{info.userBaseId}</td>
+									<td>$!{info.userName}</td>
+									<td>$!{info.accountName}</td>
+									<td>$!{info.realName}</td>
+									<td>$!{info.certNo}</td>
+									<td>$!{info.memberNo}</td>
+									#if($!{info.role}==11)
+										<td>经纪人</td>
+									#elseif($!{info.role}==12)
+										<td>投资人</td>
+									#elseif($!{info.role}==13)
+										<td>融资人</td>
+									#else
+										<td>角色暂无</td>
+									#end
+									<td>$!dateUtil.simpleFormat($!{info.rowAddTime})</td>
+									#if($!{info.state}=="freeze")
+										<td class="red">冻结</td>
+									#elseif($!{info.state}=="inactive")
+										<td class="gray">未激活</td>
+									#elseif($!{info.state}=="disable")
+										<td class="gray">禁用</td>
+									#elseif($!{info.state}=="normal")
+										<td>正常</td>
+									#elseif($!{info.state}=="locked")
+										<td>锁定</td>
+									#else
+										<td>状态暂无</td>
+									#end
+									<td>
+										#if($p>0)
+                                            <a href="javascript: return false;" userId="$!info.userId" class="goldExp">发放体验金</a>
+											 |
+											<a href="/backstage/userManage/personalManage/updatePersonalUser?userBaseId=$!{info.userBaseId}&userId=$!{info.userId}" class="updateUser">修改</a>
+										#end
+										#if($t>0)
+											|
+											<a href="/backstage/userManage/personalManage/detailPersonalInfo?userBaseId=$!{info.userBaseId}&userId=$!{info.userId}&memberNo=$!{info.memberNo}" class="updateUser">详情</a>
+										#end
+										#if($m>0)
+											#if($!{info.state}=="normal")
+												| <a href="javascript:;" class="udateState" state="freeze">冻结</a>
+											#elseif($!{info.state}=="freeze")
+												| <a href="javascript:;" class="udateState" state="normal">解冻</a>
+											#elseif($!{info.state}=="inactive" || $!{info.state}=="disable"|| $!{info.state}=="locked")
+											#end
+											<input type="hidden" value="$!{info.userBaseId}" />
+											#if($!{info.state} !="disable")
+												| <a href="javascript:;" class="udateState" state="disable">禁用</a>
+											#end
+										#end
+										<input type="hidden" value="$!{info.userBaseId}" />
+										#if($n>0)
+										#end
+										<input type="hidden" value="$!{info.userBaseId}" />
+									</td>
+								</tr>
+								#end
+							</tbody>
+						</table>
+                        <input type="hidden" value="GR" data="userType"/>
+                        <div class="p-box pages-b fn-clear">
+							#parse("/backstage/page/page.vm")
+                        </div>
+					</div>
+					</div>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>	
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'personalManage');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			var url = "/backstage/userManage/personalManage"
+			+"?userName=$!{queryConditions.userName}"
+			+"&state=$!{queryConditions.state}"
+			+"&accountName=$!{queryConditions.accountName}"
+			+"&certNo=$!{queryConditions.certNo}"
+			+"&mobile=$!{queryConditions.mobile}"
+			+"&role=$!{queryConditions.role}"
+			+"&memberNo=$!{queryConditions.memberNo}"
+			+"&realName=$!{queryConditions.realName}"
+			+"&referees=$!{queryConditions.referees}"
+			+"&payNo=$!{order.payNo}"
+			+"&pageSize=$!{page.pageSize}&pageNo="+pageNo;
+			window.location.href=url;
+		}
+    </script>
+</body>
+</html>

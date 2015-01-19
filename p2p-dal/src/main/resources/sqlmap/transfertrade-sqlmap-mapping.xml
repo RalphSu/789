@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-TRANSFERTRADE" class="com.icebreak.p2p.dataobject.TransferTrade">
+  	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="yjfUserName" column="yjf_user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="amount" column="amount" javaType="long" jdbcType="BIGINT" />
+	  <result property="tradeDetailId" column="trade_detail_id" javaType="long" jdbcType="BIGINT" />
+  </resultMap>
+  
+    <select id="TRANSFERTRADE-GETTRANSFERTRADES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRANSFERTRADE">
+		SELECT user_base_info.user_id, trade_detail.amount, user_base_info.account_id yjf_user_name, trade_detail.trade_detail_id  FROM trade_detail 
+			
+		INNER JOIN user_base_info ON trade_detail.user_id = user_base_info.user_id
+		<isNotEmpty property="roles">
+			INNER JOIN role ON role.role_id = trade_detail.role_id
+		</isNotEmpty>
+			WHERE trade_detail.trade_id = #tradeId#
+        <isNotEmpty property="roles">
+			AND role.role_code IN 
+			<iterate conjunction="," open="(" close=")" property="roles">
+	  		   #roles[]#
+	  	    </iterate>
+		</isNotEmpty>
+  </select>
+  <select id="TRANSFERTRADE-GETPHASETRANSFERTRADES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRANSFERTRADE">
+		SELECT user_base_info.user_id, trade_detail.amount, user_base_info.account_id yjf_user_name, trade_detail.trade_detail_id  FROM trade_detail 
+			
+		INNER JOIN user_base_info ON trade_detail.user_id = user_base_info.user_id
+		<isNotEmpty property="roles">
+			INNER JOIN role ON role.role_id = trade_detail.role_id
+		</isNotEmpty>
+			WHERE trade_detail.trade_id = #tradeId# 
+			AND trade_detail.transfer_phase = #transferPhase#
+		<isNotEmpty property="periodNo">
+			AND trade_detail.repay_period_no = #periodNo#
+		</isNotEmpty>
+	  	<isNotEmpty property="tradeDetailStatus">
+		  AND trade_detail.`status` = #tradeDetailStatus#
+	  	</isNotEmpty>
+        <isNotEmpty property="roles">
+			AND role.role_code IN 
+			<iterate conjunction="," open="(" close=")" property="roles">
+	  		   #roles[]#
+	  	    </iterate>
+		</isNotEmpty>
+  </select>
+
+    <select id="TRANSFERTRADE-GETPHASETRANSFERTRADES_CHARGE" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRANSFERTRADE">
+        SELECT trade_detail.user_id, trade_detail.amount, -1  yjf_user_name, trade_detail.trade_detail_id  FROM trade_detail
+        WHERE trade_detail.trade_id = #tradeId#
+        AND trade_detail.transfer_phase = #transferPhase#
+        <isNotEmpty property="roles">
+            AND trade_detail.role_id IN
+            <iterate conjunction="," open="(" close=")" property="roles">
+                #roles[]#
+            </iterate>
+        </isNotEmpty>
+    </select>
+  
+   <select id="TRANSFERTRADE-GETBROKERTRANSFERTRADES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRANSFERTRADE">
+		
+		SELECT user_base_info.account_id yjf_user_name, user_base_info.user_id, FLOOR(SUM(trade_detail.amount) * division_rule.division_rule * trade.interest_rate) amount, trade_detail.trade_detail_id FROM user_relation t
+		
+		INNER JOIN user_base_info ON t.parent_id = user_base_info.user_id
+		
+		INNER JOIN trade_detail ON trade_detail.user_id = t.child_id
+		
+		INNER JOIN trade_division ON trade_detail.trade_id = trade_division.trade_id
+		
+		INNER JOIN trade ON trade.trade_id = trade_detail.trade_id
+		
+		INNER JOIN division_rule ON division_rule.rule_template_id = trade_division.division_template_id
+		
+		WHERE trade_detail.trade_id = #tradeId# AND trade_detail.role_id = 12 AND division_rule.role_id = #roleId#
+		
+		AND t.child_id IN 
+		
+		<iterate conjunction="," open="(" close=")" property="ids">
+	  		   #ids[]#
+	  	</iterate>
+	  	
+	  	GROUP BY t.parent_id
+  </select>
+  
+  <select id="TRANSFERTRADE-GETMARKETINGTRANSFERTRADES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRANSFERTRADE">
+	  	SELECT user_base_info.account_id yjf_user_name, user_base_info.user_id, FLOOR(SUM(trade_detail.amount) * division_rule.division_rule * trade.interest_rate) amount, trade_detail.trade_detail_id  FROM user_relation tp
+		
+		INNER JOIN user_relation tc ON tc.parent_id = tp.child_id
+		
+		INNER JOIN user_base_info ON tp.parent_id = user_base_info.user_id
+		
+		INNER JOIN trade_detail ON trade_detail.user_id = tc.child_id
+		
+		INNER JOIN trade_division ON trade_detail.trade_id = trade_division.trade_id
+		
+		INNER JOIN trade ON trade.trade_id = trade_detail.trade_id
+		
+		INNER JOIN division_rule ON division_rule.rule_template_id = trade_division.division_template_id
+		
+		WHERE trade_detail.trade_id = #tradeId# AND trade_detail.role_id = 12 AND division_rule.role_id = #roleId#
+		
+		AND tc.child_id IN 
+		
+		<iterate conjunction="," open="(" close=")" property="ids">
+	  		   #ids[]#
+	  	</iterate>
+		
+	  	GROUP BY tp.parent_id
+  </select>
+  
+  <select id="TRANSFERTRADE-GETDIVISIONTRANSFERTRADES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRANSFERTRADE">
+  	SELECT user_base_info.user_id, division_detail.amount, user_base_info.account_id yjf_user_name, division_detail.trade_detail_id   FROM division_detail
+
+	INNER JOIN user_base_info ON user_base_info.user_id = division_detail.user_id
+
+	WHERE division_detail.division_status = #status# AND division_detail.trade_id = #tradeId#
+  </select>
+  
+  <select id="TRANSFERTRADE-GETLOANEDAMOUNT" parameterClass="java.util.Map" resultClass="long">
+		SELECT IFNULL(SUM(trade_detail.amount), 0) FROM trade_detail 
+		
+		INNER JOIN role ON role.role_id = trade_detail.role_id
+		
+		WHERE role.role_code = #code# AND trade_detail.trade_id = #tradeId#
+  </select>
+</sqlMap>

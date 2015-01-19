@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>新增体验金</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+</head>
+<style type="text/css">
+    .select-right {
+        background: url(/resources/images/common/select_right5.gif) no-repeat;
+        display: block;
+        width: 35px;
+        height: 37px;
+        position: absolute;
+        right: 0;
+        top: 1px;
+    }
+    .choose-bank .select-box {
+        width: 227px;
+        height: 40px;
+        border: 1px solid #CCC;
+        border-radius: 3px;
+        position: relative;
+        margin-bottom: 1px;
+    }
+    .bank-list {
+        width: 610px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 15px;
+        position: relative;
+        background: #fff;
+        z-index: 10003;
+    }
+    .fn-clear {
+		zoom: 1;
+    }
+</style>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>体验金管理</a></li>
+                            <li><a href>新增体验金</a></li>
+                        </ul>
+                    </div>
+					<form action="/backstage/goldExp/addGoldExp" method="post" class="ui-form" id="addGoldExpForm">
+						<fieldset>
+							<legend><h3>填写体验金基本信息</h3></legend>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>体验金名称：</label>
+								<input type="text" class="u-input w170" name="name"/>
+                                <p class="u-tip" id="name">填写体验金名称</p>
+							</div>
+							<div class="item" style="margin-bottom: 30px;">
+								<label for="" class="u-label"><span class="required">*</span>体验金类型：</label>
+                                <div class="jqtransform jqtransform-select3" style="width: 175px;">
+                                    <select name="activityType" id="activityType">
+                                        <option value="">---&nbsp;请选择活动类型&nbsp; ---</option>
+                                        #foreach($activityType in $!activityTypes)
+                                            <option value="$activityType">$activityType.message</option>
+                                        #end
+                                    </select>
+                                </div>
+							</div>
+							<div class="item" name="syn">
+								<label for="" class="u-label"><span class="required">*</span>体验金额：</label>
+                                <input type="text" class="u-input w170" name="amount"/>
+                                <p class="u-tip" id="amount">填写体验金额</p>
+							</div>
+                            <div class="item" name="syn">
+                                <label for="" class="u-label"><span class="required">*</span>发放数量：</label>
+                                <input type="text" class="u-input w170" name="quantity"/>
+                                <input type="hidden" class="u-input w170" name="surplusQuantity"/>
+                            </div>
+                            <div class="item" name="syn">
+                                <label for="" class="u-label"><span class="required">*</span>用途：</label>
+                                <input type="text" class="u-input w170" name="purpose"/>
+                            </div>
+                            <div class="item">
+                                <label for="" class="u-label"><span class="required">*</span>开始时间：</label>
+                                <input type="text" class="u-input w170 time" name="startTime" id="startTime"/>
+                            </div>
+                            <div class="item">
+                                <label for="" class="u-label"><span class="required">*</span>结束时间:</label>
+                                <input type="text" class="u-input w170 time" name="endTime" id ="endTime" />
+                            </div>
+                            #if($msg)
+                                <div class="item">
+                                    <label for="" class="u-label"><span class="required"></span>$!msg</label>
+                                </div>
+                            #end
+						</fieldset>
+						<div class="item mt10">
+                            <a href class="u-btn u-btn-blue fn-submit1">确定</a><a href="javascript:history.go(-1);" class="u-btn u-btn-gray">取消</a>
+						</div>
+					</form>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript">
+        seajs.use($_GLOBAL.mode + 'goldExperience');
+    </script>
+</body>
+</html>

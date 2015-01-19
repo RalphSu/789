@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>交易管理-交易查询</title>
+	<link type="text/css" href="$!{rc.contextPath}/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>交易管理</a></li>
+                            <li><a href>交易查询</a></li>
+                        </ul>
+                    </div>
+					<div class="search fn-clear">
+						<form action="$!{rc.contextPath}/backstage/trade/mainTrade/$!{page.pageSize}/$!{page.currentPageNo}" method="post" name="frm">
+							<dl>
+								<dt>交易名称：</dt>
+								<dd><input type="text" class="u-input w110" style="width: 115px;" name="tradeName" value="$!{request.getParameter('tradeName')}"/></dd>
+							</dl>
+							<dl>
+								<dt>金额区间：</dt>
+								<dd><input type="text" class="u-input w60" name="maiLoanAmount" value="$!{request.getParameter('maiLoanAmount')}"/> - <input type="text" class="u-input w60" name="maxLoanAmount" value="$!{request.getParameter('maxLoanAmount')}"/></dd>
+							</dl>
+							<dl>
+								<dt>创建时间区间：</dt>
+								<dd><input type="date" class="u-input w90" name="startDate" value="$!{request.getParameter('startDate')}"/> - <input type="date" class="u-input w90" name="endDate" value="$!{request.getParameter('endDate')}"/></dd>
+							</dl>
+							<dl>
+								<dt>还款时间区间：</dt>
+								<dd><input type="date" class="u-input w90" name="startExpireDate" value="$!{request.getParameter('startExpireDate')}"/> - <input type="date" class="u-input w90" name="endExpireDate" value="$!{request.getParameter('endExpireDate')}"/></dd>
+							</dl>
+							<dl>
+								<dt>交易状态：</dt>
+								<dd>#set($status = $!{request.getParameter('status')})
+									<div class="jqtransform jqtransform-select3">
+										<select name="status">
+											<option value=""#if($status == -1) selected="selected"#end>全部</option>
+											<option value="1"#if($status == 1) selected="selected"#end>融资中</option>
+											<option value="2"#if($status == 2) selected="selected"#end>已成立</option>
+											<option value="3"#if($status == 3) selected="selected"#end>正常还款</option>
+											<option value="4"#if($status == 4) selected="selected"#end>未成立</option>
+											<option value="5"#if($status == 5) selected="selected"#end>违约处理中</option>
+											<option value="6"#if($status == 6) selected="selected"#end>担保机构审核中</option>
+											<option value="7"#if($status == 7) selected="selected"#end>违约代偿完成</option>
+											<option value="8"#if($status == 8) selected="selected"#end>等待融资人还款</option>
+										</select>
+									</div>
+								</dd>
+							</dl>
+							<a href="javascript:void(0);" class="s-btn">搜索</a>
+						</form>
+					</div>
+					<div class="t-box">
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+								<th width="150">交易名称</th>
+                                <th width="140">交易创建时间</th>
+								<th width="110">交易成立时间</th>
+								<th width="140">交易到期时间</th>
+								<th width="120">申请融资金额(元)</th>
+								<th width="120">实际融资金额(元)</th>
+                                <th width="70">状态</th>
+								<th>操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							#set($t = $permission.check('/backstage/trade/offLineTrade'))
+							#set($p = $permission.check('/backstage/trade/fixRepayTime'))
+							#set($q = $permission.check('/backstage/trade/investTrade/1/2'))
+							#set($m = $permission.check('/backstage/trade/devisionDetails/1/2'))
+							#set($n = $permission.check('/backstage/trade/tradeFlow/1/2'))
+							#foreach($item in $!{page.result})
+							<tr>
+								<td>$!{item.name}</td>
+                                <td>$!dateUtil.simpleFormat($!{item.createDate})</td>
+							<!--	<td>还款</td> -->
+								#if($!{item.effectiveDateTime})
+        						 <td>$!dateUtil.dtSimpleFormat($!{item.effectiveDateTime})</td>
+        						#else
+        							<td>暂无数据</td>
+								#end
+								#if($!{item.expireDateTime})
+        						 <td>$!dateUtil.simpleFormat($!{item.expireDateTime})</td>
+        						#else
+        							<td>暂无数据</td>
+        						#end
+								<td ><span class="ft-f60">￥$!{moneyUtil.getFormatAmount($!{item.amount})}</span></td>
+								<td><span class="ft-f60">￥$!{moneyUtil.getFormatAmount($!{item.loanedAmount})}</span></td>
+                                <td>#if($!{item.status}=="0")
+        								待审核
+        							#elseif($!{item.status}=="1")
+        								融资中
+        							#elseif($!{item.status}=="2") 
+        								未到期
+        							#elseif($!{item.status}=="3") 
+        								正常还款
+        							#elseif($!{item.status}=="4")  
+        								未成立
+        							#elseif($!{item.status}=="5")  
+        								违约处理中
+									#elseif($!{item.status}=="6")  
+        								担保机构审核中
+        							#elseif($!{item.status}=="7")  
+        								违约代偿完成
+									#elseif($!{item.status}=="8")  
+        								等待融资人还款
+        							#end
+								</td>
+								<td>
+									#if($t > 0)
+										<a href="javascript:void(0);" name="offLineTrade" data ="$!{item.id}">下线</a>
+									#end
+									#if($q > 0)
+										<a href="javascript:void(0);" onclick="javacript:document.location.href = '$!{rc.contextPath}/backstage/trade/investTrade/$!{item.id}';"> | 详情</a>
+									#end
+									#if($m > 0)	
+										<a href="javascript:void(0);" onclick="javacript:document.location.href = '$!{rc.contextPath}/backstage/trade/devisionDetails/$!{item.id}';"> | 分润详情</a>
+									#end
+									#if($n > 0)
+										<a href="javascript:void(0);" onclick="javacript:document.location.href = '$!{rc.contextPath}/backstage/trade/tradeFlow/$!{item.id}';"> | 交易流水</a>
+									#end
+									#if($!{item.status}=="1")
+										<a href="javascript:void(0);" name="transfer" data ="$!{item.id}"> | 放款</a>
+									#end
+									<a href="javascript:void(0);" name="closeTrade" data ="$!{item.id}"> | 流标</a>
+                                </td>
+							</tr>
+							#end
+                            </tbody>
+						</table>
+						<div class="p-box pages-b fn-clear">
+							#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+		<!--提示-->
+	<div class="m-layer m-layer-tip" id="fixTime" style="width:360px;display:none;">
+		<div class="title">
+			<h2>修订还款时间</h2>
+		</div>
+		<form id="fixRepayTimeForm" action="/backstage/trade/fixRepayTime" method="post">
+		
+		<div class="cont">
+			<ul>
+				<li><label for=""><span style="color:red">*</span>还款时间：</label><input type="text" class="u-input w170 fn-time" id="expireDate" name="expireDate"/></li>
+			</ul>
+			<div class="l-btn">
+				<input type="hidden" id="fixObject" name="tradeObject" />
+				<input type="hidden" name="token" value="$!token" />
+				<a href="javascript:;" class="u-btn u-btn-blue fn-ok">确认修订</a><a href="javascript:;" class="u-btn u-btn-gray">关闭</a>
+			</div>
+		</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/plugins/jquery.window.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'backTradeMain');
+    </script>
+	<script type="text/javascript">
+		
+		$('.s-btn').click(function (){
+			toPage($!{page.totalPageCount}, $!{page.currentPageNo});
+		});
+		
+		
+		function toPage(totalPage, curr){
+		    if(isNaN(curr)){ return; }
+		    if(curr < 1){ return ;}
+			if(curr > totalPage){ return ;}
+			$('form[name=frm]').attr('action', '$!{rc.contextPath}/backstage/trade/mainTrade/$!{page.pageSize}/' + curr);
+			document.frm.submit();
+		}
+    </script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,35 @@
+#parse("/front/index/common/header.vm")
+<body>
+    #parse("/front/index/common/header-menu.vm")
+<div class="top_blank"></div>
+<div class="blank"></div>
+<!--通用新闻公告内容开始-->
+<div class="new nav" style="height: 600px;">
+    #parse("/front/help/helpLeftMenu.vm")
+    <ul class="new_list">
+        <li class="new_list_tit large_font"><span class="blue">加入我们</span></li>
+        <li class="new_list_text">
+            <p class="blue" style="font-size:15px;">
+                <b>加入我们</b>
+            </p>
+            <P>
+                789金融隶属于重庆柒捌玖网络科技有限公司，注册资金伍仟一佰万元整，总部位于重庆，是由金融界老兵及互联网精英团队共同倾力打造的一个安全、透明、便捷的金融资讯和信息发布平台。
+                789金融有着多年线下票据行业经验与互联网专业技术的结合，为投资者提供一个无门槛、保本息、高收益的理财新选择。我们用心经营于您的每一份投资，认真把控好在线上、线下的每一个环节，享受到银行级别的安全保障，彻底做到让您投资无忧。
+            </P><br/>
+            <p class="blue" style="font-size:15px;">
+                <b>为什么选择789金融</b>
+            </p>
+
+            <p>
+                <b>①一元起投，无门槛</b>&nbsp;&nbsp;
+                <b>②银行承兑，低风险</b>&nbsp;&nbsp;
+                <b>③银行托管，更安全</b>&nbsp;&nbsp;
+                <b>④保本保息，高收益</b>&nbsp;&nbsp;
+            </p>
+        </li>
+    </ul>
+</div>
+<!--通用新闻公告内容结束-->
+    #parse("/front/index/common/footer.vm")
+</body>
+</html>

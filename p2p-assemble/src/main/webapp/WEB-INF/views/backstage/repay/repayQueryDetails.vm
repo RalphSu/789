@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>交易管理-还款查询</title>
+	<link type="text/css" href="$!{rc.contextPath}/resources/css/after.css" rel="stylesheet" />
+</head>
+<body>
+				<div class="mc">
+					<div class="top">
+						<p><a href="">交易管理</a> > 还款详情</p>
+					</div>
+					<h2 class="title2 mt10"><span class="tit-name">项目详情</span><a href="javascript:history.go(-1)"  class="return">《 返回</a><span class="balance" href="#">可用余额<span class="ml5">￥$!{thirdPartAccountInfo.availableBalance.toStandardString()}</span><a href="/usercenter/deposit"></a></span></h2>
+					 <div class="b-border pro-info">
+                    	<ul>
+                        	<li><span>项目名称：</span><p>$!{trade.tradeName}</p></li>
+                            <li><span>借款金额：</span><p>$!{loanDemand.loanAmount.toStandardString()} 元</p></li>
+                            <li><span>成本年化率：</span><p>$!{totalAnnualInterest}</p></li>
+                            <li><span>期限：</span><p>$!{trade.timeLimit} $!{trade.timeLimitUnit.viewName}</p></li>
+                            <li><span>还款方式：</span><p>$!loanDemand.repayDivisionWay.message</p></li>
+                            #if($!{trade.tradeStatus.value}==1)
+							<li><span>已投金额：</span><p>$!{trade.loanedAmount.toStandardString()} 元</p></li>
+							<li class="ft-f60"><span>最低投资：</span><p>$!{loanDemand.leastInvestAmount.toStandardString()} 元</p><br/>
+								#if($!{lastInvestAvailable})
+									#set($st1=$permission.check('/invest/invest'))
+									#if($st1 > 0 && $!{item.bizTypec.code}=='public')
+			    						<span id="contract-demo" class="wnd-tip wnd-tip-tooltip" style="width:150px;">
+			    							项目尾投阶段不受此处最低投资限制
+			    							<a id="lastInvestAvlb" href="javascript:;">
+			    							点此投资</a>
+			                            </span><br/>
+									#end
+								#end
+								#end
+							</li>
+                        </ul>
+                     </div>
+            </div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/plugins/jquery.window.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'backTradeMain');
+    </script>
+	<script type="text/javascript">
+		
+	
+    </script>
+</body>
+						
+</head>
+</html>
+
+
+
+
+

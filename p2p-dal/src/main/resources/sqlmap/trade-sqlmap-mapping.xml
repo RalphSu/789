@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-TRADE" class="com.icebreak.p2p.dataobject.Trade" >
+	  <result property="id" column="trade_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="code" column="trade_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="demandId" column="demand_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="name" column="trade_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="amount" column="trade_amount" javaType="long" jdbcType="BIGINT" />
+	  <result property="interestRate" column="interest_rate" javaType="double" jdbcType="DECIMAL" />
+	  <result property="leastInvestAmount" column="least_invest_amount" javaType="long" jdbcType="BIGINT" />
+	  <result property="saturationConditionMethod" column="saturation_condition_method" javaType="java.lang.String" jdbcType="ENUM" />
+	  <result property="saturationCondition" column="saturation_condition" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="status" column="trade_status" javaType="short" jdbcType="TINYINT" />
+	  <result property="timeLimitUnit" column="time_limit_unit" javaType="java.lang.String" jdbcType="ENUM"/>
+	  <result property="timeLimit" column="time_limit" javaType="int" jdbcType="INT" />
+	  <result property="deadline" column="deadline" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="loanedAmount" column="loaned_amount" javaType="long" jdbcType="BIGINT" />
+	  <result property="createDate" column="trade_create_date" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="finishDate" column="trade_finish_date" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="effectiveDateTime" column="trade_effective_date" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="expireDateTime" column="trade_expire_date" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="note" column="trade_note" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="isNotifyLoaner" column="trade_isNotified_loaner" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="isJoinActivity" column="is_join_activity" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="loanType" column="loan_type" javaType="com.icebreak.p2p.dataobject.DOEnum.LoanTypeEnum" jdbcType="ENUM" />
+  </resultMap>
+  
+  <resultMap id="RM-TRADE-LOAN" class="com.icebreak.p2p.dataobject.Trade" >
+	  <result property="id" column="trade_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="code" column="trade_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="demandId" column="demand_id" javaType="long" jdbcType="BIGINT" />
+	  <result property="name" column="trade_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="amount" column="trade_amount" javaType="long" jdbcType="BIGINT" />
+	  <result property="interestRate" column="interest_rate" javaType="double" jdbcType="DECIMAL" />
+	  <result property="leastInvestAmount" column="least_invest_amount" javaType="long" jdbcType="BIGINT" />
+	  <result property="saturationConditionMethod" column="saturation_condition_method" javaType="java.lang.String" jdbcType="ENUM" />
+	  <result property="saturationCondition" column="saturation_condition" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="status" column="trade_status" javaType="short" jdbcType="TINYINT" />
+	  <result property="timeLimitUnit" column="time_limit_unit" javaType="java.lang.String" jdbcType="ENUM"/>
+	  <result property="timeLimit" column="time_limit" javaType="int" jdbcType="INT" />
+	  <result property="deadline" column="deadline" javaType="java.util.Date" jdbcType="DATETIME"/>
+	  <result property="loanedAmount" column="loaned_amount" javaType="long" jdbcType="BIGINT" />
+	  <result property="createDate" column="trade_create_date" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="finishDate" column="trade_finish_date" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="effectiveDateTime" column="trade_effective_date" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="expireDateTime" column="trade_expire_date" javaType="java.util.Date" jdbcType="DATETIME" />
+	  <result property="note" column="guarantee_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="isNotifyLoaner" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="isJoinActivity" column="is_join_activity" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="loanType" column="loan_type" javaType="com.icebreak.p2p.dataobject.DOEnum.LoanTypeEnum" jdbcType="ENUM" />
+  </resultMap>
+  
+  <select id="TRADE-GETBYTRADEID" parameterClass="long" resultClass="com.icebreak.p2p.dataobject.Trade" resultMap="RM-TRADE">
+     SELECT 
+	     t.trade_id,
+	     t.trade_code,
+	     t.demand_id,
+	     t.trade_name,
+	     t.trade_amount,
+	     t.interest_rate,
+	     t.least_invest_amount,
+	     t.saturation_condition_method,
+	     t.saturation_condition,
+	     t.trade_status,
+	     t.time_limit_unit,
+	     t.time_limit,
+	     t.deadline,
+	     t.loaned_amount,
+	     t.trade_create_date,
+	     t.trade_finish_date,
+	     t.trade_effective_date,
+	     t.trade_expire_date,
+	     t.trade_note,
+	     t.trade_isNotified_loaner,
+	     t.is_join_activity,
+	     t.loan_type
+     FROM trade t WHERE t.trade_id = #value#;
+  </select>
+  <select id="TRADE-GETBYTRADEID-WITHROWLOCK" parameterClass="long" resultClass="com.icebreak.p2p.dataobject.Trade" resultMap="RM-TRADE">
+     SELECT 
+	     t.trade_id,
+	     t.trade_code,
+	     t.demand_id,
+	     t.trade_name,
+	     t.trade_amount,
+	     t.interest_rate,
+	     t.least_invest_amount,
+	     t.saturation_condition_method,
+	     t.saturation_condition,
+	     t.trade_status,
+	     t.time_limit_unit,
+	     t.time_limit,
+	     t.deadline,
+	     t.loaned_amount,
+	     t.trade_create_date,
+	     t.trade_finish_date,
+	     t.trade_effective_date,
+	     t.trade_expire_date,
+	     t.trade_note,
+	     t.trade_isNotified_loaner,
+	     t.is_join_activity,
+	  	 t.loan_type
+     FROM trade t WHERE t.trade_id = #value# FOR UPDATE;
+  </select>
+  
+  <select id="TRADE-GETBYTRADECODE" parameterClass="java.lang.String" resultClass="com.icebreak.p2p.dataobject.Trade" resultMap="RM-TRADE">
+  	SELECT 
+	     t.trade_id,
+	     t.trade_code,
+	     t.demand_id,
+	     t.trade_name,
+	     t.trade_amount,
+	     t.interest_rate,
+	     t.least_invest_amount,
+	     t.saturation_condition_method,
+	     t.saturation_condition,
+	     t.trade_status,
+	     t.time_limit_unit,
+	     t.time_limit,
+	     t.deadline,
+	     t.loaned_amount,
+	     t.trade_create_date,
+	     t.trade_finish_date,
+	     t.trade_effective_date,
+	     t.trade_expire_date,
+	     t.trade_note,
+	     t.trade_isNotified_loaner,
+	     t.is_join_activity,
+	  	 t.loan_type
+     FROM trade t WHERE t.trade_code = #value#;
+  </select>
+  
+  <insert id="TRADE-ADDTRADE" parameterClass="com.icebreak.p2p.dataobject.Trade">
+ 	 INSERT INTO trade (
+	     trade_code,
+	     demand_id,
+	     trade_name,
+	     trade_amount,
+	     interest_rate,
+	     least_invest_amount,
+	     saturation_condition_method,
+	     saturation_condition,
+	     trade_status,
+	     time_limit_unit,
+	     time_limit,
+	     deadline,
+	     loaned_amount,
+	     trade_create_date,
+	     trade_finish_date,
+	     trade_note,
+	     trade_isNotified_loaner,
+	     is_join_activity,
+	     loan_type
+	 ) VALUES (
+	     #code#,
+	     #demandId#,
+	     #name#,
+	     #amount#,
+	     #interestRate#,
+	     #leastInvestAmount#,
+	     #saturationConditionMethod#,
+	     #saturationCondition#,
+	     #status#,
+	     #timeLimitUnit#,
+	     #timeLimit#,
+	     #deadline#,
+	     #loanedAmount#,
+	     #createDate#,
+	     #finishDate#,
+	     #note#,
+	     #isNotifyLoaner#,
+	     #isJoinActivity#,
+	  	 #loanType#
+	 )
+  </insert>
+  
+  <select id="TRADE-GETBYDEMANDID" parameterClass="long" resultClass="com.icebreak.p2p.dataobject.Trade" resultMap="RM-TRADE">
+	  SELECT 
+		     t.trade_id,
+		     t.trade_code,
+		     t.demand_id,
+		     t.trade_name,
+		     t.trade_amount,
+		     t.interest_rate,
+		     t.least_invest_amount,
+		     t.saturation_condition_method,
+		     t.saturation_condition,
+		     t.trade_status,
+		     t.time_limit_unit,
+		     t.time_limit,
+		     t.deadline,
+		     t.loaned_amount,
+		     t.trade_create_date,
+		     t.trade_finish_date,
+		     t.trade_effective_date,
+		     t.trade_expire_date,
+		     t.trade_note,
+	         t.trade_isNotified_loaner,
+	  		 t.is_join_activity,
+	         t.loan_type
+	     FROM trade t WHERE t.demand_id = #value#;
+  </select>
+  
+  <update id="TRADE-UPDATESTATUS" parameterClass="java.util.Map">
+  		UPDATE trade SET trade_status = #status# WHERE trade_id = #tradeId#
+  </update>
+
+	<update id="TRADE-UPDATESTATUS-BY-FULL" parameterClass="java.util.Map">
+		UPDATE trade SET trade_status = #status# , trade_effective_date = #effectiveDateTime#, trade_expire_date = #expireDateTime# WHERE trade_id = #tradeId#
+	</update>
+
+  <update id="TRADE-CREATEEFFECTIVEDATE" parameterClass="java.util.Map">
+  		UPDATE trade SET trade_effective_date = #effectiveDateTime#, trade_expire_date=#expireDateTime# WHERE trade_id = #tradeId#
+  </update>
+  <update id="TRADE-ADDLOANEDAMOUNT" parameterClass="java.util.Map">
+  		UPDATE trade SET loaned_amount = loaned_amount + #amount# WHERE trade_id = #tradeId#
+  </update>
+  <update id="TRADE-UPDATEAMOUNT" parameterClass="java.util.Map" >
+  		UPDATE trade SET trade_amount = #amount# WHERE trade_id = #tradeId#
+  </update>
+  
+  <update id="TRADE-MODIFYFINISHDATE" parameterClass="java.util.Map">
+  		UPDATE trade SET trade_finish_date = #date# WHERE trade_id = #tradeId#
+  </update>
+  
+  
+  <!-- mapped statement for TradeDaoImpl.queryCountByCondition -->
+	<select id="RM-TRADE-QUERY_COUNT_BY_CONDITION" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /* RM-TRADE-QUERY_COUNT_BY_CONDITION */ COUNT(1) 
+		FROM trade t 
+		INNER JOIN  trade_detail d ON t.trade_id=d.trade_id 
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[t.trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeName" prepend=" and ">
+				<![CDATA[t.trade_name like CONCAT(CONCAT('%', #tradeName#),'%') ]]>
+			</isNotEmpty>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[d.user_Id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[d.role_id = #roleId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[t.loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="isJoinActivity" prepend=" and ">
+				<![CDATA[t.is_join_activity = #isJoinActivity#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[t.trade_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[t.trade_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[t.trade_create_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[t.trade_create_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date >= #maiExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date <= #maxExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="executionDateTime" prepend=" and ">
+				<![CDATA[t.deadline <= #executionDateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="effectiveDateTime" prepend=" and ">
+				<![CDATA[t.trade_effective_date <= #effectiveDateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic> 
+	</select>
+  
+  <!-- mapped statement for TradeDaoImpl.queryListByCondition -->
+	<select id="RM-TRADE-QUERY_LIST_BY_CONDITION" resultMap="RM-TRADE">
+		<![CDATA[
+		SELECT * 
+		FROM trade t INNER JOIN  trade_detail d ON t.trade_id=d.trade_id 
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[t.trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeName" prepend=" and ">
+				<![CDATA[t.trade_name like CONCAT(CONCAT('%', #tradeName#),'%') ]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[t.loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="isJoinActivity" prepend=" and ">
+				<![CDATA[t.is_join_activity = #isJoinActivity#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[d.user_Id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[d.role_id = #roleId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[t.trade_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[t.trade_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[t.trade_create_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[t.trade_create_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date >= #maiExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date <= #maxExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="executionDateTime" prepend=" and ">
+				<![CDATA[t.deadline <= #executionDateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY t.trade_create_date DESC
+		LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="RM-TRADE-QUERY_ALLLOANEDAMOUNT_BY_CONDITION" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /* RM-TRADE-QUERY_LIST_BY_CONDITION */ IFNULL(SUM(t.loaned_amount), 0)
+		FROM trade t INNER JOIN  trade_detail d ON t.trade_id=d.trade_id 
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[t.trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[t.loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="isJoinActivity" prepend=" and ">
+				<![CDATA[t.is_join_activity = #isJoinActivity#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[d.user_Id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[d.role_id = #roleId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[t.trade_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[t.trade_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[t.trade_create_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[t.trade_create_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="executionDateTime" prepend=" and ">
+				<![CDATA[t.deadline <= #executionDateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+  <!-- mapped statement for TradeDaoImpl.queryCountByCondition -->
+	<select id="RM-TRADE-QUERY_COUNT_BY_CONDITION_FORJOB" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT   /* RM-TRADE-QUERY_COUNT_BY_CONDITION */ COUNT(1) 
+		FROM trade t 
+		INNER JOIN  trade_detail d ON t.trade_id=d.trade_id 
+                INNER JOIN loan_demand l ON t.demand_id = l.demand_id
+                WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[t.trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[t.loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="isJoinActivity" prepend=" and ">
+				<![CDATA[t.is_join_activity = #isJoinActivity#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[d.user_Id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[d.role_id = #roleId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[t.trade_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[t.trade_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[t.trade_create_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[t.trade_create_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="executionDateTime" prepend=" and ">
+				<![CDATA[t.deadline <= #executionDateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="effectiveDateTime" prepend=" and ">
+				<![CDATA[t.trade_effective_date <= #effectiveDateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="expireDateTime" prepend=" and ">
+				<![CDATA[t.trade_expire_date <= #expireDateTime#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="repayDivisionWay" prepend=" and ">
+				<![CDATA[l.repay_division_way = #repayDivisionWay#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="isNotifiedLoaner" prepend=" and ">
+				<![CDATA[t.trade_isNotified_loaner <= #isNotifiedLoaner#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic> 
+		<![CDATA[ FOR UPDATE;]]>
+	</select>
+  
+  <!-- mapped statement for TradeDaoImpl.queryListByCondition -->
+	<select id="RM-TRADE-QUERY_LIST_BY_CONDITION_FORJOB" resultMap="RM-TRADE">
+		<![CDATA[
+		SELECT /* RM-TRADE-QUERY_LIST_BY_CONDITION */ * 
+		FROM trade t 
+		INNER JOIN  trade_detail d ON t.trade_id=d.trade_id 
+                INNER JOIN loan_demand l ON t.demand_id = l.demand_id
+                WHERE 1=1      ]]>
+		<dynamic>
+			<isNotEmpty property="tradeCode" prepend=" and ">
+				<![CDATA[t.trade_code = #tradeCode#]]>
+			</isNotEmpty>
+			<isNotEmpty property="loanType" prepend=" and ">
+				<![CDATA[t.loan_type = #loanType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="isJoinActivity" prepend=" and ">
+				<![CDATA[t.is_join_activity = #isJoinActivity#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userId" prepend=" and ">
+				<![CDATA[d.user_Id = #userId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[d.role_id = #roleId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiLoanAmount" prepend=" and ">
+				<![CDATA[t.trade_amount >= #maiLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxLoanAmount" prepend=" and ">
+				<![CDATA[t.trade_amount <= #maxLoanAmount#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maiDemandDate" prepend=" and ">
+				<![CDATA[t.trade_create_date >= #maiDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="maxDemandDate" prepend=" and ">
+				<![CDATA[t.trade_create_date <= #maxDemandDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="executionDateTime" prepend=" and ">
+				<![CDATA[t.deadline <= #executionDateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="effectiveDateTime" prepend=" and ">
+				<![CDATA[t.trade_effective_date <= #effectiveDateTime#]]>
+			</isNotEmpty>
+			<isNotEmpty property="expireDateTime" prepend=" and ">
+				<![CDATA[t.trade_expire_date <= #expireDateTime#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="repayDivisionWay" prepend=" and ">
+				<![CDATA[l.repay_division_way = #repayDivisionWay#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="isNotifiedLoaner" prepend=" and ">
+				<![CDATA[t.trade_isNotified_loaner <= #isNotifiedLoaner#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY t.trade_create_date DESC
+		LIMIT #limitStart#,#pageSize# FOR UPDATE;]]>
+	</select>
+	<update id="TRADE-ADDAMOUNTTOORGS" parameterClass="java.util.Map">
+  		UPDATE trade_detail SET amount = amount + #amount# WHERE trade_id = #tradeId# AND role_id = #roleId#
+  	</update>
+  	
+  	<update id="TRADE-UPDATE-ISNOTIFIED-LOANER" parameterClass="java.util.Map">
+  		UPDATE trade SET trade_isNotified_loaner = #isNotifiedLoaner# WHERE trade_id = #tradeId#
+  </update>
+  <update id="TRADE-UPDATE-TRADE-EXPIRE-DATE" parameterClass="java.util.Map">
+  		UPDATE trade SET trade_expire_date = #expireDate# WHERE trade_id = #tradeId#
+  </update>
+  
+  <delete id="TRADE-DELETEBYTRADEID" parameterClass="long">
+ 	  DELETE FROM trade WHERE trade_id = #value#
+  </delete>
+  
+  <select id="TRADE-COUNTAMOUNTBYPARAMS" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /* TRADE-COUNTAMOUNTBYPARAMS */ IFNULL(SUM(t.loaned_amount), 0)
+		FROM trade t WHERE 1=1 ]]>
+		<dynamic>
+			<isNotEmpty property="startDate" prepend=" and ">
+				<![CDATA[t.trade_create_date >= #startDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endDate" prepend=" and ">
+				<![CDATA[t.trade_create_date <= #endDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="LOAN-REPAY-LIST" resultMap="RM-TRADE-LOAN" parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT t.*,l.guarantee_name,l.user_name FROM trade t INNER JOIN loan_demand l ON t.demand_id = l.demand_id
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="startExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date >= #startExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date <= #endExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeName" prepend=" and ">
+				<![CDATA[t.trade_name like '%$tradeName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[l.guarantee_name like '%$guaranteeName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[l.user_name like '%$userName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY t.trade_effective_date DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	<select id="LOAN-REPAY-COUNTS"  resultClass="java.lang.Long"  parameterClass="java.util.Map">
+		<![CDATA[
+		SELECT IFNULL(COUNT(1),0) counts FROM trade t INNER JOIN loan_demand l ON t.demand_id = l.demand_id
+		WHERE 1=1]]>
+		<dynamic>
+			<isNotEmpty property="startExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date >= #startExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endExpireDate" prepend=" and ">
+				<![CDATA[t.trade_expire_date <= #endExpireDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="tradeName" prepend=" and ">
+				<![CDATA[t.trade_name like '%$tradeName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="guaranteeName" prepend=" and ">
+				<![CDATA[l.guarantee_name like '%$guaranteeName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[l.user_name like '%$userName$%']]>
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">
+				<![CDATA[t.trade_status in]]>
+				<iterate property="status" open="(" close=")" conjunction=",">
+					<![CDATA[#status[]#]]>
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<update id="TRADE-MODIFYTRADECODE" parameterClass="java.util.Map">
+		UPDATE trade SET trade_code = #tradeCode# WHERE trade_id = #tradeId#
+	</update>
+	
+	
+	<select id="RM-TRADE-BY_STATUS" resultMap="RM-TRADE">
+		SELECT * FROM trade t WHERE t.trade_status  = #status#
+	</select>
+</sqlMap>

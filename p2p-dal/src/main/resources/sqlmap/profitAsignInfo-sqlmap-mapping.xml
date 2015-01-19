@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+	<resultMap id="RM-PROFITASIGNINFO" class="com.icebreak.p2p.dataobject.ProfitAsignInfo">
+		<result property="tblBaseId" column="tbl_base_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<result property="receiveId" column="receive_id" javaType="long" jdbcType="BIGINT"/>
+		<result property="distributionId" column="distribution_id" javaType="long" jdbcType="BIGINT"/>
+		<result property="addTime" column="add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="modifyTime" column="modify_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="distributionQuota" column="distribution_quota" javaType="double" jdbcType="decimal"/>
+		<result property="note" column="note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="rem1" column="rem1" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		
+	</resultMap>
+
+	<!-- ============================================= -->
+	<!-- mapped statements for PROFITASIGNINFO -->
+	<!-- ============================================= -->
+	<!-- mapped statement for PROFITASIGNINFO.insert -->
+	<insert id="MS-PROFITASIGNINFO-INSERT">
+		<![CDATA[
+		insert /*MS-PROFITASIGNINFO-INSERT*/ into profit_asign_info(tbl_base_id,receive_id,distribution_id,add_time,modify_time,distribution_quota,note,rem1) 
+		values (#tblBaseId#, #receiveId#, #distributionId#, #addTime#, #modifyTime#,#distributionQuota#,#note#, #rem1#)
+		]]>
+	</insert>
+	
+	<insert id="MS-PROFITASIGNINFO-UPDATE">
+		<![CDATA[
+		UPDATE  profit_asign_info /*MS-PROFITASIGNINFO-UPDATE*/ SET receive_id=#receiveId#,distribution_id=#distributionId#,add_time=#addTime#,
+			modify_time=#modifyTime#,distribution_quota=#distributionQuota#,note=#note#, rem1=#rem1#
+			WHERE tbl_base_id=#tblBaseId#
+		]]>
+	</insert>
+		
+	<select id="MS-PROFITASIGNINFO-QUERY" resultMap="RM-PROFITASIGNINFO">
+		<![CDATA[SELECT /*MS-PROFITASIGNINFO-QUERY*/ * FROM profit_asign_info WHERE receive_id=#receiveId#]]>
+	</select>
+	<select id="MS-PROFITASIGNINFO-QUERYBY-DISTRIBUTIONID" resultMap="RM-PROFITASIGNINFO">
+		<![CDATA[SELECT /*MS-PROFITASIGNINFO-QUERY*/ * FROM profit_asign_info WHERE receive_id=#receiveId# and distribution_id=#distributionId#]]>
+	</select>
+		<delete id="MS-PROFITASIGNINFO-DELETE">
+		<![CDATA[
+		DELETE /*MS-PROFITASIGNINFO-DELETE*/ FROM profit_asign_info WHERE (tbl_base_id = #tblBaseId#)
+		]]>
+	</delete>
+</sqlMap>

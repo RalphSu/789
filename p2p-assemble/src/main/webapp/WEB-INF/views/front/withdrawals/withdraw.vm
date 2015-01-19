@@ -1,0 +1,103 @@
+<#parse("/front/index/common/header.vm")
+<link type="text/css" href="/styles/style.css" rel="stylesheet" />
+<link type="text/css" href="/styles/p2p.css" rel="stylesheet">
+<body>
+	#parse("/front/index/common/header-menu.vm")
+<!--内容-->
+
+<div class="top_blank"></div>
+<div class="container fn-clear">
+        <div class="mt30 fn-clear user-box">
+			<div class="main-content" style="margin-bottom: 10px;">
+				<div class="top-title" style="margin-bottom: 10px;">
+					<h2 class="fn-left">申请提现</h2>
+				</div>
+				<div class="pay-way">
+					<div class="t-money">
+					</div>
+					<form action="/invest/forwardWithdraw" id="fm-withdraw" method="post" class="fm-pay">
+						<h3 class="fm-title">选择提现银行账户</h3>
+						<ul class="selected-bank fn-clear" id="select_bank_list">
+							#foreach($card in $!cards)
+                                <li id="$!card.pactNo">
+									#set($cardNo = $!card.cardNo)
+									#set($len = $!cardNo.length())
+									#set($start = $len - 4)
+                                    <a href="javascript: return false;"><img src="/styles/images/bank/$!{card.bankShort}.jpg" alt="中信银行"><p>尾号$!cardNo.substring($start, $len)</p></a>
+                                    <a href="javascript:;" class="del" title="删除"></a>
+                                </li>
+							#end
+							<li class="add-b">
+								<a href="javascript: return false;" class="add-b">添加银行账户</a>
+							</li>
+						</ul>
+						<div id="bindCard"
+						#if($!cards.size() > 0)
+							style="display: none"
+						#end>
+							<input type="hidden" name="pactNo" />
+							#*<div class="fm-item fn-clear">
+								<label>开户名：</label>
+								<input type="text" name="cardName" class="pay-text w245">
+							</div>*#
+							<div class="fm-item fn-clear">
+								<label>开户银行：</label>
+                                <div class="jqtransform jqtransform-select3">
+                                    <input type="hidden" name="bankType" />
+                                    <select name="bankCode" data="selectBranch" style="width: 200px;">
+										#foreach($bank in $!banks)
+											<option value="$!bank.bankCode">$!bank.bankName</option>
+										#end
+                                    </select>
+                                </div>
+							</div>
+							<div class="fm-item fn-clear">
+								<label>银行账号：</label>
+								<input type="text" name="cardNo" class="pay-text w245">
+								<p class="fn-tip">请按照您开户许可证上的银行账号填写</p>
+							</div>
+                        </div>
+						<div class="fm-item fn-clear">
+							<label>提现金额：</label>
+							<input type="text" name="amount" class="pay-text w245">
+							#*<a href="">提现规则</a>
+							<table cellpadding="0" cellspacing="0" border="0" class="t-rule tx-rule">
+								<tbody>
+								<tr class="thead">
+									<td>笔数</td>
+									<td>服务费</td>
+								</tr>
+								<tr>
+									<td>无限制</td>
+									<td>3元/笔</td>
+								</tr>
+								</tbody>
+							</table>*#
+						</div>
+						<div class="fm-item">
+							<button type="submit" class="pay-btn-g fm-btn">下一步</button>
+						</div>
+					</form>
+					<ul class="explain">
+						<li><em></em>提现是指把易极付账户中的可用余额(充值金额除外)提取到银行帐户中，每天最多可提现3次。</li>
+						<li><em></em>提现之前请确认您绑定的银行帐户是否正常可用。</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+    <!--通用底部开始-->
+    <div class="blank"></div>
+	#parse("/front/index/common/footer.vm")
+    <!--通用底部结束-->
+    <!--通用底部结束-->
+    <script type="text/javascript">
+        var $_GLOBAL = {};
+    </script>
+    <script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+    <script type="text/javascript">
+        seajs.use($_GLOBAL.mode + 'withdraw');
+    </script>
+</body>
+</html>

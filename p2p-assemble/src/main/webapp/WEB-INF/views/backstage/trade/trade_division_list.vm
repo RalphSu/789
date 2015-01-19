@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>交易管理-交易查询</title>
+	<link type="text/css" href="$!{rc.contextPath}/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>交易管理</a></li>
+                            <li><a href>分润详情</a></li>
+                        </ul>
+                    </div>
+					<div class="search fn-clear">
+						<form action="$!{rc.contextPath}/backstage/trade/tradeDivisionFlow/$!{trade.id}" method="post" name="frm">
+							<dl>
+								<dt>参与方角色：</dt>
+								<dd>#set($status = $!{request.getParameter('roleId')})
+									<div class="jqtransform jqtransform-select3">
+										<select name="roleId">
+											<option value="-1"#if($status == -1) selected="selected"#end>全部</option>
+											<option value="7"#if($status == 7) selected="selected"#end>$!appConstantsUtil.getProductName()分润</option>
+											<option value="8"#if($status == 8) selected="selected"#end>担保机构</option>
+											<option value="9"#if($status == 9) selected="selected"#end>保荐机构</option>
+											<option value="10"#if($status == 10) selected="selected"#end>营销机构</option>
+											<option value="11"#if($status == 11) selected="selected"#end>经纪人</option>
+											<option value="12"#if($status == 12) selected="selected"#end>投资人</option>
+										</select>
+									</div>
+								</dd>
+							</dl>
+							<dl>
+								<dt>参与方用户名：</dt>
+								<dd><input type="text" class="u-input w120" name="userName" value="$!{request.getParameter('userName')}"/></dd>
+							</dl>
+							<dl>
+								<dt>参与方姓名：</dt>
+								<dd><input type="text" class="u-input w120" name="realName" value="$!{request.getParameter('realName')}"/></dd>
+							</dl>
+							<dl>
+								<dt>时间区间：</dt>
+								<dd><input type="date" class="u-input w90" name="startDate" value="$!{request.getParameter('startDate')}"/> - <input type="date" class="u-input w90" name="endDate" value="$!{request.getParameter('endDate')}"/></dd>
+							</dl>
+							<a href="javascript:void(0);" class="s-btn">搜索</a>
+						</form>
+					</div>
+					<div class="t-box">
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+								<th width="150">交易流水号</th>
+                                <th width="200">交易创建时间</th>
+								<th width="200">参与角色</th>
+								<th width="200">参与方姓名</th>
+								<th width="120">分润金额(元)</th>
+								<th width="120">融资方姓名</th>
+                                <th width="150">交易状态</th>
+							</tr>
+							</thead>
+							<tbody>
+							#if($page.result.size()==0)
+                				<tr class="even">
+                    				<td colspan=6 align=center>暂时没有分润记录</td>
+                    			</tr>
+            				#end
+							#foreach($item in $page.result)
+							<tr>
+								<td>$!{trade.code}</td>
+                                <td>$!dateUtil.simpleFormat($!{item.date})</td>
+							<!--	<td>还款</td> -->
+								<td>$!{item.roleName}</td>
+								<td>$!{item.realName}</td>
+								<td>￥$!{moneyUtil.getFormatAmount($!{item.amount})}</td>
+								<td>$!{item.loanerName}</td>
+                                <td>$!{item.status}</td>
+							</tr>
+							#end
+                            </tbody>
+						</table>
+						<div class="p-box pages-b fn-clear">
+            				#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+	
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/plugins/jquery.window.js"></script>
+	<script type="text/javascript" src="$!{rc.contextPath}/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'demo');
+    </script>
+	<script type="text/javascript">
+		
+		$('.s-btn').click(function (){
+			toPage($!{page.totalPageCount}, $!{page.totalPageCount});
+		});
+		
+		
+		function toPage(totalPage, curr){
+		    if(isNaN(curr)){ return; }
+		    if(curr < 1){ return ;}
+			if(curr > totalPage){ return ;}
+			var url = '$!{rc.contextPath}/backstage/trade/devisionDetails/$!{trade.id}?pageSize=$!{page.pageSize}&pageNo=' + curr;
+			$('form[name=frm]').attr('action', url);
+			document.frm.submit();
+		}
+    </script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+	<resultMap id="TRADE-FLOW-CODE" class="com.icebreak.p2p.dataobject.TradeFlowCode">
+		<result property="tblBaseId" column="tbl_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="tradeDetailId" column="trade_detail_id" javaType="long" jdbcType="BIGINT" />
+		<result property="tradeFlowCode" column="trade_flow_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="rowAddTime" column="row_add_time" javaType="java.util.Date" jdbcType="DATETIME"/>
+		<result property="note" column="note" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="state" column="state" javaType="int" jdbcType="TINYINT"/>
+	</resultMap>
+
+	<!-- ============================================= -->
+	<!-- mapped statements for IbatisUserRelationDAO -->
+	<!-- ============================================= -->
+	<!-- mapped statement for IbatisUserRelationDAO.insert -->
+	<insert id="TRADE-FLOW-CODE-INSERT">
+		<![CDATA[
+		INSERT /*USER-PASSWORD-EXTEND-INSERT*/ INTO trade_flow_code (tbl_base_id,trade_detail_id, trade_flow_code,row_add_time,note,state) VALUES (#tblBaseId#, #tradeDetailId#, #tradeFlowCode#, #rowAddTime#, #note#, #state#)
+		]]>
+	</insert>
+
+	<!-- mapped statement for IbatisUserRelationDAO.update -->
+	<update id="TRADE-FLOW-CODE-UPDATE">
+		<![CDATA[
+		UPDATE /*USER-PASSWORD-EXTEND-UPDATE*/ trade_flow_code SET trade_detail_id=#tradeDetailId#, trade_flow_code=#tradeFlowCode#,note=#note#, row_add_time=#rowAddTime#, state=#state# WHERE (tbl_base_id = #tblBaseId#)
+		]]>
+	</update>
+
+	<!-- mapped statement for IbatisUserRelationDAO.delete -->
+	<delete id="TRADE-FLOW-CODE-DELETE">
+		<![CDATA[
+		DELETE /*MS-ELOAN-USER-RELATION-DELETE*/ FROM trade_flow_code WHERE (tb_base_id = #tbBaseId#)
+		]]>
+	</delete>
+	<select id="TRADE-FLOW-CODE-COUNTBYCONDITIONS" parameterClass="java.util.Map" resultClass="java.lang.Long">
+      SELECT COUNT(0)
+	  FROM trade_flow_code tr
+	  WHERE 1 = 1
+	  <isNotEmpty property="tradeDetailId">
+			AND tr.trade_detail_id = #tradeDetailId# 
+	  </isNotEmpty>
+	  <isNotEmpty property="tblBaseId">
+		AND tr.tbl_base_id = #tblBaseId#
+	  </isNotEmpty>
+	  <isNotEmpty property="tradeFlowCode">
+		AND tr.trade_flow_code = #tradeFlowCode#
+	  </isNotEmpty>
+  </select>
+  <select id="TRADE-FLOW-CODE-BYCONDITIONS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="TRADE-FLOW-CODE">
+      SELECT *
+	  FROM trade_flow_code tr
+	  WHERE 1 = 1
+	  <isNotEmpty property="tradeDetailId">
+			AND tr.trade_detail_id = #tradeDetailId# 
+	  </isNotEmpty>
+	  <isNotEmpty property="tblBaseId">
+		AND tr.tbl_base_id = #tblBaseId#
+	  </isNotEmpty>
+	  <isNotEmpty property="tradeFlowCode">
+		AND tr.trade_flow_code = #tradeFlowCode#
+	  </isNotEmpty>
+  </select>
+ 	
+   <select id="TRADE-FLOW-CODE-GETBYTRADEID" parameterClass="java.lang.Long" resultClass="java.util.List" resultMap="TRADE-FLOW-CODE">
+      SELECT *
+	  FROM trade_flow_code tr INNER JOIN trade_detail td ON td.`trade_detail_id` = tr.`trade_detail_id` 
+	  WHERE td.`role_id` =12 AND td.`transfer_phase` = 'original' AND td.`trade_id` = #value#
+	</select>
+	<select id="TRADE-FLOW-CODE-GETBYTRADEDETAILID" parameterClass="java.lang.Long" resultClass="java.util.List" resultMap="TRADE-FLOW-CODE">
+      SELECT * FROM trade_flow_code WHERE trade_detail_id = #value#
+	</select>
+	<delete id="TRADE-FLOW-CODE-DELETEBYTRADEDETAILID" parameterClass="long">
+ 	  DELETE FROM trade_flow_code WHERE trade_detail_id = #value#
+	</delete>
+</sqlMap>

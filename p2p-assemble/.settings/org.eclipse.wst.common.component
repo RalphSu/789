@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="p2p-assemble">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <dependent-module archiveName="p2p-common-util-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/p2p-common-util/p2p-common-util">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="icebreak-util-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/icebreak-util/icebreak-util">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="p2p-web-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/p2p-web/p2p-web">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="p2p-facade-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/p2p-facade/p2p-facade">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="p2p-facade-wsp-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/p2p-facade-wsp/p2p-facade-wsp">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="p2p-integration-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/p2p-integration/p2p-integration">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="p2p-biz-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/p2p-biz/p2p-biz">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="p2p-dal-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/p2p-dal/p2p-dal">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="p2p-config-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/p2p-config/p2p-config">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="ROOT"/>
+        <property name="java-output-path" value="/p2p-assemble/target/classes"/>
+    </wb-module>
+</project-modules>

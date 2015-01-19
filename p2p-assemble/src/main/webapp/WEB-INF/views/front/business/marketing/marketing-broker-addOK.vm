@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>经纪人开户-经纪人开户成功</title>
+	<link type="text/css" href="/resources/css/loan.css" rel="stylesheet" />
+</head>
+<body>
+	<!--头部-->
+	#parse("/front/index/common/header-menu.vm")
+	<!--内容-->
+	<div class="container fn-clear">
+		<!--左侧导航-->
+		#parse("/front/user/common/left.vm")
+		<!--右侧内容-->
+		<div class="main-content fn-right">
+			<div class="mc-border">
+				<ul class="fn-steps mt10 fn-clear">
+					<li>1.填写开户信息</li>
+					<li class="current">2.开户成功</li>
+				</ul>
+				<div class="fn-operate fn-success">
+					<em></em>
+					<h4>开户成功！请通知您的经纪人主动去邮箱激活并完成相应的认证。</h4>
+					#if($!{res}==1)
+					<p class="mt5">此用户已成为您公司下面的经纪人</p>
+					#else 
+					<p class="mt5" style="color:red">此用户暂不属于您公司下面的经纪人，请联系客服处理！</p>
+					#end
+					<p class="mt5">现在去：<a href="/marketingCenter/brokerManage">经纪人管理</a>,或者<a href="/marketingCenter/addBroker">继续开户</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	#parse("/front/index/common/footer.vm")
+	
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'demo');
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+#parse("/front/index/common/header.vm")
+<body xmlns="http://www.w3.org/1999/html">
+<script type="text/javascript">
+    if(window.top != window){
+        window.top.location.href = window.location.href;
+    }
+</script>
+#parse("/front/index/common/header-menu.vm")
+<div style="height: 100px;"></div>
+<div class="h-top">
+<div class="home-section_bd pt20">
+	<div class="blank30"></div>
+    <div class="m-content-box" style="width:1118px;">
+    	<div class="fn-operate fn-fail mt10" style="color: #989393; background: #FFFFFF; border-radius: 0px;box-shadow: 0px 0px 0px #FFF">
+    <h4><em></em>#if($message)$!{message}#else抱歉，系统升级中，请稍后再试! #end</h4>
+    <p class="mt20">你可以：<a href="javascript:history.go(-1)">返回上一步</a><span>|</span><a href="/usercenter/home">返回首页</a></p>
+</div>
+</div>
+    <div class="blank50"></div>
+</div>
+#parse("/front/index/common/footer.vm")
+</body>
+</html>
+

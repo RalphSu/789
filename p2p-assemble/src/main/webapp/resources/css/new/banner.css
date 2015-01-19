@@ -1,0 +1,63 @@
+
+/*Slide Start幻灯片位置开始*/
+/*
+#Slidebox{width:100%; height:270px;  padding:0px;  margin:0 auto; background:url(/resources/images/new/banner.jpg) center; overflow:hidden;}
+#flashBg {height: 270px;overflow: hidden;width:100%;clear: both;margin: 0;padding: 0;}
+#flashLine {background: url(/resources/images/new/touming.png) repeat-x center bottom;height: 390px;width: 100%;clear: both;}
+#flash{width: 1120px;height: 390px;overflow: hidden;margin: 0 auto;clear: both;position: relative;padding: 0px 0px;}
+#flash a {width: 1120px;height: 390px;display: none;}
+#flash img {width: 1120px;height: 390px;}
+.flash_bar {width:auto;height: 30px;overflow: hidden;position: absolute;padding-top: 13px!important;padding-top: 0px; top:240px; z-index:999;
+left:430px; background: url(/resources/images/new/tg_flashbar.png) no-repeat 0px 0px;text-align: center;}
+.flash_bar .dq {
+display: block;float: left;width: 80px;height: 5px;margin:2px 4px;cursor: pointer;background: #009ED6; overflow:hidden;
+_background: #009ED6; 
+_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://vizo.retail20.cn/images/pagination.png" ,sizingMethod="crop");
+}
+*/
+
+
+/*Slide Start幻灯片位置开始*/
+#Slidebox{width:100%; height:300px;  padding:0px;  margin:0 auto;  /*position:relative;*/ background:url(/resources/images/new/banner.jpg) center; overflow:hidden;}
+#flashBg {height: 300px;overflow: hidden;width:100%;clear: both;margin: 0;padding: 0;}
+#flashLine {background: url(../images/touming.png) repeat-x center bottom;height: 270px;width: 100%;clear: both;}
+#flash{width: 1120px;height: 300px;overflow: hidden;margin: 0 auto;clear: both;position: relative;padding: 0px 0px;}
+#flash a {width: 1120px;height: 300px;display: none;}
+#flash img {width: 1120px;height: 300px;}
+.flash_bar {width:auto;height: 30px;overflow: hidden;position: absolute;padding-top: 13px!important;padding-top: 0px; top:265px; z-index:999;
+    left:430px; background: url(../images/tg_flashbar.png) no-repeat 0px 0px;text-align: center;}
+.flash_bar .dq {
+    display: block;float: left;width: 80px;height: 5px;margin:2px 4px;cursor: pointer;background: #009ED6; overflow:hidden;
+    _background: #009ED6;
+    _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://vizo.retail20.cn/images/pagination.png" ,sizingMethod="crop");
+}
+
+
+.flash_bar .no {display: block;float: left;width: 80px;height: 5px;margin:2px 4px;cursor: pointer;
+background:#fff; overflow:hidden;
+_background:#fff;
+_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://vizo.retail20.cn/images/pagination.png" ,sizingMethod="crop");
+}
+
+#example {width:995px; height:382px; position:relative; margin:0 auto;}
+.mask{ position:absolute; left:0px; top:0px; background:url(/resources/images/new/mask.png) no-repeat 0 0; z-index:101; width:995px; height:382px;}
+#slides {position:absolute;top:0;left:0;z-index:100;}
+#slides .slide{width:995px;padding:0px; height:382px;}
+#slides .slide .translucent{ z-index:6; display:block; width:995px; height:42px; /*filter:alpha(opacity=50); opacity:0.50;*/ position:absolute; left:0px; bottom:0px; background:url(../images/slidesTranslucent.png) no-repeat left bottom;}
+
+* html #slides .slide .translucent{ z-index:6; display:block; width:995px; height:42px; filter:alpha(opacity=50); opacity:0.50; position:absolute; left:0px; bottom:0px; background:#000;}
+
+#slides .slide .description{z-index:106; display:block; width:395px; text-align:left; padding-left:5px; height:164px;  position:absolute; left:465px; bottom:96px;  
+color:#fff; font:normal 12px/1.5 Tahoma; text-indent:-9999px;}
+#slides .slide .description a{ text-decoration:none; color:#fff; display:block; width:395px; height:164px; }
+
+#slides .next,#slides .prev{position:absolute;top:352px;left:22px;width:15px;height:19px;display:block;z-index:101; overflow:hidden; background:url(../images/On_a_frame.png) no-repeat left top; text-indent:-9999px;}
+.slides_container{width:995px;height:382px;overflow:hidden;position:relative;}
+
+#slides .next{left:957px;background:url(/resources/images/new/Next_frame.png) no-repeat left top;}
+.pagination {margin:0;width:90px; position:absolute; top:355px; left:455px; z-index:1000;}
+.pagination li {float:left;margin:0 1px;}
+.pagination li a{display:block;width:13px;height:0;padding-top:12px;background-image:url(/resources/images/new/pagination.png);background-position:0 0;float:left;overflow:hidden;}
+
+.pagination li.current a {background-position:0 -12px;}
+.arroud { background:url(/resources/images/new/banner.jpg) 0px 0px no-repeat; height:450px}

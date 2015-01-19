@@ -1,0 +1,40 @@
+#parse("/front/index/common/reg-header.vm")
+<!--注册页面开始-->
+<div class="reg_tit nav large_font">用户激活</div>
+<div class="load nav">
+	<ul class="four_load">
+    	<li class="last start"><div class="num_last"><span class="green_t">1</span></div>填写基本信息并验证手机</li>
+        <li class="load_link"><img src="/resources/images/new/load3.png"></li>
+        <li class="in"><div class="num_innext"><span class="green_o">2</span></div>用户激活</li>
+        <li class="load_link"><img src="/resources/images/new/load1.png"></li>
+        <li class="next"><div class="num_innext"><span class="gray_t">3</span></div>开通第三方支付账户</li>
+        <li class="load_link"><img src="/resources/images/new/load2.png"></li>
+        <li class="next end"><div class="num_innext"><span class="gray_t">4</span></div>注册完成</li>
+    </ul>
+</div>
+<div class="blank"></div>
+<div class="reg_form nav">
+	<ul class="prompt">
+    	<li class="reg_name"> </li>
+        <li class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+        <li class="reg_input full_text">邮件已发送至您的邮箱，请查收并激活邮箱！</li>
+    </ul>
+    <ul class="prompt">
+        <li class="reg_name"></li>
+        <li class="reg_input"></li>
+        <li class="reg_text"></li>
+    </ul>
+    <ul>
+        <li class="reg_name"></li>
+        <li class="reg_input"><a class="reg_bt" href="$!loginEmailUrl"><div class="mid_font tran_but_suc reg_blue">登录我的邮箱</div></a></li>
+        <li class="reg_text"></li>
+    </ul>
+</div>
+<div class=" form_blank"></div>
+</div>
+<!--注册页面结束-->
+#parse("/front/index/common/footer.vm")
+</html>

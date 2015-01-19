@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+	<resultMap id="RM-USER-BASE" class="com.icebreak.p2p.dataobject.UserBaseInfoDO">
+		<result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="logPassword" column="log_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="payPassword" column="pay_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="accountId" column="account_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="accountName" column="account_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mobile" column="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mobileBinding" column="mobile_binding" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="mail" column="mail" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="mailBinding" column="mail_binding" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="type" column="type" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="state" column="state" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="rowAddTime" column="row_add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="rowUpdateTime" column="row_update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+		<result property="identityName" column="identity_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="identityStartNo" column="identity_start_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="identityEndNo" column="identity_end_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="exIdentityNo" column="ex_identity_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="realNameAuthentication" column="real_name_authentication" javaType="java.lang.String" jdbcType="ENUM"/>
+		<result property="pwdErrorCount" column="pwd_error_count" javaType="java.lang.Integer" jdbcType="INT"/>
+		<result property="changeLockTime" column="change_lock_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- ============================================= -->
+	<!-- mapped statements for IbatisUserBaseDAO -->
+	<!-- ============================================= -->
+	<!-- mapped statement for IbatisUserBaseDAO.insert -->
+	<insert id="MS-USER-BASE-INSERT">
+		<![CDATA[
+		insert into user_base_info(user_base_id,user_id,user_name,real_name,log_password,pay_password,account_id,account_name,mobile,mobile_binding,mail,mail_binding,type,state,row_add_time,row_update_time,identity_name,identity_start_no,identity_end_no,ex_identity_no) values (#userBaseId#, #userId#, #userName#, #realName#, MD5(#logPassword#),MD5(#payPassword#), #accountId#, #accountName#, #mobile#, #mobileBinding#, #mail#, #mailBinding#, #type#, #state#, #rowAddTime#, #rowUpdateTime#,#identityName#,#identityStartNo#,#identityEndNo#,#exIdentityNo#)
+		]]>
+	</insert>
+
+	<update id="MS-USER-BASE-UPDATE-LOGIN-PWD-BY-USERNAME">
+		<![CDATA[
+		update user_base_info set log_password=MD5(#newPwd#) where user_name=#userName# and log_password=MD5(#oldPwd#)
+		]]>
+	</update>
+	<!-- mapped statement for IbatisUserBaseDAO.update -->
+	<update id="MS-USER-BASE-UPDATE">
+		update user_base_info
+		<dynamic prepend="set">
+			<isNotEmpty property="realName" prepend=",">
+				real_name = #realName#
+			</isNotEmpty>
+			<isNotEmpty property="mobile" prepend=",">
+				mobile = #mobile#
+			</isNotEmpty>
+			<isNotEmpty property="mail" prepend=",">
+				mail = #mail#
+			</isNotEmpty>
+			<isNotEmpty property="state" prepend=",">
+				state = #state#
+			</isNotEmpty>
+			<isNotEmpty property="exIdentityNo" prepend=",">
+				ex_identity_no = #exIdentityNo#
+			</isNotEmpty>
+			<isNotEmpty property="identityEndNo" prepend=",">
+				identity_end_no = #identityEndNo#
+			</isNotEmpty>
+			
+			<isNotEmpty property="changeLockTime" prepend=",">
+				change_lock_time = #changeLockTime#
+			</isNotEmpty>
+			<isNotEmpty property="pwdErrorCount" prepend=",">
+				pwd_error_count = #pwdErrorCount#
+			</isNotEmpty>
+			<isNotEmpty property="realNameAuthentication" prepend=",">
+				real_name_authentication = #realNameAuthentication#
+			</isNotEmpty>
+			<isNotEmpty property="accountId" prepend=",">
+				account_id = #accountId#
+			</isNotEmpty>
+		</dynamic>
+	    where (user_base_id = #userBaseId#)
+	</update>
+	<!-- mapped statement for IbatisUserBaseDAO.delete -->
+	<delete id="MS-USER-BASE-DELETE">
+		<![CDATA[
+		delete /*MS-ELOAN-USER-BASE-DELETE*/ from user_base_info where (user_base_id = #value#)
+		]]>
+	</delete>
+	<!-- mapped statement for IbatisUserBaseDAO.validationLogPassword -->
+	<select id="MS-USER-BASE-INFO-VALIDATION_LOG_PASSWORD" resultClass="java.lang.Long">
+			<![CDATA[
+			SELECT /*MS-PERSONAL-INFO-QUERY*/ count(1) FROM user_base_info u WHERE u.log_password=MD5(#logPassword#) AND u.user_base_id=#userBaseId#
+			]]>
+	</select>
+	
+	<!-- mapped statement for IbatisUserBaseDAO.updateLogPassword -->
+	<update id="MS-USER-BASE-UPDATE_LOG_PASSWORD">
+		<![CDATA[
+		UPDATE /*MS-USER-BASE-UPDATE_LOG_PASSWORD*/ user_base_info u SET u.log_password=MD5(#logPassword#) WHERE (u.user_base_id = #userBaseId#)
+		]]>
+	</update>
+	
+	<!-- mapped statement for IbatisUserBaseDAO.validationPayPassword -->
+	<select id="MS-USER-BASE-INFO-VALIDATION_PAY_PASSWORD" resultClass="java.lang.Long">
+			<![CDATA[
+			SELECT /*MS-USER-BASE-INFO-VALIDATION_PAY_PASSWORD*/ count(1) FROM user_base_info u WHERE u.pay_password=MD5(#payPassword#) AND u.user_base_id=#userBaseId#
+			]]>
+	</select>
+	
+	<!-- mapped statement for IbatisUserBaseDAO.updatePayPassword -->
+	<update id="MS-USER-BASE-UPDATE_PAY_PASSWORD">
+		<![CDATA[
+		UPDATE /*MS-USER-BASE-UPDATE_PAY_PASSWORD*/ user_base_info u SET u.pay_password=MD5(#payPassword#) WHERE (u.user_base_id = #userBaseId#)
+		]]>
+	</update>
+	
+	<!-- mapped statement for IbatisUserBaseDAO.updateLogPasswordAndPayPassword -->
+	<update id="MS-USER-BASE-UPDATE_LOG_PASSWORD_AND_PAY_PASSWORD">
+		<![CDATA[
+		UPDATE /*MS-USER-BASE-UPDATE_LOG_PASSWORD_AND_PAY_PASSWORD*/ user_base_info u SET u.log_password=MD5(#logPassword#), u.pay_password=MD5(#payPassword#), u.state='normal' WHERE (u.user_base_id = #userBaseId#)
+		]]>
+	</update>
+	
+	<!-- mapped statement for IbatisUserBaseDAO.updateState -->
+	<update id="MS-USER-BASE-UPDATE_STATE">
+		<![CDATA[
+		UPDATE /*MS-USER-BASE-UPDATE_STATE*/ user_base_info u SET u.state=#state# WHERE (u.user_base_id = #userBaseId#)
+		]]>
+	</update>
+	
+	<!-- mapped statement for IbatisUserBaseDAO.updateAccountId -->
+	<update id="MS-USER-BASE-UPDATE_ACCOUNT_ID">
+		<![CDATA[
+		UPDATE /*MS-USER-BASE-UPDATE_ACCOUNT_ID*/ user_base_info u SET u.account_id=#accountId# WHERE (u.user_base_id = #userBaseId#)
+		]]>
+	</update>
+	
+	<!-- mapped statement for IbatisUserBaseDAO.validationUserName -->
+	<select id="MS-USER-BASE-INFO-VALIDATION_USER_NAME" resultClass="java.lang.Long">
+			<![CDATA[
+			SELECT /*MS-USER-BASE-INFO-VALIDATION_USER_NAME*/ count(1) FROM user_base_info u WHERE u.user_name=#userName#
+			]]>
+	</select>
+	
+	<!-- mapped statement for IbatisUserBaseDAO.validationUserName -->
+	<select id="MS-USER-BASE-INFO-QUERY_USER_NAME" resultMap="RM-USER-BASE">
+			<![CDATA[
+			SELECT /*MS-USER-BASE-INFO-QUERY_USER_NAME*/ * FROM user_base_info u INNER JOIN user_role s  ON u.user_id =s.user_id INNER JOIN role r ON s.role_id=r.role_id WHERE u.user_name=#userName#
+			]]>
+	<dynamic>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[r.role_id = #roleId#]]>
+			</isNotEmpty>
+	</dynamic>
+	</select>
+	
+	<select id="MS-USER-BASE-INFO-QUERY_REAL_NAME"  resultMap="RM-USER-BASE">
+			<![CDATA[
+			SELECT /*MS-USER-BASE-INFO-QUERY_USER_NAME*/ * FROM user_base_info u  WHERE u.user_name=#userName#
+			]]>
+	</select>
+	
+	
+	<!-- mapped statement for IbatisUserBaseDAO.queryByUserBaseId -->
+	<select id="MS-USER-BASE-INFO-QUERY_USER_BASE_ID" resultMap="RM-USER-BASE">
+		<![CDATA[
+		SELECT /*MS-USER-BASE-INFO-QUERY_USER_BASE_ID*/ * FROM user_base_info u where u.user_base_id = #userBaseId#
+		]]>
+	</select>
+	
+	<!-- mapped statement for IbatisUserBaseDAO.queryByMD5UserBaseId -->
+	<select id="MS-USER-BASE-INFO-QUERY_MD5_USER_BASE_ID" resultMap="RM-USER-BASE">
+		<![CDATA[
+		SELECT /*MS-USER-BASE-INFO-QUERY_MD5_USER_BASE_ID*/ u.* 
+		FROM user_base_info u WHERE u.user_base_id = (
+			SELECT 
+	    	b.user_base_id 
+	  		FROM
+	    	user_base_info b 
+  			WHERE MD5(b.user_base_id) = #MD5UserBaseId#
+  			)
+		]]>
+	</select>
+
+	<!-- mapped statement for IbatisUserBaseDAO.queryByType -->
+	<select id="MS-USER-BASE-INFO-QUERY_BY_TYPE"  resultMap="RM-USER-BASE">
+    		<![CDATA[
+			SELECT /*MS-USER-BASE-INFO-QUERY_BY_TYPE*/ * FROM user_base_info u WHERE 1=1
+			]]>
+		<dynamic>
+			<isNotEmpty property="type" prepend=" AND ">
+					<![CDATA[u.type = #type#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userId" prepend=" AND ">
+					<![CDATA[u.user_id = #userId#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+   
+	<!-- mapped statement for IbatisUserBaseDAO.login -->
+   <select id="USER-LOGIN" parameterClass="java.util.Map" resultClass="com.icebreak.p2p.dataobject.UserBaseInfoDO" resultMap="RM-USER-BASE">
+     SELECT  user_base_info.* FROM user_base_info 
+	 WHERE user_base_info.user_name = #userName# AND user_base_info.log_password = MD5(#password#);
+   </select>
+
+
+	<!-- mapped statement for IbatisUserBaseDAO.queryUserId -->
+	<select id="MS-USER-BASE-INFO-QUERY_USERID" resultClass="java.lang.Long">
+    		<![CDATA[
+			SELECT /*"MS-USER-BASE-INFO-QUERY_USERID"*/ u.user_id FROM user_base_info u WHERE 1=1
+			]]>
+		<dynamic>
+			<isNotEmpty property="userName" prepend=" AND ">
+					<![CDATA[u.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" AND ">
+					<![CDATA[u.real_name = #realName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="identityName" prepend=" AND ">
+					<![CDATA[u.identity_name = #identityName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="type" prepend=" AND ">
+					<![CDATA[u.type = #type#]]>
+			</isNotEmpty>
+
+		</dynamic>
+	</select>
+
+
+	<!-- mapped statement for IbatisUserBaseDAO.queryUserBaseId -->
+	<select id="MS-USER-BASE-INFO-QUERY_USERBASEID" resultClass="java.lang.String">
+    		<![CDATA[
+			SELECT /*"MS-USER-BASE-INFO-QUERY_USERBASEID"*/ u.user_base_id FROM user_base_info u WHERE 1=1
+			]]>
+		<dynamic>
+			<isNotEmpty property="identityName" prepend=" AND ">
+					<![CDATA[u.identity_name = #identityName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="type" prepend=" AND ">
+					<![CDATA[u.type = #type#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userId" prepend=" AND ">
+					<![CDATA[u.user_id = #userId#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+   <!-- mapped statement for IbatisUserBaseInfoDAO.queryAllUserInfoCount -->
+	<select id="MS-USER-INFO-QUERY_COUNT" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /*MS-USER-INFO-QUERY_COUNT*/ COUNT(1)
+		FROM user_base_info u WHERE 1=1 ]]>
+		<dynamic>
+			<isNotEmpty property="userBaseId" prepend=" and ">
+				<![CDATA[p.user_base_id = #userBaseId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[u.real_name = #realName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="accountName" prepend=" and ">
+				<![CDATA[u.account_name = #accountName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="state" prepend=" and ">
+				<![CDATA[u.state = #state#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<!-- mapped statement for IbatisUserBaseInfoDAO.queryAllUserInfolIST -->
+	<select id="MS-USER-INFO-QUERY_LIST" resultMap="RM-USER-BASE">
+		<![CDATA[
+		SELECT /*MS-USER-INFO-QUERY_LIST*/ *
+		FROM  user_base_info u   WHERE 1=1 ]]>
+		<dynamic>
+			<isNotEmpty property="userBaseId" prepend=" and ">
+				<![CDATA[u .user_base_id = #userBaseId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[u .real_name = #realName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u .user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="accountName" prepend=" and ">
+				<![CDATA[u.account_name = #accountName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="accountId" prepend=" and ">
+				<![CDATA[u.account_id = #accountId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="state" prepend=" and ">
+				<![CDATA[u.state = #state#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY row_add_time DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="MS-USER-INFO-QUERY_BY_USERID"  resultMap="RM-USER-BASE">
+		<![CDATA[
+		SELECT /*MS-USER-BASE-INFO-QUERY_USER_NAME*/ * FROM user_base_info u  WHERE u.user_id=#value#
+		]]>
+	</select>
+	
+	<select id="MS-USER-INFO-MOBILE_EMAIL_ROLR_COUNT" resultClass="java.lang.Long" >
+		<![CDATA[
+		SELECT /*MS-USER-INFO-QUERY_COUNT*/ COUNT(1)
+		FROM user_base_info u 
+		INNER JOIN user_role ur on ur.user_id = u.user_id
+		INNER JOIN role r on r.role_id = ur.role_id 	
+		WHERE 1=1 ]]>
+		<dynamic>
+			<isNotEmpty property="mobile" prepend=" and ">
+				<![CDATA[u.mobile = #mobile#]]>
+			</isNotEmpty>
+			<isNotEmpty property="email" prepend=" and ">
+				<![CDATA[u.mail = #email#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleCode" prepend=" and ">
+				<![CDATA[r.role_code = #roleCode#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="MS-USER-INFO-QUERY_LOCKED_LIST"  resultMap="RM-USER-BASE">
+		<![CDATA[
+		SELECT /*MS-USER-INFO-QUERY_LOCKED_LIST*/ *
+		FROM  user_base_info u   WHERE u.state = 'locked' ]]>
+	</select>
+	
+	<!-- mapped statement for IbatisUserBaseInfoDAO.queryChildrenCountByCondition -->
+	<select id="MS-USERBASE-INFO-QUERY_COUNT_INVESTOR" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /*MS-USERBASE-INFO-QUERY_COUNT_INVESTOR*/ COUNT(1)
+		FROM user_base_info u 
+		WHERE 1 = 1
+		AND u.user_id IN
+		(SELECT
+		r.child_id
+		FROM
+		user_relation r
+		WHERE r.parent_id = #userId#)]]>
+		<dynamic>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[u.real_name = #realName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="isRealNamePass" prepend=" and ">
+				<![CDATA[u.real_name_authentication = #isRealNamePass#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startDate" prepend=" and ">
+				<![CDATA[u.row_add_time >= #startDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endDate" prepend=" and ">
+				<![CDATA[u.row_add_time <= #endDate#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!-- mapped statement for IbatisUserBaseInfoDAO.queryChildrenListByCondition -->
+	<select id="MS-USERBASE-INFO-QUERY_COUNT_INVESTOR_LIST" resultMap="RM-USER-BASE">
+		<![CDATA[
+		SELECT /*MS-USERBASE-INFO-QUERY_COUNT_INVESTOR_LIST*/ *
+		FROM user_base_info u 
+		WHERE 1 = 1
+		AND u.user_id IN
+		(SELECT
+		r.child_id
+		FROM
+		user_relation r
+		WHERE r.parent_id = #userId#)]]>
+		<dynamic>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name like CONCAT(CONCAT('%', #userName#),'%') ]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[u.real_name like CONCAT(CONCAT('%', #realName#),'%') ]]>
+			</isNotEmpty>
+			<isNotEmpty property="isRealNamePass" prepend=" and ">
+				<![CDATA[u.real_name_authentication = #isRealNamePass#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startDate" prepend=" and ">
+				<![CDATA[u.row_add_time >= #startDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endDate" prepend=" and ">
+				<![CDATA[u.row_add_time <= #endDate#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ORDER BY u.row_add_time DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+	
+	<select id="MS-USER-INFO-STATISTICS" resultClass="java.lang.Long">
+		<![CDATA[
+		SELECT /*MS-USER-INFO-STATISTICS*/ COUNT(DISTINCT(u.user_id))
+		FROM user_base_info u 
+		INNER JOIN user_role ur on ur.user_id = u.user_id
+		WHERE 1=1 ]]>
+		<dynamic>
+			<isNotEmpty property="userBaseId" prepend=" and ">
+				<![CDATA[p.user_base_id = #userBaseId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[u.real_name = #realName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userType" prepend=" and ">
+				<![CDATA[u.type = #userType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="isRealNamePass" prepend=" and ">
+				<![CDATA[u.real_name_authentication = #isRealNamePass#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[ur.role_id = #roleId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="accountName" prepend=" and ">
+				<![CDATA[u.account_name = #accountName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="state" prepend=" and ">
+				<![CDATA[u.state = #state#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startDate" prepend=" and ">
+				<![CDATA[u.row_add_time >= #startDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endDate" prepend=" and ">
+				<![CDATA[u.row_add_time <= #endDate#]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="MS-USER-INFO-STATISTICS-LISTS" resultMap="RM-USER-BASE">
+		<![CDATA[
+		SELECT /*MS-USER-INFO-STATISTICS-LISTS*/ *
+		FROM user_base_info u 
+		INNER JOIN user_role ur on ur.user_id = u.user_id
+		WHERE 1=1 ]]>
+		<dynamic>
+			<isNotEmpty property="userBaseId" prepend=" and ">
+				<![CDATA[p.user_base_id = #userBaseId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="realName" prepend=" and ">
+				<![CDATA[u.real_name = #realName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend=" and ">
+				<![CDATA[u.user_name = #userName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="userType" prepend=" and ">
+				<![CDATA[u.type = #userType#]]>
+			</isNotEmpty>
+			<isNotEmpty property="isRealNamePass" prepend=" and ">
+				<![CDATA[u.real_name_authentication = #isRealNamePass#]]>
+			</isNotEmpty>
+			<isNotEmpty property="roleId" prepend=" and ">
+				<![CDATA[ur.role_id = #roleId#]]>
+			</isNotEmpty>
+			<isNotEmpty property="accountName" prepend=" and ">
+				<![CDATA[u.account_name = #accountName#]]>
+			</isNotEmpty>
+			<isNotEmpty property="state" prepend=" and ">
+				<![CDATA[u.state = #state#]]>
+			</isNotEmpty>
+			<isNotEmpty property="startDate" prepend=" and ">
+				<![CDATA[u.row_add_time >= #startDate#]]>
+			</isNotEmpty>
+			<isNotEmpty property="endDate" prepend=" and ">
+				<![CDATA[u.row_add_time <= #endDate#]]>
+			</isNotEmpty>
+		</dynamic>
+		<![CDATA[ GROUP BY u.user_id ORDER BY u.row_add_time DESC LIMIT #limitStart#,#pageSize#;]]>
+	</select>
+</sqlMap>

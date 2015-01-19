@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>融资管理-融资需求审核结果</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>融资管理</a></li>
+                            <li><a href>融资需求审核结果</a></li>
+                        </ul>
+                    </div>
+					<div class="search fn-clear">
+						<form action="/backstage/pageQueryLoanDemand?module=PASSADNDISMISS"  method="post" >
+							<dl style="width:290px;">
+								<dt>申请号：</dt>
+								<dd><input type="text" class="u-input" name="tradeCode" value="$!{queryConditions.tradeCode}"/></dd>
+							</dl>
+							<dl style="width:290px;">
+								<dt>融资人：</dt>
+								<dd><input type="text" class="u-input" name="userName" value="$!{queryConditions.userName}"/></dd>
+							</dl>
+							<dl style="width:290px;">
+								<dt>金额区间：</dt>
+								<dd><input type="text" class="u-input w60 mask_money" name="maiLoanAmount" value="$!{queryConditions.maiLoanAmount}"/> - <input type="text" class="u-input w60 mask_money" name="maxLoanAmount" value="$!{queryConditions.maxLoanAmount}"/></dd>
+							</dl>
+							<dl>
+								<dt>时间区间：</dt>
+								<dd><input type="text" class="u-input fn-time" name="maiDemandDate"  value="$!{queryConditions.maiDemandDate}"/> - <input type="text" class="u-input fn-time" name="maxDemandDate"  value="$!{queryConditions.maxDemandDate}"/></dd>
+                                <button type="submit" class="s-btn" style="margin-left: 5px;">搜索</button>
+							</dl>
+						</form>
+					</div>
+					<div class="t-box">
+                        <div class="tools">
+                            <ul class="toolbar">
+                                <li class="click"><span><a href="/backstage/addLoanDemand">
+                                    <img src="/resources/back/images/t01.png"></span>发布融资需求</a></li>
+                            </ul>
+                        </div>
+                        <table class="tablelist">
+                            <thead>
+							<tr>
+                                <th width="250">融资名称</th>
+								<th width="150">还款方式</th>
+                                <th width="90">融资人</th>
+								<th width="130">融资金额(元)</th>
+								<th width="160">申请时间</th>
+								<th width="80">状态</th>
+								<th width="100">操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							#if($page.result.size()==0)
+                				<tr class="even">
+                					<td colspan=9 align=center>暂时没有融资需求审核结果记录</td>
+                				</tr>
+							#end
+							#foreach($info in $page.result)
+							<tr>
+                                <td><a href="/backstage/updateLoanDemand?demandId=$!{info.demandId}&info=info">$!{info.loanName}</a></td>
+								<td>#if($!{info.repayDivisionWay} == 'month')按月付息，到期还本#else到期归还本金及利息#end</td>
+								<td>$!{info.userName}</td>
+								<td>￥$!{moneyUtil.getFormatAmount($!{info.loanAmount})}</td>
+##								<td>$!{info.guaranteeName}</td>
+##								<td>$!{info.sponsorName}</td>
+								<td>$!dateUtil.simpleFormat($!{info.demandDate})</td>
+								#if($!{info.status}=="pass")
+									<td>通过</td>
+								#elseif($!{info.status}=="dismiss")
+									<td class="red">驳回<a href="javascript:;" data="$!{info.dismissReason}" id="dismissLink">(查看原因)</a></td>
+								#end
+								<td>
+                                    #if($!{info.status}=="dismiss")
+                                        <a href="/backstage/updateLoanDemand?demandId=$!{info.demandId}&info=update">修改融资需求</a><br/>
+                                    #else
+                                        <a href="/backstage/updateLoanDemand?demandId=$!{info.demandId}&info=info">查看需求详情</a>
+									#end
+
+							</tr>
+							#end
+                            </tbody>
+						</table>
+						<div class="p-box pages-b fn-clear">
+            				#parse("/backstage/page/page.vm")
+						</div>
+					</div>
+				</div>
+	<div class="m-layer m-layer-tip" id="dismiss" style="width:360px;display:none;">
+		<div class="title">
+			<h2>驳回原因</h2>
+		</div>
+		<form id="dismissForm" action="/backstage/approvalDismiss">
+		
+		<div class="cont">
+			<textarea id="dismissReason" name="dismissReason" class="u-area"></textarea>
+			<div class="l-btn">
+				<a href="javascript:;" class="u-btn u-btn-gray">关闭</a>
+			</div>
+		</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript" src="/resources/js/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'pageQueryLoanDemandInfo');
+		function toPage(totalPage, pageNo){
+    		if(totalPage<pageNo){
+    			return false;
+    		}
+			var url = "/backstage/pageQueryLoanDemand?module=PASSADNDISMISS"
+			+"&tradeCode=$!{queryConditions.tradeCode}"
+			+"&guaranteeName=$!{queryConditions.guaranteeName}"
+			+"&sponsorName=$!{queryConditions.sponsorName}"
+			+"&userName=$!{queryConditions.userName}"
+			+"&maiLoanAmount=$!{queryConditions.maiLoanAmount}"
+			+"&maxLoanAmount=$!{queryConditions.maxLoanAmount}"
+			+"&maiDemandDate=$!{queryConditions.maiDemandDate}"
+			+"&maxDemandDate=$!{queryConditions.maxDemandDate}"
+			+"&payNo=$!{order.payNo}"
+			+"&pageSize=$!{page.pageSize}&pageNo="+pageNo;
+			window.location.href=url;
+		}
+    </script>
+</body>
+</html>

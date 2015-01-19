@@ -1,0 +1,54 @@
+#parse("/front/index/common/header.vm")
+#parse("/front/index/common/header-menu.vm")
+
+<body>
+<div class="top_blank"></div>
+<!--通用头部结束-->
+<div class="blank"></div>
+<div class="alrod">
+<!--注册页面开始-->
+<div class="reg_tit nav tit_font">登录789金融</div>
+<div class="blank reg_line"></div>
+<form action="$!{rc.conextPath}/login/dologin" method="post" class="m-form" id="login_Form">
+<div class="reg_form nav">
+    <ul>
+        <li class="reg_name"></li>
+        <li class="reg_input" style="color:#f00;width: 540px;line-height:20px;word-break: break-all;">
+            $!{message}
+        </li>
+    </ul>
+    <ul>
+        <li class="reg_name">手机号码： </li>
+        <li class="reg_input" style="width: 500px;"><input  name="userName" type="text" class="reg_input"></li>
+    </ul>
+    <ul>
+        <li class="reg_name">登录密码： </li>
+        <li class="reg_input" style="width: 500px;"><input name="password" id="password" type="password" class="reg_input"></li>
+    </ul>
+    <ul>
+        <li class="reg_name">验证码： </li>
+        <li class="reg_input" style="width: 500px;"><input name="captcha" type="text" class="reg_input" style="width: 213px;" />
+        	<a href="#" class="reg_bt"><div class="ver" style="right: 170px;"><img id="newcaptcha" class="code-img" style="margin-top: 4px;" title="看不清？请点击验证码刷新" onclick="this.src = '/anon/getImgCode?t=' + new Date().getTime();" src="/anon/getImgCode" /></div></a>
+        </li>
+    </ul>
+    <ul>
+        <li class="reg_name"></li>
+        <li class="reg_input" style="width: 500px;"><input name="remenberMe" type="checkbox" value="" class="agree"> 记住密码 <div class="forget" style="right: 200px;">
+        	<a href="/anon/findpwd"><span class="blue">忘记密码?</span></a></div></li>
+    </ul>
+    <ul>
+        <li class="reg_name"></li>        
+        <li class="reg_input"><a class="reg_bt" href><div id="confirm" class="mid_font tran_but_suc reg_blue" style="width: 210px;">登录</div></a></li>
+    </ul>
+</div>
+</form>
+<div class=" form_blank"></div>
+</div>
+<!--注册页面结束-->
+<div class="blank"></div>
+#parse("/front/index/common/footer.vm")
+<script type="text/javascript">
+    seajs.use($_GLOBAL.mode + 'login');
+</script>
+</body>
+</html>

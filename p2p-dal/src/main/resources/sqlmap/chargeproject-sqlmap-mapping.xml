@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="eloan">
+
+  <resultMap id="RM-CHARGEPROJECT" class="com.icebreak.p2p.dataobject.ChargeProject">
+	  <result property="id" column="charge_project_id" javaType="long" jdbcType="BIGINT"/>
+	  <result property="method" column="charge_mathod" javaType="java.lang.String" jdbcType="ENUM"/>
+	  <result property="code" column="project_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="project" column="charge_project" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	  <result property="status" column="trade_status" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+  </resultMap>
+  
+  <insert id="CHARGEPROJECT-ADD" parameterClass="com.icebreak.p2p.dataobject.ChargeProject">
+	  INSERT INTO charge_project (
+		  charge_mathod,
+		  project_code,
+		  charge_project,
+		  trade_status
+	  ) VALUES (
+		  #method#,
+		  #code#,
+		  #project#,
+		  #status#
+	  )
+  </insert>
+  
+  <select id="CHARGEPROJECT-GETBYMETHODS" parameterClass="java.util.List" resultClass="java.util.List" resultMap="RM-CHARGEPROJECT">
+	  SELECT 
+		  charge_project_id,
+		  charge_mathod,
+		  project_code,
+		  charge_project,
+		  trade_status
+	  FROM charge_project
+	  <isNotEmpty>
+	  WHERE charge_mathod IN
+	  <iterate conjunction="," open="(" close=")">
+  		   #value[]#
+  	  </iterate>
+  	  </isNotEmpty>
+  </select>
+  
+  <select id="CHARGEPROJECT-GETBYTEMPLATEID" parameterClass="long" resultClass="java.util.List" resultMap="RM-CHARGEPROJECT">
+      SELECT 
+		  t.charge_project_id,
+		  t.charge_mathod,
+		  t.project_code,
+		  t.charge_project,
+		  t.trade_status
+	  FROM charge_project t
+	  INNER JOIN charge_template_project ON charge_template_project.charge_project_id = t.charge_project_id
+	  INNER JOIN charge_template ON charge_template.charge_template_id = charge_template_project.charge_template_id
+	  WHERE charge_template_project.charge_template_id = #value#
+  </select>
+  
+  <delete id="CHARGEPROJECT-DELETEBYID" parameterClass="long">
+  	  DELETE FROM charge_project WHERE charge_project_id = #value#
+  </delete>
+  
+  <select id="CHARGEPROJECT-GETBYTEMPLATEIDANDSTATUS" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-CHARGEPROJECT">
+      SELECT 
+		  t.charge_project_id,
+		  t.charge_mathod,
+		  t.project_code,
+		  t.charge_project,
+		  t.trade_status
+	  FROM charge_project t
+	  INNER JOIN charge_template_project ON charge_template_project.charge_project_id = t.charge_project_id
+	  INNER JOIN charge_template ON charge_template.charge_template_id = charge_template_project.charge_template_id
+	  WHERE charge_template_project.charge_template_id = #templateId# AND t.trade_status = #status#
+  </select>
+</sqlMap>

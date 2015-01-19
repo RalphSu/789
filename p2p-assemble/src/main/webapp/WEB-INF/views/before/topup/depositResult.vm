@@ -1,0 +1,86 @@
+#parse("/front/index/common/header.vm")
+    #parse("/front/index/common/header-menu.vm")
+<!--内容-->
+
+<style >
+		.fn-operate p span {
+            color: #FFFFFF;
+			padding:0 15px 3px 4px;
+        }
+    </style>
+<div class="home-section_bd pt20">
+    <div class="blank20"></div>
+    <div class="bd-box container fn-clear">
+        <div class="">
+            <div class="m-content-box" style="width:1118px;">
+				<div class="title3 mt10"><span>《 返回</span><span class="two ml15">账户充值</span></div>
+                    <div class="blank20"></div>
+					
+					#if($!isSuccess)				
+                    <div class="fn-operate fn-success recharge-state mt10 pt120">
+						<div class="recharge-submit">
+						<em></em>
+                        <h4>快捷充值成功！</h4>
+						</div>
+                           <h3>温馨提示：</h3>
+                            <p>1.充值操作支持国内大部分银行的网上银行，只要您开通了网上银行的账户即可充值。</p>
+                            <p>2.由于大多数银行的网银系统只支持IE浏览器，请您进行充值时使用IE浏览器。</p>
+                            <p>3.充值过程中，请勿关闭浏览器窗口，操作完成后，浏览器会自动跳转返回到网站界面。</p>
+                            <p>4.如果您在充值过程中遇到任何问题，请咨询客服人员。</p>
+                          
+                        <p class="mt20"><a href="/usercenter/userHome">我的账户</a><span>|</span><a href="/usercenter/rechargeRecord">查看充值记录</a><span>|</span><a href="/usercenter/topUp/withholdingIndex">继续充值</a></p>
+                        <div class="blank30"></div>
+                    </div>
+					#elseif($!isProcessing)				
+                    <div class="fn-operate fn-success recharge-state mt10 pt120">
+						<div class="recharge-submit">
+						<em></em>
+                        <h4>快捷充值申请已提交，需要等待银行处理结果！</h4>
+						</div>
+                           <h3>温馨提示：</h3>
+                            <p>1.充值操作支持国内大部分银行的网上银行，只要您开通了网上银行的账户即可充值。</p>
+                            <p>2.由于大多数银行的网银系统只支持IE浏览器，请您进行充值时使用IE浏览器。</p>
+                            <p>3.充值过程中，请勿关闭浏览器窗口，操作完成后，浏览器会自动跳转返回到网站界面。</p>
+                            <p>4.如果您在充值过程中遇到任何问题，请咨询客服人员。</p>
+                          
+                        <p class="mt20"><a href="/usercenter/depositRecord">查看充值记录</a><span>|</span><a href="/usercenter/deposit">继续充值</a></p>
+                        <div class="blank30"></div>
+                    </div>
+					#elseif($!isAccountNotActive)
+					<div class="fn-operate fn-fail mt10">
+                    <em></em>
+                    <h4>快捷充值操作失败。</h4>
+                    <p class="mt5">支付账号未激活！</p>
+                    <p class="mt5">您需要:<a href="/anon/activeYjfAccount" class="fn-o-btn ml5"><span>立即激活</span></a>|</span><a href="/usercenter/home" class="fn-o-btn ml5"><span>返回首页</span></a></p>
+        			</div>
+					#else
+					<div class="fn-operate fn-fail mt10">
+                    <em></em>
+                    <h4>快捷充值操作失败。</h4>
+                    <p class="mt5">$!message。</p>
+                    <p class="mt5">您可能需要：<a href="/usercenter/deposit">返回上一步</a><span>|</span><a href="/usercenter/home">返回首页</a></p>
+        			</div>
+					#end
+                    <div class="blank30"></div>
+                  </div>
+			</div>
+        </div>
+    </div>
+    <div class="blank50"></div>
+</div>
+    #parse("/front/index/common/footer.vm")
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+    	seajs.use($_GLOBAL.mode + 'demo');
+		
+     }
+    </script>
+	 <script type="text/javascript">
+     
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>系统参数设置</title>
+	<link type="text/css" href="/resources/css/after.css" rel="stylesheet" />
+    <link href="/resources/back/css/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" href="/resources/js/jqzoom_ev-2.3/css/jquery.jqzoom.css" rel="stylesheet" />
+</head>
+<body>
+				<div class="mc">
+                    <div class="place">
+                        <span>位置：</span>
+                        <ul class="placeul">
+                            <li><a href>系统设置</a></li>
+                            <li><a href>系统参数管理</a></li>
+                        </ul>
+                    </div>
+					<form action="/backstage/sysParamManage/addSysParam" class="ui-form" id="systemParam_form" method="POST">
+						<fieldset>
+							<legend><h3>$!appConstantsUtil.getProductName()系统参数</h3></legend>
+							<div class="item">
+								<label for="" class="u-label"><span class="required">*</span>参数名：</label>
+								<input type="text" class="u-input w170"  name="param_name" id="param_name"    maxlength=""/>
+							</div>
+							<div class="item">
+                                <label for="" class="u-label"><span class="required">*</span>参数值：</label>
+                                <input type="text" class="u-input w170"  name="param_value" id="param_value"   maxlength=""/>
+							</div>
+							<div class="item">
+                                <label for="" class="u-label">扩展属性一：</label>
+                                <input type="text" class="u-input w170"  name="extend_attribute_one" id="extend_attribute_one"  maxlength=""/>
+							</div>
+                            <div class="item">
+                                <label for="" class="u-label">扩展属性二：</label>
+                                <input type="text" class="u-input w170"  name="extend_attribute_two" id="extend_attribute_two"  maxlength=""/>
+                            </div>
+                            <div class="item" style="display: none">
+                                <label for="" class="u-label"><span class="required"></span>描述：</label>
+                                <textarea name="description" class="u-area" style="width:350px;height:100px;"></textarea>
+                            </div>
+						</fieldset>
+
+						<div class="item">
+                            <a href="javascript:;"  class="u-btn u-btn-blue submit_form">创建</a><a href="/backstage/sysParamManage" class="u-btn u-btn-gray">取消</a>
+						</div>
+					</form>
+				</div>
+	<script type="text/javascript">
+    	var $_GLOBAL = {};
+    </script>
+	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
+	<script type="text/javascript">
+
+    	seajs.use($_GLOBAL.mode + 'systemParam');
+		
+		
+    </script>
+</body>
+</html>

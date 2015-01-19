@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/new.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/recep.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/banner.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/reg.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/form.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/ui.datepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/new/ui.all.css"/>
+    <script language="javascript" type="text/javascript" src="/resources/js/jquery/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/resources/js/jquery/jquery-1.3.2.js"></script>
+
+    <title>$!appConstantsUtil.getProductName()</title>
+</head>
+
+<body>
+<!--通用头部开始-->
+<div class="top b_gray">
+    <ul>
+        <li class="left logo"><img src="/resources/images/new/logo.png" width="230" height="70" style="margin-top:5px;"></li>
+        <li class="left"><a href="/login/login">登录</a></li>
+        <li class="left"><a href="/anon/register">注册</a></li>
+
+        <li><a href="/about/us">关于我们</a></li>
+        <li><a href="loan/type">我要融资</a></li>
+        <li><a href="/index/invest/10/1">我要投资</a></li>
+        <li><a href="/usercenter/home">我的账户</a></li>
+        <li class="light"><a href="/">平台首页</a></li>
+    </ul>
+</div>
+<div class="top_blank"></div>
+<!--通用头部结束-->
+<div class="blank"></div>
+<div class="alrod">
