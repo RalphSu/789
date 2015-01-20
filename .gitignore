@@ -18,6 +18,7 @@ $RECYCLE.BIN/
 .classpath
 *.gitignore
 .settings/
+target/
 
 # Windows shortcuts
 *.lnk
@@ -53,3 +54,8 @@ p2p-integration/.classpath
 *.project
 *.classpath
 *.project
+*.properties
+*.classpath
+*.MF
+*.classpath
+*.classpath
