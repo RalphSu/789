@@ -6,11 +6,21 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/new/main.css"/>
     <link rel="stylesheet" type="text/css" href="/resources/css/new/recep.css"/>
     <link rel="stylesheet" type="text/css" href="/resources/css/new/banner.css"/>
+    <script language="javascript" type="text/javascript" src="/resources/js/jquery/jquery.min.js"></script>
 </head>
+	<script type="text/javascript">
+		$(function(){
+			//设置父frame中该iframe的高度
+			//至少留出一行的空位
+			var minHeight = 360;
+			var height = document.body.clientHeight;
+			$(window.parent.document.body).find("#iframe").css("height",(height >= minHeight ? height : minHeight) + "px");
+		});
+	</script>
 <body>
 
 <div class="nav inpro" id="childIframe">
-    <ul>
+    <ul id="entryUl">
         #foreach($trade in $!{page.result})
             <a href="javascript:index($!{trade.demandId},$!{trade.tradeId});"><li style="height:315px;">
                 <div class="inpro_pic">

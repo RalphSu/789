@@ -280,7 +280,7 @@
 </div>
 
 <div class="nav inpro" style="width:100%">
-    <iframe src="/index/staticIndex/8/1" style="height: auto; width: 100%;" name="iframe" id="iframe" onload="iframeFitHeight(this);" marginheight="0" marginwidth="0" scrolling="no" frameborder="0" >
+    <iframe src="/index/staticIndex/8/1" style="height: auto; width: 100%;" name="iframe" id="iframe" marginheight="0" marginwidth="0" scrolling="no" frameborder="0" >
     </iframe>
 ##    #parse("/front/index/common/entries.vm")
 </div>
@@ -310,9 +310,9 @@
 ##*<script type="text/javascript">
 ##  var $_GLOBAL = {};
 ##</script>
-<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
 ##<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
 <script type="text/javascript">
+	##这个函数暂时没用了，先放这里
     function iframeFitHeight(oIframe, len){
         if(oIframe.src == null || oIframe.src==""){
             return;
@@ -340,6 +340,7 @@
 
     $(function() {
        $("#gundongTextContainer").attr("style", "font-size:18px; color: red;");
+##       alert($("#iframe").find("ul").length);
     });
 
     $("#loanType").children("a").click(function() {
