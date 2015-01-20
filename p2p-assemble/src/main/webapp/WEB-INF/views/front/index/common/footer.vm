@@ -5,7 +5,7 @@
             <li><a href="/help/aboutus"><span class="small_font">关于我们</span></a><a href="/help/guidelines"><span class="small_font">新手指引</span></a><a href="/help/investment"><span class="small_font">投资流程</span></a><a href="/help/security"><span class="small_font">安全保障</span></a><a href="/help/joinus"><span class="small_font">加入我们</span></a><a href="/help/contactus"><span class="small_font">联系我们</span></a><a href="$!{rc.contextPath}/help/qa"><span class="small_font">常见问题</span></a></li>
             <li><span class="small_font">客服热线 （工作时间：工作日 9:00-17:30）</span><span class="small_font">客服邮箱 $!appConstantsUtil.getCustomerServiceEmail()</span>
             	<!--在线客服代码-->
-            	<div style="position: fixed;right: 50px;bottom: 70px;"><script language="javascript" src="http://chat32.live800.com/live800/chatClient/staticButton.js?jid=7544075772&companyID=467824&configID=59692&codeType=custom"></script></div>
+            	<div style="position: fixed;right: 0px;bottom: 70px;"><script language="javascript" src="http://chat32.live800.com/live800/chatClient/staticButton.js?jid=7544075772&companyID=467824&configID=59692&codeType=custom"></script></div>
 				<script language="javascript" src="http://chat32.live800.com/live800/chatClient/monitor.js?jid=7544075772&companyID=467824&configID=59633&codeType=custom"></script>
 				<script type="text/javascript">
 				var _gaq = _gaq || [];
