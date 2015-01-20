@@ -1,7 +1,7 @@
 #parse("/front/index/common/reg-header.vm")
     <!--注册页面开始-->
     <div class="reg_tit nav large_font">开通第三方支付账户失败！</div>
-    <div class="load nav">
+    <div class="load nav" style="width:900px">
         <ul class="four_load">
             <li class="last start"><div class="num_last"><span class="green_t">1</span></div>填写基本信息并验证手机</li>
             <li class="load_link"><img src="/resources/images/new/load4.png"></li>
