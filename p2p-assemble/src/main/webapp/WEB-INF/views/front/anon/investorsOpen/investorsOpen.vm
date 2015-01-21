@@ -38,13 +38,13 @@
         <li class="reg_name"><span class="required">*</span>确认密码： </li>
         <li class="reg_input" style="width: 500px;"><input name="confirmLogPassword" type="password" class="reg_input"></li>
     </ul>
-    <ul>
-        <li class="reg_name"><span class="required"></span>常用电子邮箱：</li>
-        <li class="reg_input" style="width: 500px;">
-            <input type="text" class="reg_input" maxlength="30" name="mail" />
-            ##<b class="fn-tip">注册完成后需要通过邮箱激活用户<br />由6—20英文字母、数字或符号组成，建议使用大小写字母与数字混合设置密码。</b>
-        </li>
-    </ul>
+##    <ul>
+##        <li class="reg_name"><span class="required"></span>常用电子邮箱：</li>
+##        <li class="reg_input" style="width: 500px;">
+##            <input type="text" class="reg_input" maxlength="30" name="mail" />
+##            ##<b class="fn-tip">注册完成后需要通过邮箱激活用户<br />由6—20英文字母、数字或符号组成，建议使用大小写字母与数字混合设置密码。</b>
+##        </li>
+##    </ul>
 
     <ul>
         <li class="reg_name"><span class="required">*</span>图片验证码：</li>

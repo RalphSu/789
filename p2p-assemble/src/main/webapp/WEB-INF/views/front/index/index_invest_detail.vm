@@ -694,9 +694,8 @@
 		success : function(res) {
 			if(res.code == "0"){
 				//如果没有注册三方账户
-				var o = confirm("您还没有注册支付账户，现在注册吗?");
-				if(o){
-					window.location.href("/anon/toRegYJFAccount/${userBaseInfo.userName}");
+				if(confirm("您还没有注册支付账户，现在注册吗?")){
+					window.location.href = "/anon/toRegYJFAccount/${userBaseInfo.userName}";
 				}
 			}else{
 				if(checkCode() && checkAmount()){   //&& checkPayPassword()
@@ -716,9 +715,8 @@
 		                if(!result.investStatus){
 		                	myWin.close();
 		                	if(!(undefined == result.code) && "-1" == result.code){
-		                		var r = confirm("您的余额不足，现在充值吗?");
-		                		if(r){
-		                			window.location.href = ("/usercenter/deposit");
+		                		if(confirm("您的余额不足，现在充值吗?")){
+		                			window.location.href = "/usercenter/deposit";
 		                		}else{
 									$('#invest-result-messge').html(result.message).show();
 		                    		_this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);		                			
