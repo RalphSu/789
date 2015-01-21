@@ -23,7 +23,7 @@ public class UserAccountInfoBaseController extends BaseAutowiredController {
 	
 	protected void initAccountInfo(Model model, boolean isInitUserBase) {
 		if (isInitUserBase){
-			if(null != SessionLocalManager.getSessionLocal().getUserBaseId() && "" != SessionLocalManager.getSessionLocal().getUserBaseId()){
+			if(null != SessionLocalManager.getSessionLocal() && null != SessionLocalManager.getSessionLocal().getUserBaseId() && "" != SessionLocalManager.getSessionLocal().getUserBaseId()){
 				//初始化用户基本信息
 				this.getUserBaseInfo(null, model);
 			}
