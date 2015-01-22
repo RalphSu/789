@@ -205,6 +205,7 @@ public class LoanDemandManagerImpl extends BaseBizService implements LoanDemandM
 		if ("pass".equals(status)) {
 			try {
 				LoanDemandDO demandDO = loanDemandDAO.queryLoanDemandByDemandId(demandId);
+				//注意 createNewTrade方法中的 remoteTradeService.createTrade 调用了易极付接口 在那边创建了一个交易
 				divisionService.createNewTrade(demandDO);
 				Trade trade = tradeDao.getByDemandId(demandId);
 				TradeFlowCode tradeFlow = new TradeFlowCode();

@@ -372,6 +372,7 @@ public class DivisionServiceImpl extends OpenApiBaseService implements
 			}
 			order.setTradeName(trade.getName());
 			OpenApiContext context = this.getOpenApiContext();
+			//调用远程方法进行trade的新建
 			TradeResult result = remoteTradeService.createTrade(order, context);
 
 			if (result.isSuccess()) {
