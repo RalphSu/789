@@ -21,7 +21,7 @@ public class AuthorityFilter implements Filter {
 											"/backstage/backstageIdex", "/admincenter/",
 											"/backstage/nopermission", "/loan/", "/about/",
 								 			"/JoinApplication/", "/remote/trade/receive/",
-											"/notify", "/index/" , "/goto.htm" };
+											"/notify", "/index/" , "/goto.htm","/gotoInvest.htm" };
 	/**
 	 * 正则${:}
 	 */

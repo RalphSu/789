@@ -41,6 +41,11 @@ public class BaseHandelController extends BaseAutowiredController {
 	public String turnPage(Model model) throws Exception {
 		return vm_path + "common/goto.htm";
 	}
+	
+	@RequestMapping("gotoInvest.htm")
+	public String turnInvestPage(Model model) throws Exception {
+		return vm_path + "common/gotoInvest.htm";
+	}
 
 
 	@RequestMapping("")
