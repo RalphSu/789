@@ -90,8 +90,10 @@ public class PersonalInfoManagerImpl extends BaseAutowiredToolsService implement
 			throw new Exception("数据库异常");
 		}
 		personalInfo.setUserBaseId(userBaseId);
+		
+		personalInfoDAO.insert(personalInfo);
 		//取消邮件验证 15.01.19
-		/*long personId = personalInfoDAO.insert(personalInfo);
+		 /*
 		if (personId > 0 && !"normal".equals(userBaseInfo.getState())) {
 			try {
 				mailService.sendMail(SendInformation.sendMail(userBaseInfo.getMail(),
