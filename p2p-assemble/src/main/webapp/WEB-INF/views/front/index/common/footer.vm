@@ -19,7 +19,8 @@
 				</script>
 				<!--在线客服代码结束-->
             </li>
-            <li class="up"><span class="large_font">手机客户端</span><a href="#"><span class="down"><img src="/resources/images/new/phone_ap.png"></span></a><a href="#"><span class="down"><img src="/resources/images/new/phone_ad.png"></span></a><a href="#"><span class="down"><img src="/resources/images/new/phone_wp.png"></span></a></li>
+            <li class="up"><span class="large_font">手机客户端</span><a href="#"><span class="down"><img src="/resources/images/new/phone_ap.png"></span></a><a href="#"><span class="down"><img src="/resources/images/new/phone_ad.png"></span></a><a href="#"><span class="down"><img src="/resources/images/new/phone_wp.png"></span></a>
+			</li>
             <li class="up"><span class="tit_font">$!appConstantsUtil.getCustomerServicePhone()</span></li>
         </ul>
     </div>
@@ -29,7 +30,12 @@
     <div class="nav copy">
         <ul>
             <li>Copyright © 2014-2015 789jinrong.com, All Rights Reserved</li>
-            <li class="down"><a href="#"><span><img src="/resources/images/new/copy_ico1.png"></span></a><a href="#"><span><img src="/resources/images/new/copy_ico2.png"></span></a><a href="#"><span><img src="/resources/images/new/copy_ico3.png"></span></a><a href="#"><span><img src="/resources/images/new/copy_ico4.png"></span></a><a href="#"><span><img src="/resources/images/new/copy_ico5.png"></span></a></li>
+            <li class="down">
+				<a href="#"><span><img src="/resources/images/new/copy_ico1.png"></span></a>
+				<a href="http://t.knet.cn/index_new.jsp"><span><img width="83px" width="30px" src="/resources/images/new/copy_ico2.png"></span></a>
+				<a href="http://webscan.360.cn/index/checkwebsite/url/www.789jinrong.com"><span><img width="83px" height="30px" border="0" src="http://img.webscan.360.cn/status/pai/hash/5fb7fec26e3cf9efb1a65a51d4036563"/></a></span>
+				<a href="#"><span><img src="/resources/images/new/copy_ico4.png"></span></a>
+				<a href="#"><span><img src="/resources/images/new/copy_ico5.png"></span></a></li>
             <li class="up">版权所有 $!appConstantsUtil.getProductICP()  市场有风险 投资需谨慎！</li>
         </ul>
     </div>
