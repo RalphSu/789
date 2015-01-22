@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head lang="cn">
+    <meta charset="UTF-8">
+    <title>页面正在跳转，请稍后...</title>
+</head>
+<script language="javascript" type="text/javascript" src="/resources/js/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var isLogin = islogin();
+	    if(!isLogin){
+	    	//未登录时关闭窗口，主窗口跳到登录页面
+	    	openerGo("/login/login");
+	    	return;
+	    }
+	    var option = {
+	    		url : '/usercenter/checkThirdpartAccountcomplete',
+	    		type : 'post',
+	    		dataType : 'json',
+	    		success : function(res) {
+	    			if(res.code == "0"){
+	    				//如果没有注册三方账户
+	    				if(confirm("您还没有注册支付账户，现在注册吗?")){
+	    					openerGo("/anon/toRegYJFAccount/${userBaseInfo.userName}");
+	    					return;
+	    				}else{
+	    					closeWin();
+	    					return;
+	    				}
+	    			}else{
+	    				if(checkCode() && checkAmount()){   //&& checkPayPassword()
+	    		            var url = getValue("contextPath") + '/invest/goinvest';
+	    		            var data = {amount : (parseInt(getValue('invest-pay-amount')*1) * 100), tradeId : getValue("tradeId") , token : getValue('token')};
+	    		            //判断是否使用体验金
+	    		            if("checked" == getTarget("goldExp").attr("checked")) {
+	    		                data.virtualMoney = getTarget("goldExp").attr('value');
+	    		            }
+	    		            //disabled处理
+	    		            disButton();
+    		                var result = requestAjax(url, data);
+    		                if(!result.investStatus){
+    		                	if(!(undefined == result.code) && "-1" == result.code){
+    		                		if(confirm("您的余额不足，现在充值吗?")){
+   			                			openerGo("/usercenter/deposit");
+    		                		}else{
+    									addTips(result.message);
+    		                    		enButton();
+    		                    		closeWin();
+    		                    		return;
+    		                		}
+    		                	}else{
+    		                		addTips(result.message);
+    		                		enButton();
+		                    		closeWin();
+		                    		return;
+    		                	}
+    		                }else{
+    		                	console.log(result.redirectURL);
+    		                	return;
+    		                    if(result.redirectURL != null){
+    		                    	enButton();
+    		                        window.location.href = result.redirectURL;
+    		                    }else{
+    		                       	addTips("跳转路径出错！");
+    		                       	enButton();
+    		                       	closeWin();
+    		                       	return;
+    		                    }
+    		                }
+	    		             return false;
+	    		        }else{
+	    		        	closeWin();
+	    		        };
+	    				}
+	    			},
+	    			error : function(res){
+	    				var message = "系统错误，请刷新页面!";
+	    				addTips(message);
+	    				alert(message);
+	    				closeWin();
+	    			}
+	    		}; 
+	    $.ajax(option);
+	});
+	function islogin(){
+        var url = getValue("contextPath") + '/login/islogin';
+        return requestAjax(url);
+    }
+
+    function isInvest(){
+        var url = '/invest/isInvest';
+        var data = {'demandId' : $(window.opener.document).find('[name=demandId]').val()};
+        return requestAjax(url,data);
+
+    }
+
+    function checkTrade(tradeId){
+        var url = getValue("contextPath") + '/invest/checktrade/'+getValue("tradeId");
+        return requestAjax(url);
+    }
+
+    function checkInvest(){
+        var url = getValue("contextPath") + '/invest/checkinvest/'+getValue("tradeId");
+        return requestAjax(url);
+    }
+    
+    function addTips(messge){
+    	var context = $(window.opener.document).find("#invest-result-messge");
+		context.html(messge).show();    		
+    }
+    function openerGo(url){
+		window.opener.location.href = url;   
+		closeWin();
+    }
+    function closeWin(){
+    	window.opener= null;
+		window.open("","_self"); 
+		window.close();
+    }
+    function requestAjax(url, data){
+        var json = null;
+        $.ajax({
+            url:url,
+            dataType:'json',
+            type:'post',
+            async:false,
+            data:data,
+            success:function(result){
+                json = result;
+            }
+        });
+        return json;
+    }
+    function checkCode(){
+        return true;
+        /* var code = $('#code1').val();
+        if(code.length < 1){
+            alert('手机验证码不能为空');
+            return false;
+        }
+        return true; */
+    }
+
+    function checkAmount(){
+    	var $opener = $(window.opener.document);
+        var amount = $opener.find('#invest-pay-amount').val();
+        var e = $opener.find('#invest-pay-amount-messge').hide();
+        if(amount.length < 1){
+            e.html('请输入投资金额').show();
+            return false;
+        }else if(isNaN(amount)){
+            e.html('投资金额必须为数字').show();
+            return false;
+        }else if(parseFloat(amount*1) < 1){
+            e.html('投资金额必须大于0元').show();
+            return false;
+        }
+        return true;
+    }
+    
+    function getValue(id){
+    	return $(window.opener.document).find("#" + id).val();
+    }
+    
+    function getTarget(id){
+    	return $(window.opener.document).find("#" + id);
+    }
+    
+    function disButton(){
+    	$(window.opener.document).find("#invest-ok").attr("href","#").removeAttr("target");    	
+    }
+    
+    function enButton(){
+    	$(window.opener.document).find("#invest-ok").attr("href","/gotoInvest.htm").attr("target","_blank");
+    }
+</script>
+<body>
+    <div style="text-align: center;height:60px;line-height: 60px;color:#444;font-size:13px;">
+        <img src="../../../resources/images/common/loading.gif" />正在努力跳转中，请稍等片刻...</div>
+</body>
+</html>
