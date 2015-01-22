@@ -30,7 +30,7 @@
             <li class="reg_text" name="msg"></li>
         </ul>
         <ul>
-            <li class="reg_name">有效期： </li>
+            <li class="reg_name">身份证有效期： </li>
             <li class="reg_input"><input type="text" id="businessPeriod" class="reg_input" maxlength="12" name="businessPeriod" /></li>
             <li class="reg_text"></li>
         </ul>

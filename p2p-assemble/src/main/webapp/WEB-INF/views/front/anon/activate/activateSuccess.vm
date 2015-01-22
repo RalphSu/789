@@ -7,9 +7,9 @@
             <li class="load_link"><img src="/resources/images/new/load4.png"></li>
             ##<li class="last"><div class="num_last"><span class="green_t">2</span></div>验证邮箱</li>
             ##<li class="load_link"><img src="/resources/images/new/load4.png"></li>
-            <li class="last"><div class="num_last"><span class="green_t">3</span></div>开通第三方支付账户</li>
+            <li class="last"><div class="num_last"><span class="green_t">2</span></div>开通第三方支付账户</li>
             <li class="load_link"><img src="/resources/images/new/load3.png"></li>
-            <li class="in end"><div class="num_innext"><span class="green_o">4</span></div>注册完成</li>
+            <li class="in end"><div class="num_innext"><span class="green_o">3</span></div>注册完成</li>
         </ul>
     </div>
     <div class="blank"></div>
