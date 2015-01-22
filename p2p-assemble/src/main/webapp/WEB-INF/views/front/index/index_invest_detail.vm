@@ -4,7 +4,7 @@
 <div class="top_blank"></div>
 <!--通用头部结束-->
 <div class="blank"></div>
-<div class="alrod">
+<div class="alrod" id="mainDiv">
     <!--项目详情开始-->
     <div class="pbu">
         <div class="pro_bas nav">
@@ -74,7 +74,9 @@
                     </ul>
                 </div>
             </div>
-
+			##值传递区
+			<input type="hidden" id="contextPath" value="$!{rc.contextPath}" />
+			<input type="hidden" id="tradeId" value="$!{tradeId}" />
             #set($balance = 0)
             #if($!{thirdPartAccountInfo.availableBalance} != '')
                 #set($balance = $!{thirdPartAccountInfo.availableBalance})
@@ -162,8 +164,10 @@
                                         融资已结束
                                     #elseif($finishTrade)
                                         交易已结束
+                                    #elseif(!$sessionScope)
+                                        <a href="/gotoInvest.htm" onclick="return false;" target="_blank" id="invest-ok"><img src="/resources/images/new/br_but.png"></a>
                                     #else
-                                        <a href="javascript:void(0);" id="invest-ok"><img src="/resources/images/new/br_but.png"></a>
+                                    	<a href="/gotoInvest.htm" target="_blank" id="invest-ok"><img src="/resources/images/new/br_but.png"></a>
                                     #end
                                 #end
                                 <br/>
@@ -679,7 +683,7 @@
     }
 
 
-    $('#invest-ok').click(function (){
+    $('#invest-ok1').click(function (){
     //如果设置了disabled 第二次点无效
     if($(this).attr('disabled'))return false;
     var isLogin = islogin();
@@ -713,14 +717,15 @@
 		            setTimeout(function(){
 		                var result = requestAjax(url, data);
 		                if(!result.investStatus){
-		                	myWin.close();
+##		                	myWin.close();
 		                	if(!(undefined == result.code) && "-1" == result.code){
-		                		if(confirm("您的余额不足，现在充值吗?")){
-		                			window.location.href = "/usercenter/deposit";
-		                		}else{
-									$('#invest-result-messge').html(result.message).show();
-		                    		_this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);		                			
-		                		}
+##		                		if(confirm("您的余额不足，现在充值吗?")){
+##		                			window.location.href = "/usercenter/deposit";
+##		                		}else{
+									addTips(result.message);
+##									$('#invest-result-messge').html(result.message).show();
+##		                    		_this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);		                			
+##		                		}
 		                	}else{
 		                		$('#invest-result-messge').html(result.message).show();
 		                    	_this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);
@@ -730,6 +735,7 @@
 		                    {
 		                        _this.html("<img src=/resources/images/new/br_but.png>").attr('disabled',false);
 		                        //window.open(result.redirectURL);
+		                        console.log(result.redirectURL);
 		                        myWin.location.href = result.redirectURL;
 		                    }else
 		                    {
@@ -768,6 +774,13 @@
     function checkInvest(){
         var url = '$!{rc.contextPath}/invest/checkinvest/$!{tradeId}';
         return requestAjax(url);
+    }
+    
+    function addTips(messge, url, isOpenNew){
+    	var context = $("#invest-result-messge");
+    	if(null == isOpenNew || !isOpenNew){
+			context.html(messge + "<br><a class='error-tip' href="+url+">现在充值</a> 取消");    		
+    	}
     }
 </script>
 
