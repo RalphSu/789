@@ -237,25 +237,34 @@ public class LoanDemandController extends BaseAutowiredController {
 	
 	@RequestMapping(value = "addLoanDemand")
 	public String addLoanDemand(String bizType, String amount, Model model) throws Exception {
+		//获取担保机构信息，8是角色分类
 		model.addAttribute("guarantee", getInfos(8));
+		//获取担保人信息，9角色分类
 		model.addAttribute("sponsor", getInfos(9));
+		//bizType应该是区分的定向还是公共。如果为空，则设置为公共
 		if (StringUtil.isNotEmpty(bizType)) {
 			model.addAttribute("bizType", bizType);
 		} else {
 			model.addAttribute("bizType", LoanBizTypeEnum.PUBLIC.code());
 		}
-		
+		//金额----不知道为什么要在这里加这个，感觉没用
 		if (StringUtil.isNotEmpty(amount)) {
 			model.addAttribute("amount", Long.parseLong(amount) / 100);
 		}
+		//附件类型
 		List<CommonAttachmentTypeEnum> list = YrdEnumUtil.getAttachmentByIndustry();
 		model.addAttribute("enumlist", list);
+		//根据就分润阶段查询分润模版 INVESET_PHASE 为投资阶段
 		model.addAttribute("invest", divisionService.getDivisionTemplatesByPhase(
 			DivisionPhaseEnum.INVESET_PHASE.code(), "normal"));
+		//根据就分润阶段查询分润模版  REPAY_PHASE 为还款阶段阶段
 		model.addAttribute("repay", divisionService.getDivisionTemplatesByPhase(
 			DivisionPhaseEnum.REPAY_PHASE.code(), "normal"));
+		//这一行是忘记了删么？？
 		model.addAttribute("uploadHost", "");
+		//还本付息方式 是一个list
 		model.addAttribute("divisionWayList", DivisionWayEnum.getAllEnum());
+		//担保方式 是一个List 789没有担保 这个应该是没用的
 		model.addAttribute("insureWayList", InsureWayEnum.getAllEnum());
 //		model.addAttribute("loanTypes", LoanTypeEnum.getEnums());
 		//查询所有融资类型
@@ -396,40 +405,60 @@ public class LoanDemandController extends BaseAutowiredController {
 //			jsonobj.put("message", "未选择担保机构");
 //			return jsonobj;
 //		}
-
+		//根据userBaseInfo设置一些个人信息，如果没找到对应的userBaseInfo, 会throw一个Exception
 		loanDemandDO = this.getLoanDemandDO(loanDemandDO);
+		//默认分成模板
 		long divisionTemplateId = 0l;
+		//如果这里的templateIds的长度为2，即募资阶段和还款阶段的的templateId都有的话，会到divisionTemplateTrade
+		//里面去查invest_template_id = templateIds[0] 和 repay_template_id = templateIds[1]的记录。 
+		//这个divisionTemplateTrade是个什么，还不知道
 		long existDivisionTemplateId = divisionTemplateLoanService
 			.getBaseIdByTemplateIds(templateIds);
+		//接上 如果divisionTemplateTrade里面有记录，就会把divisionTemplateId设置成existDivisionTemplateId
+		//如果existDivisionTemplateId找出来是空，DivisionTemplateLoanDaoImpl.getBaseIdByTemplateIds()会返回0 这种方式我也是醉了
 		if (existDivisionTemplateId > 0) {
 			divisionTemplateId = existDivisionTemplateId;
 		} else {
-			divisionTemplateId = divisionTemplateLoanService
-				.insertDivisionTemplateLoan(templateIds);
+			//如果existDivisionTemplateId没找到，就在divisionTemplateTrade中插入一条记录
+			//但是这里DivisionTemplateLoanServiceImpl.insertDivisionTemplateLoan里面没有对templateIds做长度判断
+			//可能会outOfRange啊魂淡
+			divisionTemplateId = divisionTemplateLoanService.insertDivisionTemplateLoan(templateIds);
 		}
+		//这句的意思是查询该阶段的指定角色的分成(融资成本)是多少。这个分成是由分润模板上指定的。下一句是还款阶段的
 		List<DivsionRuleRole> investRolelist = divisionService.getRuleRole(String
 			.valueOf(templateIds[0]));
+		//你妹 又是一个templateIds[1] 如果确定了长度必然会大于1 你搞个变长参数是为了好玩吗？
 		List<DivsionRuleRole> repayRolelist = divisionService.getRuleRole(String
 			.valueOf(templateIds[1]));
+		//第一阶段借款成本(利率)
 		double loanInterest1 = 0;
+		//第一阶段投资者成本(利率)
 		double investorInterest1 = 0;
+		//第二阶段借款成本(利率)
 		double loanInterest2 = 0;
+		//第二阶段投资者成本(利率)
 		double investorInterest2 = 0;
+		//总借款成本(利率)
 		double totalLoanInterest = 0;
+		//总投资者利率
 		double totalInvestorInterest = 0;
 		//投资阶段分润信息
 		if (investRolelist != null && investRolelist.size() > 0) {
+			//循环投资阶段所有角色
 			for (DivsionRuleRole role : investRolelist) {
+				//把分成率乘以100，便于计算
 				double bg = CommonUtil.mulDI(role.getRule(), 100);
+				//设置第一阶段和总结款利率
 				totalLoanInterest = CommonUtil.addDD(totalLoanInterest, bg);
 				loanInterest1 = CommonUtil.addDD(loanInterest1, bg);
 				if (12 == role.getRoleId()) {
+					//如果角色是投资者 还要加上投资利率
 					investorInterest1 = CommonUtil.addDD(investorInterest1, bg);
 					totalInvestorInterest = CommonUtil.addDD(totalInvestorInterest, bg);
 				}
 			}
 		}
-		//还款阶段分润信息
+		//还款阶段分润信息 --处理逻辑和上一个if一样
 		if (repayRolelist != null && repayRolelist.size() > 0) {
 			for (DivsionRuleRole role : repayRolelist) {
 				double bg1 = CommonUtil.mulDI(role.getRule(), 100);
@@ -441,6 +470,7 @@ public class LoanDemandController extends BaseAutowiredController {
 				}
 			}
 		}
+		//设置投资者总利率
 		if (totalInvestorInterest != loanDemandDO.getInterestRate()) {
 			loanDemandDO.setInterestRate(totalInvestorInterest);
 		}
@@ -452,6 +482,7 @@ public class LoanDemandController extends BaseAutowiredController {
 		loanDemandDO.setLoanAmount(loanDemandDO.getLoanAmount() * 100);
 		//最低投资
 		loanDemandDO.setLeastInvestAmount(loanDemandDO.getLeastInvestAmount() * 100);
+		//融资完成条件 金额还是比例
 		loanDemandDO.setSaturationCondition(getSaturationCondition(
 			loanDemandDO.getSaturationConditionMethod(), loanDemandDO.getSaturationCondition()));
 		
@@ -468,9 +499,10 @@ public class LoanDemandController extends BaseAutowiredController {
 			jsonobj.put("message", "融资期限按天计算时，不可选择按月还款！");
 			return jsonobj;
 		}
-		
+		//是否定向融资 这里没有定向融资 页面上用hidden设置了N
 		String isDirectional = request.getParameter("isDirectional");
 		if (StringUtil.equals(isDirectional, "Y")) {
+			//是定向融资的要输入指定密码
 			if (StringUtil.isEmpty(loanDemandDO.getLoanPassword())) {
 				jsonobj.put("code", 0);
 				jsonobj.put("message", "请设置密码");
@@ -481,12 +513,10 @@ public class LoanDemandController extends BaseAutowiredController {
 				jsonobj.put("message", "定向融资密码长度应在6到8之间");
 				return jsonobj;
 			}
-		}
-		else
-		{
+		}else{
 			loanDemandDO.setLoanPassword(null);
 		}
-		//检查融资金额必须在融资规模内
+		//检查融资金额必须在融资规模内 --这里在页面上也设置为空了
 		String dimensions = loanDemandDO.getDimensions();
 		if (StringUtil.isNotBlank(dimensions)) {
 			String[] dimension = dimensions.replaceAll(",", "").split(" ~ ");
@@ -500,7 +530,7 @@ public class LoanDemandController extends BaseAutowiredController {
 				
 			}
 		}
-		
+		//这句是检查按月还息不支持以天计息 没什么用
 		ResultBase checkRs = loanDemandManager.checkRules(loanDemandDO);
 		if(!checkRs.isSuccess()){
 			jsonobj.put("code", 0);
@@ -514,21 +544,24 @@ public class LoanDemandController extends BaseAutowiredController {
 		loanDemandDO.setGuaranteeLicenseName("-");
 		loanDemandDO.setSponsorId(0);
 		loanDemandDO.setSponsorName("-");
-
+		
+		//数据库中的insert操作，设置了几个默认值，并把自身的ID设置进来了
 		AddLoanDemandResult resultEnum = loanDemandManager.addLoanDemand(loanDemandDO);
 		logger.info("发布借款需求结束：{}", resultEnum);
 		if (resultEnum.getResultEnum() == ResultEnum.EXECUTE_SUCCESS) {
-			//result.getDemandId()
+			//设置bizNo为loanDemand的ID
 			String bizNo = String.valueOf(resultEnum.getDemandId());
 
 			/** 扩展属性 ***/
 			ExtendAttrDO extendAttrDO = new ExtendAttrDO();
 			extendAttrDO.setRecordId(loanDemandDO.getDemandId());
+			//这个attrName没有任何意义，不要被它迷惑了，就是用来存储支付银行的 不能直接在load_demand中加一个字段么？？为什么要这样？可能一对多？
 			extendAttrDO.setAttrName("LOANDEMAND_PAYMENTBANKNAME");
 			String paymentBankName = request.getParameter("paymentBankName");
 			extendAttrDO.setAttrValue(paymentBankName);
 			extendAttrDAO.insert(extendAttrDO);
 			
+			//上传附件
 			P2PBaseResult baseResult = addAttachfile(bizNo, request);
 			if ("draft".equalsIgnoreCase(loanDemandDO.getStatus())) {
 				jsonobj.put("code", 1);
