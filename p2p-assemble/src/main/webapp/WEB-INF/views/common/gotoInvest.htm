@@ -23,7 +23,7 @@
 	    			if(res.code == "0"){
 	    				//如果没有注册三方账户
 	    				if(confirm("您还没有注册支付账户，现在注册吗?")){
-	    					openerGo("/anon/toRegYJFAccount/${userBaseInfo.userName}");
+	    					openerGo("/anon/toRegYJFAccount/"+getValue("userName"));
 	    					return;
 	    				}else{
 	    					closeWin();
