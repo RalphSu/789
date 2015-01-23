@@ -260,7 +260,6 @@ public class BaseCheckController extends BaseAutowiredController {
 	@ResponseBody
 	@RequestMapping("sendSmsCode")
 	public Object sendSmsCode(HttpSession session,String mobile, String business) throws Exception {
-		logger.info("发生手机验证码，入参[{}],[{}]", mobile, business);
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (SessionLocalManager.getSessionLocal() != null) {
 			UserBaseInfoDO baseUser = userBaseInfoManager.queryByUserBaseId(SessionLocalManager
@@ -300,7 +299,7 @@ public class BaseCheckController extends BaseAutowiredController {
 				session.removeAttribute("verifyRegCodeSuccess");
 			}
 		}
-		
+		logger.info("发生手机验证码，入参[{}],[{}]", mobile, business);
 		P2PBaseResult baseResult = smsManagerService.sendSmsCode(mobile,
 			SmsBizType.getByCode(business));
 		if (baseResult.isSuccess()) {
