@@ -16,7 +16,7 @@ public class LogInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		String url = request.getRequestURL().toString();
-		if(url.contains("/resources/")){
+		if(url.contains("/resources/") || url.contains("/sendSmsCode")){
 			return true;
 		}
 		StringBuilder stringBuilder = new StringBuilder("http请求URL：" + url + "，传入参数：{");
