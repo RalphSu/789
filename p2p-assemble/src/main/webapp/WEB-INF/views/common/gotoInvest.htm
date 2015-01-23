@@ -7,6 +7,8 @@
 <script language="javascript" type="text/javascript" src="/resources/js/jquery/jquery.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		//先清空之前的提示信息
+		addTips("");
 		var isLogin = islogin();
 	    if(!isLogin){
 	    	//未登录时关闭窗口，主窗口跳到登录页面
@@ -55,8 +57,8 @@
 		                    		return;
     		                	}
     		                }else{
-    		                	console.log(result.redirectURL);
-    		                	return;
+    		                	/* console.log(result.redirectURL);
+    		                	return; */
     		                    if(result.redirectURL != null){
     		                    	enButton();
     		                        window.location.href = result.redirectURL;
