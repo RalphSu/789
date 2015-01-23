@@ -16,7 +16,7 @@
 <div class="reg_form nav">
 
     <form id="registForm" action="/anon/regYJFAccount" method="post">
-        <input type="hidden" id="userName" name="userName" value="${userName}"/>
+        <input type="hidden" id="userName" name="userName" value="$!{userName}"/>
         <ul>
             <li class="reg_name">真实姓名： </li>
             <li class="reg_input">

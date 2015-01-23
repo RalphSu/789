@@ -53,6 +53,11 @@ define(function(require) {
     });
 
     $("#confirm").click(function(){
+    	if(undefined == $("#userName").val() || "" == $("#userName").val()){
+    		//如果没获取到用户名
+    		alert("登录已失效，请重新登录!");
+    		return;
+    	}
         regeistForm.submit();
         return false;
     });
