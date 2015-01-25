@@ -5,7 +5,6 @@ define(function(require) {
 	//require('../content/securityPassword.js')(210,31);
 	require('../content/securityPassword.js');
 
-
     var newcaptcha = $('#newcaptcha');
 	verify.click(function() {
 		var img = new Image();
@@ -17,9 +16,9 @@ define(function(require) {
 			newcaptcha.remove();
 			obj.click(function(){
 				verify.click();
-			})
+			});
 			newcaptcha = obj;
-		}
+		};
 	});
 	$('[name=userName]').val(getCookie("userName"));
 	var login_form = $('#login_form');
@@ -165,7 +164,25 @@ define(function(require) {
  		});
  	}
  	$("#confirm").click(function() {
- 		loginForm.submit();
+ 		var option = {
+ 			url : '/login/checkImgCode',
+ 			dataType : 'json',
+			data : {
+				captcha : $("#captcha").val()
+			},
+			async : false,
+			success : function(res) {
+				if (res.code == 1) {
+					loginForm.submit();
+				} else {
+					$("#messageSpan").html("验证码输入有误!");
+				}
+			},
+			error : function() {
+				$("#messageSpan").html("网络连接失效，请刷新页面！");
+			}
+ 		};
+ 		$.ajax(option);
  		return false;
  	});
  	

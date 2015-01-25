@@ -14,20 +14,20 @@
     <ul>
         <li class="reg_name"></li>
         <li class="reg_input" style="color:#f00;width: 540px;line-height:20px;word-break: break-all;">
-            $!{message}
+            <span id="messageSpan">$!{message}</span>
         </li>
     </ul>
     <ul>
         <li class="reg_name">手机号码： </li>
-        <li class="reg_input" style="width: 500px;"><input  name="userName" type="text" class="reg_input"></li>
+        <li class="reg_input" style="width: 500px;"><input id="userName" name="userName" type="text" class="reg_input"></li>
     </ul>
     <ul>
         <li class="reg_name">登录密码： </li>
-        <li class="reg_input" style="width: 500px;"><input name="password" id="password" type="password" class="reg_input"></li>
+        <li class="reg_input" style="width: 500px;"><input id="password" name="password" id="password" type="password" class="reg_input"></li>
     </ul>
     <ul>
         <li class="reg_name">验证码： </li>
-        <li class="reg_input" style="width: 500px;"><input name="captcha" type="text" class="reg_input" style="width: 213px;" />
+        <li class="reg_input" style="width: 500px;"><input id="captcha" name="captcha" type="text" class="reg_input" style="width: 213px;" />
         	<a href="#" class="reg_bt"><div class="ver" style="right: 170px;"><img id="newcaptcha" class="code-img" style="margin-top: 4px;" title="看不清？请点击验证码刷新" onclick="this.src = '/anon/getImgCode?t=' + new Date().getTime();" src="/anon/getImgCode" /></div></a>
         </li>
     </ul>
@@ -45,7 +45,10 @@
 <div class=" form_blank"></div>
 </div>
 <!--注册页面结束-->
-<div class="blank"></div>
+<div class="blank">
+	<input type="hidden" id="hiddenUserName" value="$!{userName}" />
+	<input type="hidden" id="hiddenPassword" value="$!{password}" />
+</div>
 #parse("/front/index/common/footer.vm")
 <script type="text/javascript">
     seajs.use($_GLOBAL.mode + 'login');
