@@ -122,18 +122,25 @@ public class LoginController extends BaseAutowiredController {
 
 		return "test/login.vm";
 	}
+	
+	@ResponseBody
+	@RequestMapping("checkImgCode")
+	public Object checkImgCode(HttpSession session,String captcha, Model model){
+		JSONObject json = new JSONObject();
+		json.put("code", 1);
+		if (!Image.checkImgCode(session, captcha)) {
+			json.put("code", 0);
+		}else{
+			session.removeAttribute(KAPTCHA_SESSION_KEY);
+		}
+		return json;
+	}
 
 	@RequestMapping("dologin")
 	public String doLogin(String userName, String password, String redirect,
-			String captcha, HttpSession session, HttpServletRequest request)
+			String captcha, HttpSession session, HttpServletRequest request, Model model)
 			throws UnsupportedEncodingException {
  		session.setAttribute("test", "test");
-		if (!Image.checkImgCode(session, captcha)) {
-			return "redirect:login?message=" + LOGIN_CAPTCHA_MESSAGE
-					+ "&redirect=" + redirect;
-		}
-		session.removeAttribute(KAPTCHA_SESSION_KEY);
-
 		UserBaseInfoDO baseInfoDO = loginService.login(userName, password);
 		if (baseInfoDO == null) {
 			int pwdErrorTimes = 0;
