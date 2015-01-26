@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>$!appConstantsUtil.getProductName()官网</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--站长验证-->
+	<meta name="pinggu-site-verification" content="786fee57f1b1135e0aa0bbebd51d40a7" />
 	<link rel="stylesheet" type="text/css" href="/resources/css/new/main.css"/>
 	<link rel="stylesheet" type="text/css" href="/resources/css/new/recep.css"/>
 	<link rel="stylesheet" type="text/css" href="/resources/css/new/banner.css"/>
