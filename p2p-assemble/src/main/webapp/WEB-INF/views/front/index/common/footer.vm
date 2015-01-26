@@ -19,12 +19,21 @@
 				</script>
 				<!--在线客服代码结束-->
             </li>
-            <li class="up"><span class="large_font">手机客户端</span><a href="#"><span class="down"><img src="/resources/images/new/phone_ap.png"></span></a><a href="#"><span class="down"><img src="/resources/images/new/phone_ad.png"></span></a><a href="#"><span class="down"><img src="/resources/images/new/phone_wp.png"></span></a>
+            <li class="up"><span class="large_font">联系我们</span><span class="down"><img id="weixin_code" src="/resources/images/new/weixin_code.png" style="display:none;position:absolute;top:-200px;left:-50px;z-index:999" /><img id="weixin" src="/resources/images/new/weixin.png" /></span><a href="http://weibo.com/p/1006065406270456"><span class="down"><img title="关注我们的新浪微博" src="/resources/images/new/weibo.png"></span></a>
 			</li>
             <li class="up"><span class="tit_font">$!appConstantsUtil.getCustomerServicePhone()</span></li>
         </ul>
     </div>
 </div>
+<script type="text/javascript">
+	$(function(){
+		$("#weixin").on("mouseover",function(){
+			$("#weixin_code").css("display","");
+		}).on("mouseleave",function(){
+			$("#weixin_code").css("display","none");
+		});
+	});
+</script>
 
 <div class="alrod b_gray">
     <div class="nav copy">
