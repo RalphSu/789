@@ -85,7 +85,7 @@ input,select { border:1px solid #ccc; color:#999}
 .map ul li a span { padding-right:20px}
 .map ul li span { padding-right:20px}
 .map ul li span.down { position:relative; top:10px}
-.map ul li.up{ position:relative; top:-10px}
+.map ul li.up{ position:relative; top:-10px; overflow:visible}
 
 .copy { height:80px; color:#999}
 .copy ul li { float:left; width:560px; line-height:40px; overflow:hidden}
