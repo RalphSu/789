@@ -91,7 +91,7 @@ public class PayTogetherAmountFlowTask extends AbstractTask {
                         .getFormatAmountByMoney(transferAmount));
                 tradePoolSubTansferOrders.add(subOrder);
                 order.setTradePoolSubTansferOrders(tradePoolSubTansferOrders);
-
+                //付款操作
                 TradeResult result = remoteTradeService.payTogether(order,
                         openApiContext);
 				if (StringUtil

@@ -73,6 +73,7 @@ public class DivisionTransferTask extends AbstractTask {
 						.getAmount()));
 				order.setTradeMemo("收益");
 				order.setTradeName("收益");
+				//付款操作(利润)
 				TradeResult result = ctrlTransferService.transfer(order,
 						openApiContext);
 				String resultCode = result.getResultCode();
