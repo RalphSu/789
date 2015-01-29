@@ -35,7 +35,7 @@
         <!--flash begin-->
         <div id="flashBg">
             <div id="flashLine">
-                <div id="flash">
+                <div id="flash" style="overflow:visible">
                     <a name="url(resources/images/new/banner.jpg) #8B8B97 center" style="display: block;" id="flash1" href="/index/invest/10/1"><div class="nav banner_one"><img src="resources/images/new/b1.png" width="1120" style=" width:1120px;height:270px"></div></a>
                     <a name="url(resources/images/new/banner_2.jpg) #185768 center" id="flash3" href="/help/security"><div class="nav banner_one" id="test"><img src="resources/images/new/b2.png" width="1120" style="width:1120px;height:270px"></div></a>
                     <a name="url(resources/images/new/banner_3.jpg) #8B8B97 center" id="flash2" href="/anon/register"><div class="nav banner_one"><img src="resources/images/new/b5.png" width="1120" style=" width:1120px;height:270px"></div></a>
