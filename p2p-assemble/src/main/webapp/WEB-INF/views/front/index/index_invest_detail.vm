@@ -59,7 +59,7 @@
 ##
 ##                        </span></li>
                         #if($trade.expireDateTime)
-                            <li style="clear:both;margin-top:-20px;"><span class="font_right">结息日期：</span><span class="blue font_right" style="width:200px"> $!{dateUtil.dtSimpleFormat($!{trade.expireDateTime})} </span></li>
+                            <li style="clear:both;margin-top:-20px;"><span class="font_right">结息日期：</span><span class="blue font_right" style="padding-right:52px"> $!{dateUtil.dtSimpleFormat($!{trade.expireDateTime})} </span></li>
                             <li style="margin-top:-20px;"><span class="font_right">最迟还款日（节假日顺延）：</span><span class="blue font_right">$!{dateUtil.dtSimpleFormat($!{lastExpireDate})} </span></li>
                         #end
                     </ul>
