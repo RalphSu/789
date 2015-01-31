@@ -487,12 +487,12 @@ public class LoanDemandController extends BaseAutowiredController {
 			loanDemandDO.getSaturationConditionMethod(), loanDemandDO.getSaturationCondition()));
 		
 		logger.info("发布借款需求，完整入参{}", loanDemandDO);
-		
-		if (loanDemandDO.getInvestAvalibleTime().before(new Date())) {
-			jsonobj.put("code", 0);
-			jsonobj.put("message", "可投资时间应该在当前日期之后");
-			return jsonobj;
-		}
+		//暂时取消时间验证
+//		if (loanDemandDO.getInvestAvalibleTime().before(new Date())) {
+//			jsonobj.put("code", 0);
+//			jsonobj.put("message", "可投资时间应该在当前日期之后");
+//			return jsonobj;
+//		}
 		
 		if ("month".equals(loanDemandDO.getRepayDivisionWay())&& "D".equals(loanDemandDO.getTimeLimitUnit())) {
 			jsonobj.put("code", 0);

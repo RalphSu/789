@@ -3,6 +3,7 @@
     #parse("/front/index/common/header-menu.vm")
 <div class="top_blank"></div>
 <!--通用头部结束-->
+<script type="text/javascript" src="/resources/js/content/util.js"></script>
 <div class="blank"></div>
 <div class="alrod" id="mainDiv">
     <!--项目详情开始-->
@@ -36,11 +37,14 @@
                 <div class="bl_tim" style="border-bottom: 0px;">
                     <ul>
                         <li><span class="font_right">起息日期：</span><span class="blue font_right">
-                            #if($trade.effectiveDateTime)
-                                $!{dateUtil.dtSimpleFormat($!{trade.effectiveDateTime})}
-                            #else
-                                满标立即起息
-                            #end
+                        	<input type="hidden" id="effectiveDateTime" value="$!{dateUtil.simpleFormat($!{trade.effectiveDateTime})}" />
+                        	<input type="hidden" id="diffDate" value="0" />
+##                            #if($trade.effectiveDateTime)
+##                                $!{dateUtil.simpleFormatYmdhms($!{trade.effectiveDateTime})}
+##                            #else
+##                                满标立即起息
+##                            #end
+                            购买当日立即起息
                             </span>
                         </li>
                         <li><span class="font_right">还款方式：</span><span class="blue font_right">$!{loanDemand.repayDivisionWayMsg}</span></li>
@@ -55,8 +59,8 @@
 ##
 ##                        </span></li>
                         #if($trade.expireDateTime)
-                            <li style="clear:both;margin-top:-20px;"><span class="font_right">结息日期：</span><span class="blue font_right"> $!{dateUtil.dtSimpleFormat($!{trade.expireDateTime})} </span></li>
-                            <li style="margin-top:-20px;"><span class="font_right">最迟还款日：</span><span class="blue font_right">$!{dateUtil.dtSimpleFormat($!{lastExpireDate})} </span></li>
+                            <li style="clear:both;margin-top:-20px;"><span class="font_right">结息日期：</span><span class="blue font_right" style="width:200px"> $!{dateUtil.dtSimpleFormat($!{trade.expireDateTime})} </span></li>
+                            <li style="margin-top:-20px;"><span class="font_right">最迟还款日（节假日顺延）：</span><span class="blue font_right">$!{dateUtil.dtSimpleFormat($!{lastExpireDate})} </span></li>
                         #end
                     </ul>
                 </div>
@@ -582,9 +586,10 @@
         }else{
             var amountPreWord = "金额大写： ";
             $('#invest-pay-amount-chinese').html(amountPreWord + chineseAmount).show();
-
             //体验金
             var goldExpValue = $('#goldExp').attr('checked') ? parseFloat($('#goldExp').val()) : 0;
+            var diffDate = parseInt($("#diffDate").val());
+            days = days - (diffDate > 0 ? diffDate : 0);
             //预期收益
             var willIncome = Number((inputAmount + goldExpValue) * rate/360 * days).toFixed(3);
             willIncome = willIncome.substring(0,willIncome.length-1);
@@ -615,7 +620,6 @@
 
 ##
 <script type="text/javascript">
-
     $('#pass-btn').click(function (){
         var e3 = $('#loan-password-messge');
         var e4 = $('#loan-password-re-messge');
@@ -836,6 +840,7 @@
             setInterval(GetRTime,1000);
         }
     }
+    $("#diffDate").val(GetDateDiff($("#effectiveDateTime").val(), new Date().Format("yyyy-MM-dd hh:mm:ss"), "day"));
 </script>
 
 <!--首页内容结束-->

@@ -7,7 +7,6 @@ define(function(require) {
 		 	liveUplodify('upfile');
 		 	
 		var _attach;
-		
 		function liveUplodify(id){
 		    var input = $('#'+id);
 		    input.uploadify({
@@ -659,5 +658,7 @@ define(function(require) {
     	    	}
         	}
         );
-
+    function ccc(){
+    	alert(123);
+    }
 });

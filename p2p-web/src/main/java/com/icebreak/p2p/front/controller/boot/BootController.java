@@ -301,26 +301,27 @@ public class BootController extends UserAccountInfoBaseController {
         if(expireDate != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(expireDate);
-            //一周第一天是否为星期天
-            boolean isFirstSunday = (cal.getFirstDayOfWeek() == Calendar.SUNDAY);
-            //获取周几
-            int weekDay = cal.get(Calendar.DAY_OF_WEEK);
-            //若一周第一天为星期天，则-1
-            if(isFirstSunday){
-                weekDay = weekDay - 1;
-                if(weekDay == 0){
-                    weekDay = 7;
-                }
-            }
-            //加3个工作日
-            int addDay = 3; //结息日期为星期一、星期二、星期天时加3天
-            if(weekDay == 3 || weekDay == 4 || weekDay == 5){
-                addDay = 5; //结息日期为星期三、星期四、星期五时加5天，跨过周末
-            }else if(weekDay == 6){
-                addDay = 4; //结息日期为星期六时加4天
-            }
-
-            cal.add(Calendar.DATE, addDay);
+            cal.add(Calendar.DAY_OF_YEAR, 3);//直接加3天
+//            //一周第一天是否为星期天
+//            boolean isFirstSunday = (cal.getFirstDayOfWeek() == Calendar.SUNDAY);
+//            //获取周几
+//            int weekDay = cal.get(Calendar.DAY_OF_WEEK);
+//            //若一周第一天为星期天，则-1
+//            if(isFirstSunday){
+//                weekDay = weekDay - 1;
+//                if(weekDay == 0){
+//                    weekDay = 7;
+//                }
+//            }
+//            //加3个工作日
+//            int addDay = 3; //结息日期为星期一、星期二、星期天时加3天
+//            if(weekDay == 3 || weekDay == 4 || weekDay == 5){
+//                addDay = 5; //结息日期为星期三、星期四、星期五时加5天，跨过周末
+//            }else if(weekDay == 6){
+//                addDay = 4; //结息日期为星期六时加4天
+//            }
+//
+//            cal.add(Calendar.DATE, addDay);
             model.addAttribute("lastExpireDate", cal.getTime());
         }
 

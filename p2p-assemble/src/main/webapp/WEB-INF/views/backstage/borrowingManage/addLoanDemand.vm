@@ -100,8 +100,8 @@
 ##								</div>
 								<div class="fn-clear mb10" style="position:relative; z-index:16">
 									<p class="fn-left"><input type="radio" class="radio" checked="checked" name="timeLimitUnit" value="D"/><label for="">定制天数：</label></p>
-									<div class="jqtransform jqtransform-select3">
-										<select name="timeLimit" id="">
+									<div class="">
+										<select style="border:solid 1px" name="timeLimit" id="timeLimitSelect">
 											<option value=" ">---&nbsp;请选择定制天数&nbsp; ---</option>
 											#foreach($foo in [1..184])
                                              <option value="$!{foo}">${foo}天</option>
@@ -411,11 +411,34 @@
     	var $_GLOBAL = {};
     </script>
 	<script type="text/javascript" src="/resources/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/resources/js/content/util.js"></script>
 	<script type="text/javascript" src="/resources/js/lib/sea.js"></script>
 	<script type="text/javascript" src="/resources/js/datepicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="/resources/js/xheditor/xheditor-1.2.1.min.js"></script>
 	<script type="text/javascript" src="/resources/js/xheditor/xheditor_lang/zh-cn.js"></script>
 	<script type="text/javascript">
+		$("#deadline").blur(function(){
+			changeTimeLimit();
+		});
+		$("#investAvalibleTime").blur(function(){
+			changeTimeLimit();
+		})
+		function changeTimeLimit(){
+			var investAvalibleTime = $("#investAvalibleTime").val();
+			var deadline = $("#deadline").val();
+			if((investAvalibleTime == undefined || investAvalibleTime == "") || (deadline == undefined || deadline == "")){
+				return;
+			}
+			var investDate = new Date(Date.parse(investAvalibleTime.replace(/-/g, "/")));
+			var deadDate = new Date(Date.parse(deadline.replace(/-/g, "/")));
+			if(deadDate > investDate){
+				##$("#timeLimitSelect").val()
+				var diffDay = (GetDateDiff(investAvalibleTime,deadline,"day"));
+				$("#timeLimitSelect option[value='"+diffDay+"']").attr("selected","selected");
+			}else{
+				$("#timeLimitSelect option").eq(0).attr("selected","selected");
+			}
+		}
     	seajs.use($_GLOBAL.mode + 'addLoanDemand');
     </script>
 </body>

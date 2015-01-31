@@ -341,6 +341,9 @@ public class DivisionServiceImpl extends OpenApiBaseService implements
 			trade.setIsJoinActivity(demandDO.getIsJoinActivity());
 			trade.setLoanType(demandDO.getLoanType());
 			trade.setIsNotifyLoaner(YrdConstants.MessageNotifyConstants.ISNOTIFIED_NO);
+			//789的特殊需求，计息开始时间就为发布时间，预计还款时间为投资结束时间
+			trade.setEffectiveDateTime(demandDO.getInvestAvalibleTime());
+			trade.setExpireDateTime(demandDO.getDeadline());
 			tradeDao.addTrade(trade);
 			final long tradeId = trade.getId();
 			tradeDetailDao.addTradeDetail(new TradeDetail(demandDO
@@ -494,13 +497,14 @@ public class DivisionServiceImpl extends OpenApiBaseService implements
 //		trade = this.tradeDao.getByTradeIdWithRowLock(trade.getId());
 		if (trade.getStatus() != YrdConstants.TradeStatus.REPAYING) {
 			//当前时间
+			//开始计息日期和结息日期都已经在发布时就定了 这里不重新设置了 10.01.29 by ethan
 			Date currentDate = new Date();
-			//计算结息日期
+//			//计算结息日期
 			Calendar cal = Calendar.getInstance();
-			cal.setTime(currentDate);
-			cal.add(Calendar.DATE, trade.getTimeLimit());
-			trade.setEffectiveDateTime(currentDate);
-			trade.setExpireDateTime(cal.getTime());
+//			cal.setTime(currentDate);
+//			cal.add(Calendar.DATE, trade.getTimeLimit());
+//			trade.setEffectiveDateTime(currentDate);
+//			trade.setExpireDateTime(cal.getTime());
 			// 修改状态
 			tradeDao.modifyStatus(trade.getId(), YrdConstants.TradeStatus.REPAYING, currentDate, cal.getTime());
 		} else {

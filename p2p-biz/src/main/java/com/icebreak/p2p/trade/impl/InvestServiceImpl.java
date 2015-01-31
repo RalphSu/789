@@ -72,6 +72,15 @@ public class InvestServiceImpl extends BaseBizService implements InvestService {
 		} else {
 			days = Math.round(timeLimit * YrdConstants.TimeRelativeConstants.DAYSOFAYEAR / 12);
 		}
+		//计算当前日期与起息日期之间的差 实际计息日要用总天数扣除当日
+		if(null != trade.getEffectiveDateTime()){
+			Calendar endTime = Calendar.getInstance();
+			Calendar beginTime = Calendar.getInstance();
+			beginTime.setTime(trade.getEffectiveDateTime());
+			int cutDays = (int) ((beginTime.getTimeInMillis() - endTime.getTimeInMillis())/1000/60/60/24);
+			days = days - cutDays;
+			days = (days < 0 ? 0 : days);
+		}
 		BigDecimal bg = new BigDecimal(rule / YrdConstants.TimeRelativeConstants.DAYSOFAYEAR * days);
 		double daysRate = bg.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
 		return daysRate;

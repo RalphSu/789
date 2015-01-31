@@ -116,7 +116,7 @@ public class InvestorRegisterController extends BaseAutowiredController {
 		String resendEmailUrl = "/anon/resendEmail/"
 								+ MD5Util.getMD5_32(user.getUserBaseId());
 		model.addAttribute("resendEmailUrl", resendEmailUrl);
-		model.addAttribute("userName", personalInfo.getUserName());
+		model.addAttribute("userName", user.getUserName());
 		model.addAttribute("MD5UserBaseId", user.getUserBaseId());
 		String email = user.getMail();
 		if (StringUtil.isNotBlank(email) && email.indexOf("@") != -1) {

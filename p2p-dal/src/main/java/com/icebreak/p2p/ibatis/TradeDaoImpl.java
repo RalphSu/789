@@ -59,8 +59,8 @@ public class TradeDaoImpl extends SqlMapClientDaoSupport implements TradeDao {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("tradeId", tradeId);
 		params.put("status", status);
-		params.put("effectiveDateTime", effectiveDateTime);
-		params.put("expireDateTime", expireDateTime);
+//		params.put("effectiveDateTime", effectiveDateTime);
+//		params.put("expireDateTime", expireDateTime);
 		return getSqlMapClientTemplate().update("TRADE-UPDATESTATUS-BY-FULL", params);
 	}
 
