@@ -840,7 +840,7 @@
             setInterval(GetRTime,1000);
         }
     }
-    $("#diffDate").val(GetDateDiff($("#effectiveDateTime").val(), new Date().Format("yyyy-MM-dd hh:mm:ss"), "day"));
+    $("#diffDate").val(GetDateDiff($("#effectiveDateTime").val().substring(0, $("#effectiveDateTime").val().indexOf(" ")), new Date().Format("yyyy-MM-dd"), "day"));
 </script>
 
 <!--首页内容结束-->

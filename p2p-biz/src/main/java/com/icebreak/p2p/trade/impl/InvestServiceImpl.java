@@ -1,13 +1,41 @@
 package com.icebreak.p2p.trade.impl;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.icebreak.p2p.base.BaseBizService;
+import com.icebreak.p2p.base.OpenApiBaseContextServiceBase;
 import com.icebreak.p2p.dal.daointerface.RepayPlanDAO;
 import com.icebreak.p2p.dal.dataobject.RepayPlanDO;
 import com.icebreak.p2p.daointerface.DivisonRuleRoleDao;
 import com.icebreak.p2p.daointerface.TradeDao;
 import com.icebreak.p2p.daointerface.TradeDetailDao;
 import com.icebreak.p2p.daointerface.UserGoldExperienceDao;
-import com.icebreak.p2p.dataobject.*;
+import com.icebreak.p2p.dataobject.DivisionTemplateLoanDO;
+import com.icebreak.p2p.dataobject.DivsionRuleRole;
+import com.icebreak.p2p.dataobject.InvestDetailDO;
+import com.icebreak.p2p.dataobject.LoanDemandDO;
+import com.icebreak.p2p.dataobject.ProfitAsignInfo;
+import com.icebreak.p2p.dataobject.Trade;
+import com.icebreak.p2p.dataobject.TradeDetail;
+import com.icebreak.p2p.dataobject.TradeFlowCode;
+import com.icebreak.p2p.dataobject.TradeQueryDetail;
+import com.icebreak.p2p.dataobject.UserBaseInfoDO;
+import com.icebreak.p2p.dataobject.UserGoldExperienceDO;
+import com.icebreak.p2p.dataobject.UserRelationDO;
 import com.icebreak.p2p.division.DivisionService;
 import com.icebreak.p2p.division.DivisionTemplateYrdService;
 import com.icebreak.p2p.integration.openapi.result.InvestReturnRequest;
@@ -16,21 +44,26 @@ import com.icebreak.p2p.page.Page;
 import com.icebreak.p2p.trade.InvestService;
 import com.icebreak.p2p.user.UserBaseInfoManager;
 import com.icebreak.p2p.user.UserRelationManager;
-import com.icebreak.p2p.util.*;
-import com.icebreak.p2p.ws.enums.*;
+import com.icebreak.p2p.util.AppConstantsUtil;
+import com.icebreak.p2p.util.BusinessNumberUtil;
+import com.icebreak.p2p.util.CommonUtil;
+import com.icebreak.p2p.util.DateUtil;
+import com.icebreak.p2p.util.MoneyUtil;
+import com.icebreak.p2p.util.YrdConstants;
+import com.icebreak.p2p.ws.enums.DivisionPhaseEnum;
+import com.icebreak.p2p.ws.enums.DivisionWayEnum;
+import com.icebreak.p2p.ws.enums.LoanLimitUnitEnum;
+import com.icebreak.p2p.ws.enums.RepayPlanStatusEnum;
+import com.icebreak.p2p.ws.enums.SysUserRoleEnum;
+import com.icebreak.p2p.ws.enums.TradeDetailStatusEnum;
+import com.icebreak.p2p.ws.enums.TradeFullConditionEnum;
+import com.icebreak.p2p.ws.enums.UserTypeEnum;
 import com.icebreak.util.lang.util.ListUtil;
 import com.icebreak.util.lang.util.StringUtil;
 import com.icebreak.util.lang.util.money.Money;
 import com.yiji.openapi.sdk.message.common.YzzUserAccountQueryRequest;
 import com.yiji.openapi.sdk.message.common.YzzUserAccountQueryResponse;
 import com.yiji.openapi.sdk.message.yzz.InvestApplyNotify;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
-import java.util.*;
 
 @Service
 public class InvestServiceImpl extends BaseBizService implements InvestService {
@@ -74,12 +107,20 @@ public class InvestServiceImpl extends BaseBizService implements InvestService {
 		}
 		//计算当前日期与起息日期之间的差 实际计息日要用总天数扣除当日
 		if(null != trade.getEffectiveDateTime()){
-			Calendar endTime = Calendar.getInstance();
-			Calendar beginTime = Calendar.getInstance();
-			beginTime.setTime(trade.getEffectiveDateTime());
-			int cutDays = (int) ((beginTime.getTimeInMillis() - endTime.getTimeInMillis())/1000/60/60/24);
-			days = days - cutDays;
-			days = (days < 0 ? 0 : days);
+			try{
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar endTime = Calendar.getInstance();
+				endTime.setTime(sdf.parse(sdf.format(Calendar.getInstance().getTime())));
+				Calendar beginTime = Calendar.getInstance();
+				beginTime.setTime(sdf.parse(sdf.format(trade.getEffectiveDateTime())));
+				int cutDays = (int) ((endTime.getTimeInMillis() - beginTime.getTimeInMillis())/1000/60/60/24);
+				days = days - cutDays;
+				days = (days < 0 ? 0 : days);
+			}catch(Exception e){
+				Logger logger = LoggerFactory.getLogger("get DiffDate");
+				logger.error("conculate diffDate throw a exceptioin!");
+				logger.error(e.getMessage());
+			}
 		}
 		BigDecimal bg = new BigDecimal(rule / YrdConstants.TimeRelativeConstants.DAYSOFAYEAR * days);
 		double daysRate = bg.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -871,6 +912,26 @@ public class InvestServiceImpl extends BaseBizService implements InvestService {
 	@Override
 	public void updateInvestDetailRepayDate(long detailId, Date repayDate) {
 		tradeDetailDao.updateRepaydate(detailId, repayDate);
+	}
+	
+	public static void main(String[] args){
+		int days = 56;
+		Calendar endTime = Calendar.getInstance();
+		Calendar beginTime = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		try {
+			date = sdf.parse("2015-01-27 09:49:21");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		beginTime.setTime(date);
+		int cutDays = (int) ((endTime.getTimeInMillis() - beginTime.getTimeInMillis())/1000/60/60/24);
+		days = days - cutDays;
+		days = (days < 0 ? 0 : days);
+		System.out.println("cutDays: " + cutDays);
+		System.out.println("days: " + days);
 	}
 	
 }
