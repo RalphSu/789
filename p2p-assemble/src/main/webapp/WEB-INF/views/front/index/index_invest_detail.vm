@@ -60,7 +60,7 @@
 ##                        </span></li>
                         #if($trade.expireDateTime)
                             <li style="clear:both;margin-top:-20px;"><span class="font_right">结息日期：</span><span class="blue font_right" style="padding-right:52px"> $!{dateUtil.dtSimpleFormat($!{trade.expireDateTime})} </span></li>
-                            <li style="margin-top:-20px;"><span class="font_right">最迟还款日（节假日顺延）：</span><span class="blue font_right">$!{dateUtil.dtSimpleFormat($!{lastExpireDate})} </span></li>
+                            <li style="margin-top:-20px;"><span class="font_right">最迟还款日：</span><span class="blue font_right">$!{dateUtil.dtSimpleFormat($!{lastExpireDate})}（结息日后的三个工作日内，若遇节假日顺延）</span></li>
                         #end
                     </ul>
                 </div>
@@ -123,12 +123,12 @@
                         #if($!{investAvlTimeReached})
                             <input type="hidden" name="istDate" value="$!{dateUtil.simpleFormat($!{loanDemand.deadline})}"/>
                             #set($timeDesc = '投资结束')
+                            <li class="br_text" ></li>
                         #else
                             <input type="hidden" name="istDate" value="$!{dateUtil.simpleFormat($!{loanDemand.investAvalibleTime})}"/>
                             #set($timeDesc = '投资开始')
+                            <li class="br_text">$timeDesc : <span class="mid_font" id="t_d"><em>00</em> 天 </span>  <span class="mid_font" id="t_h"><em>00</em> 小时 </span>  <span class="mid_font" id="t_m"><em>00</em> 分 </span>  <span class="mid_font" id="t_s"><em>00</em> 秒</span></li>
                         #end
-
-                        <li class="br_text">$timeDesc : <span class="mid_font" id="t_d"><em>00</em> 天 </span>  <span class="mid_font" id="t_h"><em>00</em> 小时 </span>  <span class="mid_font" id="t_m"><em>00</em> 分 </span>  <span class="mid_font" id="t_s"><em>00</em> 秒</span></li>
                         <li class="br_text">可投金额 :
                 <span class="mid_font">
                     #if($!{percent} =="100.0%")
