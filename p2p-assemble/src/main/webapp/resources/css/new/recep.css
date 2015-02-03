@@ -78,6 +78,8 @@ span.aid_text { position:relative; top:-4px; left:5px}
 .bas_right { float:right; width:320px; height:310px; padding-top:25px}
 .bas_right ul li { width:255px; position:relative}
 .bas_right ul li.br_text { height:35px; line-height:35px; color:#fff}
+.bas_right ul li.br_protocal{ height:35px; line-height:35px; color:#fff}
+.bas_right ul li.br_protocal a{color:#fff;text-decoration:underline;font-size:15px}
 .bas_right ul li.br_input { margin-top:15px; height:55px}
 .bas_right ul li.br_blank { width:100%; border-bottom:1px dotted #f7f7f7; height:10px; margin-bottom:10px}
 .bas_right ul li.br_cen { text-align:center}
