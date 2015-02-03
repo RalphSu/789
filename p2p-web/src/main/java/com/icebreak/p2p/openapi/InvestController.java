@@ -92,6 +92,7 @@ public class InvestController extends BaseAutowiredController {
 				UserGoldExperienceDO virtualMoneyDO = virtualMoneyList.get(0);
 				BigDecimal dbVirtualMoney = virtualMoneyDO.getAmount();
 				if ((new Money(dbVirtualMoney)).equals(virtualMoney)) {
+					//如果有体验金 真实付款金额为投资金额减去体验金
 					realPayMoney = amount - virtualMoney.getCent();
 					trade.setNote(String.valueOf(virtualMoneyDO.getId()));
 				} else {
