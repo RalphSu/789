@@ -83,13 +83,19 @@ define(function(require) {
 	});
 
 	$(".fn-ok").click(function() {
+		var maxAmount = $("#goldExpId").find("option:selected").attr("amount");
+		var realAmount = $("input[name='amount']").val();
+		if(maxAmount < realAmount){
+			//发放的体验金不得高于当前选择活动设置的体验金
+			return;
+		}
 		$.ajax({
 			url : '/backstage/userManage/adduserexp',
 			type : 'post',
 			dataType : 'json',
 			data : {
 				userId : $("input[name='userId']").val(),
-				amount : $("input[name='amount']").val(),
+				amount : realAmount,
 				goldExpId : $("#goldExpId").val(),
 				status : '1'
 			},

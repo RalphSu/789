@@ -29,7 +29,10 @@
                         </ul>
                         <ul class="ic">
                             <li style="padding-left:12px;"><img src="/resources/images/new/bl_2.png" style="left:0px;top:9px;"> <span class="font_right">本息保障</span>
+                            	&nbsp;<img src="/resources/images/new/icon_alarm_clock.png"/> 到期由 <span class="blue">$!{paymentBankName}</span> 无条件兑付
+                            	<!--
                                 &nbsp;项目上线时间：$!{dateUtil.simpleFormat($!{trade.createDate})}
+                                -->
                             </li>
                         </ul>
                     </div>
@@ -81,7 +84,14 @@
 			##值传递区
 			<input type="hidden" id="contextPath" value="$!{rc.contextPath}" />
 			<input type="hidden" id="tradeId" value="$!{tradeId}" />
-			<input type="hidden" id="userName" value="$!{userBaseInfo.userName}">
+			<input type="hidden" id="userName" value="$!{userBaseInfo.userName}" />
+			<input type="hidden" id="cname" value="$!{sessionScope.realName}" />
+			<input type="hidden" id="productName" value="$!{trade.name}" />
+			<input type="hidden" id="productRate" value="$!{moneyUtil.getPercentage($!{loanDemand.interestRate})}" />
+			<input type="hidden" id="productTimeLimit" value="$!{dateUtil.dtSimpleFormat($!{trade.createDate})}" />
+			<input type="hidden" id="productTimeLimit" value="$!{loanDemand.timeLimit}" />
+			<input type="hidden" id="productExpireDate" value="$!{dateUtil.dtSimpleFormat($!{lastExpireDate})}" />
+			<input type="hidden" id="payBank" value="$!{paymentBankName}" />
             #set($balance = 0)
             #if($!{thirdPartAccountInfo.availableBalance} != '')
                 #set($balance = $!{thirdPartAccountInfo.availableBalance})
@@ -123,11 +133,11 @@
                         #if($!{investAvlTimeReached})
                             <input type="hidden" name="istDate" value="$!{dateUtil.simpleFormat($!{loanDemand.deadline})}"/>
                             #set($timeDesc = '投资结束')
-                            <li class="br_text" ></li>
+##                            <li class="br_text" ></li>
                         #else
                             <input type="hidden" name="istDate" value="$!{dateUtil.simpleFormat($!{loanDemand.investAvalibleTime})}"/>
                             #set($timeDesc = '投资开始')
-                            <li class="br_text">$timeDesc : <span class="mid_font" id="t_d"><em>00</em> 天 </span>  <span class="mid_font" id="t_h"><em>00</em> 小时 </span>  <span class="mid_font" id="t_m"><em>00</em> 分 </span>  <span class="mid_font" id="t_s"><em>00</em> 秒</span></li>
+##                            <li class="br_text">$timeDesc : <span class="mid_font" id="t_d"><em>00</em> 天 </span>  <span class="mid_font" id="t_h"><em>00</em> 小时 </span>  <span class="mid_font" id="t_m"><em>00</em> 分 </span>  <span class="mid_font" id="t_s"><em>00</em> 秒</span></li>
                         #end
                         <li class="br_text">可投金额 :
                 <span class="mid_font">
@@ -161,6 +171,10 @@
                                 <li class="br_text"></input>您还未登录<div class="br_right"><a href="/login/login" class="reg_link" id="all_in"><span class="white">登录</span></a></div></li>
                             #end
                             <li class="br_blank"></li>
+                            <li class="br_protocal" style="text-align:center">
+                            	<input type="checkbox" id="protocal" checked="checked" />已阅读并同意:
+                            	<a href="#"><span>借款协议</span></a>&nbsp;<a href="#"><span>委托协议</span></a>
+                            </li>
                             <li class="br_but br_cen">
                                 #if($!{percent} =="100.0%")
                                     <a href="javascript:void(0);"><img src="/resources/images/new/br_but_fin.png"></a>
@@ -222,9 +236,9 @@
 ##                        <li>审核状态</li>
 ##                    </ul>
                     <div>
-                        #if($paymentBankName)
-                            <div style="margin-left:24px;height: 30px;line-height: 30px;"><img src="/resources/images/new/icon_alarm_clock.png"/> 到期由 <span class="blue">$!{paymentBankName}</span> 无条件兑付</div>
-                        #end
+##                        #if($paymentBankName)
+##                            <div style="margin-left:24px;height: 30px;line-height: 30px;"></div>
+##                        #end
                     </div>
                     <table id="auditInfo" class="tab_index_invest_detail_audit">
                         <tr>
@@ -809,15 +823,15 @@
                 mm = checkTime(mm);
                 ss = checkTime(ss);
 
-                document.getElementById("t_d").innerHTML = "<em>" + dd + "</em>天";
-                document.getElementById("t_h").innerHTML = "<em>" + hh + "</em>小时";
-                document.getElementById("t_m").innerHTML = "<em>" + mm + "</em>分";
-                document.getElementById("t_s").innerHTML = "<em>" + ss + "</em>秒";
+##                document.getElementById("t_d").innerHTML = "<em>" + dd + "</em>天";
+##                document.getElementById("t_h").innerHTML = "<em>" + hh + "</em>小时";
+##                document.getElementById("t_m").innerHTML = "<em>" + mm + "</em>分";
+##                document.getElementById("t_s").innerHTML = "<em>" + ss + "</em>秒";
             }else{
-                document.getElementById("t_d").innerHTML = "<em>00</em>天";
-                document.getElementById("t_h").innerHTML = "<em>00</em>小时";
-                document.getElementById("t_m").innerHTML = "<em>00</em>分";
-                document.getElementById("t_s").innerHTML = "<em>00</em>秒";
+##                document.getElementById("t_d").innerHTML = "<em>00</em>天";
+##                document.getElementById("t_h").innerHTML = "<em>00</em>小时";
+##                document.getElementById("t_m").innerHTML = "<em>00</em>分";
+##                document.getElementById("t_s").innerHTML = "<em>00</em>秒";
 
                 var url = "/index/lookup/$!{trade.demandId}/$!{trade.id}";
                 window.location.href=url;

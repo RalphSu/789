@@ -109,7 +109,13 @@ public class PersonalController extends BaseAutowiredController {
 		model.addAttribute("page", page);
 		//体验金类型
 		List<GoldExperienceDO> list = goldExperienceDao.queryMay();
-		model.addAttribute("goldExps", list);
+		List<GoldExperienceDO> avaliableList = new ArrayList<GoldExperienceDO>();
+		for(GoldExperienceDO goldExperience : list){
+			if(goldExperience.getSurplusQuantity() > 0){
+				avaliableList.add(goldExperience);
+			}
+		}
+		model.addAttribute("goldExps", avaliableList);
 		response.setHeader("Pragma", "No-cache");
 		return USER_MANAGE_PATH + "personalManage.vm";
 	}
@@ -847,6 +853,12 @@ public class PersonalController extends BaseAutowiredController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			userGoldExperienceDao.insert(userGoldExp);
+			GoldExperienceDO goldExperience = goldExperienceDao.queryById(userGoldExp.getGoldExpId());
+			//对于发放的体验金 减少1
+			if(null != goldExperience){
+				goldExperience.setSurplusQuantity(goldExperience.getSurplusQuantity() - 1);
+				goldExperienceDao.update(goldExperience);
+			}
 			map.put("msg", "添加成功");
 			map.put("success", true);
 		} catch (Exception e) {

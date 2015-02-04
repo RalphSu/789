@@ -11,12 +11,15 @@ import com.icebreak.p2p.pop.IPopService;
 import com.icebreak.p2p.util.MoneyUtil;
 import com.icebreak.p2p.ws.enums.TradeStatusEnum;
 import com.icebreak.p2p.ws.service.query.order.IndexQueryOrder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +48,11 @@ public class BaseHandelController extends BaseAutowiredController {
 	@RequestMapping("gotoInvest.htm")
 	public String turnInvestPage(Model model) throws Exception {
 		return vm_path + "common/gotoInvest.htm";
+	}
+	
+	@RequestMapping("help/{target}")
+	public String commonHelp(@PathVariable String target,Model model) throws Exception{
+		return vm_path + "common/help/"+target+".html";
 	}
 
 

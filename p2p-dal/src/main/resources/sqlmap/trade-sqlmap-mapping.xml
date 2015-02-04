@@ -213,7 +213,11 @@
   </update>
 
 	<update id="TRADE-UPDATESTATUS-BY-FULL" parameterClass="java.util.Map">
-		UPDATE trade SET trade_status = #status# , trade_effective_date = #effectiveDateTime#, trade_expire_date = #expireDateTime# WHERE trade_id = #tradeId#
+		UPDATE trade SET trade_status = #status# , 
+		<!--
+			trade_effective_date = #effectiveDateTime#, trade_expire_date = #expireDateTime#
+		 --> 
+		WHERE trade_id = #tradeId#
 	</update>
 
   <update id="TRADE-CREATEEFFECTIVEDATE" parameterClass="java.util.Map">

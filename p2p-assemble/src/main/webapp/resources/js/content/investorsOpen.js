@@ -62,6 +62,9 @@ define(function(require) {
 //				businessPeriod : {
 //					required : true
 //				},
+				verifyCode:{
+					required : true
+				},
 				mobile : {
 					required : true
 				},

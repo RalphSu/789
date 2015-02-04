@@ -128,7 +128,8 @@
                 <li class="col2" style="height: 35px;">$!{investCount.totalPaidInvestedPrinciple}</li>
                 <li class="col3" style="height: 35px;">$!{investCount.paidInvestedPrincipleAmount.toStandardString()}</li>
             </ul>
-            #if($Integer.parseInt($!investCount.faildTransactions) && $Integer.parseInt($!investCount.faildTransactions)>=1)
+            #set($Integer = 0)
+            #if($!{investCount.faildTransactions})
                 <ul class="blue">
                     <li class="col1" style="height: 35px;">失败</li>
                     <li class="col2" style="height: 35px;">$!{investCount.faildTransactions}</li>

@@ -103,7 +103,7 @@ public class Money implements Serializable, Comparable<Object> {
 	 * @param amount 金额，以元为单位。
 	 */
 	public Money(String amount) {
-		this(amount == null ? "" : amount.replace(",", ""), Currency
+		this(amount == null ? "0" : amount.replace(",", ""), Currency
 			.getInstance(DEFAULT_CURRENCY_CODE));
 	}
 	

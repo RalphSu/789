@@ -84,7 +84,7 @@
         <li class="reg_name"></li>
         <li class="reg_input" style="width:500px;">
             <input name="checkOK" type="checkbox" value="" class="agree" checked="true"> 已阅读并同意
-            <a href="#" class="reg_link"><span class="blue">789金融用户协议</span></a>
+            <a href="/help/register.html" target="_blank" class="reg_link"><span class="blue">789金融用户协议</span></a>
         </li>
     </ul>
     <ul>

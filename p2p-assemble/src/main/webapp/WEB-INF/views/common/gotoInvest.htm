@@ -9,6 +9,11 @@
 	$(function(){
 		//先清空之前的提示信息
 		addTips("");
+		var readProtocal = getTarget("protocal").attr("checked"); 
+		if(!(readProtocal == "checked" || readProtocal == "true" || readProtocal == true)){
+			addTips("您尚未同意协议!");
+			closeWin();
+		}
 		var isLogin = islogin();
 	    if(!isLogin){
 	    	//未登录时关闭窗口，主窗口跳到登录页面
@@ -34,8 +39,9 @@
 	    		            var url = getValue("contextPath") + '/invest/goinvest';
 	    		            var data = {amount : (parseInt(getValue('invest-pay-amount')*1) * 100), tradeId : getValue("tradeId") , token : getValue('token')};
 	    		            //判断是否使用体验金
-	    		            if("checked" == getTarget("goldExp").attr("checked")) {
-	    		                data.virtualMoney = getTarget("goldExp").attr('value');
+	    		            var goldExp = getTarget("goldExp").attr("checked");
+	    		            if("checked" == goldExp || "true" == goldExp || true == goldExp) {
+	    		                data.virtualMoney = parseInt(getTarget("goldExp").attr('value'));
 	    		            }
 	    		            //disabled处理
 	    		            disButton();

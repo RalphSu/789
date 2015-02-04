@@ -72,7 +72,7 @@ public class InvestorRegisterController extends BaseAutowiredController {
 								PersonalInfoDO personalInfo, UserBaseInfoDO userBaseInfo,
 								String token, Model model) throws Exception {
 
-		SessionMobileSend validCode = (SessionMobileSend)Session.getAttribute("session_mobile_send");
+		SessionMobileSend validCode = (SessionMobileSend)Session.getAttribute("session_mobile_sendaaa");
 		if(validCode == null){
 			model.addAttribute("userName", userBaseInfo.getUserName());
 			model.addAttribute("reason", "短信验证码不匹配，请先获取短信验证码！");

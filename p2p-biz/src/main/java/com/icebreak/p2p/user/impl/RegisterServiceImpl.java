@@ -78,6 +78,9 @@ public class RegisterServiceImpl extends OpenApiBaseService implements RegisterS
 				json.put("code", 0);
 				json.put("message", "个人用户注册失败");
 			}
+		}else{
+			json.put("code", 0);
+			json.put("message", "注册重复，请刷新注册页面！");
 		}
 		this.cleanSession(session);
 		return json;

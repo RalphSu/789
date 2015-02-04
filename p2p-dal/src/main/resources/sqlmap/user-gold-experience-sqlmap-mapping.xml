@@ -47,7 +47,7 @@
 		update user_gold_experience
 		set
 		usage_time = sysdate()
-		<dynamic prepend=" ">
+		<dynamic prepend=",">
 			<isNotEmpty prepend="," property="tradeId">
 				trade_id = #tradeId#
 			</isNotEmpty>
