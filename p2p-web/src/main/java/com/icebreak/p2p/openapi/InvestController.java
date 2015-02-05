@@ -88,7 +88,12 @@ public class InvestController extends BaseAutowiredController {
 			userGoldExp.setUserId(sessionLocal.getUserId());
 			userGoldExp.setStatus("1");
 			List<UserGoldExperienceDO> virtualMoneyList = userGoldExperienceDao.query(userGoldExp);
-			if (ListUtil.isNotEmpty(virtualMoneyList) && allowUseVirtalMoney(trade)) {
+			if (ListUtil.isNotEmpty(virtualMoneyList)) {
+				if(!allowUseVirtalMoney(trade)){
+					//如果不允许使用体验金
+					result.put("message", "本产品不能使用体验金!");
+					return result;
+				}
 				UserGoldExperienceDO virtualMoneyDO = virtualMoneyList.get(0);
 				BigDecimal dbVirtualMoney = virtualMoneyDO.getAmount();
 				if ((new Money(dbVirtualMoney)).equals(virtualMoney)) {
