@@ -18,7 +18,7 @@
 
 <body>
 <!--通用头部开始-->
-<div class="top b_gray">
+<div class="top white">
     <ul>
         <li class="left logo"><img src="/resources/images/new/logo.png" width="230" height="70" style="margin-top:5px;"></li>
         <li class="left"><a href="/login/login">登录</a></li>
