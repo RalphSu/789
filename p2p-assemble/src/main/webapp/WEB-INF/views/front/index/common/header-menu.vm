@@ -7,7 +7,7 @@
 ##</div>
 <!--浮动图标结束-->
 <!--通用头部开始-->
-<div class="top b_gray">
+<div class="top white">
     <ul>
         <li class="left logo">
             <a href="/index">
@@ -25,7 +25,7 @@
             <li class="left"><a href="/anon/register"><font color="red">注册</font></a></li>
 		#end
 
-        <li class="phone"><span class=" gray_o big_font">$!appConstantsUtil.getCustomerServicePhone()</span></li>
+        <li class="phone"><span class=" black big_font">$!appConstantsUtil.getCustomerServicePhone()</span></li>
     </ul>
     <ul class="header_menu">
         <li $!{helpSelected} id="header_about"><a href="/help/aboutus">帮助中心</a></li>
@@ -37,6 +37,13 @@
 </div>
 
 <script>
+	$(function(){
+		$(".header_menu").find("li").on("mouseover",function(){
+			$(this).addClass("mouseover");
+		}).on("mouseout",function(){
+			$(this).removeClass("mouseover");
+		});
+	});
 
     (function(){
         var old = window.onload;
