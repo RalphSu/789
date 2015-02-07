@@ -433,7 +433,7 @@
 			var deadDate = new Date(Date.parse(deadline.replace(/-/g, "/")));
 			if(deadDate > investDate){
 				##$("#timeLimitSelect").val()
-				var diffDay = (GetDateDiff(investAvalibleTime,deadline,"day"));
+				var diffDay = (GetDateDiff(investDate.Format("yyyy-MM-dd"),deadDate.Format("yyyy-MM-dd"),"day"));
 				$("#timeLimitSelect option[value='"+diffDay+"']").attr("selected","selected");
 			}else{
 				$("#timeLimitSelect option").eq(0).attr("selected","selected");
