@@ -3,6 +3,10 @@ package com.icebreak.p2p.user.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.icebreak.p2p.authority.AuthorityService;
 import com.icebreak.p2p.base.BaseAutowiredToolsService;
+import com.icebreak.p2p.dal.daointerface.SysParamDAO;
+import com.icebreak.p2p.dal.dataobject.SysParamDO;
+import com.icebreak.p2p.daointerface.GoldExperienceDao;
+import com.icebreak.p2p.daointerface.UserGoldExperienceDao;
 import com.icebreak.p2p.dataobject.*;
 import com.icebreak.p2p.dataobject.viewObject.InvestorInfoVO;
 import com.icebreak.p2p.dataobject.viewObject.PersonalInfoVO;
@@ -21,11 +25,13 @@ import com.icebreak.p2p.ws.enums.SysUserRoleEnum;
 import com.icebreak.p2p.ws.enums.UserTypeEnum;
 import com.icebreak.util.lang.util.ListUtil;
 import com.icebreak.util.lang.util.StringUtil;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -38,6 +44,12 @@ public class PersonalInfoManagerImpl extends BaseAutowiredToolsService implement
 	
 	@Autowired
 	protected AuthorityService authorityService;
+	@Autowired
+	SysParamDAO sysParamDAO;
+	@Autowired
+	GoldExperienceDao goldExperienceDao;
+	@Autowired
+	UserGoldExperienceDao userGoldExperienceDao;
 	
 	public long getDefaultBrokerUserId() throws Exception {
 		UserBaseInfoDO brokerUser = userBaseInfoManager.queryByUserName(
@@ -54,6 +66,28 @@ public class PersonalInfoManagerImpl extends BaseAutowiredToolsService implement
 		User user = null;
 		try {
 			user = authorityService.addUser(userBaseInfo.getUserName(), roleIds);
+			//用户注册送体验金
+			Boolean autoExpire = false;
+			try{
+				SysParamDO sysParamDO = sysParamDAO.findById("SYS_PARAM_SEND_EXPIRE");
+				if(Integer.valueOf(sysParamDO.getParamValue()) > 0){
+					autoExpire = true;
+				}
+			}catch(Exception e){
+				autoExpire = false;
+			}
+			if(autoExpire){
+				//如果设置了自动送体验金,查找指定的体验金
+				GoldExperienceDO experience = goldExperienceDao.queryById(-1);
+				if(null != experience){
+					UserGoldExperienceDO userGoldExperience = new UserGoldExperienceDO();
+					userGoldExperience.setUserId(user.getId());
+					userGoldExperience.setGoldExpId(experience.getId());
+					userGoldExperience.setAmount(experience.getAmount());
+					userGoldExperience.setStatus("1");
+					userGoldExperienceDao.insert(userGoldExperience);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("addUser error userBaseInfo={},roleIds={}", e);
