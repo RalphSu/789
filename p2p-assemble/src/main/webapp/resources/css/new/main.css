@@ -19,6 +19,7 @@ img { border:none}
 
 /*颜色设定*/
 .white { color:#fff}
+.black {color:#000}
 .red { color:#F00}
 .gray { color:#333}
 .gray_o { color:#999}
@@ -62,10 +63,11 @@ input,select { border:1px solid #ccc; color:#999}
 /*通用头部*/
 .top { height:70px; min-width:1280px; position:absolute; top:0px; left:0px; width:100%; z-index:10}
 .top_blank { height:70px; clear:both}
-.top ul li a { color:#999}
-.top ul li.light a { color:#fff}
-.top ul li a:hover { color:#fff}
-.top ul li { width:auto; margin-right:40px; text-align:left; line-height:70px; float:right}
+.top ul li a { color:#000}
+.top ul li.light a { color:red}
+.top ul li a:hover { color:red}
+.top ul li { width:auto; margin-right:40px; text-align:left; line-height:70px; float:right;}
+.top ul li.mouseover{background:url(/resources/images/new/liback.png) no-repeat;background-position:bottom}
 .top ul li.left { float:left; width:auto;margin-right:20px;}
 .top ul li.welcome { float:left; width:auto}
 .top ul li.logo { width:230px; padding-left:40px}

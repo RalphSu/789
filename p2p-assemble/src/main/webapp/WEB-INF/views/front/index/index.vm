@@ -38,7 +38,7 @@
                 <div id="flash" style="overflow:visible">
                     <a name="url(resources/images/new/banner.jpg) #8B8B97 center" style="display: block;" id="flash1" href="/index/invest/10/1"><div class="nav banner_one"><img src="resources/images/new/b1.png" width="1120" style=" width:1120px;height:270px"></div></a>
                     <a name="url(resources/images/new/banner_2.jpg) #185768 center" id="flash3" href="/help/security"><div class="nav banner_one" id="test"><img src="resources/images/new/b2.png" width="1120" style="width:1120px;height:270px"></div></a>
-                    <a name="url(resources/images/new/banner_4.jpg) #8B8B97 center" id="flash2" href="/anon/register"><div class="nav banner_one"><img src="resources/images/new/b6.png" width="1120" style=" width:1120px;height:270px"></div></a>
+                    <a name="url(resources/images/new/banner_4.png) #8B8B97 center" id="flash2" href="/anon/register"><div class="nav banner_one"><img src="resources/images/new/b6.png" width="1120" style=" width:1120px;height:270px"></div></a>
                     <div class="flash_bar">
                         <div class="dq"  id="f1" onClick="changeflash(1)"></div>
                         <div class="no"  id="f2" onClick="changeflash(2)"></div>
@@ -288,7 +288,8 @@
 <div class="blank"></div>
 <div class="alrod intit">
     <div class="nav nav_tit">
-        <span class=" large_font">合作金融机构</span>
+    	<div><img style="width:1120px;height:120px;position:relative;left:-20px" src="/resources/images/new/insuranceBack.png"></div>
+        <span class=" mid_font" style="position:relative;top:-20px">合作机构</span>
     ##    <div class="login_reg">
     ##        	<a href="coop_list.html" class="reg_bt"><div class="index_but b_gray_t"><span>更多合作机构</span></div></a>
     ##      </div>
@@ -296,10 +297,11 @@
 </div>
 <div class="nav inpart">
     <ul>
-        <li><a href="coop_page.html"><img src="resources/images/new/coop.png" width="240" height="96"></a></li>
-        <li><a href="coop_page.html"><img src="resources/images/new/coop.png" width="240" height="96"></a></li>
-        <li><a href="coop_page.html"><img src="resources/images/new/coop.png" width="240" height="96"></a></li>
-        <li><a href="coop_page.html"><img src="resources/images/new/coop.png" width="240" height="96"></a></li>
+        <li><a href="coop_page.html"><img src="resources/images/new/coop.png" width="180" height="56"></a></li>
+        <li><a href="coop_page.html"><img src="resources/images/new/coop.png" width="180" height="56"></a></li>
+        <li><a href="coop_page.html"><img src="resources/images/new/coop.png" width="180" height="56"></a></li>
+        <li><a href="coop_page.html"><img src="resources/images/new/coop.png" width="180" height="56"></a></li>
+        <li><a href="coop_page.html"><img src="resources/images/new/coop.png" width="180" height="56"></a></li>
     </ul>
 </div>
 <!--首页内容结束-->

@@ -3,12 +3,12 @@
 .ad { height:70px; line-height:70px}
 span.aid_text { position:relative; top:-4px; left:5px}
 .login_reg { position:absolute; right:0px; top:0px}
-.intit { height:90px; border-top:1px dotted #ccc; border-bottom:1px solid #ccc; line-height:90px}
+.intit { height:160px; border-top:1px dotted #ccc; border-bottom:1px solid #ccc; line-height:90px}
 .nav_tit { text-indent:20px; background:url(../images/tit_bg.jpg) no-repeat 0px 30px}
 
 .inpart { overflow:hidden}
 .inpart ul { width:1300px}
-.inpart ul li { width:240px; height:96px; border:1px solid #ccc; float:left; margin-right:50px; margin-top:40px}
+.inpart ul li { width:180px; height:56px; border:1px solid #ccc; float:left; margin-right:50px; margin-top:40px}
 
 .inpro { overflow:hidden}
 .inpro ul { width:1300px}
