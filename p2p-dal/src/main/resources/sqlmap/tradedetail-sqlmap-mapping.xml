@@ -572,8 +572,12 @@
 			</isNotEmpty>
 
         </dynamic>
-        <![CDATA[ORDER BY t.date DESC
-		LIMIT #limitStart#,#pageSize# ;]]>
+        ORDER BY t.date DESC
+        <isNotEmpty property="limitStart">
+        	<isNotEmpty property="pageSize">	
+				LIMIT #limitStart#,#pageSize# ;
+			</isNotEmpty>
+		</isNotEmpty>
     </select>
 
 	<select id="TRADEDETAIL-getById" parameterClass="long" resultMap="RM-TRADEDETAIL">
