@@ -287,9 +287,9 @@
 <!--合作伙伴-->
 <div class="blank"></div>
 <div class="alrod intit">
+	<div><img style="width:100%;height:120px;" src="/resources/images/new/insuranceBack.png"></div>
     <div class="nav nav_tit">
-    	<div><img style="width:1120px;height:120px;position:relative;left:-20px" src="/resources/images/new/insuranceBack.png"></div>
-        <span class=" mid_font" style="position:relative;top:-20px">合作机构</span>
+        	<span class=" mid_font" style="position:relative;top:-20px">合作机构</span>
     ##    <div class="login_reg">
     ##        	<a href="coop_list.html" class="reg_bt"><div class="index_but b_gray_t"><span>更多合作机构</span></div></a>
     ##      </div>

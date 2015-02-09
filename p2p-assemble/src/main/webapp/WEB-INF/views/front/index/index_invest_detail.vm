@@ -211,7 +211,7 @@
             <ul>
                 <li class="light" id="tradeinfo"><a href="javascript:;" >项目详情</a></li>
                 <li id="extendinfo"><a href="javascript:;" >资料图片</a></li>
-                <li id="investinfo"><a href="javascript:;" >风控表</a></li>
+                <li id="investinfo"><a href="javascript:;" >产品介绍</a></li>
             </ul>
         </div>
     </div>
@@ -348,12 +348,16 @@
                                     #set($tempCount=$tempCount+1)
                                 </li>
                             </a>
+                             <a href="${commonAttachmentInfo.requestPath}" target="_blank">
+                                <li class="pb_pic">
+                                    <img style="position:relative;left:-20px;top:-25px" src="/resources/images/new/riskControl.png" />
+                                </li>
+                            </a>
                         #end
                     #end
                 </ul>
             </div>
             <div class="pro_box" id="investdiv" style="display:none">
-            	<img style="position:relative; left:60px" src="/resources/images/new/riskControl.png" />
             </div>
 ##            <div class="pro_boxpara" id="investdiv" style="display:none">
 ##                <ul class="pbp_tit">
