@@ -262,7 +262,7 @@
 </div>
 <div class="blank" style="height:0px"></div>
 <!--项目-->
-<div class="alrod intit">
+<div class="alrod intit" style="height:80px">
     <div class="nav nav_tit">
         <span class="large_font">最新融资项目</span>
         <div>
