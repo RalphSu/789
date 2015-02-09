@@ -34,8 +34,10 @@ public class SMSServiceImpl extends OpenApiServiceBase implements SMSService {
 		StringBuilder sb = new StringBuilder();
 		sb.append("您本次").append(bizCode.getMessage()).append("的验证码为：").append(code)
 			.append("，请妥善保管。");
+		logger.info(sb.toString());
 		//非本地环境才发送验证码
 		if(!Env.isDev()) {
+			logger.info("the sms is sendding now!");
 			smsSender.send(mobileNumber,sb.toString());
 		}
 		resultBase.setSuccess(true);
