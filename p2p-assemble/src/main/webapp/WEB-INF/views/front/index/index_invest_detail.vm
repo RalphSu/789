@@ -210,7 +210,7 @@
         <div class="pro_menu" >
             <ul>
                 <li class="light" id="tradeinfo"><a href="javascript:;" >项目详情</a></li>
-                <li id="extendinfo"><a href="javascript:;" >资料图片</a></li>
+                <li id="extendinfo"><a href="javascript:;" >质押票据扫描件</a></li>
                 <li id="investinfo"><a href="javascript:;" >产品介绍</a></li>
             </ul>
         </div>
