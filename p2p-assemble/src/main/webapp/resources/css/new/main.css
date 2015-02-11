@@ -54,7 +54,7 @@ input,select { border:1px solid #ccc; color:#999}
 .nav { width:1120px; position:relative}
 .form_nav { width:1118px}
 .alrod { width:100%;min-width:1280px;}
-.blank { width:100%; height:40px; clear:both}
+.blank { width:100%; height:0px; clear:both}
 .form_blank { width:100%; height:20px; clear:both}
 
 .blank20 { width:100%; height:20px; clear:both}
