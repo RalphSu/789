@@ -273,7 +273,7 @@ public class BaseCheckController extends BaseAutowiredController {
 			return map;
 		}
 
-		Pattern p = Pattern.compile("^[1][3,4,5,8][0-9]{9}$"); // 验证手机号
+		Pattern p = Pattern.compile("^[1][3,4,5,8,7][0-9]{9}$"); // 验证手机号
 		Matcher m =p.matcher(mobile);
 		if(!m.matches()){
 			map.put("code", 0);
