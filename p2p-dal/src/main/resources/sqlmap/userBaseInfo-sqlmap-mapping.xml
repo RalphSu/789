@@ -295,8 +295,13 @@
 			<isNotEmpty property="state" prepend=" and ">
 				<![CDATA[u.state = #state#]]>
 			</isNotEmpty>
+			<isNotEmpty property="tradeId" prepend=" and ">
+				u.user_id in (select distinct user_id from trade_detail where trade_id = #tradeId# and status = 'PS')
+			</isNotEmpty>
+			<isNotEmpty property="limitStart">
+				<![CDATA[ ORDER BY row_add_time DESC LIMIT #limitStart#,#pageSize#;]]>
+			</isNotEmpty>
 		</dynamic>
-		<![CDATA[ORDER BY row_add_time DESC LIMIT #limitStart#,#pageSize#;]]>
 	</select>
 	
 	<select id="MS-USER-INFO-QUERY_BY_USERID"  resultMap="RM-USER-BASE">
