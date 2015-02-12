@@ -1,5 +1,7 @@
 package com.icebreak.p2p.common.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -144,6 +146,21 @@ public class messageServiceImpl extends OpenApiBaseService implements MessageSer
 				notifiedUser.getRealName(), emailContent, 23L, attachs), "HTML");
 		} catch (Exception e) {
 			logger.error("error:--发送邮件异常", e);
+		}
+	}
+
+	@Override
+	public void notifyUsersBySms(List<UserBaseInfoDO> notifyUsers, String content) {
+		initPrivateValue();
+		String smsContent = content.replace("hostLink", urlHostSms);
+		smsContent += "客服电话：" + AppConstantsUtil.getCustomerServicePhone();
+		for(UserBaseInfoDO user : notifyUsers){
+			try{
+//				logger.info(user.getMobile()+smsContent);
+				this.smsService.sendSMS(user.getMobile(), smsContent, this.getOpenApiContext());
+			}catch(Exception e){
+				logger.error("error:--短信发送异常：" + user.getRealName() + "--" + user.getMobile(), e);
+			}
 		}
 	}
 	

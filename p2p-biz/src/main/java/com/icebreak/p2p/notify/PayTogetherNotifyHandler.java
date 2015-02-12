@@ -1,9 +1,11 @@
 package com.icebreak.p2p.notify;
 
+import com.icebreak.p2p.common.services.MessageService;
 import com.icebreak.p2p.daointerface.AmountFlowDao;
 import com.icebreak.p2p.daointerface.DivisionDetailDao;
 import com.icebreak.p2p.daointerface.TradeDao;
 import com.icebreak.p2p.daointerface.TransferTradeDao;
+import com.icebreak.p2p.daointerface.UserBaseInfoDAO;
 import com.icebreak.p2p.dataobject.*;
 import com.icebreak.p2p.ext.enums.DivisionTypeEnum;
 import com.icebreak.p2p.trade.RechargeFlowService;
@@ -14,16 +16,21 @@ import com.icebreak.util.lang.util.StringUtil;
 import com.yiji.openapi.sdk.message.BaseNotify;
 import com.yiji.openapi.sdk.message.yzz.PayTogetherNotify;
 import com.yiji.openapi.sdk.notify.NotifyHandler;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
+
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("payTogetherNotifyHandler")
 public class PayTogetherNotifyHandler implements NotifyHandler {
@@ -41,6 +48,10 @@ public class PayTogetherNotifyHandler implements NotifyHandler {
 	private RechargeFlowService rechargeFlowService;
 	@Resource
 	private TransactionTemplate transactionTemplate;
+	@Resource
+	private UserBaseInfoDAO userBaseInfoDAO;
+	@Autowired
+	private MessageService messageService;
 
 	@Override
 	public void handleNotify(BaseNotify notify) {
@@ -62,7 +73,7 @@ public class PayTogetherNotifyHandler implements NotifyHandler {
 
 				@Override
 				public Integer doInTransaction(TransactionStatus status) {
-					List<AmountFlow> amountFlows = amountFlowDao.queryPayTogetherForUpdate(trade.getId(), 1);
+					List<AmountFlow> amountFlows = amountFlowDao.queryPayTogetherForUpdate(trade.getId(), 2);
 					if (ListUtil.isNotEmpty(amountFlows)) {
 						logger.info("查询到AmountFlow记录数：" + amountFlows.size());
 						long loanerId = 0;
@@ -82,8 +93,12 @@ public class PayTogetherNotifyHandler implements NotifyHandler {
 
 						logger.info("生成融资人收支明细--投资满标集体转入。");
 						addLoanerLoanRechargeFlow(tradeNo, trade, loanerId);
-
-						logger.info("AmountFlow全部更新完成.");
+						logger.info("AmountFlow全部更新完成.发送短信通知");
+						Map<String, Object> params = new HashMap<String, Object>();
+						params.put("tradeId", trade.getId());
+						List<UserBaseInfoDO> users = userBaseInfoDAO.queryAllUserInfoList(params);
+						String smsContent = "您购买的789金融"+trade.getName();
+						messageService.notifyUsersBySms(users, smsContent);
 						List<TransferTrade> investDevisionList = transferTradeDao.getPhaseTransferTrades(
 								trade.getId(), DivisionPhaseEnum.INVESET_PHASE.getCode(), null, null);
 						if(ListUtil.isEmpty(investDevisionList)) {
