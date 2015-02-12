@@ -73,7 +73,7 @@ public class PayTogetherNotifyHandler implements NotifyHandler {
 
 				@Override
 				public Integer doInTransaction(TransactionStatus status) {
-					List<AmountFlow> amountFlows = amountFlowDao.queryPayTogetherForUpdate(trade.getId(), 2);
+					List<AmountFlow> amountFlows = amountFlowDao.queryPayTogetherForUpdate(trade.getId(), 1);
 					if (ListUtil.isNotEmpty(amountFlows)) {
 						logger.info("查询到AmountFlow记录数：" + amountFlows.size());
 						long loanerId = 0;
