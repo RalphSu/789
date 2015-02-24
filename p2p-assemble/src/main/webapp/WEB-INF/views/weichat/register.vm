@@ -1,0 +1,23 @@
+#parse("/weichat/common/import.vm")
+<body>
+<div data-role="page" class="content-wrapper" id="stepOne">
+	<link rel="stylesheet" type="text/css" href="/resources/css/new/jquery.mobile.flatui.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/css/weichat/common.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/css/weichat/register.css"/>
+	<div data-role="header" data-theme="d">
+		<h1>注册789金融</h1>
+	</div>
+	<div data-role="content">
+		<span id="info" style="color:#f08519;">$!{message}</span>
+		<form action="/weichat/doRegister.do" method="post" id="register_Form" data-ajax="false">
+			<input id="username" name="mobile" type="text" placeholder="请输入手机号码" />
+			<input id="password" name="logPassword" type="password" placeholder="请输入密码" />
+			<input id="password1" type="password" placeholder="请重复密码" />
+			<input type="hidden" name="token" value="$!{token}" />
+		</form>
+		<button id="submit" data-theme="d">下一步</button>
+		<script type="text/javascript" src="/resources/js/weichat/register.js"></script>
+	</div>
+</div>
+</body>
+</html>

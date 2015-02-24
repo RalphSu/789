@@ -1,0 +1,10 @@
+<body>
+<div data-role="page" class="content-wrapper">
+<link rel="stylesheet" type="text/css" href="/resources/css/new/jquery.mobile.flatui.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/css/weichat/common.css"/>
+<div style="height:80px;width:100%;background-color:#a0d9f6;">
+	<div id="pageTitle" class="round center" style="width:200px;">
+		产品列表
+	</div>
+</div>
+<div style="padding-left:5px;padding-right:5px;">

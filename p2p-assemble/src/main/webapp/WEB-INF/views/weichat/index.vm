@@ -1,0 +1,43 @@
+#parse("/weichat/common/import.vm")
+#parse("/weichat/common/header.vm")
+<style type="text/css">
+	li {
+		margin-bottom:6px !important;
+	}
+</style>
+<link rel="stylesheet" type="text/css" href="/resources/css/weichat/product.css"/>
+<ul id="productList" data-role="listview" data-inset="true">
+	#foreach($trade in $!{page.result})
+	    <li>
+	        <a href="/weichat/detail.do/$!{trade.demandId}/$!{trade.tradeId}" data-ajax="false">
+	            <div class="ui-grid-a">
+					<!-- grid block start -->
+					<div class="ui-block-a" style="width:110px;margin-right:8px">
+						<span class="highlight" style="font-size:28px">$!{trade.strRaate}</span>
+						<span>$!{loanUtil.getLoanTime($!{trade.time}, $!{trade.timeUnit})}</span>
+						<span>$!{moneyUtil.getFormatAmount($!{trade.leastInvestAmount})}&nbsp;元起</span>
+						<span>#if($!{trade.status}==1)$!{moneyUtil.getMoneyByw($!{trade.amount})}#else$!{moneyUtil.getMoneyByw($!{trade.loanedAmount})}#end万</span>
+					</div>
+					<!-- grid block end -->
+					<!-- grid block start -->
+					 #if($!{trade.status}==1)
+                        #set($p = $moneyUtil.getPercentage($!{trade.loanedAmount},$!{trade.amount},$!{trade.leastInvestAmount}))
+				     #else
+				        #set($p = '100%')
+				     #end  
+					<div class="ui-block-b">
+						<span style="font-size:20px;margin-bottom:8px">$!{trade.name}</span>
+						<span class="highlight">融资进度:${p}</span>
+						<span>开始时间：$!{dateUtil.dtSimpleFormat($!{trade.investAvalibleTime})}</span>
+						<span>完成时间：$!{dateUtil.dtSimpleFormat($!{trade.deadline})}</span>
+					</div>
+					<!-- grid block end -->
+				</div>
+	        </a>
+	    </li>
+    #end
+</ul>
+<input type="hidden" id="pageSize" name="pageSize"  value="$page.pageSize" />
+<input type="hidden" id="totalCount" name="totalCount"  value="$page.totalCount" />
+<script type="text/javascript" src="/resources/js/weichat/index.js"></script>
+#parse("/weichat/common/footer.vm")

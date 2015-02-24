@@ -1,0 +1,127 @@
+#parse("/weichat/common/import.vm")
+#parse("/weichat/common/header.vm")
+<script type="text/javascript" src="/resources/js/content/util.js"></script>
+<link rel="stylesheet" type="text/css" href="/resources/css/weichat/product.css"/>
+	<input type="hidden" id="productName" value="$!{trade.name}">
+	<div id="rate" class="center">
+			<div class="center leftFloat">$!{moneyUtil.getPercentage($!{loanDemand.interestRate})}%</div>
+			<div class="leftFloat" style="color:#a1a1a1;font-size:12px;margin-left:5px;position:relative;top:40px">年化<br>收益</div>
+	</div>
+	<div id="info">
+		<div class="leftFloat infoLeft">
+			<div class="leftIn">
+				<div style="text-align:center;position:relative;top:39px;">
+					<span id="availableNow" style="font-size:20px">
+						#if($!{percent} =="100")
+                        	0
+                    	#else
+                        	$!{moneyUtil.getFormatAmount($!{investableAmount})}
+                    	#end
+                    </span>
+				</div>
+			</div>
+		</div>
+		<div class="leftFloat infoRight">
+			<div class="rightIn"><span class="rightInSpan1">最低起投：</span><span class="rightInSpan2">1元</span></div>
+			<div class="rightIn"><span class="rightInSpan1">期限：</span><span class="rightInSpan2">$!{loanDemand.timeLimit}天</span></div>
+			<div class="rightIn"><span class="rightInSpan1">金额：</span><span class="rightInSpan2">$!{moneyUtil.getMoneyByw($!{loanDemand.loanAmount})}万</span></div>
+		</div>
+	</div>
+	<div class="percent">
+		<div style="line-height:80px;width:280px;float:left;position:relative;left:120px">已完成融资&nbsp;$!{percent}</div>
+	</div>
+	<div class="percentBar">
+		<input type="hidden" id="percentBarDoneHidden" value="$!{percent}" />
+		<div id="percentBarDone" class="percentBarDone"></div>
+	</div>
+	<div class="inputDiv">
+		<div class="leftFloat" style="width:60%;">
+			<input id="invest-pay-amount" type="text" placeholder="请输入投资金额" />
+		</div>
+		<div class="leftFloat" style="width:30%;margin-left:5px;">
+			#if($sessionScope)
+				<a href="#" data-role="button" data-theme="d">立刻抢购</a>
+			#else
+				<a href="/weichat/login.do" data-ajax="false" data-role="button" data-theme="d">登录</a>
+			#end
+		</div>
+		<div class="expireGoldDiv leftFloat">
+			#if($sessionScope)
+				#set($balance = 0)
+	            #if($!{thirdPartAccountInfo.availableBalance} != '')
+	                #set($balance = $!{thirdPartAccountInfo.availableBalance})
+	            #end
+	            账户余额: $!balance 元 &nbsp;
+	            #if($userGoldExp)
+	                体验金额: $!userGoldExp.amount 元
+	                #if(!$overDeadLine && !$finishTrade)
+	                	<input type="checkbox" name="checkbox-a" id="checkbox-a" checked="checked" data-role='none' />
+	                	立即使用
+	                #end
+	            #end
+	        #else
+	        	您尚未登录
+	        #end
+		</div>
+	</div>
+	<div class="profit" id="profit">
+		<div style="line-height:20px;padding-left:10%;">
+			预计收益：<span id="profitSpan" class="highlight">0.00</span>元
+		</div>
+	</div>
+	<div class="detailInfo">
+		<div class="detailIn">
+			<span class="detailInSpan">项目状态：</span>
+			<span class="detailInfoRight highlight">
+			#if($overDeadLine || $finishTrade)
+                已结束
+        	#else	
+        		抢购中
+        	#end
+            </span>
+        </div>
+		<div class="detailIn"><span class="detailInSpan">承兑银行：</span><span class="detailInfoRight">$!{paymentBankName}</span></div>
+		<div class="detailIn"><span class="detailInSpan">最低起投金额：</span><span class="detailInfoRight">$!{moneyUtil.getFormatAmount($!{trade.leastInvestAmount})}元</span></div>
+		<div class="detailIn"><span class="detailInSpan">起息日期：</span><span class="detailInfoRight">购买当日立即起息</span></div>
+		<div class="detailIn"><span class="detailInSpan">还款方式：</span><span class="detailInfoRight">$!{loanDemand.repayDivisionWayMsg}</span></div>
+		<div class="detailIn"><span class="detailInSpan">结息日期：</span><span class="detailInfoRight">$!{dateUtil.dtSimpleFormat($!{trade.expireDateTime})}</span></div>
+		<div class="detailIn"><span class="detailInSpan">最低还款日：</span><span class="detailInfoRight">$!{dateUtil.dtSimpleFormat($!{lastExpireDate})}</span></div>
+		<div class="detailIn"><span class="detailInSpan">（结息日后的三个工作日内，若遇节假日顺延）</span>
+	</div>
+	<input type="hidden" id="diffDate" value="0" />
+	<input type="hidden" id="effectiveDateTime" value="$!{dateUtil.simpleFormat($!{trade.effectiveDateTime})}" />
+<script type="text/javascript" src="/resources/js/weichat/detail.js"></script>
+<script>
+	$('#invest-pay-amount').keyup(function (){
+        var timeNum = parseInt('$!{loanDemand.timeLimit}' || 1);
+        var timeUnit = '$!{loanDemand.timeLimitUnit}';
+        var days = timeNum;
+        var rate = parseFloat('$!{loanDemand.interestRate}');
+        if(timeUnit == 'Y'){
+            days = timeNum * 360;
+        }
+        if(timeUnit == 'M'){
+            days = timeNum * 30;
+        }
+
+        var inputAmount = $(this).val() * 1;
+        if(undefined == inputAmount || "" == inputAmount || inputAmount <= 0){
+            $("#profitSpan").text("0.00");
+            return;
+        }
+        //体验金
+##        var goldExpValue = $('#goldExp').attr('checked') ? parseFloat($('#goldExp').val()) : 0;
+        var diffDate = parseInt($("#diffDate").val());
+        days = days - (diffDate > 0 ? diffDate : 0);
+        //预期收益
+##        var willIncome = Number((inputAmount + goldExpValue) * rate/360 * days).toFixed(3);
+		var willIncome = Number((inputAmount) * rate/360 * days).toFixed(3);
+        willIncome = willIncome.substring(0,willIncome.length-1);
+        $("#profitSpan").text(willIncome);
+    });
+    $("#diffDate").val(GetDateDiff($("#effectiveDateTime").val().substring(0, $("#effectiveDateTime").val().indexOf(" ")), new Date().Format("yyyy-MM-dd"), "day"));
+</script>
+</div>
+</div>
+</body>
+</html>

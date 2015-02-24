@@ -49,6 +49,10 @@
 			<artifactId>p2p-config</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.icebreak.p2p</groupId>
+			<artifactId>wei-server</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>

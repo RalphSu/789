@@ -1,0 +1,9 @@
+.title{
+	height:80px;
+	text-align:center;
+}
+.title span{
+	position:relative;
+	top:40px;
+	font-size:22px;
+}

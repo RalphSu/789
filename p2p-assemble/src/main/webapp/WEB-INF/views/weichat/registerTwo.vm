@@ -1,0 +1,24 @@
+#parse("/weichat/common/import.vm")
+<body>
+<div data-role="page" class="content-wrapper">
+	<link rel="stylesheet" type="text/css" href="/resources/css/new/jquery.mobile.flatui.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/css/new/mobiscroll.custom-2.15.0.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/css/weichat/common.css"/>
+	<script type="text/javascript" src="/resources/js/lib/mobiscroll.custom-2.15.0.min.js"></script>
+	<div data-role="header" data-theme="d">
+		<h1>开通支付账户</h1>
+	</div>
+	<div data-role="content">
+		<form action="/weichat/doPayAccount.do" method="post" id="register_Form" data-ajax="false">
+			<input id="realName" name="realName" type="text" placeholder="真实姓名" />
+			<input id="certNo" name="certNo" type="text" placeholder="身份证号" />
+			<input id="businessPeriod" name="businessPeriod" type="text" data-role="datebox" placeholder="身份证有效期" />
+			<input type="hidden" name="userName" id="userName" value="$!{userName}" />
+		</form>
+		<button id="submit" data-theme="d">开通支付账户</button>
+		<a data-role="button" href="/weichat/first.do" data-ajax="false" data-theme="c">暂不开通</a>
+		<script type="text/javascript" src="/resources/js/weichat/registerTwo.js"></script>
+	</div>
+</div>
+</body>
+</html>

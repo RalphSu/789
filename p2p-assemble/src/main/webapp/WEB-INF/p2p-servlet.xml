@@ -12,20 +12,37 @@
           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd" >
 
 	<context:component-scan base-package="com.icebreak.p2p.*" />
+	<context:component-scan base-package="com.oms.*" />
 	<mvc:resources location="/resources/**" mapping="/resources/**"/>
 	<mvc:resources location="/uploadfile/**" mapping="/uploadfile/**"/>
 	<mvc:resources location="/images/**" mapping="/images/**"/>
 	<mvc:resources location="/styles/**" mapping="/styles/**"/>
 	<mvc:resources location="/backstagecss/**" mapping="/backstagecss/**"/>
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
 	    <property name="interceptors">
 	       <array>
-	         <!-- 拦截器 -->
-	         <bean class="com.icebreak.p2p.base.LogInterceptor" />
+	       	 <!-- log拦截器 -->
+	       	 <bean class="com.icebreak.p2p.base.LogInterceptor" />
+	         <!-- requestMapping拦截器 -->
+	         <bean class="com.oms.interceptor.OAuth2Interceptor" />
 	       </array>
 	    </property>	
 	</bean>
-
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/plain;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
 			<list>
@@ -118,6 +135,7 @@
             <mvc:mapping path="/collection/**"/>
             <mvc:mapping path="/repayDB/**"/>
             <mvc:mapping path="/joinApplication/**"/>
+            <mvc:mapping path="/weichat/**"/>
 	    	<bean class="com.icebreak.p2p.base.YrdInterceptor" />
 	    </mvc:interceptor>
     </mvc:interceptors>

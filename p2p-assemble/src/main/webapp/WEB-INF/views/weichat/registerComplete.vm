@@ -1,0 +1,23 @@
+#parse("/weichat/common/import.vm")
+<body>
+<div data-role="page" class="content-wrapper" id="stepOne">
+	<link rel="stylesheet" type="text/css" href="/resources/css/new/jquery.mobile.flatui.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/css/new/mobiscroll.custom-2.15.0.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/css/weichat/common.css"/>
+	<script type="text/javascript" src="/resources/js/lib/mobiscroll.custom-2.15.0.min.js"></script>
+	<div data-role="header" data-theme="d">
+		<h1>注册完成</h1>
+	</div>
+	<div data-role="content">
+		<div style="color:#f08519">$!{message}</div>
+		#if($!{code} == "1")
+			<a data-role="button" href="/weichat/first.do" data-ajax="false" data-theme="d">回主页面</a>
+			<a data-role="button" href="/weichat/login.do" data-ajax="false" data-theme="f">登录系统</a>
+		#else
+			<a data-role="button" href="/weichat/registerTwo.do?userName=$!{userName}" data-ajax="false" data-theme="d">重新开通</a>
+		#end		
+	</div>
+	<script type="text/javascript" src="/resources/js/weichat/registerTwo.js"></script>
+</div>
+</body>
+</html>

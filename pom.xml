@@ -110,6 +110,11 @@
                 <version>${p2p.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.icebreak.p2p</groupId>
+                <artifactId>wei-server</artifactId>
+                <version>${p2p.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.sun</groupId>
                 <artifactId>PDFReader</artifactId>
                 <version>1.0</version>
@@ -627,7 +632,7 @@
                 <artifactId>commons-net</artifactId>
                 <version>3.3</version>
             </dependency>
-            <!--数据访问层依赖-->
+            <!--DAO LAYER DEPENDENCY-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
@@ -780,7 +785,7 @@
                 </exclusions>
             </dependency>
 
-            <!--容器依赖-->
+            <!--CONTEXT-->
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -862,7 +867,7 @@
                 <artifactId>validation-api</artifactId>
                 <version>1.0.0.GA</version>
             </dependency>
-            <!--测试依赖-->
+            <!--TEST-->
             <dependency>
                 <groupId>org.perf4j</groupId>
                 <artifactId>perf4j</artifactId>
@@ -880,7 +885,7 @@
                 <version>2.6.0</version>
                 <scope>test</scope>
             </dependency>
-            <!--mock推荐使用mockito-->
+            <!--mock SUGGEST mockito-->
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
@@ -906,7 +911,7 @@
                 <scope>test</scope>
             </dependency>
 
-            <!--中间件-->
+            <!--MIDDLE WIREA-->
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
@@ -955,9 +960,9 @@
                 <version>2.7.0</version>
             </dependency>
             <!--
-               spring3.2 有很多新特性
-               参考 http://docs.spring.io/spring/docs/3.2.6.RELEASE/spring-framework-reference/htmlsingle/#new-in-3.2
-               spring 4.0改动太大,暂时不考虑
+               spring3.2 
+                http://docs.spring.io/spring/docs/3.2.6.RELEASE/spring-framework-reference/htmlsingle/#new-in-3.2
+               spring 4.0 GOT TOO MANY NEW FIGURES
                http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#spring-whats-new
             -->
             <dependency>
@@ -1068,9 +1073,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!--aspectj
-            aspectjweaver里包括aspectjrt,不需要再依赖aspectjrt，也不需要aspectjlib
-            -->
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
@@ -1106,7 +1108,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!--日志 采用slf4j 日志实现为logback -->
+            <!--LOGGER USE slf4j THE APPLICATION IS logback -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -1195,7 +1197,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!--建议不使用下面的版本,改为com.netflix.curator:curator-recipes-->
+            <!--DO NOT SUGGEST THIS, TURN TO com.netflix.curator:curator-recipes-->
             <dependency>
                 <groupId>com.netflix.curator</groupId>
                 <artifactId>curator-framework</artifactId>
@@ -1246,11 +1248,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!--cglib3
-            貌似cglib有导致permgen溢出的风险，
-            https://jira.springsource.org/browse/SPR-10573
-            https://jira.springsource.org/browse/SPR-8190
-            -->
             <dependency>
                 <groupId>cglib</groupId>
                 <artifactId>cglib</artifactId>
@@ -1263,7 +1260,7 @@
             </dependency>
 
             <!--javassit
-            有jboss的支持，估计以后这个是王道
+            	DO YOU WANT TO USE JBOSS?
             https://issues.jboss.org/browse/JASSIST
             -->
             <dependency>
@@ -1282,7 +1279,6 @@
                 <artifactId>poi-ooxml</artifactId>
                 <version>3.9</version>
             </dependency>
-            <!--oro提供正则表达式支持，建议不使用 -->
             <dependency>
                 <groupId>oro</groupId>
                 <artifactId>oro</artifactId>
@@ -1320,7 +1316,7 @@
                 <version>3.2.1</version>
             </dependency>
 
-            <!--excel操作-->
+            <!--excel-->
             <dependency>
                 <groupId>net.sourceforge.jexcelapi</groupId>
                 <artifactId>jxl</artifactId>
@@ -1379,6 +1375,12 @@
                 <artifactId>jstl</artifactId>
                 <version>1.2</version>
             </dependency>
+            
+            <dependency>
+	    		<groupId>com.google.code.gson</groupId>
+	    		<artifactId>gson</artifactId>
+	    		<version>2.3.1</version>
+    		</dependency>
 		</dependencies>	
     </dependencyManagement>
 
@@ -1461,14 +1463,8 @@
         <module>p2p-test</module>
 		<module>p2p-config</module>
     <module>icebreak-util</module>
-  </modules>
-  <!--
-  <repositories>
-		<repository>
-			<id>CQCISartifactory</id>
-			<name>CQCIS Dev local artifactory</name>
-			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2/org/acegisecurity/</url>
-		</repository>
-	</repositories>
-	-->
+    <module>wei-server</module>
+    </modules>
+    <dependencies>
+    </dependencies>
 </project>

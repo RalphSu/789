@@ -55,7 +55,7 @@ public class LoginController extends BaseAutowiredController {
 	/**
 	 * 登录提示信息
 	 */
-	private static String LOGIN_MESSAGE = null;
+	protected static String LOGIN_MESSAGE = null;
 	/**
 	 * 验证码错误提示信息
 	 */
@@ -63,7 +63,7 @@ public class LoginController extends BaseAutowiredController {
 	/**
 	 * 用户不可用
 	 */
-	private static String LOGIN_MESSAGE_DISABLE = null;
+	protected static String LOGIN_MESSAGE_DISABLE = null;
 	/**
 	 * 未激活
 	 */
@@ -75,15 +75,15 @@ public class LoginController extends BaseAutowiredController {
 	/**
 	 * 账户已被锁定
 	 */
-	private static String LOGIN_MESSAGE_LOCKED = null;
+	protected static String LOGIN_MESSAGE_LOCKED = null;
 	/**
 	 * 账户不存在
 	 */
-	private static String LOGIN_USER_UNKNOWN = null;
+	protected static String LOGIN_USER_UNKNOWN = null;
 	/**
 	 * 密码错误提示
 	 */
-	private static String LOGIN_WONGMSG_TIP = null;
+	protected static String LOGIN_WONGMSG_TIP = null;
 	/**
 	 * 验证码
 	 */

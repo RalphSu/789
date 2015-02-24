@@ -365,7 +365,7 @@ public class BootController extends UserAccountInfoBaseController {
      * @param userId
      * @return
      */
-    private UserGoldExperienceDO queryUserGoldExp(long userId) {
+    protected UserGoldExperienceDO queryUserGoldExp(long userId) {
         UserGoldExperienceDO userGoldExp = new UserGoldExperienceDO();
         userGoldExp.setUserId(userId);
         userGoldExp.setStatus("1");//未使用
