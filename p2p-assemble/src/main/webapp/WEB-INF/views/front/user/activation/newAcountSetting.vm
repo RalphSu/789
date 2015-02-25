@@ -230,7 +230,7 @@
                     <label class="fn-label"><span class="required">*</span>手机号码：</label>
                     <input type="text"  disabled="disabled" class="fn-text w130"  name="mobile4" value="$!{mobile}"/>
                     <input id="mobile1" type="hidden"   disabled="disabled" class="fn-text w130"  name="mobile" value="$!{userBaseInfo.mobile}"/>
-                    <a href="javascript:;" id="getCode1" class="fn-h-btn"><span class="timedown">获取验证码</span></a>
+                    <a href="javascript:;" id="getCode1" class="fn-h-btn Y-countdown"><span class="timedown">获取验证码</span></a>
                     <input id="business1" type="hidden" name="business" value="cellphone"/>
                 </div>
                 <div class="fn-item">
@@ -300,12 +300,12 @@
 	<div class="m-layer" id="boundMobile_ok" style="width:350px;display:none;">
 		<div class="f-title fn-mb15 fn-clear">
 			<h4 class="fn-left">绑定手机提示</h4>
-			<a href="javascript:;" class="fn-right cancel">x</a>
+			<a href="javascript:;" class="fn-right lyclose">x</a>
 		</div>
 		<div class="f-con">
 			<p class="text-c ft-666"><img src="$!{rc.contextPath}/resources/images/common/success-ico.jpg" class="vm m5" />你的手机号绑定成功！</p>
 			<div class="f-btn mt20">
-				<a href="javascript:;" class="fn-h-btn  cancel"><span>确认</span></a>
+				<a href="javascript:;" class="fn-h-btn  lyclose"><span>确认</span></a>
 			</div>
 		</div>
 	</div>
@@ -314,12 +314,12 @@
 	<div class="m-layer" id="boundMobile_ok" style="width:350px;display:none;">
 		<div class="f-title fn-mb15 fn-clear">
 			<h4 class="fn-left">绑定手机提示</h4>
-			<a href="javascript:;" class="fn-right  cancel">x</a>
+			<a href="javascript:;" class="fn-right  lyclose">x</a>
 		</div>
 		<div class="f-con">
 			<p class="text-c ft-666"><img src="$!{rc.contextPath}/resources/images/common/success-ico.jpg" alt="" class="vm m5" />你的手机号绑定失败！</p>
 			<div class="f-btn mt20">
-				<a href="javascript:;" class="fn-h-btn  cancel"><span>确认</span></a>
+				<a href="javascript:;" class="fn-h-btn  lyclose"><span>确认</span></a>
 			</div>
 		</div>
 	</div>
