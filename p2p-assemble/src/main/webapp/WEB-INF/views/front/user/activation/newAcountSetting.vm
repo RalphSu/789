@@ -230,7 +230,7 @@
                     <label class="fn-label"><span class="required">*</span>手机号码：</label>
                     <input type="text"  disabled="disabled" class="fn-text w130"  name="mobile4" value="$!{mobile}"/>
                     <input id="mobile1" type="hidden"   disabled="disabled" class="fn-text w130"  name="mobile" value="$!{userBaseInfo.mobile}"/>
-                    <a href="javascript:;" id="getCode1" class="fn-h-btn  Y-countdown"><span class="timedown">获取验证码</span></a>
+                    <a href="javascript:;" id="getCode1" class="fn-h-btn"><span class="timedown">获取验证码</span></a>
                     <input id="business1" type="hidden" name="business" value="cellphone"/>
                 </div>
                 <div class="fn-item">
@@ -293,67 +293,6 @@
 		</div>
 		<div class="f-btn" style="text-align:center;">
 			<a class="fn-g-btn lyclose" href="javascript:;" style="margin-bottom:10px;"><span>确定</span></a>
-		</div>
-	</div>
-
-	<!--浮层2.1-->
-	<div class="m-layer" id="bound_updateMobile" style="width:520px;display:none;">
-        <div class="lytt fn-clear">
-			<h4 class="fn-left">修改绑定手机 </h4>
-			<a href="javascript:;" class="lyclose">x</a>
-		</div>
-		<div class="f-con f-change">
-			<div class="fn-y-tip fn-mb20">
-				<em></em>
-			</div>
-			<form action="/security/updateBoundMobile" method="post" id="updateBoundMobile_form">
-				<div class="fn-item">
-					<label class="fn-label"><span class="required">*</span>手机号码：</label>
-					<input type="text"  disabled="disabled" class="fn-text w130"  name="mobile4" value="$!{mobile}"/>
-					<input id="mobile1" type="hidden"   disabled="disabled" class="fn-text w130"  name="mobile" value="$!{userBaseInfo.mobile}"/>
-                    <a href="javascript:;" id="getCode1" class="fn-h-btn  Y-countdown"><span class="timedown">获取验证码</span></a>
-                    <input id="business1" type="hidden" name="business" value="cellphone"/>
-				</div>
-				<div class="fn-item">
-					<label class="fn-label"><span class="required">*</span>新手机号码：</label>
-					<input type="text"  class="fn-text w130" name="newMobile" maxlength="11"/>
-				</div>
-				<div class="fn-item">
-					<label class="fn-label"><span class="required">*</span>验证码：</label>
-					<input id="code1" type="text" class="fn-text w130" name="code" />
-				</div>
-				<div class="fn-item">
-					<a href="javascript:;" class="fn-g-btn fn-mr5"><button type="submit">确定</button></a>
-				</div>
-			</form>
-		</div>
-	</div>
-
-	<!--浮层2.2-->
-	<div class="m-layer" id="bound_mobile" style="width:470px;display:none;">
-        <div class="lytt fn-clear">
-			<h4 class="fn-left">绑定手机</h4>
-			<a href="javascript:;" class="lyclose">x</a>
-		</div>
-		<div class="f-con f-change">
-			<div class="fn-y-tip fn-mb20">
-				<em></em>
-			</div>
-			<form action="/security/boundMobile" method="post" id="boundMobile_form">
-				<div class="fn-item">
-					<label class="fn-label"><span class="required">*</span>手机号码：</label>
-					<input id="mobile2" type="text" class="fn-text w130" maxlength="11" name="mobile" />
-					<a href="javascript:;" id="getCode2" class="fn-h-btn Y-countdown"><span class="timedown">获取验证码</span></a>
-					<input id="business2" type="hidden" name="business" value="addcellphone"/>
-				</div>
-				<div class="fn-item">
-					<label class="fn-label"><span class="required">*</span>验证码：</label>
-					<input id="code2" type="text" class="fn-text w50" name="code"/>
-				</div>
-				<div class="fn-item">
-					<a href="javascript:;" class="fn-g-btn fn-mr5"><button type="submit">确定</button></a>
-				</div>
-			</form>
 		</div>
 	</div>
 
