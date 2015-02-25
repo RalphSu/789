@@ -142,16 +142,14 @@ public class SecurityCenterController extends BaseAutowiredController {
 			this.getOpenApiContext());
 		if (baseResult.isSuccess()) {
 			userBaseInfo.setMobileBinding("IS");
-			returnEnum = userBaseInfoManager.updateUserBaseInfo(userBaseInfo);
-			if (returnEnum == UserBaseReturnEnum.EXECUTE_SUCCESS) {
-				jsonobj.put("code", 1);
-				jsonobj.put("message", "修改绑定手机成功");
-			} else {
-				jsonobj.put("code", 0);
-				jsonobj.put("message", "修改绑定手机失败");
-			}
+		}
+		returnEnum = userBaseInfoManager.updateUserBaseInfo(userBaseInfo);
+		if (returnEnum == UserBaseReturnEnum.EXECUTE_SUCCESS) {
+			jsonobj.put("code", 1);
+			jsonobj.put("message", "修改绑定手机成功");
 		} else {
-			returnEnum = userBaseInfoManager.updateUserBaseInfo(userBaseInfo);
+			jsonobj.put("code", 0);
+			jsonobj.put("message", "修改绑定手机失败");
 		}
 		
 		return jsonobj;
