@@ -6,13 +6,13 @@
 	}
 </style>
 <link rel="stylesheet" type="text/css" href="/resources/css/weichat/product.css"/>
-<ul id="productList" data-role="listview" data-inset="true">
+<ul id="productList" data-role="listview" data-inset="true" data-icon="none">
 	#foreach($trade in $!{page.result})
 	    <li>
 	        <a href="/weichat/detail.do/$!{trade.demandId}/$!{trade.tradeId}" data-ajax="false">
 	            <div class="ui-grid-a">
 					<!-- grid block start -->
-					<div class="ui-block-a" style="width:110px;margin-right:8px">
+					<div class="ui-block-a" style="width:40%">
 						<span class="highlight" style="font-size:28px">$!{trade.strRaate}</span>
 						<span>$!{loanUtil.getLoanTime($!{trade.time}, $!{trade.timeUnit})}</span>
 						<span>$!{moneyUtil.getFormatAmount($!{trade.leastInvestAmount})}&nbsp;元起</span>
