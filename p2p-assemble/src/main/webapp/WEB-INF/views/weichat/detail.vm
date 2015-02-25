@@ -28,7 +28,7 @@
 		</div>
 	</div>
 	<div class="percent">
-		<div style="line-height:80px;width:280px;float:left;position:relative;left:120px">已完成融资&nbsp;$!{percent}</div>
+		<div style="line-height:80px;width:280px;float:left;position:relative;left:100px;font-size:18px;">已完成融资&nbsp;$!{percent}</div>
 	</div>
 	<div class="percentBar">
 		<input type="hidden" id="percentBarDoneHidden" value="$!{percent}" />
