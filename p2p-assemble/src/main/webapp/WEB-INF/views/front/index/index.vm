@@ -145,9 +145,9 @@
         ScrollTime = setInterval("ScrollAutoPlay('"+ContainerID+"','"+ScrollDirection+"',"+ShowWidth+','+TextWidth+","+PosSteper+")",Interval);
     }
 
-    $(function() {
-        ScrollText($('#gundongText'),23,420,'789金融网站目前处于公测阶段，现在主要针对网站的推荐用户进行投资体验，未接受客户经理投资咨询者，请暂勿投资，详情请致电我们平台热线。本次公测最终解释权归789金融平台所有。','left',1,20);//滚动字幕
-    });
+##    $(function() {
+##        ScrollText($('#gundongText'),23,420,'789金融网站目前处于公测阶段，现在主要针对网站的推荐用户进行投资体验，未接受客户经理投资咨询者，请暂勿投资，详情请致电我们平台热线。本次公测最终解释权归789金融平台所有。','left',1,20);//滚动字幕
+##    });
 </script>
 
 <!--新闻-->
