@@ -33,13 +33,13 @@
    	 		到期由<span style="color:#f08519">$!{trade.paymentBankName}</span>无条件兑付
    	 	</div>
    	 	<div id="rate" class="center">
-			<div class="leftFloat">$!{trade.strRaate}</div>
-			<div class="leftFloat" style="color:#a1a1a1;font-size:12px;margin-left:5px;position:relative;top:45px">年化<br>收益</div>
+			<div class="leftFloat rateNum">$!{trade.strRaate}</div>
+			<div class="leftFloat" style="color:#a1a1a1;font-size:12px;margin-left:5px;position:relative;top:22px">年化<br>收益</div>
 		</div>
 		<div class="days">
 			投资周期：$!{loanUtil.getLoanTime($!{trade.time}, $!{trade.timeUnit})}
 		</div>
-		<div style="margin-top:20px">
+		<div style="margin-top:5px">
 			<a href="/weichat/detail.do/$!{trade.demandId}/$!{trade.tradeId}" id="goInvest" data-role="button" data-inline="true" data-theme="d">立即投资</a>
 		</div>
    	 </div>

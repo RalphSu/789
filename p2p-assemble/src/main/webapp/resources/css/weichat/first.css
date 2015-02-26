@@ -9,28 +9,31 @@
 	height:120px;
 }
 .productContent{
-	margin-top:10px;
+	margin-top:5px;
 	font-weight:bold;
 	text-align:center;
 	color:#332c2b;
 }
 .productName{
-	font-size:22px;
+	font-size:20px;
 }
 .bankName{
-	margin-top:12px;
+	margin-top:4px;
 }
 #rate{
 	font-weight:normal;
-	height:90px;
+	height:60px;
 	text-align:center;
 	color:#5fbbea;
-	padding-top:20px;
-	font-size:68px;
-	width:230px;
+	padding-top:5px;
+	font-size:52px;
+	width:180px;
+}
+.rateNum{
+	height:60px;
 }
 .days{
-	margin-top:20px;
+	margin-top:5px;
 }
 .imageDiv{
 	text-align:center;
