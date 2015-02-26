@@ -10,8 +10,8 @@
 	<div id="info">
 		<div class="leftFloat infoLeft">
 			<div class="leftIn">
-				<div style="text-align:center;position:relative;top:39px;">
-					<span id="availableNow" style="font-size:20px">
+				<div style="text-align:center;position:relative;top:30px;">
+					<span id="availableNow" style="font-size:16px">
 						#if($!{percent} =="100")
                         	0
                     	#else
@@ -122,6 +122,4 @@
     $("#diffDate").val(GetDateDiff($("#effectiveDateTime").val().substring(0, $("#effectiveDateTime").val().indexOf(" ")), new Date().Format("yyyy-MM-dd"), "day"));
 </script>
 </div>
-</div>
-</body>
-</html>
+ #parse("/weichat/common/footer.vm")

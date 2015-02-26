@@ -7,3 +7,6 @@
 	top:40px;
 	font-size:22px;
 }
+#contentDiv{
+	min-height:324px;
+}

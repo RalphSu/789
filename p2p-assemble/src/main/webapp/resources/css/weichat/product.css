@@ -32,23 +32,24 @@
 	width:230px;
 }
 #info{
-	height:140px;
+	height:120px;
 	border-bottom:solid 1px #332c2b;
 	padding-bottom:5px;
 }
 .infoLeft{
-	width:35%;
+	width:48%;
 }
 .leftIn{
-	height:140px;
-	width:111px;
+	height:110px;
+	width:87px;
+	margin-left:10%;
 	background-image:url(../../images/weichat/detail_1.png);
 }
 .infoRight{
-	width:65%;
+	width:50%;
 }
 .rightIn{
-	font-size:26px;
+	font-size:18px;
 	margin-bottom:16px;
 }
 .rightInSpan1{
@@ -105,7 +106,7 @@
 	color:#8b8b8c;
 }
 .detailIn{
-	font-size:20px;
+	font-size:16px;
 	margin-bottom:16px;
 }
 .detailInSpan{

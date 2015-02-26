@@ -18,6 +18,4 @@
 		#end		
 	</div>
 	<script type="text/javascript" src="/resources/js/weichat/registerTwo.js"></script>
-</div>
-</body>
-</html>
+ #parse("/weichat/common/footer.vm")

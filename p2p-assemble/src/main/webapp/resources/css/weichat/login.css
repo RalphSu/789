@@ -18,20 +18,6 @@
 .split{
 	height:30px;
 }
-.footer{
-	height:100px;
-	background-color:#a0d9f6;
-}
-.footerDiv{
-	height:100%;
-	width:65px;
-	margin-left:12%;
-	float:left;
-}
-.footerDiv a{
-	position:relative;
-	top:20px;
-}
 .buttonDiv{
-	min-height:260px;
+	min-height:134px;
 }

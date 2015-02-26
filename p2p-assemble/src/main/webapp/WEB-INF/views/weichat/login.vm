@@ -21,19 +21,5 @@
 		$!{message}
 	</div>
 </div>
-<div class="footer">
-   	 	<div class="footerDiv">
-   	 		<a href="/weichat/first.do" data-ajax="false"><img src="/resources/images/weichat/footer1a.png" /></a>
-   	 	</div>
-   	 	<div class="footerDiv">
-   	 		<a href="/weichat/index.do/8/1" data-ajax="false"><img src="/resources/images/weichat/footer2a.png" /></a>
-   	 	</div>
-   	 	<div class="footerDiv">
-   	 		<a href="#"><img src="/resources/images/weichat/footer3.png" /></a>
-   	 	</div>
-</div>
-</div>
 <script type="text/javascript" src="/resources/js/weichat/login.js"></script>
-</div>
-</body>
-</html>
+ #parse("/weichat/common/footer.vm")

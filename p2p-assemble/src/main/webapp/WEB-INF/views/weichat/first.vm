@@ -5,7 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="/resources/css/weichat/common.css"/>
 	<link rel="stylesheet" type="text/css" href="/resources/css/weichat/first.css"/>
 	<div class="header">
-		<div style="float:right;position:relative;top:65px;right:5%;">
+		<div style="float:right;position:relative;top:10px;right:5%;">
 			<a id='button-special' href="/weichat/login.do" data-role="button" data-inline="true" data-theme="e">登录/注册</a>
 		</div>
 	</div>
@@ -13,9 +13,9 @@
     <div id="flashBg">
         <div id="flashLine">
             <div id="flash" style="overflow:visible">
-                <a name="url(/resources/images/new/banner.jpg) #8B8B97 center" style="display: block;" id="flash1" href="/index/invest/10/1"><div class="nav banner_one"><img src="/resources/images/new/b1.png" style="height:160px"></div></a>
-                <a name="url(/resources/images/new/banner_2.jpg) #185768 center" id="flash3" href="/help/security"><div class="nav banner_one" id="test"><img src="/resources/images/new/b2.png" style="height:160px"></div></a>
-                <a name="url(/resources/images/new/banner_4.png) #8B8B97 center" id="flash2" href="/anon/register"><div class="nav banner_one"><img src="/resources/images/new/b6.png" style="height:160px"></div></a>
+                <a name="url(/resources/images/new/banner.jpg) #8B8B97 center" style="display: block;" id="flash1" href="/weichat/index.do/8/1"><div class="nav banner_one"><img src="/resources/images/new/b1.png" style="height:100px;max-width:780px"></div></a>
+                <a name="url(/resources/images/new/banner_2.jpg) #185768 center" id="flash3" href="/weichat/index.do/8/1"><div class="nav banner_one" id="test"><img src="/resources/images/new/b2.png" style="height:100px;max-width:780px"></div></a>
+                <a name="url(/resources/images/new/banner_4.png) #8B8B97 center" id="flash2" href="/weichat/index.do/8/1"><div class="nav banner_one"><img src="/resources/images/new/b6.png" style="height:100px;max-width:780px"></div></a>
                 <div class="flash_bar">
                     <div class="dq"  id="f1" onClick="changeflash(1)"></div>
                     <div class="no"  id="f2" onClick="changeflash(2)"></div>
@@ -57,19 +57,6 @@
    	 		<p>保本保息</p>
    	 	</div>
    	 </div>
-   	 <div class="footer">
-   	 	<div class="footerDiv">
-   	 		<a href="#"><img src="/resources/images/weichat/footer1.png" /></a>
-   	 	</div>
-   	 	<div class="footerDiv">
-   	 		<a href="/weichat/index.do/8/1"><img src="/resources/images/weichat/footer2.png" /></a>
-   	 	</div>
-   	 	<div class="footerDiv">
-   	 		<a href="#"><img src="/resources/images/weichat/footer3.png" /></a>
-   	 	</div>
-   	 </div>
-<script type="text/javascript" src="/resources/js/jquery/imgAuto.js"></script>
-<script type="text/javascript" src="/resources/js/weichat/first.js"></script>
-</div>
-</body>
-</html>
+   	 <script type="text/javascript" src="/resources/js/jquery/imgAuto.js"></script>
+	 <script type="text/javascript" src="/resources/js/weichat/first.js"></script>
+ #parse("/weichat/common/footer.vm")

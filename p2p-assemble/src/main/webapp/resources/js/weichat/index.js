@@ -56,13 +56,13 @@ function appendLi(items){
 	var appendLiString = "";
 	for(var i = 0; i < items.length; i++){
 		var item = items[i];
-		var liString = "<li><a href='/weichat/" + item.demandId + "/"+ item.tradeId +"' data-ajax='false'>" + "<div class='ui-grid-a'>"
-					  +"<div class='ui-block-a' style='width:110px;margin-right:8px'>" 
+		var liString = "<li><a href='/weichat/detail.do/" + item.demandId + "/"+ item.tradeId +"' data-ajax='false'>" + "<div class='ui-grid-a'>"
+					  +"<div class='ui-block-a' style='width:40%'>" 
 					  +"<span class='highlight' style='font-size:28px'>" + item.strRaate + "</span>"
 					  +"<span>" + item.timeLimit + "天</span>" + "<span>" + item.leastInvestAmount +" 元起</span>"
 					  +"<span>" + item.amount +"</span></div>"
 					  +"<div class='ui-block-b'>"
-					  +"<span style='font-size:20px;margin-bottom:8px'>" + item.name + "</span>"
+					  +"<span style='font-size:18px;margin-bottom:8px'>" + item.name + "</span>"
 					  +"<span class='highlight'>融资进度:" + item.p + "</span>"
 					  +"<span>开始时间：" + item.investAvalibleTime + "</span>"
 					  +"<span>完成时间：" + item.deadline + "</span>"

@@ -29,3 +29,17 @@ html, body, div, p, span {
 	background-color:#fff;
 	color:#008fd7;
 }
+.footer{
+	height:60px;
+	background-color:#a0d9f6;
+}
+.footerDiv{
+	height:100%;
+	width:40px;
+	margin-left:15%;
+	float:left;
+}
+.footerDiv a{
+	position:relative;
+	top:10px;
+}

@@ -129,10 +129,22 @@ public class SecurityCenterController extends BaseAutowiredController {
 	@ResponseBody
 	@RequestMapping("updateBoundMobile")
 	public Object updateBoundMobile(String mobile, String newMobile, String code) throws Exception {
-		UserBaseReturnEnum returnEnum = UserBaseReturnEnum.EXECUTE_FAILURE;
 		JSONObject jsonobj = new JSONObject();
+		if(StringUtil.isBlank(newMobile)){
+			jsonobj.put("code", 0);
+			jsonobj.put("message", "手机号码丢失！");
+			return jsonobj;
+		}
+		UserBaseReturnEnum returnEnum = UserBaseReturnEnum.EXECUTE_FAILURE;
+		UserBaseInfoDO existUser = userBaseInfoManager.queryByUserName(newMobile, -1l);
 		UserBaseInfoDO userBaseInfo = userBaseInfoManager.queryByUserBaseId(SessionLocalManager
 			.getSessionLocal().getUserBaseId());
+		if((!existUser.getUserBaseId().equals(userBaseInfo.getUserBaseId())) && (existUser.getUserName().equals(userBaseInfo.getUserName()))){
+			//如果已存在新手机号的用户 且这个用户不是当前用户时，说明手机号码重复
+			jsonobj.put("code", 0);
+			jsonobj.put("message", "手机号码重复！");
+			return jsonobj;
+		}
 		userBaseInfo.setMobile(newMobile);
 		MobileBindOrder mobileBindOrder = new MobileBindOrder();
 		mobileBindOrder.setUserId(userBaseInfo.getAccountId());

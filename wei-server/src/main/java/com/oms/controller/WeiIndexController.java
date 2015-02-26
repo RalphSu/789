@@ -65,6 +65,7 @@ public class WeiIndexController extends BootController {
 		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 		for(IndexTrade trade : indexTrade.getResult()){
 			Map<String, Object> tradeMap = new HashMap<String, Object>();
+			tradeMap.put("demandId", trade.getDemandId());
 			tradeMap.put("tradeId", trade.getTradeId());
 			tradeMap.put("strRaate", RateUtil.getRate(trade.getRate()));
 			tradeMap.put("timeLimit", trade.getTime());
