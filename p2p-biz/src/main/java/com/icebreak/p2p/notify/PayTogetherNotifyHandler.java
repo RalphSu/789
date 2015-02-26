@@ -93,12 +93,7 @@ public class PayTogetherNotifyHandler implements NotifyHandler {
 
 						logger.info("生成融资人收支明细--投资满标集体转入。");
 						addLoanerLoanRechargeFlow(tradeNo, trade, loanerId);
-						logger.info("AmountFlow全部更新完成.发送短信通知");
-						Map<String, Object> params = new HashMap<String, Object>();
-						params.put("tradeId", trade.getId());
-						List<UserBaseInfoDO> users = userBaseInfoDAO.queryAllUserInfoList(params);
-						String smsContent = "您购买的789金融"+trade.getName();
-						messageService.notifyUsersBySms(users, smsContent);
+						logger.info("AmountFlow全部更新完成.");
 						List<TransferTrade> investDevisionList = transferTradeDao.getPhaseTransferTrades(
 								trade.getId(), DivisionPhaseEnum.INVESET_PHASE.getCode(), null, null);
 						if(ListUtil.isEmpty(investDevisionList)) {

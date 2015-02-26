@@ -41,6 +41,7 @@ import com.icebreak.util.lang.util.money.Money;
 import com.yiji.openapi.sdk.Constants;
 import com.yiji.openapi.sdk.message.common.YzzUserAccountQueryResponse;
 import com.yiji.openapi.sdk.message.yzz.RepayNotify;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -392,8 +393,10 @@ public class TradeServiceImpl extends BaseAutowiredToolsService implements
 				RepaySubOrder subOrder = new RepaySubOrder();
 				Money transferAmount = Money.cent(tt.getAmount());
 
-				TransferTrade td = investDevisionList.get(i);
-				if (tt.getUserId() == td.getUserId()) {
+				TransferTrade td = this.getRepayDetail(investDevisionList, investTradeList.get(i));
+				if (null == td) {
+					transferAmount.addTo(Money.cent(0l));
+				}else{
 					transferAmount.addTo(Money.cent(td.getAmount()));
 				}
 
@@ -430,6 +433,26 @@ public class TradeServiceImpl extends BaseAutowiredToolsService implements
 		repayPlanDAO.update(repayPlan);
 
 		return repayOrder;
+	}
+	
+	/**
+	 * 在分润列表中查找指定投资项的分润信息
+	 * @param investDevisionList
+	 * @param invest
+	 * @return
+	 */
+	private TransferTrade getRepayDetail(List<TransferTrade> investDevisionList, TransferTrade invest){
+		TransferTrade result = null;
+		for(TransferTrade devision : investDevisionList){
+			if((devision.getUserId() == invest.getUserId()) 
+					&& (devision.getTradeDetailId() == (invest.getTradeDetailId() + 1))
+					&& (devision.getTransferPhase().equalsIgnoreCase("repay"))){
+				//判定规则 id为投资项id+1 && userId相等  && 投资阶段为repay
+				result = devision;
+				break;
+			}
+		}
+		return result;
 	}
 
 	@Transactional(rollbackFor = Exception.class, value = "transactionManager")
@@ -493,6 +516,13 @@ public class TradeServiceImpl extends BaseAutowiredToolsService implements
 					RepayPlanStatusEnum.REPAY_SUCCESS.getCode());
 			repayPlanService.updateActualRepayDate(plan.getRepayPlanId(),
 					new Date());
+//			logger.info("发送短信通知");
+//			Map<String, Object> params = new HashMap<String, Object>();
+//			params.put("tradeId", tradeId);
+//			List<UserBaseInfoDO> users = userBaseInfoDAO.queryAllUserInfoList(params);
+//			Trade trade = tradeDao.getByTradeId(tradeId);
+//			String smsContent = "您购买的789金融"+trade.getName();
+//			messageService.notifyUsersBySms(users, smsContent);
 		}
 		logger.info("还款成功!");
 		return 0;

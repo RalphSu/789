@@ -23,6 +23,16 @@ public class TransferTrade implements Serializable {
 	 */
 	private long				tradeDetailId		= 0;
 	
+	private String 				transferPhase       = null;
+	
+	public String getTransferPhase() {
+		return transferPhase;
+	}
+
+	public void setTransferPhase(String transferPhase) {
+		this.transferPhase = transferPhase;
+	}
+
 	public long getUserId() {
 		return userId;
 	}

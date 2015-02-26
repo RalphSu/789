@@ -48,6 +48,9 @@
 	<update id="MS-USER-BASE-UPDATE">
 		update user_base_info
 		<dynamic prepend="set">
+			<isNotEmpty property="userName" prepend=",">
+				user_name = #userName#
+			</isNotEmpty>
 			<isNotEmpty property="realName" prepend=",">
 				real_name = #realName#
 			</isNotEmpty>

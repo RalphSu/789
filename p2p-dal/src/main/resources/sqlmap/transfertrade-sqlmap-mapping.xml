@@ -6,6 +6,7 @@
   <resultMap id="RM-TRANSFERTRADE" class="com.icebreak.p2p.dataobject.TransferTrade">
   	  <result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" />
 	  <result property="yjfUserName" column="yjf_user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="transferPhase" column="transfer_phase" javaType="java.lang.String" jdbcType="VARCHAR" />
 	  <result property="amount" column="amount" javaType="long" jdbcType="BIGINT" />
 	  <result property="tradeDetailId" column="trade_detail_id" javaType="long" jdbcType="BIGINT" />
   </resultMap>
@@ -26,8 +27,8 @@
 		</isNotEmpty>
   </select>
   <select id="TRANSFERTRADE-GETPHASETRANSFERTRADES" parameterClass="java.util.Map" resultClass="java.util.List" resultMap="RM-TRANSFERTRADE">
-		SELECT user_base_info.user_id, trade_detail.amount, user_base_info.account_id yjf_user_name, trade_detail.trade_detail_id  FROM trade_detail 
-			
+		SELECT user_base_info.user_id, trade_detail.amount, user_base_info.account_id yjf_user_name, trade_detail.trade_detail_id,trade_detail.transfer_phase transfer_phase
+		FROM trade_detail 
 		INNER JOIN user_base_info ON trade_detail.user_id = user_base_info.user_id
 		<isNotEmpty property="roles">
 			INNER JOIN role ON role.role_id = trade_detail.role_id
