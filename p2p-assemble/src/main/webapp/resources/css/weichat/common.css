@@ -30,7 +30,7 @@ html, body, div, p, span {
 	color:#008fd7;
 }
 .footer{
-	height:60px;
+	height:50px;
 	background-color:#a0d9f6;
 }
 .footerDiv{
@@ -41,5 +41,5 @@ html, body, div, p, span {
 }
 .footerDiv a{
 	position:relative;
-	top:10px;
+	top:5px;
 }

@@ -5,7 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="/resources/css/weichat/common.css"/>
 	<link rel="stylesheet" type="text/css" href="/resources/css/weichat/first.css"/>
 	<div class="header">
-		<div style="float:right;position:relative;top:10px;right:5%;">
+		<div style="float:right;position:relative;right:5%;">
 			<a id='button-special' href="/weichat/login.do" data-role="button" data-inline="true" data-theme="e">登录/注册</a>
 		</div>
 	</div>
@@ -18,9 +18,9 @@
                     <div class="no"  id="f2" onClick="changeflash(2)"></div>
                     <div class="no"  id="f3" onClick="changeflash(3)"></div>
                 </div>
-                <a name="url(/resources/images/new/banner.jpg) #8B8B97 center" style="display: block;" id="flash1" href="/weichat/index.do/8/1"><div class="nav banner_one"><img src="/resources/images/weichat/01.png" style="max-height:141px;min-height:57px;max-width:800px;min-width:320px"></div></a>
-                <a name="url(/resources/images/new/banner_2.jpg) #185768 center" id="flash3" href="/weichat/index.do/8/1"><div class="nav banner_one" id="test"><img src="/resources/images/weichat/02.png" style="max-height:141px;min-height:57px;max-width:800px;min-width:320px"></div></a>
-                <a name="url(/resources/images/new/banner_4.png) #8B8B97 center" id="flash2" href="/weichat/index.do/8/1"><div class="nav banner_one"><img src="/resources/images/weichat/03.png" style="max-height:141px;min-height:57px;max-width:800px;min-width:320px"></div></a>
+                <a name="url(/resources/images/new/banner.jpg) #8B8B97 center" style="display: block;" id="flash1" href="/weichat/index.do/8/1"><div class="nav banner_one"><img src="/resources/images/weichat/01.png" style="max-height:141px;min-height:80px;max-width:800px;min-width:320px"></div></a>
+                <a name="url(/resources/images/new/banner_2.jpg) #185768 center" id="flash3" href="/weichat/index.do/8/1"><div class="nav banner_one" id="test"><img src="/resources/images/weichat/02.png" style="max-height:141px;min-height:80px;max-width:800px;min-width:320px"></div></a>
+                <a name="url(/resources/images/new/banner_4.png) #8B8B97 center" id="flash2" href="/weichat/index.do/8/1"><div class="nav banner_one"><img src="/resources/images/weichat/03.png" style="max-height:141px;min-height:80px;max-width:800px;min-width:320px"></div></a>
             </div>
         </div>
     </div>
