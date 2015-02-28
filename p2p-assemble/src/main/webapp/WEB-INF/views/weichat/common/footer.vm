@@ -1,3 +1,7 @@
+<div class="footerContent">
+	&nbsp;
+</div>
+</div>
 <div class="footer">
    	 	<div class="footerDiv">
    	 		<a href="/weichat/first.do"><img src="/resources/images/weichat/footer1.png" /></a>
@@ -9,7 +13,6 @@
    	 		<a href="#"><img src="/resources/images/weichat/footer3.png" /></a>
    	 	</div>
    	 </div>
-</div>
 </div>
 </body>
 </html>

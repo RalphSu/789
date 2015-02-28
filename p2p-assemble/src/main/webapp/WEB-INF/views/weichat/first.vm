@@ -6,7 +6,13 @@
 	<link rel="stylesheet" type="text/css" href="/resources/css/weichat/first.css"/>
 	<div class="header">
 		<div style="float:right;position:relative;right:5%;">
-			<a id='button-special' href="/weichat/login.do" data-role="button" data-inline="true" data-theme="e">登录/注册</a>
+			#if(!$sessionScope)
+				<a id='button-special' href="/weichat/login.do" data-role="button" data-inline="true" data-theme="e">登录/注册</a>
+			#else
+				<div style="margin-top:10px;font-size:14px;">
+					欢迎您 : $!{sessionScope.realName} !&nbsp;&nbsp;<a href="/login/logout?redirect=/weichat/first.do" style="color: #a60000;">[安全退出]</a>
+				</div>
+			#end
 		</div>
 	</div>
 	<!--flash begin-->

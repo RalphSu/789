@@ -29,9 +29,19 @@ html, body, div, p, span {
 	background-color:#fff;
 	color:#008fd7;
 }
+.footerContent{
+	height:50px;
+}
 .footer{
 	height:50px;
+	width:100%;
+	max-width:800px;
+	min-width:320px;
 	background-color:#a0d9f6;
+	position:fixed;
+	bottom:0px;
+	top:auto;
+	z-index:9999;
 }
 .footerDiv{
 	height:100%;
