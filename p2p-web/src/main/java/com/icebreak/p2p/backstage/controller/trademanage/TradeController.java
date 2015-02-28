@@ -194,7 +194,11 @@ public class TradeController extends BaseAutowiredController {
 			.queryRepayPlanInfo(repayQueryOrder);
 		for(RepayPlanInfo repayPlanInfo:batchResult.getPageList()){
 			Trade trade = tradeService.getByTradeId(repayPlanInfo.getTradeId());
-			repayPlanInfo.setNote(String.valueOf(trade.getDemandId()));
+			try{
+				repayPlanInfo.setNote(String.valueOf(trade.getDemandId()));
+			}catch(Exception e){
+				logger.info("trade not exist");
+			}
 		}
 		model.addAttribute("repayQuery", repayQueryOrder);
 		model.addAttribute("statusList", statusList);

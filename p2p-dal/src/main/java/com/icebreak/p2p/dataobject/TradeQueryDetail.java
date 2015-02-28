@@ -1,5 +1,7 @@
 package com.icebreak.p2p.dataobject;
 
+import java.util.Date;
+
 public class TradeQueryDetail extends TradeDetail {
 	
 	private static final long	serialVersionUID	= 2668025060802679820L;
@@ -9,6 +11,9 @@ public class TradeQueryDetail extends TradeDetail {
 	
 	private long				tradeAmount			= 0;
 	private long				loanedAmount		= 0;
+	private Date				effectiveDate;
+	private double				income				= 0;
+	private double 				rule				= 0.0;
 	/**
 	 * 投资期限
 	 */
@@ -18,6 +23,30 @@ public class TradeQueryDetail extends TradeDetail {
 	 */
 	private String timeLimitUnit;
 	
+	public Date getEffectiveDate() {
+		return effectiveDate;
+	}
+
+	public void setEffectiveDate(Date effectiveDate) {
+		this.effectiveDate = effectiveDate;
+	}
+
+	public double getIncome() {
+		return income;
+	}
+
+	public void setIncome(double income) {
+		this.income = income;
+	}
+
+	public double getRule() {
+		return rule;
+	}
+
+	public void setRule(double rule) {
+		this.rule = rule;
+	}
+
 	public short getStatus() {
 		return status;
 	}

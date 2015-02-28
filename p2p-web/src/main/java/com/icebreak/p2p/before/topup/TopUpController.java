@@ -19,6 +19,7 @@ import com.icebreak.p2p.ws.enums.CertTypeEnum;
 import com.icebreak.p2p.ws.enums.SmsBizType;
 import com.icebreak.util.lang.util.StringUtil;
 import com.icebreak.util.lang.util.money.Money;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,20 +52,21 @@ public class TopUpController extends UserAccountInfoBaseController {
 				signCardInfo.setUserId(sessionLocal.getAccountId());
 				signCardInfo.setSignType(DivisionTypeEnum.SIGN.code());
 				List<SignCardInfo> list = signCardInfoService.queryList(signCardInfo);
-				Map<String, SignCardInfo> signBankMap = new HashMap<String, SignCardInfo>();
+				/*快捷支付要用到，先屏蔽
+				 * Map<String, SignCardInfo> signBankMap = new HashMap<String, SignCardInfo>();
 				for (SignCardInfo cardInfo : list) {
 					BankConfigInfo bankConfigInfo = bankDataService.loadBankConfigInfo(cardInfo.getBankShort());
 					cardInfo.setBankGifUrl(bankConfigInfo.getLogoUrl());
 					signBankMap.put(cardInfo.getBankShort(), cardInfo);
 				}
-				request.getSession().setAttribute(YrdConstants.SesssionKey.SIGN_BANK_KEY, signBankMap);
+				request.getSession().setAttribute(YrdConstants.SesssionKey.SIGN_BANK_KEY, signBankMap);*/
 				model.addAttribute("signBankInfos", list);
 				model.addAttribute("thirdPartAccountInfo", accountInfo);
 				return returnVm("deposit.vm");
 			}
 		}catch (Exception e) {
 			logger.info("【跳转提现页面异常】" + e.getMessage());
-			e.printStackTrace();
+			throw e;
 		}
 		return null;
 	}

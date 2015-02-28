@@ -94,10 +94,17 @@ public class CollectionManagerController extends UserAccountInfoBaseController {
         conditions.put("roleId", SysUserRoleEnum.INVESTOR.getValue());
         conditions.put("transferPhase", DivisionPhaseEnum.ORIGINAL_PHASE.getCode());
         Page<TradeQueryDetail> page =  tradeService.queryCollectionPage(conditions, pageParam);
+        this.setIncome(page.getResult());
         model.addAttribute("list", CLASS);
         model.addAttribute("myinvest", CLASS);
         model.addAttribute("page", page);
         return vm_path + "newCollectionManager.vm";
+    }
+    
+    private void setIncome(List<TradeQueryDetail> tradeQueryDetailList){
+    	for(TradeQueryDetail detail : tradeQueryDetailList){
+    		detail.setIncome(detail.getAmount() * investService.getDaysRuleRate(detail.getProfitRate(), detail.getTimeLimitUnit(), detail.getTimeLimit(), detail.getEffectiveDate(), detail.getDate()));
+    	}
     }
 
 }

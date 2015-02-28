@@ -100,7 +100,7 @@ public class NotifyHandlerDispatcher implements ApplicationContextAware {
 			// 实名认证通知
 			if (StringUtils.endsWith(Constants.realNameCertNotifyUrl, notifyUrl)) {
 				openApiGatewayService.notifySignManyBank(notifyData,
-					(NotifyHandler) getHandlerInstance("signManyBankNotifyHandler"));
+					(NotifyHandler) getHandlerInstance("realNameCertNotifyHandler"));
 			}
 		} catch (Exception e) {
 			logger.warn("支付网关异步通知 处理失败", e);

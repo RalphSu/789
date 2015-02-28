@@ -51,6 +51,7 @@
       <result property="tradeDetailStatus" column="status" javaType="java.lang.String" jdbcType="VARCHAR"/>
       <result property="timeLimit" column="time_limit" javaType="int" jdbcType="INT"/>
       <result property="timeLimitUnit" column="time_limit_unit" javaType="java.lang.String" jdbcType="ENUM"/>
+      <result property="effectiveDate" column="trade_effective_date" javaType="java.util.Date" jdbcType="DATETIME"/>
   </resultMap>
   <insert id="TRADEDETAIL-ADDTRADEDETAIL" parameterClass="com.icebreak.p2p.dataobject.TradeDetail">
 	  INSERT INTO trade_detail ( 
@@ -501,6 +502,7 @@
         <!--t.repay_date,-->
         t.ext_order ,
         t.actual_repay_date,
+        trd.trade_effective_date,
 		trd.trade_expire_date repay_date,
 		trd.interest_rate profit_rate,
         trd.trade_name,

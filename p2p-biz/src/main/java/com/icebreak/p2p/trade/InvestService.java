@@ -50,4 +50,6 @@ public interface InvestService {
 	
 	public TradeDetail saveInvestOriginalTradeDetail(TradeDetail detail) throws Exception;
 	
+	public double getDaysRuleRate(double rule, String timeLimitUnit, int timeLimit, Date effectiveDate, Date endDate);
+	
 }

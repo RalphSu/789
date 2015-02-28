@@ -59,6 +59,7 @@
 			</list>
 		</property>
 	</bean>
+	<bean class="com.icebreak.p2p.base.BaseHandlerExceptionResolver"></bean>
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	    <property name="order" value="2" />

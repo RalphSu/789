@@ -93,8 +93,15 @@ public class InvestServiceImpl extends BaseBizService implements InvestService {
 	private String yxjgRoleId = SysUserRoleEnum.MARKETING.code();
 	private String investRoleId = SysUserRoleEnum.INVESTOR.code();
 	
-	//按天计算利率
-	private static double getDaysRuleRate(double rule, Trade trade) {
+	public double getDaysRuleRate(double rule, String timeLimitUnit, int timeLimit, Date effectiveDate, Date endDate){
+		Trade trade = new Trade();
+		trade.setTimeLimitUnit(timeLimitUnit);
+		trade.setTimeLimit(timeLimit);
+		trade.setEffectiveDateTime(effectiveDate);
+		return getDaysRuleRate(rule, trade, endDate);
+	}
+	
+	private static double getDaysRuleRate(double rule, Trade trade, Date endDate){
 		String timeLimitUnit = trade.getTimeLimitUnit();
 		double timeLimit = trade.getTimeLimit();
 		double days = 0;
@@ -110,7 +117,11 @@ public class InvestServiceImpl extends BaseBizService implements InvestService {
 			try{
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				Calendar endTime = Calendar.getInstance();
-				endTime.setTime(sdf.parse(sdf.format(Calendar.getInstance().getTime())));
+				if(null == endDate){
+					endTime.setTime(sdf.parse(sdf.format(Calendar.getInstance().getTime())));
+				}else{
+					endTime.setTime(sdf.parse(sdf.format(endDate)));
+				}
 				Calendar beginTime = Calendar.getInstance();
 				beginTime.setTime(sdf.parse(sdf.format(trade.getEffectiveDateTime())));
 				int cutDays = (int) ((endTime.getTimeInMillis() - beginTime.getTimeInMillis())/1000/60/60/24);
@@ -125,6 +136,11 @@ public class InvestServiceImpl extends BaseBizService implements InvestService {
 		BigDecimal bg = new BigDecimal(rule / YrdConstants.TimeRelativeConstants.DAYSOFAYEAR * days);
 		double daysRate = bg.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
 		return daysRate;
+	}
+	
+	//按天计算利率
+	private static double getDaysRuleRate(double rule, Trade trade) {
+		return getDaysRuleRate(rule, trade, null);
 	}
 	
 	public String getJjrRoleId() {
@@ -375,11 +391,20 @@ public class InvestServiceImpl extends BaseBizService implements InvestService {
 			}
 
 			double repayCutAmount = 0; // 投资人还款阶段分润总额
-			if (ListUtil.isNotEmpty(repayRolelist)) {
+			/* 计算应还利息 不再直接用利率乘，而是用tradeDetail中的记录一条条加
+			 * if (ListUtil.isNotEmpty(repayRolelist)) {
 				for (DivsionRuleRole druleRole : repayRolelist) {
 					double temp = getDaysRuleRate(druleRole.getRule(), trade)
 							* trade.getLoanedAmount();
 					repayCutAmount = repayCutAmount + temp;
+				}
+			}*/
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("tradeId", trade.getId());
+			List<TradeDetail> detailList = tradeDetailDao.getTradeDivisionDetailByConditions(params);
+			if(null != detailList){
+				for(TradeDetail detail : detailList){
+					repayCutAmount = repayCutAmount + detail.getAmount();
 				}
 			}
 			double repayAmount = trade.getLoanedAmount() + repayCutAmount;
