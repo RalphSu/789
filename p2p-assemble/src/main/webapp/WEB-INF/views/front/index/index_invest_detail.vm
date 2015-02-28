@@ -357,7 +357,8 @@
                     #end
                 </ul>
             </div>
-            <div class="pro_box" id="investdiv" style="display:none">
+            <div class="pro_box" id="investdiv" style="display:none;padding-left:20px;">
+            	<img src="/resources/images/new/product.png" />
             </div>
 ##            <div class="pro_boxpara" id="investdiv" style="display:none">
 ##                <ul class="pbp_tit">
