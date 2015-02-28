@@ -516,13 +516,13 @@ public class TradeServiceImpl extends BaseAutowiredToolsService implements
 					RepayPlanStatusEnum.REPAY_SUCCESS.getCode());
 			repayPlanService.updateActualRepayDate(plan.getRepayPlanId(),
 					new Date());
-//			logger.info("发送短信通知");
-//			Map<String, Object> params = new HashMap<String, Object>();
-//			params.put("tradeId", tradeId);
-//			List<UserBaseInfoDO> users = userBaseInfoDAO.queryAllUserInfoList(params);
-//			Trade trade = tradeDao.getByTradeId(tradeId);
-//			String smsContent = "您购买的789金融"+trade.getName();
-//			messageService.notifyUsersBySms(users, smsContent);
+			logger.info("发送短信通知");
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("tradeId", tradeId);
+			List<UserBaseInfoDO> users = userBaseInfoDAO.queryAllUserInfoList(params);
+			Trade trade = tradeDao.getByTradeId(tradeId);
+			String smsContent = "尊敬的用户，您认购的"+trade.getName()+"产品已经到期，本息已返还至您的账户中，请及时登录查收！";
+			messageService.notifyUsersBySms(users, smsContent);
 		}
 		logger.info("还款成功!");
 		return 0;
