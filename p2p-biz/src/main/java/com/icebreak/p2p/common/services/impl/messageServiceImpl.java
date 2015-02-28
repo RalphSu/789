@@ -99,7 +99,7 @@ public class messageServiceImpl extends OpenApiBaseService implements MessageSer
 		content = content.replace("你", "您");
 		String mobile = notifiedUser.getMobile();
 		String smsContent = content.replace("hostLink", urlHostSms);
-		smsContent += "客服电话：" + AppConstantsUtil.getCustomerServicePhone() + "【789金融】";
+		smsContent += "客服电话：" + AppConstantsUtil.getCustomerServicePhone();
 		String emailContent = content.replace("hostLink", urlHostEmail);
 		if (YrdConstants.MessageNotifyConstants.NOTIFY_TYPE_SMS.equals(notify_Type)) {
 			content = YrdConstants.MessageNotifyConstants.GREETING_CONTENT
@@ -153,10 +153,10 @@ public class messageServiceImpl extends OpenApiBaseService implements MessageSer
 	public void notifyUsersBySms(List<UserBaseInfoDO> notifyUsers, String content) {
 		initPrivateValue();
 		String smsContent = content.replace("hostLink", urlHostSms);
-		smsContent += "客服电话：" + AppConstantsUtil.getCustomerServicePhone()+"【789金融】";
+		smsContent += "客服电话：" + AppConstantsUtil.getCustomerServicePhone();
 		for(UserBaseInfoDO user : notifyUsers){
 			try{
-//				logger.info(user.getMobile()+smsContent);
+				logger.info(user.getMobile()+smsContent);
 				this.smsService.sendSMS(user.getMobile(), smsContent, this.getOpenApiContext());
 			}catch(Exception e){
 				logger.error("error:--短信发送异常：" + user.getRealName() + "--" + user.getMobile(), e);
