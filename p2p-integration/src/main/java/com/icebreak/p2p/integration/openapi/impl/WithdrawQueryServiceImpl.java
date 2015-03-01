@@ -35,7 +35,9 @@ public class WithdrawQueryServiceImpl extends OpenApiServiceBase implements With
 				paramMap.put("endTime",
 					DateUtil.getFormat(DateUtil.dtSimpleYmdhms).format(order.getEndTime()));
 			}
+			logger.info(paramMap.toString());
 			String responseString = send(paramMap);
+			logger.info(responseString);
 			JSONObject object = JSON.parseObject(responseString);
 			Object jsonArray = object.get("data");
 			String size = (String)object.get("size");

@@ -40,7 +40,7 @@
             <ul>
                 <li class="col1" style="height: 40px;">$!info.outBizNo</a><br/></li>
                 <li class="col7" style="height: 40px;">$!info.payTime<br/></li>
-                <li class="col3" style="height: 40px;">${vmUtil.getBankName($!info.bankName)}</li>
+                <li class="col3" style="height: 40px;">$!info.bankName</li>
                 <li class="col3" style="height: 40px;">
                     #if($!info.status=='SUCCESS')
                         成功
