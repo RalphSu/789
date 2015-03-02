@@ -185,6 +185,7 @@
 	      trd.time_limit,
 	      trd.time_limit_unit,
 		  trd.loaned_amount,
+		  trd.trade_effective_date,
           t.actual_repay_date,
           t.status
     FROM trade_detail t
