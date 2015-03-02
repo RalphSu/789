@@ -54,7 +54,7 @@
 							<div class="fm-item fn-clear">
 								<label>银行账号：</label>
 								<input type="text" name="cardNo" class="pay-text w245">
-								<p class="fn-tip">请按照您开户许可证上的银行账号填写</p>
+								<p class="fn-tip">请按照您银行卡上的银行账号填写</p>
 							</div>
                         </div>
 						<div class="fm-item fn-clear">
