@@ -160,7 +160,7 @@
             e.html('投资金额必须为数字').show();
             return false;
         }else if(parseFloat(amount*1) < 1){
-            e.html('投资金额必须大于0元').show();
+            e.html('投资金额必须大于0且高于体验金金额').show();
             return false;
         }
         return true;

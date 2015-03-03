@@ -608,12 +608,13 @@
         }else{
             var amountPreWord = "金额大写： ";
             $('#invest-pay-amount-chinese').html(amountPreWord + chineseAmount).show();
-            //体验金
-            var goldExpValue = $('#goldExp').attr('checked') ? parseFloat($('#goldExp').val()) : 0;
+##            //体验金
+##            var goldExpValue = $('#goldExp').attr('checked') ? parseFloat($('#goldExp').val()) : 0;
             var diffDate = parseInt($("#diffDate").val());
             days = days - (diffDate > 0 ? diffDate : 0);
-            //预期收益
-            var willIncome = Number((inputAmount + goldExpValue) * rate/360 * days).toFixed(3);
+##            //预期收益
+##            var willIncome = Number((inputAmount + goldExpValue) * rate/360 * days).toFixed(3);
+            var willIncome = Number(inputAmount * rate/360 * days).toFixed(3);
             willIncome = willIncome.substring(0,willIncome.length-1);
             $('#invest-pay-amount-income').html('<span style="color:#FFC90E;">预期收益 : ' + willIncome + '元</span>').show();
         }
