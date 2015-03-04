@@ -357,7 +357,7 @@
                     #end
                 </ul>
             </div>
-            <div class="pro_box" id="investdiv" style="display:none;padding-left:20px;">
+            <div class="pro_box" id="investdiv" style="display:none;padding-left:20px;padding-top:0px;">
             	<img src="/resources/images/new/product.png" />
             </div>
 ##            <div class="pro_boxpara" id="investdiv" style="display:none">
