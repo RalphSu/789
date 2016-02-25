@@ -27,10 +27,13 @@
             <groupId>org.springmodules</groupId>
             <artifactId>spring-modules-validation</artifactId>
         </dependency>
+<!--
         <dependency>
             <groupId>com.google.kaptcha</groupId>
             <artifactId>kaptcha</artifactId>
+            <version>2.3</version>
         </dependency>
+-->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
@@ -86,10 +89,11 @@
             <artifactId>poi</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.scratchpad</groupId>
+            <groupId>org.apache.poi</groupId>
             <artifactId>poi-scratchpad</artifactId>
+            <version>3.9</version>
         </dependency>
-		
+	<!--	
         <dependency>
             <groupId>com.sun</groupId>
             <artifactId>PDFReader</artifactId>
@@ -97,7 +101,9 @@
         <dependency>
             <groupId>com.jacob</groupId>
             <artifactId>jacob</artifactId>
+	    <version>1.1.1</version>
         </dependency>
+-->
 
         <!-- aop -->
         <dependency>
@@ -138,6 +144,7 @@
             <version>1.9.4</version>
         </dependency>
         <!-- pdf creator -->
+<!--
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
@@ -154,6 +161,7 @@
             <groupId>com.itextpdf</groupId>
             <artifactId>xmlworker</artifactId>
         </dependency>
+-->
         <dependency>
             <groupId>org.owasp.esapi</groupId>
             <artifactId>esapi</artifactId>
