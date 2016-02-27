@@ -51,7 +51,7 @@
 		</dependency>
 	
 		<!-- pdf creator -->
-		<dependency>
+		<!-- <dependency>
 		  <groupId>com.itextpdf</groupId>
 		  <artifactId>itextpdf</artifactId>
 		</dependency>
@@ -66,6 +66,6 @@
 		<dependency>
 		  <groupId>com.itextpdf</groupId>
 		  <artifactId>xmlworker</artifactId>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 </project>

@@ -935,13 +935,13 @@ public class TradeQueryController extends UserAccountInfoBaseController {
 
 		String servletPath = request.getServletContext().getRealPath("/");
 
-		byte[] data = receiptPDFCreator.creatFileData4Receipt(tradeId,
-				detailId, servletPath);
-
-		// byte[] data = creatFileData4PDFVoucher(tradeId, detailId,
-		// servletPath);
-
-		downloadPDF(checkType, response, data);
+//		byte[] data = receiptPDFCreator.creatFileData4Receipt(tradeId,
+//				detailId, servletPath);
+//
+//		// byte[] data = creatFileData4PDFVoucher(tradeId, detailId,
+//		// servletPath);
+//
+//		downloadPDF(checkType, response, data);
 	}
 
 	private void downloadPDF(String checkType, HttpServletResponse response,
