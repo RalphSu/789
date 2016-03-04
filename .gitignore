@@ -60,3 +60,5 @@ p2p-integration/.classpath
 *.classpath
 *.classpath
 .classpath
+
+**/bin/*
