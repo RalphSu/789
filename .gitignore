@@ -62,3 +62,6 @@ p2p-integration/.classpath
 .classpath
 
 **/bin/*
+
+**/.idea/
+*.iml
