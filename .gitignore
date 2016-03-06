@@ -65,3 +65,5 @@ p2p-integration/.classpath
 
 **/.idea/
 *.iml
+
+.settings/
