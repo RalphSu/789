@@ -17,7 +17,7 @@
 			<fileNamePattern>${LOG_PATH}/fxt.log-%d{yyyy-MM-dd}</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%d{apache-tomcat-7.0.56yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L---/%n-/%msg%n%n</pattern>
+			<pattern>%d{apache-tomcat-7.0.56 yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L---/%n-/%msg%n%n</pattern>
 		</encoder>
 	</appender>
 	<if condition='property("os.name").toUpperCase().contains("WINDOWS")'>

@@ -14,14 +14,37 @@
 	<build>
 		<finalName>ROOT</finalName>
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
-				<version>1.1</version>
+	<!-- 		<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.1</version>
 				<configuration>
+					<port>8080</port>
 					<path>/</path>
+					<uriEncoding>UTF-8</uriEncoding>
+					<server>tomcat7</server>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.3.7.v20160115</version>
+				<configuration>
+					<jettyXml>jetty.xml,jetty-http.xml,jetty-ssl.xml,jetty-https.xml</jettyXml>
+				</configuration>
+			</plugin> -->
+			
+			<plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.3.v20140905</version>
+                <configuration>
+                    <stopKey>STOP</stopKey>
+                    <stopPort>9999</stopPort>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <contextPath>/</contextPath>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -83,8 +106,6 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
 
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
