@@ -5,7 +5,7 @@
 				
   <resultMap id="RM-PERMISSION" class="com.icebreak.p2p.dataobject.Permission" >
   		<result property="id" column="permission_id" javaType="int" jdbcType="INT"/>
-  		<result property="code" column="permission_code" javaType="java.lang.String" jdbcType="VARVHAR"/>
+  		<result property="code" column="permission_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
   		<result property="name" column="permission_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
   		<result property="operate" column="permission_operate" javaType="java.lang.String" jdbcType="VARCHAR"/>
   		<result property="backOperate" column="permission_callback" javaType="java.lang.String" jdbcType="VARCHAR"/>

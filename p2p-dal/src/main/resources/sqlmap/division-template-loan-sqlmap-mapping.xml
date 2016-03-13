@@ -4,9 +4,9 @@
 <sqlMap namespace="eloan">
 
   <resultMap id="RM-DIVISIONTEMPLATELOAN" class="com.icebreak.p2p.dataobject.DivisionTemplateLoanDO">
-	  <result property="baseId" column="base_id" />
-	  <result property="investTemplateId" column="invest_template_id" />
-	  <result property="repayTemplateId" column="repay_template_id" />
+	  <result property="baseId" column="base_id" jdbcType="BIGINT"/>
+	  <result property="investTemplateId" column="invest_template_id" jdbcType="BIGINT"/>
+	  <result property="repayTemplateId" column="repay_template_id" jdbcType="BIGINT"/>
   </resultMap>
   
   <insert id="DIVISIONTEMPLATELOAN-ADD" parameterClass="com.icebreak.p2p.dataobject.DivisionTemplateLoanDO">

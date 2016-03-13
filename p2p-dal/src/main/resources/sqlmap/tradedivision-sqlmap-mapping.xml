@@ -5,9 +5,9 @@
 <sqlMap namespace="eloan">
 
   <resultMap id="RM-TRADEDIVISION" class="com.icebreak.p2p.dataobject.TradeDivision">
-	  <result property="id" column="trade_division_id" />
-	  <result property="templateId" column="division_template_id" />
-	  <result property="tradeId" column="trade_id" />
+	  <result property="id" column="trade_division_id" jdbcType="BIGINT" />
+	  <result property="templateId" column="division_template_id" jdbcType="BIGINT" />
+	  <result property="tradeId" column="trade_id" jdbcType="BIGINT" />
   </resultMap>
   
   <insert id="TRADEDIVISION-ADD" parameterClass="com.icebreak.p2p.dataobject.TradeDivision">

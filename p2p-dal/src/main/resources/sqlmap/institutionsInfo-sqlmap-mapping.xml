@@ -37,7 +37,6 @@
 		<result property="contactCertNo" column="contact_cert_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		<result property="zipCode" column="zip_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		
-		<result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		<result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
 		<result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		<result property="logPassword" column="log_password" javaType="java.lang.String" jdbcType="VARCHAR"/>

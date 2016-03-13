@@ -3,7 +3,7 @@
 
 <sqlMap namespace="eloan">
 
-	<resultMap id="RM-PERSONAL-INFO" class="com.icebreak.p2p.dataobject.PersonalInfoDO">
+	<!-- <resultMap id="RM-PERSONAL-INFO" class="com.icebreak.p2p.dataobject.PersonalInfoDO">
 		<result property="id" column="id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
 		<result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		<result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -39,7 +39,7 @@
 		<result property="rowAddTime" column="row_add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 		<result property="rowUpdateTime" column="row_update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 		<result property="realNameAuthentication" column="real_name_authentication" javaType="java.lang.String" jdbcType="ENUM"/>
-	</resultMap>
+	</resultMap> -->
 	
 	<resultMap id="RM-PERSONAL-INFO-LIST" class="com.icebreak.p2p.dataobject.PersonalInfoDO">
 		<result property="id" column="id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
@@ -62,10 +62,8 @@
 		<result property="memberNo" column="member_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		<result property="role" column="role_id" javaType="int" jdbcType="int"/>
 		
-		<result property="userBaseId" column="user_base_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		<result property="userId" column="user_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
 		<result property="userName" column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
-		<result property="realName" column="real_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		<result property="accountId" column="account_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		<result property="accountName" column="account_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		<result property="mobile" column="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>

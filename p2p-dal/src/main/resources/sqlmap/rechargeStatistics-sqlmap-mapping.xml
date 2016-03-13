@@ -4,13 +4,13 @@
 <sqlMap namespace="eloan">
 
   <resultMap id="RECHARGE-STATISTICS" class="com.icebreak.p2p.dataobject.RechargeStatistics" >
-	  <result property="countFildOne" column="bankName" javaType="java.lang.String"  />
-	  <result property="countFildTwo" column="counts" javaType="java.lang.String"  />
-	  <result property="countFildThree" column="amount" javaType="java.lang.String"  />
-	  <result property="countFildFour" column="counts2" javaType="java.lang.String"  />
-	  <result property="countFildFive" column="amount2" javaType="java.lang.String"  />
-	   <result property="countFildSix" column="counts3" javaType="java.lang.String"  />
-	  <result property="countFildSeven" column="amount3" javaType="java.lang.String"  />
+	  <result property="countFildOne" column="bankName" javaType="java.lang.String" jdbcType="VARCHAR"  />
+	  <result property="countFildTwo" column="counts" javaType="java.lang.String" jdbcType="VARCHAR"  />
+	  <result property="countFildThree" column="amount" javaType="java.lang.String" jdbcType="VARCHAR"  />
+	  <result property="countFildFour" column="counts2" javaType="java.lang.String" jdbcType="VARCHAR"  />
+	  <result property="countFildFive" column="amount2" javaType="java.lang.String" jdbcType="VARCHAR"  />
+	   <result property="countFildSix" column="counts3" javaType="java.lang.String" jdbcType="VARCHAR"  />
+	  <result property="countFildSeven" column="amount3" javaType="java.lang.String" jdbcType="VARCHAR"  />
   </resultMap>
   
    <resultMap id="RECHARGE-STATISTICS-O" class="com.icebreak.p2p.dataobject.RechargeStatistics" >

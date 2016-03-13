@@ -1,0 +1,21 @@
+use yr789; 
+DROP TABLE IF EXISTS sign_card_info; 
+CREATE TABLE sign_card_info (
+	id INT,
+	pactNo VARCHAR(400),
+	signType VARCHAR(400),
+	userId VARCHAR(400),
+	upUserNo VARCHAR(400),
+	cardNo VARCHAR(400),
+	cardType VARCHAR(400),
+	cardName VARCHAR(400),
+	certNo VARCHAR(400),
+	userPhoneNo VARCHAR(400),
+	bankName VARCHAR(400),
+	bankShort VARCHAR(400),
+	status VARCHAR(400),
+	province VARCHAR(400),
+	city VARCHAR(400),
+	createTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+	updateTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP 
+);

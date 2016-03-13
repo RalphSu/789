@@ -4,9 +4,9 @@
 <sqlMap namespace="eloan">
 
   <resultMap id="PROJECT-STATISTICS" class="com.icebreak.p2p.dataobject.ProjectStatisticsInfo" >
-	  <result property="dimension" column="ted" javaType="java.lang.String"  />
-	  <result property="pendingProjects" column="counts2" javaType="java.lang.Long"  />
-	  <result property="repayProjects" column="counts1" javaType="java.lang.Long"  />
+	  <result property="dimension" column="ted" javaType="java.lang.String" jdbcType="VARCHAR" />
+	  <result property="pendingProjects" column="counts2" javaType="java.lang.Long" jdbcType="BIGINT" />
+	  <result property="repayProjects" column="counts1" javaType="java.lang.Long"  jdbcType="BIGINT"/>
   </resultMap>
   
 	<select id="PROJECT-STATISTICS-QUERY" resultMap="PROJECT-STATISTICS" parameterClass="java.util.Map">
