@@ -10,7 +10,7 @@
 
 	<description>验证码配置	</description>
 
-	<!-- <bean id="captchaProducer4" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+	 <bean id="captchaProducer4" class="com.google.code.kaptcha.impl.DefaultKaptcha">
 		<property name="config">
 			<bean class="com.google.code.kaptcha.util.Config">
 				<constructor-arg>
@@ -28,7 +28,7 @@
 				</constructor-arg>
 			</bean>
 		</property>
-	</bean> -->
+	</bean>
 
 
 </beans>

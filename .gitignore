@@ -67,3 +67,5 @@ p2p-integration/.classpath
 *.iml
 
 .settings/
+
+LOG_PATH_IS_UNDEFINED/
